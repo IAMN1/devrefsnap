@@ -1,6 +1,6 @@
 # Выдать сессию БД на запрос
 
-[Краткий справочник](README.md) · [Тестирование](testing.md) · [SQLAlchemy](../../databases/sqlalchemy.md)
+[Краткий справочник](README.md) · [Тестирование](testing.md) · [SQLAlchemy](../../databases/sqlalchemy/README.md)
 
 | Параметр | Значение |
 | --- | --- |
