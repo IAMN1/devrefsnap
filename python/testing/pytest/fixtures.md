@@ -1,0 +1,154 @@
+# Фикстуры, данные и assertions
+
+Уровень: базовый и средний. Предпосылки: Python 3.14 и pytest 9 для точного повторения проверки.
+[К справочнику pytest](README.md).
+
+## Полный учебный пример
+
+Создай два файла ниже в одном временном каталоге. Зависимость: pytest; SQLite входит в стандартную
+библиотеку Python. Из активированного отдельного окружения выполни `python -m pytest -q test_basics.py`.
+Пример работает только с БД в памяти и временными файлами.
+
+<!-- example: pytest/demo_service.py -->
+```python
+import asyncio
+
+
+def subtotal(quantity: int, price: float) -> float:
+    if type(quantity) is not int or quantity < 0:
+        raise ValueError("quantity must be a non-negative integer")
+    return quantity * price
+
+
+def read_remote(order_id: int) -> dict:
+    raise RuntimeError("external adapter is not configured in this demo")
+
+
+def status_label(order_id: int) -> str:
+    payload = read_remote(order_id)
+    return f"order {order_id}: {payload['status']}"
+
+
+async def uppercase(value: str) -> str:
+    await asyncio.sleep(0)
+    return value.upper()
+```
+
+<!-- example: pytest/test_basics.py -->
+```python
+import sqlite3
+import warnings
+
+import pytest
+
+from demo_service import subtotal
+
+
+@pytest.fixture
+def connection():
+    conn = sqlite3.connect(":memory:")
+    conn.execute("CREATE TABLE items (name TEXT NOT NULL)")
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+
+@pytest.fixture(params=["utf-8", "utf-16"])
+def encoding(request):
+    return request.param
+
+
+@pytest.mark.parametrize("quantity, price, expected", [
+    (0, 2.5, 0.0),
+    (1, 2.5, 2.5),
+    (3, 2.5, 7.5),
+])
+def test_subtotal(quantity, price, expected):
+    assert subtotal(quantity, price) == pytest.approx(expected)
+
+
+@pytest.mark.parametrize("quantity", [-1, 1.5, True])
+def test_invalid_quantity(quantity):
+    with pytest.raises(ValueError, match="quantity") as error:
+        subtotal(quantity, 2.5)
+    assert "non-negative integer" in str(error.value)
+
+
+def test_database_write(connection):
+    connection.execute("INSERT INTO items VALUES (?)", ("apple",))
+    assert connection.execute("SELECT name FROM items").fetchall() == [("apple",)]
+
+
+def test_database_starts_empty(connection):
+    assert connection.execute("SELECT COUNT(*) FROM items").fetchone()[0] == 0
+
+
+def test_file_roundtrip(tmp_path, encoding):
+    path = tmp_path / "note.txt"
+    path.write_text("Привет", encoding=encoding)
+    assert path.read_text(encoding=encoding) == "Привет"
+
+
+def test_print_output(capsys):
+    print("ready")
+    assert capsys.readouterr().out == "ready\n"
+
+
+def test_float_sum():
+    assert 0.1 + 0.2 == pytest.approx(0.3, rel=1e-9)
+
+
+def test_warning():
+    with pytest.warns(UserWarning, match="old format"):
+        warnings.warn("old format", UserWarning)
+```
+
+Ожидается **13 passed**. Проверяются корректные и ошибочные количества, работа с SQL,
+изоляция fixture между тестами, два encoding, вывод и предупреждение.
+Сравнение `0.1 + 0.2 == 0.3` обычно ложно для Python float; допуск выбирают по смыслу данных,
+а не ради прохождения любого теста. Для денежных сумм отдельно рассмотри Decimal/целые минимальные единицы.
+
+## Область действия и фабрики
+
+| Scope | Когда создаётся значение |
+| --- | --- |
+| `function` | Для каждого тестового вызова; значение по умолчанию |
+| `class` | В рамках тестового класса |
+| `module` | В рамках модуля |
+| `package` | В рамках пакета |
+| `session` | В рамках сессии конкретного процесса pytest |
+
+Нельзя передавать function-scoped ресурс в session-scoped fixture без изменения дизайна;
+pytest сообщает ScopeMismatch. `autouse=True` делает fixture неявной для тестов своей области,
+поэтому используй его для действительно общей обязательной подготовки.
+Общие fixture размещают в `conftest.py`, избегая ненужных импортов тяжёлых зависимостей.
+
+Фрагмент fixture-фабрики для произвольного тестового файла; требует `import pytest`:
+
+```python
+@pytest.fixture
+def user_factory():
+    def build(**overrides):
+        data = {"username": "alice", "is_active": True}
+        data.update(overrides)
+        return data
+    return build
+```
+
+В тесте `user_factory(username="bob")` создаёт независимые данные. Не заменяй такой фабрикой
+реальную валидацию модели, если проверяется именно она.
+
+## Параметризовать независимые измерения
+
+Стекирование двух `parametrize` даёт декартово произведение вариантов, а не zip.
+Каждому варианту нужен осмысленный ожидаемый результат; можно задать `ids` и отдельные
+`pytest.param(..., marks=...)`. Для дорогой подготовки используй параметризованную fixture
+или indirect-передачу параметра; не делай реальный сетевой запрос только ради перебора входов.
+
+## Источники и проверка
+
+[Fixture scopes и teardown](https://docs.pytest.org/en/stable/how-to/fixtures.html),
+[parametrize](https://docs.pytest.org/en/stable/how-to/parametrize.html),
+[assertions](https://docs.pytest.org/en/stable/how-to/assert.html).
+Выполнено 2026-11-06: Python 3.14.7 / pytest 9.2.0, временный каталог и SQLite in-memory.
