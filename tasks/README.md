@@ -127,7 +127,10 @@
 | Обойти дерево рекурсивным запросом | recursive CTE, WITH RECURSIVE, иерархия | [PostgreSQL: рекурсивный обход](../databases/relational/postgresql/queries.md#рекурсивный-обход) |
 | Выбрать индекс и посмотреть план запроса | EXPLAIN, ANALYZE, B-tree, GIN, performance | [PostgreSQL: индексы и план](../databases/relational/postgresql/schema-and-indexes.md#индексы-и-план-запроса) |
 | Искать в JSON или тексте | JSONB, full-text search, tsvector, полнотекстовый поиск | [PostgreSQL: JSONB и поиск](../databases/relational/postgresql/schema-and-indexes.md#jsonb-и-полнотекстовый-поиск) |
-| Сделать резервную копию и проверить восстановление | backup, restore, dump, pg_dump, pg_restore, бэкап, бекап | [PostgreSQL: копия в новую БД](../databases/relational/postgresql/backup-and-restore.md#логическая-копия-и-восстановление-в-новую-бд) |
+| Выбрать формат резервной копии PostgreSQL | backup, dump, custom, plain, directory, бэкап, бекап | [PostgreSQL: формат и версии](../databases/relational/postgresql/backup-and-restore.md#выбрать-формат-и-проверить-версии) |
+| Создать логическую копию PostgreSQL | pg_dump, consistent snapshot, резервная копия | [PostgreSQL: создать custom](../databases/relational/postgresql/backup-and-restore.md#создать-логическую-копию) |
+| Восстановить PostgreSQL в новую БД | restore, pg_restore, createdb, single-transaction | [Custom-архив](../databases/relational/postgresql/backup-and-restore.md#логическая-копия-и-восстановление-в-новую-бд) · [SQL-файл](../databases/relational/postgresql/backup-and-restore.md#восстановить-sql-файл) |
+| Проверить восстановленную копию PostgreSQL | verify backup, данные, FK, CHECK, identity | [PostgreSQL: проверки](../databases/relational/postgresql/backup-and-restore.md#проверить-восстановленную-бд) · [Полный сценарий](../databases/relational/postgresql/backup-lab.md) |
 | Найти блокировку, долгий запрос или разрастание таблиц | locks, pg_stat_activity, VACUUM, monitoring | [PostgreSQL: изоляция и блокировки](../databases/relational/postgresql/operations.md#транзакции-изоляция-и-блокировки) · [Обслуживание](../databases/relational/postgresql/operations.md#мониторинг-и-обслуживание) |
 
 ### SQLite
@@ -136,7 +139,10 @@
 | --- | --- | --- |
 | Подключить SQLite из Python и безопасно передать параметры | sqlite3, parameterized query, in-memory, foreign keys | [SQLite: полный блог в памяти](../databases/relational/sqlite/python-and-queries.md#полный-пример-блог-в-памяти) |
 | Управлять commit/rollback в Python | sqlite3, autocommit, transaction, транзакция | [SQLite: полный сценарий](../databases/relational/sqlite/python-and-queries.md#полный-пример-блог-в-памяти) · [Режимы транзакции](../databases/relational/sqlite/python-and-queries.md#транзакция-в-приложении) |
-| Создать копию, восстановить и изменить схему | backup, restore, migration, user_version, бэкап, бекап | [SQLite: полный пример копии и миграции](../databases/relational/sqlite/backup-and-migrations.md#полный-пример-копия-восстановление-и-миграция) |
+| Создать резервную копию SQLite | backup, Connection.backup, .backup, бэкап, бекап | [Python](../databases/relational/sqlite/backup-and-restore.md#создать-копию-через-python) · [CLI](../databases/relational/sqlite/backup-and-restore.md#создать-копию-через-cli) |
+| Восстановить SQLite в новый файл | restore, .restore, .dump, SQL-копия | [Бинарная копия](../databases/relational/sqlite/backup-and-restore.md#восстановить-копию-в-новый-файл) · [SQL dump](../databases/relational/sqlite/backup-and-restore.md#создать-и-восстановить-sql-копию) |
+| Проверить восстановленную копию SQLite | integrity_check, foreign_key_check, verify backup, триггер | [SQLite: проверки результата](../databases/relational/sqlite/backup-and-restore.md#проверить-восстановленную-бд) · [Полные сценарии](../databases/relational/sqlite/backup-lab.md) |
+| Изменить схему SQLite с сохранением связей | migration, user_version, перестроение таблицы | [SQLite: миграция](../databases/relational/sqlite/backup-and-migrations.md#полный-пример-перестроение-таблицы) |
 | Разобраться с занятой БД и параллельным доступом | database is locked, busy_timeout, WAL, concurrent writes | [SQLite: конкуренция и WAL](../databases/relational/sqlite/backup-and-migrations.md#конкуренция-и-wal) |
 
 ### Redis

@@ -1,32 +1,43 @@
-# Резервная копия, миграция и конкуренция SQLite
+# Миграция схемы и конкуренция SQLite
 
-[К SQLite](README.md)
+Откройте страницу для перестроения известной таблицы или разбора WAL и блокировок.
+Для резервной копии и восстановления используйте [отдельные карточки](backup-and-restore.md).
+[К SQLite](README.md).
+
+| Задача | Приём | Пример |
+| --- | --- | --- |
+| Добавить ограничение через перестроение | Транзакция, копирование данных, восстановление зависимостей | [Полный пример](#полный-пример-перестроение-таблицы) |
+| Получить и проверить резервную копию | Backup API или CLI | [Копия и восстановление](backup-and-restore.md) |
+| Разобрать busy и WAL | Короткие транзакции и план checkpoint | [Конкуренция](#конкуренция-и-wal) |
 
 | Параметр | Значение |
 | --- | --- |
-| Уровни | Средний — backup/restore; продвинутый — перестроение схемы/WAL |
-| Предпосылки | Python 3.14 со SQLite 3.37+; понимание FK/транзакций |
-| Сверено с документацией | 2026-11-06 |
-| Выполнено | 2026-11-06: Python 3.14.7 / SQLite 3.53.4; полный сценарий в своём временном каталоге, backup/restore, integrity/FK, сохранение индекса/триггера, отказ нового CHECK |
-| Не проверено | CLI dump/restore, конкурентный WAL, сбои питания и миграция произвольной пользовательской схемы |
+| Уровень | Продвинутый |
+| Предпосылки | Python 3.14 со SQLite 3.37+; понимание FK и транзакций |
+| Сверено с документацией | 2026-11-06: Python 3.14, SQLite docs и release notes 3.53.4 |
+| Выполнено | 2026-11-06: Python 3.14.7 / SQLite 3.53.4; полный сценарий в своём временном каталоге; сохранение FK, индекса и триггера, отказ нового CHECK |
+| Не проверено | Конкурентный WAL, сбои питания и миграция произвольной пользовательской схемы |
 
-## Полный пример: копия, восстановление и миграция
+## Полный пример: перестроение таблицы
 
-Сохраните пример как `backup-migration.py`.
-Выполните `python3.14 backup-migration.py`.
-Скрипт создаёт и затем удаляет **только собственный временный каталог** с синтетической БД.
-Скрипт получает согласованную копию через backup API.
-Затем скрипт восстанавливает копию в новый файл и перестраивает известную таблицу.
-Скрипт не переносит произвольную схему с неизвестными views/triggers автоматически.
+Сохраните пример как `migration.py`.
+Выполните `python3.14 migration.py`.
+Зависимости входят в стандартную библиотеку Python.
+Скрипт создаёт и затем удаляет только собственный временный каталог с синтетической БД.
+Перед изменением своей схемы получите [проверенную резервную копию](backup-and-restore.md#проверить-восстановленную-бд).
 
-<!-- example: sqlite/backup-migration.py -->
+Пример перестраивает известную таблицу и заменяет её в одной транзакции.
+Пример не переносит произвольную схему с неизвестными views/triggers автоматически.
+Удаление таблицы ниже касается только созданной учебной БД.
+
+<!-- example: sqlite/migration.py -->
 ```python
 import sqlite3
 from contextlib import closing
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-with TemporaryDirectory(prefix="sqlite-cheatsheet-") as directory:
+with TemporaryDirectory(prefix="sqlite-migration-") as directory:
     folder = Path(directory)
     with closing(sqlite3.connect(folder / "source.db", autocommit=True)) as db:
         db.execute("PRAGMA foreign_keys = ON")
@@ -44,13 +55,6 @@ with TemporaryDirectory(prefix="sqlite-cheatsheet-") as directory:
             INSERT INTO users VALUES (1, 'alice');
             INSERT INTO posts VALUES (1, 1, 'SQLite');
         """)
-        with closing(sqlite3.connect(folder / "backup.db", autocommit=True)) as backup:
-            db.backup(backup)
-            with closing(sqlite3.connect(folder / "restored.db", autocommit=True)) as restored:
-                backup.backup(restored)
-                assert restored.execute("SELECT username FROM users").fetchall() == [("alice",)]
-                assert restored.execute("PRAGMA integrity_check").fetchall() == [("ok",)]
-
         # Переключение FK выполняется вне транзакции, иначе PRAGMA не подействует.
         db.execute("PRAGMA foreign_keys = OFF")
         assert db.execute("PRAGMA foreign_keys").fetchone() == (0,)
@@ -92,38 +96,15 @@ with TemporaryDirectory(prefix="sqlite-cheatsheet-") as directory:
             raise AssertionError("Новый CHECK должен запретить пустое имя")
         assert db.execute("PRAGMA foreign_key_check").fetchall() == []
         print("SQLite", sqlite3.sqlite_version)
-        print("OK: backup/restore, integrity, FK, index/trigger preservation, migration CHECK")
+        print("OK: FK, index/trigger preservation, migration CHECK")
 ```
 
-Восстановленная БД содержит исходную alice.
-Мигрированная БД содержит alice-updated и работающий аудит.
-Скрипт проверяет сохранение внешней ссылки, индекса и триггера.
-Скрипт также проверяет отказ нового CHECK.
+**Результат:** пользователь получает имя `alice-updated`, триггер сохраняет запись аудита.
+Внешняя ссылка и индекс сохраняются.
+Новый CHECK отклоняет пустое имя.
 Для произвольной схемы дополнительно сохраните и скорректируйте views, triggers и другие зависимости.
 Следуйте официальной [процедуре перестроения](https://www.sqlite.org/lang_altertable.html#making_other_kinds_of_table_schema_changes).
 Включите копирование данных и замену таблицы в одну транзакцию.
-
-## CLI-копии и границы восстановления
-
-**Средний уровень.** Команды предназначены для вашей учебной БД.
-Заранее выберите пути к новым файлам:
-
-```text
-sqlite3 source.db ".backup backup.db"
-sqlite3 source.db ".dump" > dump.sql
-sqlite3 -bail restored.db < dump.sql
-```
-
-Выполняйте команды в оболочке.
-.backup внутри кавычек — команда CLI.
-`?DB?` в справке `.backup ?DB? FILE` означает необязательное имя БД, а не «показать прогресс».
-Для наблюдения за прогрессом в Python у backup есть callback progress.
-Проверьте резервное копирование и восстановление на отдельной цели.
-Существующий файл назначения может быть перезаписан или изменён.
-Используйте новый путь вне рабочей БД.
-SQL dump содержит исполняемый код.
-Не восстанавливайте недоверенный файл без проверки.
-`VACUUM INTO` — ещё один штатный путь создания компактной копии со своими ограничениями.
 
 ## Конкуренция и WAL
 
@@ -155,6 +136,6 @@ WAL требует совместимой файловой системы и п�
 
 ## Источники
 
-- [SQLite backup API](https://www.sqlite.org/backup.html), [Python Connection.backup](https://docs.python.org/3.14/library/sqlite3.html#sqlite3.Connection.backup), [VACUUM INTO](https://www.sqlite.org/lang_vacuum.html#vacuuminto).
 - [Изменение схемы](https://www.sqlite.org/lang_altertable.html), [транзакции](https://www.sqlite.org/lang_transaction.html), [foreign_keys](https://www.sqlite.org/pragma.html#pragma_foreign_keys).
 - [WAL](https://www.sqlite.org/wal.html), [integrity_check](https://www.sqlite.org/pragma.html#pragma_integrity_check), [foreign_key_check](https://www.sqlite.org/pragma.html#pragma_foreign_key_check).
+- [Release notes 3.53.4](https://www.sqlite.org/releaselog/3_53_4.html).
