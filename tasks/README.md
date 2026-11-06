@@ -113,7 +113,13 @@
 | Описать ORM-модели и отношения | SQLAlchemy, Mapped, relationship, ForeignKey, one-to-many | [SQLAlchemy: согласованная схема](../python/databases/sqlalchemy/models-and-transactions.md#единая-схема-для-рецептов) |
 | Изменить данные через ORM и откатить часть операции | SQLAlchemy, Session, CRUD, transaction, savepoint | [SQLAlchemy: транзакции и savepoint](../python/databases/sqlalchemy/models-and-transactions.md#crud-транзакции-и-savepoint) |
 | Написать SELECT/JOIN/CTE через Python | SQLAlchemy, select, func, aliased, ORM query | [SQLAlchemy: запросы](../python/databases/sqlalchemy/queries.md#select-join-подзапросы-и-cte) |
-| Устранить N+1 или обойти большую выборку | lazy loading, eager loading, selectinload, joinedload, yield_per | [SQLAlchemy: загрузка отношений](../python/databases/sqlalchemy/queries.md#загрузка-и-большие-выборки) |
+| Найти N+1 и сравнить число SQL-запросов | lazy loading, eager loading, счётчик SELECT | [SQLAlchemy: найти N+1](../python/databases/sqlalchemy/relationship-loading.md#найти-n1) · [Полная проверка](../python/databases/sqlalchemy/loading-lab.md) |
+| Выбрать загрузку коллекций и одиночных связей | selectinload, joinedload, unique, relationship | [SQLAlchemy: таблица выбора](../python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) |
+| Запретить непредвиденную lazy-загрузку | raiseload, неожиданный SQL, InvalidRequestError | [SQLAlchemy: ошибка вместо SELECT](../python/databases/sqlalchemy/relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
+| Фильтровать родителей и получить все дочерние строки | JOIN, filter, полная коллекция, selectinload | [SQLAlchemy: родители и полные коллекции](../python/databases/sqlalchemy/relationship-loading.md#отфильтровать-родителей-и-загрузить-полные-коллекции) |
+| Заполнить отношение результатом своего JOIN | contains_eager, filtered collection, частичная коллекция | [SQLAlchemy: частичная коллекция](../python/databases/sqlalchemy/relationship-loading.md#загрузить-частичную-коллекцию-из-join) |
+| Заменить уже загруженное отношение | populate_existing, expire_all, identity map | [SQLAlchemy: обновить коллекцию](../python/databases/sqlalchemy/relationship-loading.md#обновить-уже-загруженную-коллекцию) |
+| Обработать большую ORM-выборку по частям | yield_per, partitions, streaming, память | [SQLAlchemy: пакетная обработка](../python/databases/sqlalchemy/streaming.md) |
 | Использовать async-сессию ORM | AsyncSession, AsyncAttrs, awaitable_attrs, asyncio | [SQLAlchemy: асинхронная сессия](../python/databases/sqlalchemy/async-and-operations.md#асинхронная-сессия) |
 | Изменить схему через миграцию | Alembic, revision, upgrade, downgrade, migration | [SQLAlchemy: отдельный проект Alembic](../python/databases/sqlalchemy/async-and-operations.md#alembic-отдельный-учебный-проект) |
 

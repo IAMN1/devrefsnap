@@ -13,7 +13,7 @@ Git и GitHub находятся в [общих инструментах](../too
 | [Типы Python](language/types/README.md) | Типы, операции, копирование и хешируемость | Актуализировано |
 | [Проектирование проекта](architecture/project-design/README.md) | Решения, структура, рабочий пакет и поставка | Актуализировано |
 | [Pydantic](validation/pydantic/README.md) | Модели, валидация, сериализация и настройки | Актуализировано |
-| [SQLAlchemy](databases/sqlalchemy/README.md) | Модели, запросы, транзакции, async и миграции | Актуализировано |
+| [SQLAlchemy](databases/sqlalchemy/README.md) | Модели, [N+1 и загрузка](databases/sqlalchemy/relationship-loading.md), запросы, транзакции, async и миграции | Актуализировано |
 | [pytest](testing/pytest/README.md) | Тесты, фикстуры, параметризация, mock и плагины | Актуализировано |
 | [structlog](logging/structlog/README.md) | Процессоры, контекст и интеграции | Актуализировано |
 | [uv](tooling/uv/README.md) | Окружения, зависимости, lock и автоматизация | Актуализировано |

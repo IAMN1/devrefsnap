@@ -7,12 +7,31 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 
 [Каталог Python](../../README.md) · [FastAPI и сессия на запрос](../../web/fastapi/database.md)
 
+## Быстрый поиск
+
+| Задача | API | Где |
+| --- | --- | --- |
+| Модель, типы, defaults, constraints | `DeclarativeBase`, `Mapped`, `mapped_column` | [Модели](models-and-transactions.md#единая-схема-для-рецептов) |
+| CRUD и откат | `Session`, `session.begin()`, `rollback()` | [Транзакции](models-and-transactions.md#crud-транзакции-и-savepoint) |
+| 1:N, N:1, 1:1, N:M | `relationship`, `ForeignKey`, `Table` | [Полная схема](models-and-transactions.md#единая-схема-для-рецептов) |
+| WHERE/JOIN/CTE/CASE/UNION/EXISTS | `select`, `func`, `aliased` | [Запросы](queries.md) |
+| Найти N+1 и выбрать загрузку | Счётчик, select-in, joined | [Выбор стратегии](relationship-loading.md#выбрать-стратегию) · [Найти N+1](relationship-loading.md#найти-n1) |
+| Загрузить коллекцию для списка | `selectinload` или `joinedload` | [Select-in](relationship-loading.md#загрузить-коллекции-через-selectinload) · [Joined и unique](relationship-loading.md#загрузить-коллекцию-через-joinedload) |
+| Запретить неожиданный lazy SELECT | `raiseload` | [Карточка и ограничения](relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
+| Загрузить часть отношения своим JOIN | `contains_eager`, `populate_existing` | [Частичная коллекция](relationship-loading.md#загрузить-частичную-коллекцию-из-join) |
+| Обработать большую выборку | `yield_per`, `partitions` | [Пакеты и ограничения](streaming.md) |
+| Async-сессия и атрибуты | `AsyncSession`, `AsyncAttrs`, `awaitable_attrs` | [Async](async-and-operations.md#асинхронная-сессия) |
+| UPSERT / FOR UPDATE / частичный индекс | Диалект PostgreSQL | [Компиляция PostgreSQL](queries.md#postgresql-компиляция-без-подключения) |
+| События, SQL-логи и время запроса | `event`, `logging`, `perf_counter` | [Наблюдение](async-and-operations.md#события-и-диагностика) |
+| Изменить схему | Alembic | [Миграции](async-and-operations.md#alembic-отдельный-учебный-проект) |
+
 | Параметр | Значение |
 | --- | --- |
 | API / диалект | SQLAlchemy 2.1; исполняемые примеры SQLite, PostgreSQL отдельно помечен |
 | Предпосылки | Python, SQL, транзакции; async-рецепт требует `async with` |
 | Сверено с документацией | 2026-11-06, SQLAlchemy 2.1 и Alembic |
-| Выполнено | 2026-11-06: 10 Python-блоков скомпилированы, 9 тестов прошли, включая async FK/rollback; отдельный цикл Alembic upgrade/backfill/downgrade проверен на SQLite. Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, aiosqlite 0.22.1, Alembic 1.20.1, pytest 9.2.0 |
+| Исходные проверки | 2026-11-06: в прежней редакции 10 Python-блоков скомпилированы, 9 тестов прошли, включая async FK/rollback; отдельный цикл Alembic upgrade/backfill/downgrade проверен на SQLite. Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, aiosqlite 0.22.1, Alembic 1.20.1, pytest 9.2.0 |
+| Запросы и загрузка выполнены | 2026-11-06: 21 тест запросов, загрузки и пакетной обработки; Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, pytest 9.2.0, greenlet 3.5.6. [Условия сравнения](loading-lab.md) |
 
 ## Навигация
 
@@ -23,24 +42,11 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 - [Частые ошибки](#частые-ошибки)
 - [Источники](#источники)
 
-## Быстрый поиск
-
-| Задача | API | Где |
-| --- | --- | --- |
-| Модель, типы, defaults, constraints | `DeclarativeBase`, `Mapped`, `mapped_column` | [Модели](models-and-transactions.md#единая-схема-для-рецептов) |
-| CRUD и откат | `Session`, `session.begin()`, `rollback()` | [Транзакции](models-and-transactions.md#crud-транзакции-и-savepoint) |
-| 1:N, N:1, 1:1, N:M | `relationship`, `ForeignKey`, `Table` | [Полная схема](models-and-transactions.md#единая-схема-для-рецептов) |
-| WHERE/JOIN/CTE/CASE/UNION/EXISTS | `select`, `func`, `aliased` | [Запросы](queries.md) |
-| Избежать N+1 | `selectinload`, `joinedload`, `raiseload` | [Загрузка и большие выборки](queries.md#загрузка-и-большие-выборки) |
-| Async-сессия и атрибуты | `AsyncSession`, `AsyncAttrs`, `awaitable_attrs` | [Async](async-and-operations.md#асинхронная-сессия) |
-| UPSERT / FOR UPDATE / частичный индекс | Диалект PostgreSQL | [Компиляция PostgreSQL](queries.md#postgresql-компиляция-без-подключения) |
-| События, SQL-логи и время запроса | `event`, `logging`, `perf_counter` | [Наблюдение](async-and-operations.md#события-и-диагностика) |
-| Изменить схему | Alembic | [Миграции](async-and-operations.md#alembic-отдельный-учебный-проект) |
-
 ## Базовый уровень
 
-Установите пакеты в отдельное окружение: `python -m pip install 'sqlalchemy==2.1.8' pytest`.
-Для async добавьте `sqlalchemy[asyncio]`, `aiosqlite` и `pytest-asyncio`.
+Установите пакеты в отдельное окружение: `python -m pip install 'sqlalchemy[asyncio]==2.1.8' pytest`.
+Extra `asyncio` нужен общей модели с AsyncAttrs, даже для её синхронных рецептов.
+Для async добавьте `aiosqlite` и `pytest-asyncio`.
 
 | Компонент | Назначение |
 | --- | --- |
@@ -87,7 +93,9 @@ flowchart LR
 
 ## Продвинутый уровень
 
-[Запросы](queries.md) показывают eager loading, потоковую обработку и диалектные конструкции.
+[Запросы](queries.md) описывают SQL-выражения и отдельную компиляцию PostgreSQL.
+[Карточки загрузки](relationship-loading.md) помогают выбрать состав отношений.
+[Большие выборки](streaming.md) описывают пакетную обработку отдельно.
 `selectinload` обычно удобен для коллекций.
 Количество запросов зависит от размера пакета и диалекта.
 `joinedload` коллекции требует `Result.unique()`.
