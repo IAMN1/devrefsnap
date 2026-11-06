@@ -16,7 +16,8 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 | 1:N, N:1, 1:1, N:M | `relationship`, `ForeignKey`, `Table` | [Полная схема](models-and-transactions.md#единая-схема-для-рецептов) |
 | WHERE/JOIN/CTE/CASE/UNION/EXISTS | `select`, `func`, `aliased` | [Запросы](queries.md) |
 | Устранить слишком много запросов при чтении коллекций | N+1, lazy, `selectinload` | [Карточка N+1](relationship-loading.md#найти-n1) · [Самостоятельная программа](n-plus-one.md#подготовка-и-запуск) |
-| Загрузить коллекцию для списка | `selectinload` или `joinedload` | [Select-in](relationship-loading.md#загрузить-коллекции-через-selectinload) · [Joined и unique](relationship-loading.md#загрузить-коллекцию-через-joinedload) |
+| Выбрать загрузку коллекции по объёму и ограничениям | `selectinload` или `joinedload` | [Таблица решений](relationship-loading.md#выбрать-стратегию) · [Select-in](relationship-loading.md#загрузить-коллекции-через-selectinload) · [Joined и unique](relationship-loading.md#загрузить-коллекцию-через-joinedload) |
+| Загрузить автора каждого поста | Сравнить повторение полей и число SELECT | [Одиночная связь](relationship-loading.md#загрузить-одиночную-связь) |
 | Запретить неожиданный lazy SELECT | `raiseload` | [Карточка и ограничения](relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
 | Загрузить часть отношения своим JOIN | `contains_eager`, `populate_existing` | [Частичная коллекция](relationship-loading.md#загрузить-частичную-коллекцию-из-join) |
 | Обработать большую выборку | `yield_per`, `partitions` | [Пакеты и ограничения](streaming.md) |
@@ -96,9 +97,11 @@ flowchart LR
 [Запросы](queries.md) описывают SQL-выражения и отдельную компиляцию PostgreSQL.
 [Карточки загрузки](relationship-loading.md) помогают выбрать состав отношений.
 [Большие выборки](streaming.md) описывают пакетную обработку отдельно.
-`selectinload` обычно удобен для коллекций.
-Количество запросов зависит от размера пакета и диалекта.
-`joinedload` коллекции требует `Result.unique()`.
+Для полных коллекций списка начните с `selectinload`, если дополнительные SELECT допустимы.
+Для небольшой коллекции сравните `joinedload`, учитывая повторение полей родителя и обязательный `unique()`.
+Для одиночной связи сопоставьте число SELECT и повторение полей связанного объекта.
+[Таблица решений и ограничения запроса](relationship-loading.md#выбрать-стратегию) описывает условия выбора.
+Количество SELECT само по себе не доказывает ускорение.
 
 [Async и эксплуатация](async-and-operations.md) описывают сессию на задачу, события и миграции.
 Выбирайте размер пула, `max_overflow`, `pool_recycle` и `pool_pre_ping` по драйверу и лимитам БД.

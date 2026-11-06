@@ -10,6 +10,7 @@
 | --- | --- | --- |
 | Увидеть N+1 и сравнить eager loading | Содержимое и число SELECT в новых Session | [Полный файл тестов](#сравнить-стратегии-и-проверить-ограничения) |
 | Проверить отказ | Joined collection без unique; незагруженное отношение с raiseload | [Тот же файл](#сравнить-стратегии-и-проверить-ограничения) |
+| Проверить страницу родителей и необязательную связь | LIMIT сохраняет полные коллекции; LEFT OUTER JOIN сохраняет родителей без связи | [Тот же файл](#сравнить-стратегии-и-проверить-ограничения) |
 | Проверить неполную коллекцию | Фильтр JOIN, identity map и expire | [Тот же файл](#сравнить-стратегии-и-проверить-ограничения) |
 
 | Параметр | Значение |
@@ -36,6 +37,8 @@ Extra `asyncio` устанавливает greenlet, необходимый им
 Исходный `seed()` создаёт Alice с постами Python и SQL, а также Bob без постов.
 Фикстура создаёт отдельную БД для каждого теста.
 Некоторые сравнения добавляют ещё трёх пользователей без постов.
+Два поста ссылаются на одного автора Alice.
+Связь `User.manager` необязательна: руководитель Bob — Alice, а у Alice руководителя нет.
 Все сравниваемые загрузки начинают чтение в новой Session.
 Запись данных и создание таблиц не входят в счётчик SELECT.
 
@@ -133,15 +136,72 @@ def test_joined_collection_requires_unique(engine):
             result.all()
 
 
-@pytest.mark.parametrize("eager, expected_count", [(False, 2), (True, 1)])
-def test_scalar_author_and_identity_map(engine, eager, expected_count):
+@pytest.mark.parametrize("strategy, expected_count", [("lazy", 2), ("selectin", 2), ("joined", 1)])
+def test_scalar_author_and_identity_map(engine, strategy, expected_count):
     with count_selects(engine) as statements, Session(engine) as session:
         stmt = select(Post).order_by(Post.id)
-        if eager:
+        if strategy == "selectin":
+            stmt = stmt.options(selectinload(Post.author))
+        elif strategy == "joined":
             stmt = stmt.options(joinedload(Post.author))
         posts = session.scalars(stmt).all()
         assert [post.author.name for post in posts] == ["alice", "alice"]
         assert posts[0].author is posts[1].author
+    assert len(statements) == expected_count
+
+
+def test_joined_collection_sql_rows_repeat_parent(engine):
+    stmt = select(User).options(joinedload(User.posts)).order_by(User.id)
+    # Connection возвращает строки SQL без сборки ORM-объектов и без unique().
+    with engine.connect() as connection:
+        rows = connection.execute(stmt).mappings().all()
+    assert [row["name"] for row in rows] == ["alice", "alice", "bob"]
+    assert len(rows) == 3
+
+
+@pytest.mark.parametrize("loader, expected_count", [(selectinload, 2), (joinedload, 1)])
+def test_parent_limit_keeps_full_collection(engine, loader, expected_count):
+    with count_selects(engine) as statements, Session(engine) as session:
+        stmt = select(User).options(loader(User.posts)).order_by(User.id).limit(1)
+        result = session.scalars(stmt)
+        if loader is joinedload:
+            result = result.unique()
+        users = result.all()
+        assert [user.name for user in users] == ["alice"]
+        assert sorted(post.title for post in users[0].posts) == ["Python", "SQL"]
+    assert len(statements) == expected_count
+
+
+def test_explicit_join_limit_counts_rows_before_unique(engine):
+    with Session(engine) as session, session.begin():
+        bob = session.scalar(select(User).where(User.name == "bob"))
+        session.add(Post(title="Bob post", author=bob))
+    stmt = (
+        select(User).join(User.posts).options(selectinload(User.posts))
+        .order_by(User.id, Post.id)
+    )
+    with Session(engine) as session:
+        all_users = session.scalars(stmt).unique().all()
+        assert {user.name: sorted(post.title for post in user.posts) for user in all_users} == {
+            "alice": ["Python", "SQL"], "bob": ["Bob post"],
+        }
+    with Session(engine) as session:
+        users = session.scalars(stmt.limit(2)).unique().all()
+        # Лимит двух строк JOIN оставляет одного родителя с двумя постами.
+        assert [user.name for user in users] == ["alice"]
+        assert sorted(post.title for post in users[0].posts) == ["Python", "SQL"]
+
+
+@pytest.mark.parametrize("loader, expected_count", [(selectinload, 2), (joinedload, 1)])
+def test_optional_scalar_keeps_parents(engine, loader, expected_count):
+    with count_selects(engine) as statements, Session(engine) as session:
+        users = session.scalars(
+            select(User).options(loader(User.manager)).order_by(User.id)
+        ).all()
+        assert [(user.name, user.manager.name if user.manager else None) for user in users] == [
+            ("alice", None), ("bob", "alice"),
+        ]
+        assert users[1].manager is users[0]
     assert len(statements) == expected_count
 
 
@@ -220,7 +280,7 @@ def test_eager_collection_is_available_after_session_close(engine):
 ```
 
 Запустите `python -m pytest -q test_relationship_loading.py`.
-**Результат:** все проверки проходят.
+**Ожидаемый результат:** все проверки проходят.
 Тест после закрытия Session не выполняет commit и не вызывает expire.
 Если состояние истекло до закрытия, этот тест не гарантирует доступ к данным без Session.
 
@@ -234,11 +294,30 @@ def test_eager_collection_is_available_after_session_close(engine):
 | Alice и Bob | 3 SELECT | 2 SELECT | 1 SELECT |
 | Те же и три пользователя без постов | 6 SELECT | 2 SELECT | 1 SELECT |
 
-Для двух постов одного автора lazy many-to-one даёт два SELECT суммарно, а не три.
-Identity map переиспользует уже загруженного автора.
+Для одиночной связи `Post.author` тест сравнивает те же два поста одного автора в новых Session.
+Many-to-one означает, что многие посты могут ссылаться на одного автора.
+
+| Способ загрузки автора | SELECT вместе с чтением постов | Состав объектов |
+| --- | --- | --- |
+| Lazy | 2 | Два поста и один общий объект Alice |
+| Select-in | 2 | Те же объекты; автор прочитан отдельным SELECT |
+| Joined | 1 | Те же объекты; поля автора присутствуют в обеих строках SQL |
+
+Identity map — хранилище уже загруженных объектов по идентификатору внутри Session.
+Identity map переиспользует автора и при lazy-загрузке исключает второй SELECT для Alice.
+Это не устраняет повторение полей автора в SQL при joinedload.
+Тест `test_joined_collection_sql_rows_repeat_parent` отдельно показывает три строки SQL для двух пользователей.
+Две строки содержат Alice с её постами; третья сохраняет Bob без постов.
+Число строк SQL отличается от числа ORM-объектов, возвращённых после `unique()`.
+
+Тест страницы с `LIMIT 1` проверяет одного пользователя и оба его поста при обеих стратегиях.
+Отдельный тест явного JOIN показывает, почему `LIMIT 2` не гарантирует двух разных родителей.
+Тест `User.manager` проверяет сохранение Alice со значением `None` при обеих стратегиях.
+Без `unique()` чтение joinedload коллекции завершается `InvalidRequestError` в отдельном тесте.
 Вложенная загрузка comments даёт третий SELECT в отдельном тесте.
 Результаты относятся только к этим условиям и версиям.
 Они не измеряют ускорение, память и сетевой трафик приложения.
+Другие СУБД, составные ключи, блокировки и конкурентный доступ требуют отдельных проверок.
 
 ## Источники
 
