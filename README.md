@@ -25,7 +25,7 @@
 | pytest | [Тестирование](python/testing/pytest/README.md) | Актуализировано |
 | structlog | [Структурированные логи](python/logging/structlog/README.md) | Актуализировано |
 | uv | [Окружения и зависимости Python](python/tooling/uv/README.md) | Актуализировано |
-| FastAPI | [Веб-приложения и API](python/web/fastapi/README.md) | Актуализировано |
+| FastAPI | [Веб-приложения и API](python/web/fastapi/README.md), [подмена зависимости в тесте](python/web/fastapi/testing.md#подмена-зависимости) | Актуализировано |
 | Flask | [WSGI-приложения, factory и тесты](python/web/flask/README.md) | Добавлено |
 | Go | [Язык, конкурентность и HTTP](go/README.md) | Добавлено |
 | SQL | [Общий справочник SQL](databases/sql/README.md) | Актуализировано |
@@ -39,7 +39,7 @@
 | SOLID | [Пять принципов: до / после](architecture/solid.md) | Добавлено |
 | Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md) | Добавлено |
 
-[Проверка навигации и очередь улучшений](tasks/navigation-review.md) описывает результаты переработки Git, резервных копий и SQLAlchemy, а также очередь остальных задач.
+[Проверка навигации и очередь улучшений](tasks/navigation-review.md) описывает результаты переработки Git, резервных копий, SQLAlchemy и подмены FastAPI, а также очередь остальных задач.
 
 ## Как читать статусы и формат
 
