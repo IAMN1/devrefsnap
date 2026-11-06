@@ -1,18 +1,28 @@
-# Запросы и загрузка отношений
+# Запросы, JOIN и выражения SQL
 
 [Справочник](README.md) · [Общая схема](models-and-transactions.md#единая-схема-для-рецептов)
+
+| Задача | Приём | Пример |
+| --- | --- | --- |
+| Написать SELECT/JOIN/CTE | select, aliased, func | [Полный набор запросов](#select-join-подзапросы-и-cte) |
+| Устранить N+1 | Выбрать стратегию загрузки | [Карточки отношений](relationship-loading.md) |
+| Обработать много строк | yield_per и partitions | [Большие выборки](streaming.md) |
+| Проверить PostgreSQL-выражение без сервера | Компиляция выбранным диалектом | [PostgreSQL](#postgresql-компиляция-без-подключения) |
 
 **Уровень:** средний → продвинутый.
 Предпосылки: SQL JOIN/агрегация и Session.
 Сверено 2026-11-06 с SQLAlchemy 2.1.
-Выполнено 2026-11-06: 2 теста SQLite и компиляция четырёх выражений PostgreSQL.
+Выполнено 2026-11-06: один тест результатов SQLite и компиляция четырёх выражений PostgreSQL.
+Загрузка отношений и пакетная обработка проверены на связанных страницах.
 Окружение: Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, pytest 9.2.0.
 Файлы используют `demo_models.py`.
-Установите `sqlalchemy` и `pytest` в отдельное окружение.
+Установите `sqlalchemy[asyncio]` и `pytest` в отдельное окружение.
 PostgreSQL не запускался.
 
 - [SELECT, JOIN, подзапросы и CTE](#select-join-подзапросы-и-cte)
-- [Загрузка и большие выборки](#загрузка-и-большие-выборки)
+- [Проверки результатов](#проверить-результаты-запросов)
+- [Загрузка отношений](relationship-loading.md)
+- [Большие выборки](streaming.md)
 - [PostgreSQL: компиляция без подключения](#postgresql-компиляция-без-подключения)
 
 ## SELECT, JOIN, подзапросы и CTE
@@ -80,20 +90,16 @@ if __name__ == "__main__":
 `scalars()` оставляет первую колонку.
 Если нужны все выбранные значения, не применяйте `scalars()`.
 
-## Загрузка и большие выборки
+## Проверить результаты запросов
 
-Полный пример `test_queries.py` также служит исполняемым рецептом loader options.
-Тесты проверяют корректные строки.
-Тесты также проверяют запрет неожиданной lazy-загрузки.
+Полный `test_queries.py` проверяет строки, возвращаемые `query_report()`.
+Сохраните файл рядом с `demo_models.py` и `demo_queries.py`.
 
 <!-- example: sqlalchemy/test_queries.py -->
 ```python
-import pytest
-from sqlalchemy import select
-from sqlalchemy.exc import InvalidRequestError
-from sqlalchemy.orm import Session, contains_eager, joinedload, raiseload, selectinload
+from sqlalchemy.orm import Session
 
-from demo_models import Post, User, new_engine
+from demo_models import new_engine
 from demo_queries import query_report, seed
 
 
@@ -115,53 +121,18 @@ def test_query_results():
     finally:
         engine.dispose()
 
-
-def test_loaders_and_streaming():
-    engine = new_engine()
-    try:
-        with Session(engine) as session, session.begin():
-            seed(session)
-        with Session(engine) as session:
-            users = session.scalars(select(User).options(selectinload(User.posts)).order_by(User.id)).all()
-            assert [len(user.posts) for user in users] == [2, 0]
-        assert len(users[0].posts) == 2
-        with Session(engine) as session:
-            users = session.scalars(select(User).options(joinedload(User.posts)).order_by(User.id)).unique().all()
-            assert len(users) == 2
-        with Session(engine) as session:
-            user = session.scalar(select(User).where(User.name == "alice").options(raiseload(User.posts)))
-            with pytest.raises(InvalidRequestError):
-                _ = user.posts
-        with Session(engine) as session:
-            users = session.scalars(select(User).join(User.posts).where(Post.title == "Python").options(contains_eager(User.posts))).unique().all()
-            assert [post.title for post in users[0].posts] == ["Python"]
-        with Session(engine) as session:
-            result = session.scalars(select(User).order_by(User.id).execution_options(yield_per=1))
-            names = [user.name for batch in result.partitions(1) for user in batch]
-            assert names == ["alice", "bob"]
-    finally:
-        engine.dispose()
 ```
 
 Запустите `python -m pytest -q test_queries.py`.
-`selectinload` делает дополнительные SELECT для коллекций.
-`selectinload` не означает «весь граф одним запросом».
-`joinedload` одиночной связи обычно не размножает родительские строки.
-Для `joinedload` коллекций нужен `unique()`.
-`contains_eager` заполняет отношение из вашего JOIN.
-Фильтр может дать **частичную** коллекцию.
-Для уже загруженного объекта учитывайте identity map и `populate_existing`.
+Результат: один тест проходит.
+Каждый запуск создаёт отдельную SQLite в памяти.
 
-Для больших результатов не вызывайте `.all()`.
-Этот вызов снова соберёт весь результат в память.
-`yield_per` не совместим со всеми loader strategies/`unique()`.
-Проверяйте ограничения драйвера.
-`expire_all()` помечает атрибуты устаревшими.
-Метод не очищает сессию.
-Последующее чтение может добавить запросы.
-Не разделяйте общий Session между потоками.
+## Загрузка и большие выборки
 
-Источники: [SELECT/ORM](https://docs.sqlalchemy.org/en/21/orm/queryguide/select.html), [отношения и loader options](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html), [yield_per](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#fetching-large-result-sets-with-yield-per).
+Для N+1 и выбора loader откройте [карточки загрузки отношений](relationship-loading.md).
+Для чтения по частям откройте [большие выборки](streaming.md).
+Полные проверки отношений находятся в [loading-lab.md](loading-lab.md).
+Эти задачи вынесены отдельно, чтобы примеры SELECT не мешали выбору загрузки.
 
 ## PostgreSQL: компиляция без подключения
 

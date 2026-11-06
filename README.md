@@ -21,7 +21,7 @@
 | Типы Python | [Типы и операции](python/language/types/README.md) | Актуализировано |
 | Проектирование Python-проекта | [Решения, рабочий пакет и поставка](python/architecture/project-design/README.md) | Актуализировано |
 | Pydantic | [Валидация данных](python/validation/pydantic/README.md) | Актуализировано |
-| SQLAlchemy | [Доступ к БД из Python](python/databases/sqlalchemy/README.md) | Актуализировано |
+| SQLAlchemy | [Справочник](python/databases/sqlalchemy/README.md), [N+1 и загрузка](python/databases/sqlalchemy/relationship-loading.md) | Актуализировано |
 | pytest | [Тестирование](python/testing/pytest/README.md) | Актуализировано |
 | structlog | [Структурированные логи](python/logging/structlog/README.md) | Актуализировано |
 | uv | [Окружения и зависимости Python](python/tooling/uv/README.md) | Актуализировано |
@@ -39,7 +39,7 @@
 | SOLID | [Пять принципов: до / после](architecture/solid.md) | Добавлено |
 | Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md) | Добавлено |
 
-[Проверка навигации и очередь улучшений](tasks/navigation-review.md) описывает результаты переработки Git и резервных копий, а также редакторского обхода остальных задач.
+[Проверка навигации и очередь улучшений](tasks/navigation-review.md) описывает результаты переработки Git, резервных копий и SQLAlchemy, а также очередь остальных задач.
 
 ## Как читать статусы и формат
 

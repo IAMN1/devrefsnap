@@ -6,7 +6,9 @@
 Сверено 2026-11-06 с SQLAlchemy 2.1.
 Выполнено 2026-11-06: 4 теста страницы прошли на Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, pytest 9.2.0.
 Все примеры темы используют одну схему.
-Зависимости: `sqlalchemy`, `pytest`.
+Зависимости: `sqlalchemy[asyncio]`, `pytest`.
+Общая база наследует AsyncAttrs; импорт asyncio в SQLAlchemy 2.1 требует greenlet через extra `asyncio`.
+[Пояснение установки](https://docs.sqlalchemy.org/en/21/faq/installation.html#i-m-getting-an-error-about-greenlet-not-being-installed-when-i-try-to-use-asyncio).
 Примеры создают только учебную SQLite в памяти.
 
 ## Единая схема для рецептов
