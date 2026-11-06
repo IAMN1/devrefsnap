@@ -2,7 +2,12 @@
 
 [Справочник](README.md) · [Общая схема](models-and-transactions.md)
 
-**Уровень:** продвинутый. Сверено 2026-11-06 с SQLAlchemy 2.1 и Alembic. Выполнено 2026-11-06: async roundtrip/отношения, отказ при неверном FK с rollback и события проверены тремя тестами; миграция с backfill/NOT NULL/откатом проверена отдельно на временном файле SQLite. Python 3.14.7, SQLAlchemy 2.1.8, aiosqlite 0.22.1, SQLite 3.53.4, Alembic 1.20.1, pytest 9.2.0, pytest-asyncio 1.4.1.post1. Предпосылки: транзакции, async, различие изменения схемы и данных.
+**Уровень:** продвинутый.
+Сверено 2026-11-06 с SQLAlchemy 2.1 и Alembic.
+Выполнено 2026-11-06: async roundtrip/отношения, отказ при неверном FK с rollback и события проверены тремя тестами.
+Миграция с backfill/NOT NULL/откатом проверена отдельно на временном файле SQLite.
+Окружение: Python 3.14.7, SQLAlchemy 2.1.8, aiosqlite 0.22.1, SQLite 3.53.4, Alembic 1.20.1, pytest 9.2.0, pytest-asyncio 1.4.1.post1.
+Предпосылки: транзакции, async, различие изменения схемы и данных.
 
 - [Асинхронная сессия](#асинхронная-сессия)
 - [События и диагностика](#события-и-диагностика)
@@ -10,7 +15,10 @@
 
 ## Асинхронная сессия
 
-Установи `sqlalchemy[asyncio]`, `aiosqlite`, `pytest`, `pytest-asyncio`. Полный `demo_async.py`, остальные классы — из `demo_models.py` этой темы. Драйвер использует только SQLite в памяти.
+Установите `sqlalchemy[asyncio]`, `aiosqlite`, `pytest` и `pytest-asyncio`.
+Ниже приведён полный пример `demo_async.py`.
+Возьмите остальные классы из `demo_models.py` этой темы.
+Драйвер использует только SQLite в памяти.
 
 <!-- example: sqlalchemy/demo_async.py -->
 ```python
@@ -62,9 +70,18 @@ if __name__ == "__main__":
     print(asyncio.run(run()))
 ```
 
-`python demo_async.py` возвращает два списка `['Async Python']`. Первый показан через `AsyncAttrs.awaitable_attrs`, второй — через предварительную загрузку. Сессию/движок закрывай через контекст/finally, а в HTTP-приложении — через lifespan/[зависимости](../../web/fastapi/database.md). Для `asyncio.gather` каждой конкурентной задаче нужна отдельная сессия. Не включай sync-драйвер в `create_async_engine`.
+Запустите `python demo_async.py`.
+Результат содержит два списка `['Async Python']`.
+Первый список получен через `AsyncAttrs.awaitable_attrs`.
+Второй список получен через предварительную загрузку.
+Закрывайте сессию и движок через контекст/finally.
+В HTTP-приложении используйте lifespan/[зависимости](../../web/fastapi/database.md) для закрытия сессии и движка.
+Для `asyncio.gather` каждой конкурентной задаче нужна отдельная сессия.
+Не включайте sync-драйвер в `create_async_engine`.
 
-SQLite проверяет внешние ключи только после включения `PRAGMA foreign_keys=ON` на соединении. Как и sync-фабрика, async-фабрика включает его для каждого нового соединения, включая создание схемы; обработчик подключается к `engine.sync_engine`.
+SQLite проверяет внешние ключи только после включения `PRAGMA foreign_keys=ON` на соединении.
+Как и sync-фабрика, async-фабрика включает этот режим для каждого нового соединения, включая создание схемы.
+Обработчик подключается к `engine.sync_engine`.
 
 Полный `test_async.py`:
 
@@ -108,7 +125,9 @@ async def test_async_foreign_key_rejection_and_rollback():
 
 ## События и диагностика
 
-Полный `demo_observe.py` показывает engine event и session events; обработчики удаляются после работы, чтобы повторный запуск не удваивал их.
+Полный пример `demo_observe.py` показывает engine event и session events.
+Пример удаляет обработчики после работы.
+Поэтому повторный запуск не удваивает обработчики.
 
 <!-- example: sqlalchemy/demo_observe.py -->
 ```python
@@ -169,24 +188,39 @@ def test_observed_commit_and_insert():
     assert all(value >= 0 for value in elapsed)
 ```
 
-Запуск всех тестов темы: `python -m pytest -q -o asyncio_default_fixture_loop_scope=function`. Время здесь охватывает выполнение DBAPI cursor, не полный lifecycle HTTP-запроса и не все расходы ORM.
+Запустите все тесты темы: `python -m pytest -q -o asyncio_default_fixture_loop_scope=function`.
+Измеряемое время охватывает выполнение DBAPI cursor.
+Измерение не охватывает полный lifecycle HTTP-запроса или все расходы ORM.
 
 | Задача | Приём / ограничение |
 | --- | --- |
 | SQL-лог | `logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)` после настройки logging либо `create_engine(..., echo=True)` |
 | Посмотреть выражение | `str(stmt.compile(engine))`; это не EXPLAIN и не выполнение |
-| Session hooks | `before_commit`, `after_commit`, `after_rollback`; после commit не рассчитывай продолжить SQL в завершённой транзакции |
+| Session hooks | `before_commit`, `after_commit`, `after_rollback`. После commit не рассчитывайте продолжить SQL в завершённой транзакции |
 | Model hooks | `before_insert`, `before_update`, `load`; mapper events имеют ограничения на допустимые действия |
 | Параметризованный запрос | `select(User).where(User.id == bindparam("uid"))`, затем параметры отдельно |
 | Кэш | Встроенный cache компиляции; он не кэширует результаты и не является серверным prepare |
 
-Фрагменты таблицы предполагают импорты и модель из предыдущих примеров. SQL-логи могут содержать значения параметров; если они чувствительны, используй `hide_parameters=True` и соответствующую политику логирования. Для async события часто вешают на `engine.sync_engine` / sync Session, а не объявляют `async def` event handler. Профилирование нагрузки и подбор параметров пула не выполнялись.
+Фрагменты таблицы требуют импорты и модель из предыдущих примеров.
+SQL-логи могут содержать значения параметров.
+Если значения чувствительны, используйте `hide_parameters=True`.
+Применяйте соответствующую политику логирования.
+Для async обработчики событий часто подключают к `engine.sync_engine` / sync Session.
+В этом случае обработчик не объявляют как `async def`.
+Профилирование нагрузки и подбор параметров пула не выполнялись.
 
 Источники: [events](https://docs.sqlalchemy.org/en/21/core/event.html), [ORM events](https://docs.sqlalchemy.org/en/21/orm/events.html), [cache](https://docs.sqlalchemy.org/en/21/core/connections.html#sql-caching).
 
 ## Alembic: отдельный учебный проект
 
-Эта последовательность проверена 2026-11-06 на отдельной SQLite с синтетическим пользователем: init/autogenerate/upgrade/current/history, затем добавление verified, backfill, NOT NULL и downgrade с сохранением остальных полей. Зависимость: `alembic`. Создай отдельную пустую папку, скопируй туда `demo_models.py`; не указывай URL существующей пользовательской БД. Проверка SQLite не подтверждает миграцию других диалектов.
+Последовательность проверена 2026-11-06 на отдельной SQLite с синтетическим пользователем.
+Проверка охватила init/autogenerate/upgrade/current/history.
+Затем проверены добавление verified, backfill, NOT NULL и downgrade с сохранением остальных полей.
+Зависимость: `alembic`.
+Создайте отдельную пустую папку.
+Скопируйте туда `demo_models.py`.
+Не указывайте URL существующей пользовательской БД.
+Проверка SQLite не подтверждает миграцию других диалектов.
 
 Команды оболочки:
 
@@ -201,7 +235,8 @@ alembic init alembic
 sqlalchemy.url = sqlite:///training-migrations.db
 ```
 
-Фрагмент `alembic/env.py` **вместо** `target_metadata = None`; остальной сгенерированный файл сохраняется:
+Замените `target_metadata = None` фрагментом `alembic/env.py` ниже.
+Сохраните остальную часть сгенерированного файла:
 
 ```python
 from demo_models import Base
@@ -213,7 +248,12 @@ target_metadata = Base.metadata
 alembic revision --autogenerate -m "create training schema"
 ```
 
-Проверь сгенерированный кандидат. В этой схеме есть собственный `JSONDict`: если Alembic вывел `demo_models.JSONDict()`, добавь в модуль revision импорт `import demo_models`, иначе применение завершится `NameError`. Это часть ручной проверки autogenerate, не изменение `env.py`.
+Проверьте сгенерированный кандидат.
+В этой схеме есть собственный `JSONDict`.
+Если Alembic вывел `demo_models.JSONDict()`, добавьте в модуль revision импорт `import demo_models`.
+Без импорта применение завершится `NameError`.
+Этот шаг относится к ручной проверке autogenerate.
+Шаг не меняет `env.py`.
 
 ```bash
 alembic upgrade head
@@ -221,9 +261,19 @@ alembic current
 alembic history --verbose
 ```
 
-`revision` создаёт кандидат миграции; прочитай его перед выполнением. `upgrade` меняет структуру учебной БД. Autogenerate не обнаруживает все изменения и не понимает семантику переименований. Для следующего шага сначала отредактируй модель и создай новую revision.
+`revision` создаёт кандидат миграции.
+Прочитайте кандидат перед выполнением.
+`upgrade` меняет структуру учебной БД.
+Autogenerate не обнаруживает все изменения.
+Autogenerate не понимает семантику переименований.
+Для следующего шага сначала отредактируйте модель.
+Затем создайте новую revision.
 
-Пример **фрагмента** следующей revision: добавить nullable столбец, заполнить существующие строки, затем ужесточить ограничение через SQLite batch. Он требует `from alembic import op` и `import sqlalchemy as sa` в сгенерированном модуле; имена revision/down_revision берутся из реальной цепочки.
+Ниже приведён **фрагмент** следующей revision.
+Фрагмент добавляет nullable столбец.
+Затем фрагмент заполняет существующие строки и ужесточает ограничение через SQLite batch.
+Фрагмент требует `from alembic import op` и `import sqlalchemy as sa` в сгенерированном модуле.
+Возьмите имена revision/down_revision из реальной цепочки.
 
 ```python
 from alembic import op
@@ -249,6 +299,16 @@ alembic upgrade +1
 alembic downgrade -1
 ```
 
-`downgrade -1` применит обратную миграцию и может удалить столбец **вместе с данными**. Не запускай его только ради просмотра истории. Для конкретной revision укажи её настоящий id; значения вроде `abc123` — не готовые команды. Перед переносом на настоящую БД нужны резервная копия, проверка миграции/отката и план для ограничений конкретного диалекта. Async-вариант использует специальный шаблон `alembic init -t async alembic`; не оборачивай обычный `env.py` произвольным `AsyncEngine(...)`.
+`downgrade -1` применит обратную миграцию.
+Команда может удалить столбец **вместе с данными**.
+Не запускайте команду только ради просмотра истории.
+Для конкретной revision укажите её настоящий id.
+Значения вроде `abc123` — не готовые команды.
+Перед переносом на настоящую БД подготовьте резервную копию.
+Проверьте миграцию.
+Проверьте откат.
+Подготовьте план для ограничений конкретного диалекта.
+Async-вариант использует специальный шаблон `alembic init -t async alembic`.
+Не оборачивайте обычный `env.py` произвольным `AsyncEngine(...)`.
 
 Источники: [Alembic tutorial](https://alembic.sqlalchemy.org/en/latest/tutorial.html), [autogenerate](https://alembic.sqlalchemy.org/en/latest/autogenerate.html), [batch для SQLite](https://alembic.sqlalchemy.org/en/latest/batch.html), [async cookbook](https://alembic.sqlalchemy.org/en/latest/cookbook.html#using-asyncio-with-alembic).

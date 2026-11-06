@@ -9,11 +9,15 @@
 | Сверено с документацией | 2026-11-06, FastAPI 0.162.0, SQLAlchemy API 2.0, Pydantic v2 |
 | Выполнено | 2026-11-06: lifespan, запись/чтение sync/async SQLite, duplicate email → 409. Python 3.14.7, FastAPI 0.162.0, Pydantic 2.14.3, SQLAlchemy 2.1.8, aiosqlite 0.22.1; тесты использовали временные файлы |
 
-Оба примера самостоятельны. Не объединяй их `Base`, движки и фабрики сессий. Используется локальная SQLite с синтетическими данными; производственные подключения здесь не нужны.
+Оба примера самостоятельны.
+Не объединяйте `Base`, движки и фабрики сессий из разных примеров.
+Примеры используют локальную SQLite с синтетическими данными.
+Производственные подключения здесь не нужны.
 
 ## Синхронный SQLAlchemy
 
-Установи в отдельное окружение `fastapi==0.162.0`, `uvicorn[standard]`, `sqlalchemy`, `pydantic[email]`. Полный файл `db_app.py`:
+Установите в отдельное окружение `fastapi==0.162.0`, `uvicorn[standard]`, `sqlalchemy`, `pydantic[email]`.
+Сохраните полный пример в файле `db_app.py`:
 
 <!-- example: db_app.py -->
 ```python
@@ -99,15 +103,27 @@ curl -i -X POST http://127.0.0.1:8000/users -H 'Content-Type: application/json' 
 curl http://127.0.0.1:8000/users
 ```
 
-Ожидается `201` с `id`, затем список пользователей. Повтор того же email — `409`. Рецепт создаёт/пополняет `fastapi-sync.db` в папке запуска; повторный запуск сохраняет данные. Для чистого опыта используй новую учебную папку.
+Ожидается `201` с `id`.
+Следующий запрос возвращает список пользователей.
+Повтор того же email даёт `409`.
+Рецепт создаёт или пополняет `fastapi-sync.db` в папке запуска.
+Повторный запуск сохраняет данные.
+Для чистого опыта используйте новую учебную папку.
 
-`check_same_thread=False` снимает ограничение SQLite на поток использования соединения; он не делает `Session` безопасной для параллельного общего доступа. У каждого запроса своя сессия. Блокирующие операции находятся в `def`-обработчиках, которые FastAPI выполняет в пуле потоков. Синхронный `create_all` в lifespan допустим здесь для крошечной учебной базы; в приложении применяй миграции отдельным шагом.
+`check_same_thread=False` снимает ограничение SQLite на поток использования соединения.
+Этот параметр не делает `Session` безопасной для параллельного общего доступа.
+У каждого запроса своя сессия.
+Блокирующие операции находятся в `def`-обработчиках.
+FastAPI выполняет эти обработчики в пуле потоков.
+Синхронный `create_all` в lifespan допустим здесь для крошечной учебной базы.
+В приложении применяйте миграции отдельным шагом.
 
 Источники: [SQLAlchemy: Session и транзакции](https://docs.sqlalchemy.org/en/20/orm/session_basics.html), [FastAPI: зависимости с yield](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/), [Pydantic: чтение атрибутов объектов](https://docs.pydantic.dev/latest/concepts/models/#arbitrary-class-instances).
 
 ## Async SQLAlchemy и lifespan
 
-Установи дополнительно `sqlalchemy[asyncio]` и `aiosqlite`. Полный независимый файл `async_db_app.py`:
+Установите дополнительно `sqlalchemy[asyncio]` и `aiosqlite`.
+Сохраните полный независимый пример в файле `async_db_app.py`:
 
 <!-- example: async_db_app.py -->
 ```python
@@ -176,10 +192,23 @@ async def list_notes(session: Annotated[AsyncSession, Depends(get_session)]):
     return (await session.scalars(select(NoteDB).order_by(NoteDB.id))).all()
 ```
 
-Запуск: `uvicorn async_db_app:app --reload`. POST `/notes` с JSON `{"text":"Прочитать документацию"}` даёт `201`, GET `/notes` — список заметок. Файл `fastapi-async.db` создаётся в папке запуска.
+Запустите `uvicorn async_db_app:app --reload`.
+POST `/notes` с JSON `{"text":"Прочитать документацию"}` даёт `201`.
+GET `/notes` возвращает список заметок.
+Файл `fastapi-async.db` создаётся в папке запуска.
 
-До `yield` lifespan открывает/готовит ресурс, после `yield` закрывает. Здесь он заменяет прежние `@app.on_event("startup")` / `shutdown`. `session.begin()` фиксирует изменения при успешном выходе и откатывает их при исключении. Не разделяй один `AsyncSession` между одновременно работающими задачами. Драйвер и URL должны соответствовать async-движку; `async def` вокруг обычного синхронного драйвера не делает его неблокирующим.
+До `yield` lifespan открывает или готовит ресурс.
+После `yield` lifespan закрывает ресурс.
+Здесь lifespan заменяет прежние `@app.on_event("startup")` / `shutdown`.
+При успешном выходе `session.begin()` фиксирует изменения.
+При исключении `session.begin()` откатывает изменения.
+Не разделяйте один `AsyncSession` между одновременно работающими задачами.
+Драйвер и URL должны соответствовать async-движку.
+`async def` вокруг обычного синхронного драйвера не делает драйвер неблокирующим.
 
-Страница не реализует production-миграции, пул PostgreSQL, relationship lazy loading и восстановление БД: это самостоятельные задачи SQLAlchemy/Alembic. Старый пример с пакетом `databases` заменён одним SQLAlchemy API для sync/async; тот же принцип lifespan применим и к другим клиентам.
+Страница не реализует production-миграции, пул PostgreSQL, relationship lazy loading и восстановление БД.
+Это самостоятельные задачи SQLAlchemy/Alembic.
+Старый пример с пакетом `databases` заменён одним SQLAlchemy API для sync/async.
+Тот же принцип lifespan применим и к другим клиентам.
 
 Источники: [FastAPI: lifespan](https://fastapi.tiangolo.com/advanced/events/), [SQLAlchemy: async API](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html), [AsyncSession и конкурентные задачи](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html#using-asyncsession-with-concurrent-tasks).

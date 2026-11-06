@@ -2,7 +2,12 @@
 
 [Справочник](README.md) · [Основные модели](models.md)
 
-**Уровень:** средний → продвинутый. Предпосылки: generics, `Annotated`, переменные окружения; Core Schema нужна только для низкоуровневых расширений. Сверено 2026-11-06 с документацией Pydantic v2. Выполнено 2026-11-06: 4 теста страницы прошли на Python 3.14.7, Pydantic 2.14.3, pydantic-settings 2.16.2, FastAPI 0.162.0, HTTPX2 2.16.0, pytest 9.2.0. PaymentCardNumber, автоматическая миграция и численный benchmark не запускались.
+**Уровень:** средний → продвинутый.
+Предпосылки: generics, `Annotated`, переменные окружения.
+Core Schema нужна только для низкоуровневых расширений.
+Сверено 2026-11-06 с документацией Pydantic v2.
+Выполнено 2026-11-06: 4 теста страницы прошли на Python 3.14.7, Pydantic 2.14.3, pydantic-settings 2.16.2, FastAPI 0.162.0, HTTPX2 2.16.0, pytest 9.2.0.
+PaymentCardNumber, автоматическая миграция и численный benchmark не запускались.
 
 - [Generic, TypeAdapter и собственный тип](#generic-typeadapter-и-собственный-тип)
 - [Настройки приложения](#настройки-приложения)
@@ -11,7 +16,9 @@
 
 ## Generic, TypeAdapter и собственный тип
 
-Зависимости: `pydantic`, `pytest`. Полный `demo_advanced.py`; файл `demo_types.py` берётся с [предыдущей страницы](models.md#атрибуты-конфигурация-и-типы).
+Зависимости: `pydantic`, `pytest`.
+Сохраните полный пример как `demo_advanced.py`.
+Возьмите файл `demo_types.py` с [предыдущей страницы](models.md#атрибуты-конфигурация-и-типы).
 
 <!-- example: pydantic/demo_advanced.py -->
 ```python
@@ -64,7 +71,15 @@ if __name__ == "__main__":
     print(Article(slug="python-guide").model_dump_json())
 ```
 
-Ожидаются JSON страницы пользователей и `{"slug":"python-guide"}`. `TypeAdapter` создаётся один раз для повторного использования. Для простого slug достаточно `Annotated[str, Field(pattern=...)]`; отдельный класс показан для интеграций, которым нужен собственный Python-тип. Хук Core Schema чувствителен к обновлениям API: закрепи версию и проверяй JSON Schema/сериализацию, а не только создание объекта.
+Ожидаются JSON страницы пользователей и `{"slug":"python-guide"}`.
+Пример создаёт `TypeAdapter` один раз для повторного использования.
+Для простого slug достаточно `Annotated[str, Field(pattern=...)]`.
+Отдельный класс показан для интеграций, которым нужен собственный Python-тип.
+Хук Core Schema чувствителен к обновлениям API.
+Закрепите версию.
+Проверяйте JSON Schema.
+Проверяйте сериализацию.
+Одной проверки создания объекта недостаточно.
 
 Полный `test_advanced.py`:
 
@@ -97,7 +112,9 @@ def test_custom_type_validation_and_schema():
 
 ## Настройки приложения
 
-Зависимость: `pydantic-settings`. Полный `demo_settings.py` читает только переменные с учебным префиксом; он ничего не подключает к БД.
+Зависимость: `pydantic-settings`.
+Полный пример `demo_settings.py` читает только переменные с учебным префиксом.
+Пример не подключается к БД.
 
 <!-- example: pydantic/demo_settings.py -->
 ```python
@@ -137,11 +154,16 @@ def test_settings_environment_and_required_value(monkeypatch):
     assert "training-key" not in str(settings)
 ```
 
-Для отдельного учебного dotenv-файла передай `Settings(_env_file="training.env", _env_file_encoding="utf-8")`; значения окружения имеют приоритет над dotenv. Не полагайся на маскирование `SecretStr`, если сам вызываешь `get_secret_value()` и печатаешь результат. [Документация settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
+Для отдельного учебного dotenv-файла передайте `Settings(_env_file="training.env", _env_file_encoding="utf-8")`.
+Значения окружения имеют приоритет над dotenv.
+Если вы вызываете `get_secret_value()` и печатаете результат, не полагайтесь на маскирование `SecretStr`.
+[Документация settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
 
 ## Query-модель FastAPI
 
-Зависимости: `fastapi`, `httpx2`, `pytest`. Полный `demo_query.py`: `Query()` явно указывает, что модель заполняется из URL, а не из body.
+Зависимости: `fastapi`, `httpx2`, `pytest`.
+Ниже приведён полный пример `demo_query.py`.
+Вызов `Query()` явно задаёт заполнение модели из URL, а не из body.
 
 <!-- example: pydantic/demo_query.py -->
 ```python
@@ -181,7 +203,9 @@ def test_query_model():
         assert client.get("/items").status_code == 422
 ```
 
-Запусти `python -m pytest -q` из папки со всеми файлами темы. [Источник FastAPI](https://fastapi.tiangolo.com/tutorial/query-param-models/); остальные HTTP-задачи находятся в [его справочнике](../../web/fastapi/README.md).
+Запустите `python -m pytest -q` из папки со всеми файлами темы.
+[Источник FastAPI](https://fastapi.tiangolo.com/tutorial/query-param-models/).
+Остальные HTTP-задачи находятся в [справочнике FastAPI](../../web/fastapi/README.md).
 
 ## Миграция и производительность
 
@@ -194,8 +218,28 @@ def test_query_model():
 | `validator` / `root_validator` | `field_validator` / `model_validator` с пересмотром порядка и аргументов |
 | `BaseSettings` в pydantic | `pydantic_settings.BaseSettings` |
 
-Совместимый namespace — `pydantic.v1`, отдельный пакет `pydantic-v1` для этого не нужен. Автоматизация миграции — утилита `bump-pydantic`; запускай её в отдельной ветке и проверяй diff/тесты. Она не подтверждает сохранение поведения. Не смешивай v1/v2 модели внутри одной структуры без явно проверенного преобразования. На Python 3.14 старую v1-ветку не считай рабочим путём без проверки её ограничений.
+Совместимый namespace — `pydantic.v1`.
+Отдельный пакет `pydantic-v1` для этого не нужен.
+Для автоматизации миграции используйте утилиту `bump-pydantic`.
+Запускайте утилиту в отдельной ветке.
+Проверяйте diff.
+Запускайте тесты.
+Утилита не подтверждает сохранение поведения.
+Без явно проверенного преобразования не смешивайте v1/v2 модели внутри одной структуры.
+На Python 3.14 не считайте старую v1-ветку рабочим путём без проверки её ограничений.
 
-Для измерения сравнивай одинаковые данные и операции через `timeit.repeat`, отделяй построение `TypeAdapter` от повторной валидации, фиксируй версии/число повторов. `model_validate_json` часто избавляет от промежуточного `json.loads`, но выигрыш зависит от валидаторов и данных. `model_construct()` не гарантирует ускорение и пропускает проверки: например, `UserView.model_construct(id="wrong", name="Alice")` сохранит невалидный id. Это поясняющий фрагмент для `demo_types.py`, не рекомендуемый входной путь. Измерения производительности и автоматическая миграция здесь не выполнялись; численные обещания исходника удалены как неподкреплённые.
+Для измерения сравнивайте одинаковые данные и операции через `timeit.repeat`.
+Отделяйте построение `TypeAdapter` от повторной валидации.
+Фиксируйте версии.
+Фиксируйте число повторов.
+`model_validate_json` часто избавляет от промежуточного `json.loads`.
+Выигрыш зависит от валидаторов и данных.
+`model_construct()` не гарантирует ускорение.
+Метод пропускает проверки.
+Например, `UserView.model_construct(id="wrong", name="Alice")` сохранит невалидный id.
+Это поясняющий фрагмент для `demo_types.py`.
+Не используйте фрагмент как входной путь.
+Измерения производительности и автоматическая миграция здесь не выполнялись.
+Численные обещания исходника удалены как неподкреплённые.
 
 Источники: [свои типы](https://docs.pydantic.dev/latest/concepts/types/), [TypeAdapter](https://docs.pydantic.dev/latest/concepts/type_adapter/), [generic и create_model](https://docs.pydantic.dev/latest/concepts/models/), [migration guide и bump-pydantic](https://docs.pydantic.dev/latest/migration/), [performance](https://docs.pydantic.dev/latest/concepts/performance/).

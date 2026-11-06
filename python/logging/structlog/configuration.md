@@ -2,7 +2,13 @@
 
 [Справочник](README.md) · [Контекст и веб](context-and-web.md)
 
-**Уровень:** базовый → продвинутый. Предпосылки: словари, logging, обработка исключений. Сверено 2026-11-06 со structlog 26.1.0. Выполнено 2026-11-06: 5 тестов страницы прошли на Python 3.14.7, structlog 26.1.0, pytest 9.2.0, включая сохранённый exc_info вне except. Установи `structlog` и `pytest` в отдельное окружение; сохраняй все файлы темы рядом. Производительность под нагрузкой не измерялась.
+**Уровень:** базовый → продвинутый.
+Предпосылки: словари, logging, обработка исключений.
+Сверено 2026-11-06 со structlog 26.1.0.
+Выполнено 2026-11-06: 5 тестов страницы прошли на Python 3.14.7, structlog 26.1.0, pytest 9.2.0, включая сохранённый exc_info вне except.
+Установите `structlog` и `pytest` в отдельное окружение.
+Сохраняйте все файлы темы рядом.
+Производительность под нагрузкой не измерялась.
 
 - [Самостоятельная конфигурация](#самостоятельная-конфигурация)
 - [Интеграция со stdlib logging](#интеграция-со-stdlib-logging)
@@ -10,7 +16,9 @@
 
 ## Самостоятельная конфигурация
 
-Полный `demo_logging.py`. Renderer выбирается один раз; чувствительные поля маскируются рекурсивно по заданным именам.
+Ниже приведён полный пример `demo_logging.py`.
+Пример выбирает renderer один раз.
+Пример рекурсивно маскирует чувствительные поля по заданным именам.
 
 <!-- example: structlog/demo_logging.py -->
 ```python
@@ -73,9 +81,17 @@ if __name__ == "__main__":
         log.exception("calculation_failed")
 ```
 
-Запуск: `python demo_logging.py`. Результат — две JSON-строки; пароль заменён на `***`, во второй есть `exception` с traceback. Маскирование действует только на перечисленные **ключи**, не на произвольные строки, traceback или неизвестные контейнеры: не помещай секрет в `event`/текст исключения, ожидая автоматического обнаружения.
+Запустите `python demo_logging.py`.
+Результат — две JSON-строки.
+Пароль заменён на `***`.
+Во второй строке есть `exception` с traceback.
+Маскирование действует только на перечисленные **ключи**.
+Маскирование не обрабатывает произвольные строки, traceback или неизвестные контейнеры.
+Не помещайте секрет в `event` или текст исключения в расчёте на автоматическое обнаружение.
 
-Маскирование сохраняет тип tuple: служебный `exc_info`, сохранённый через `sys.exc_info()`, должен остаться кортежем, чтобы ConsoleRenderer восстановил traceback даже за пределами `except`.
+Маскирование сохраняет тип tuple.
+Служебный `exc_info`, сохранённый через `sys.exc_info()`, должен остаться кортежем.
+Тогда ConsoleRenderer восстановит traceback даже за пределами `except`.
 
 Полный `test_logging.py`:
 
@@ -149,7 +165,9 @@ def test_saved_exception_tuple_outside_except(output):
 
 ## Интеграция со stdlib logging
 
-Полный `demo_stdlib.py` настраивает только учебное имя logger. В приложении встрой такую конфигурацию в его штатную настройку, не очищай чужие handlers библиотечным импортом.
+Полный пример `demo_stdlib.py` настраивает только учебное имя logger.
+Встройте конфигурацию в штатную настройку приложения.
+Не очищайте чужие handlers библиотечным импортом.
 
 <!-- example: structlog/demo_stdlib.py -->
 ```python
@@ -211,7 +229,12 @@ def test_foreign_and_structlog_share_json_format():
         logging.getLogger("training").handlers.clear()
 ```
 
-Запуск: `python -m pytest -q test_logging.py test_stdlib.py`. В этой схеме финальный renderer находится в `ProcessorFormatter`; цепочка structlog заканчивается `wrap_for_formatter`. `foreign_pre_chain` обогащает обычные logging-записи, `remove_processors_meta` убирает служебные поля перед JSON. `get_logger`/`wrap_logger` возвращают structlog bound logger, даже если внутри лежит `logging.Logger`.
+Запустите `python -m pytest -q test_logging.py test_stdlib.py`.
+В этой схеме финальный renderer находится в `ProcessorFormatter`.
+Цепочка structlog заканчивается `wrap_for_formatter`.
+`foreign_pre_chain` обогащает обычные logging-записи.
+`remove_processors_meta` убирает служебные поля перед JSON.
+`get_logger`/`wrap_logger` возвращают structlog bound logger, даже если внутри лежит `logging.Logger`.
 
 ## Порядок и стоимость
 
@@ -225,10 +248,22 @@ def test_foreign_and_structlog_share_json_format():
 | `format_exc_info` | Преобразование исключения для текстового/JSON-вывода; ConsoleRenderer умеет собственное оформление |
 | `UnicodeDecoder` | Если в event dict реально приходят bytes |
 | `CallsiteParameterAdder` | FILENAME/FUNC_NAME/LINENO, когда оправдана дополнительная стоимость |
-| `JSONRenderer` / `KeyValueRenderer` / свой renderer | Последний шаг; возвращай формат, который принимает нижележащий logger |
+| `JSONRenderer` / `KeyValueRenderer` / свой renderer | Последний шаг. Возвращайте формат, который принимает нижележащий logger |
 
-Для своего renderer сигнатура — `(logger, method_name, event_dict)`; он должен осознанно сохранить нужные поля. Сборка строки только из event/level теряет остальные данные. Для другого JSON-encoder передай совместимый `serializer`, например `orjson.dumps` после установки orjson; это не `serializer=str`.
+Сигнатура своего renderer — `(logger, method_name, event_dict)`.
+Сохраните в renderer нужные поля.
+Сборка строки только из event/level теряет остальные данные.
+Для другого JSON-encoder передайте совместимый `serializer`.
+Например, после установки orjson можно передать `orjson.dumps`.
+Значение `serializer=str` для этого не подходит.
 
-Аргументы вычисляются **до** фильтра логгера: `log.debug("event", value=expensive())` уже вызовет expensive. В показанном filtering logger сначала проверь `log.is_enabled_for(logging.DEBUG)`. У stdlib BoundLogger доступен `isEnabledFor`; не переноси методы между wrapper-классами без проверки API. `cache_logger_on_first_use` задаётся один раз: повторяющийся keyword в одном вызове — синтаксическая ошибка. В тестах бери свежий логгер после перенастройки.
+Аргументы вычисляются **до** фильтра логгера.
+Поэтому `log.debug("event", value=expensive())` уже вызовет expensive.
+В показанном filtering logger сначала проверьте `log.is_enabled_for(logging.DEBUG)`.
+У stdlib BoundLogger доступен `isEnabledFor`.
+Не переносите методы между wrapper-классами без проверки API.
+Задавайте `cache_logger_on_first_use` один раз.
+Повторяющийся keyword в одном вызове — синтаксическая ошибка.
+После перенастройки берите в тестах свежий логгер.
 
 Источники: [конфигурация](https://www.structlog.org/en/stable/configuration.html), [processors/API](https://www.structlog.org/en/stable/api.html), [stdlib](https://www.structlog.org/en/stable/standard-library.html), [exceptions](https://www.structlog.org/en/stable/exceptions.html), [performance](https://www.structlog.org/en/stable/performance.html).
