@@ -8,7 +8,7 @@
 - [Go](go/README.md) — язык, стандартная библиотека, конкурентность и тестирование.
 - [Базы данных](databases/README.md) — SQL, PostgreSQL, SQLite и Redis.
 - [Операционные системы](systems/README.md) — Linux, оболочка и эксплуатационные команды.
-- [Архитектура](architecture/README.md) — общие принципы, SOLID и паттерны.
+- [Архитектура](architecture/README.md) — выбор по задаче, карточки SOLID, схемы и структуры пакетов.
 - [Инструменты разработки](tools/README.md) — Git и работа с Pull Requests на GitHub.
 - [Шаблоны](templates/README.md) — формат материалов; [правила работы](AGENTS.md).
 
@@ -33,9 +33,9 @@
 | Git | [Работа с репозиторием](tools/git/README.md) | Актуализировано |
 | GitHub Pull Requests | [Создание, ревью и слияние PR](tools/github-pull-requests/README.md) | Актуализировано |
 | Linux | [Оболочка, файлы, процессы и службы](systems/linux/README.md) | Добавлено |
-| Архитектурные принципы | [Границы, контракты и компромиссы](architecture/principles.md) | Добавлено |
-| SOLID | [Пять принципов и рабочие контракты](architecture/solid.md) | Добавлено |
-| Паттерны | [Архитектура и проектирование кода](architecture/patterns/README.md) | Добавлено |
+| Архитектурные принципы | [Карточки границ и компромиссов](architecture/principles.md), [проверки контрактов](architecture/contracts.md) | Добавлено |
+| SOLID | [Пять принципов: до / после](architecture/solid.md) | Добавлено |
+| Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md) | Добавлено |
 
 ## Как читать статусы и формат
 
