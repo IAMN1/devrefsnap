@@ -1,7 +1,7 @@
 # Фикстуры, данные и assertions
 
 Уровень: базовый и средний.
-Предпосылки: Python 3.14 и pytest 9 для точного повторения проверки.
+Предпосылки: Python 3.14.7 и pytest 9.2.0 для воспроизведения примеров.
 [К справочнику pytest](README.md).
 
 ## Полный учебный пример
@@ -156,9 +156,8 @@ def user_factory():
 Для дорогой подготовки используйте параметризованную fixture или indirect-передачу параметра.
 Не делайте реальный сетевой запрос только ради перебора входов.
 
-## Источники и проверка
+## Источники
 
 [Fixture scopes и teardown](https://docs.pytest.org/en/stable/how-to/fixtures.html),
 [parametrize](https://docs.pytest.org/en/stable/how-to/parametrize.html),
 [assertions](https://docs.pytest.org/en/stable/how-to/assert.html).
-Выполнено 2026-11-06: Python 3.14.7 / pytest 9.2.0, временный каталог и SQLite in-memory.

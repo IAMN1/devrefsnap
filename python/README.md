@@ -8,20 +8,20 @@ Git и GitHub находятся в [общих инструментах](../too
 
 ## Материалы
 
-| Тема | Содержание | Статус |
-| --- | --- | --- |
-| [Типы Python](language/types/README.md) | Типы, операции, копирование и хешируемость | Актуализировано |
-| [Проектирование проекта](architecture/project-design/README.md) | Решения, структура, рабочий пакет и поставка | Актуализировано |
-| [Pydantic](validation/pydantic/README.md) | Модели, валидация, сериализация и настройки | Актуализировано |
-| [SQLAlchemy](databases/sqlalchemy/README.md) | Модели, [N+1 и загрузка](databases/sqlalchemy/relationship-loading.md), запросы, транзакции, async и миграции | Актуализировано |
-| [pytest](testing/pytest/README.md) | Тесты, фикстуры, параметризация, mock и плагины | Актуализировано |
-| [structlog](logging/structlog/README.md) | Процессоры, контекст и интеграции | Актуализировано |
-| [uv](tooling/uv/README.md) | Окружения, зависимости, lock и автоматизация | Актуализировано |
-| [FastAPI](web/fastapi/README.md) | HTTP API, зависимости, БД, JWT и тесты | Актуализировано |
-| [Flask](web/flask/README.md) | Factory, Blueprint, конфигурация и WSGI | Добавлено |
+| Тема | Содержание |
+| --- | --- |
+| [Типы Python](language/types/README.md) | Типы, операции, копирование и хешируемость |
+| [Проектирование проекта](architecture/project-design/README.md) | Решения, структура, рабочий пакет и поставка |
+| [Pydantic](validation/pydantic/README.md) | Модели, валидация, сериализация и настройки |
+| [SQLAlchemy](databases/sqlalchemy/README.md) | Модели, [N+1 и загрузка](databases/sqlalchemy/relationship-loading.md), запросы, транзакции, async и миграции |
+| [pytest](testing/pytest/README.md) | Тесты, фикстуры, параметризация, mock и плагины |
+| [structlog](logging/structlog/README.md) | Процессоры, контекст и интеграции |
+| [uv](tooling/uv/README.md) | Окружения, зависимости, lock и автоматизация |
+| [FastAPI](web/fastapi/README.md) | HTTP API, зависимости, БД, JWT и тесты |
+| [Flask](web/flask/README.md) | Factory, Blueprint, конфигурация и WSGI |
 
 Материалы оформлены по [общему шаблону](../templates/cheat-sheet.md).
-Версии, результаты выполнения и границы проверки указаны в паспорте каждой темы.
+Версии API, зависимости и условия применения указаны в соответствующих темах.
 Общие принципы и паттерны находятся в [архитектуре](../architecture/README.md).
 Руководство по проектированию в этом разделе показывает применение принципов и паттернов к Python-проекту.
 

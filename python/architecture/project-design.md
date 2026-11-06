@@ -1,6 +1,6 @@
 # Проектирование Python-проекта
 
-Откройте [переработанное руководство](project-design/README.md).
+Откройте [руководство](project-design/README.md).
 Исходный материал разделён по самостоятельным задачам:
 
 - [Решения, структура и зависимости](project-design/structure-and-decisions.md).

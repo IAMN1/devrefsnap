@@ -109,8 +109,6 @@ def test_factory_instances_do_not_share_config():
 Проверьте очистку данных теста.
 [SQLite lifecycle](configuration-and-deployment.md#жизненный-цикл-соединения) содержит отдельный тест закрытия ресурса.
 
-## Источник и границы проверки
+## Источники
 
 [Testing Flask](https://flask.palletsprojects.com/en/stable/testing/).
-Выполнено 2026-11-06: Python 3.14.7, Flask 3.1.3, Werkzeug 3.1.9, pytest 9.2.0.
-Реальный WSGI-сервер, browser JavaScript, CSRF и production-деплой этим набором не проверялись.

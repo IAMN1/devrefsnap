@@ -5,9 +5,6 @@
 **Уровень:** средний → продвинутый.
 Предпосылки: generics, `Annotated`, переменные окружения.
 Core Schema нужна только для низкоуровневых расширений.
-Сверено 2026-11-06 с документацией Pydantic v2.
-Выполнено 2026-11-06: 4 теста страницы прошли на Python 3.14.7, Pydantic 2.14.3, pydantic-settings 2.16.2, FastAPI 0.162.0, HTTPX2 2.16.0, pytest 9.2.0.
-PaymentCardNumber, автоматическая миграция и численный benchmark не запускались.
 
 - [Generic, TypeAdapter и собственный тип](#generic-typeadapter-и-собственный-тип)
 - [Настройки приложения](#настройки-приложения)
@@ -16,7 +13,8 @@ PaymentCardNumber, автоматическая миграция и числен
 
 ## Generic, TypeAdapter и собственный тип
 
-Зависимости: `pydantic`, `pytest`.
+Для воспроизведения используйте Python 3.14.7.
+Выполните `python -m pip install 'pydantic==2.14.3' 'pytest==9.2.0' 'pydantic-settings==2.16.2' 'fastapi==0.162.0' 'httpx2==2.16.0'`.
 Сохраните полный пример как `demo_advanced.py`.
 Возьмите файл `demo_types.py` с [предыдущей страницы](models.md#атрибуты-конфигурация-и-типы).
 
@@ -239,7 +237,5 @@ def test_query_model():
 Например, `UserView.model_construct(id="wrong", name="Alice")` сохранит невалидный id.
 Это поясняющий фрагмент для `demo_types.py`.
 Не используйте фрагмент как входной путь.
-Измерения производительности и автоматическая миграция здесь не выполнялись.
-Численные обещания исходника удалены как неподкреплённые.
 
 Источники: [свои типы](https://docs.pydantic.dev/latest/concepts/types/), [TypeAdapter](https://docs.pydantic.dev/latest/concepts/type_adapter/), [generic и create_model](https://docs.pydantic.dev/latest/concepts/models/), [migration guide и bump-pydantic](https://docs.pydantic.dev/latest/migration/), [performance](https://docs.pydantic.dev/latest/concepts/performance/).

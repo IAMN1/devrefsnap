@@ -4,6 +4,7 @@
 Предпосылки: [demo_service.py](fixtures.md#полный-учебный-пример),
 pytest, pytest-mock и pytest-asyncio в одном окружении.
 [К справочнику pytest](README.md).
+Точные версии пакетов указаны в [среде примеров](configuration.md#среда-примеров).
 
 ## Проверить внешний контракт без сети
 
@@ -85,11 +86,9 @@ async def test_async_result(inbox):
   Этот импорт также не даёт безопасную тестовую БД.
 - Асинхронный HTTP-клиент не превращает синхронное WSGI-приложение в ASGI.
 
-## Источники и проверка
+## Источники
 
 [pytest-mock](https://pytest-mock.readthedocs.io/en/latest/usage.html),
 [monkeypatch](https://docs.pytest.org/en/stable/how-to/monkeypatch.html),
 [pytest-asyncio concepts](https://pytest-asyncio.readthedocs.io/en/stable/concepts.html),
 [pytest-django helpers](https://pytest-django.readthedocs.io/en/latest/helpers.html).
-Выполнено 2026-11-06: pytest 9.2.0, pytest-mock 3.17.0, pytest-asyncio 1.4.1.post1.
-Реальные Django-приложение, БД Django и внешние HTTP-интеграции не запускались.

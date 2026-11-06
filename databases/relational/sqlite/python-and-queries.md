@@ -6,9 +6,6 @@
 | --- | --- |
 | Уровни | Базовый — подключение/CRUD; средний — ограничения/индексы/транзакции |
 | Предпосылки | Python 3.14 со штатным sqlite3; SQLite 3.37+ для STRICT |
-| Сверено с документацией | 2026-11-06 |
-| Выполнено | 2026-11-06: Python 3.14.7 / SQLite 3.53.4; полный пример и SQL-функции; проверены FK/STRICT отказ, JOIN, RETURNING, cascade и rollback |
-| Не проверено | CLI, Node/JDBC/.NET и несколько конкурентных соединений |
 
 ## Полный пример: блог в памяти
 
@@ -223,7 +220,7 @@ EXCLUSIVE не является универсальным средством у
 - [Xerial SQLite JDBC](https://github.com/xerial/sqlite-jdbc) — драйвер для `jdbc:sqlite:...`. Одного DriverManager без драйвера недостаточно.
 - [Microsoft.Data.Sqlite](https://learn.microsoft.com/en-us/dotnet/standard/data/sqlite/) — откройте SqliteConnection. Освободите соединение через using.
 
-Эти драйверы здесь не запускались. Их версия SQLite может отличаться от Python и CLI.
+Версия SQLite в этих драйверах может отличаться от Python и CLI.
 
 ## Источники
 

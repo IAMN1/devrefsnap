@@ -45,7 +45,6 @@ Conventional Commits для заголовка — [соглашение про�
 ## Создать и посмотреть через CLI
 
 Справочные фрагменты предназначены для авторизованного `gh` в правильном репозитории.
-Фрагменты **не выполнялись**.
 Первые команды отправляют ветку и создают объект на GitHub:
 
 ```text
@@ -94,9 +93,7 @@ gh pr list
 `gh pr ready 123` меняет Draft на готовность к ревью.
 Наличие зелёного локального теста не заменяет обязательный серверный check.
 
-## Источники и границы проверки
+## Источники
 
 [GitHub PR quickstart](https://docs.github.com/en/pull-requests/get-started/pull-request-quickstart),
 [CLI create](https://cli.github.com/manual/gh_pr_create), [CLI checks](https://cli.github.com/manual/gh_pr_checks).
-Сверка с документацией: 2026-11-06.
-Создание PR, отправка ревью, изменение labels и запуск GitHub CI здесь не выполнялись.

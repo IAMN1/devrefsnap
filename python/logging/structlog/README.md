@@ -11,8 +11,6 @@ structlog собирает событие как словарь.
 | --- | --- |
 | API | structlog 26.1 |
 | Предпосылки | Python, словари, logging; для contextvars — конкурентные задачи |
-| Сверено с документацией | 2026-11-06, structlog stable 26.1.0 |
-| Выполнено | 2026-11-06: 8 Python-блоков скомпилированы, 7 тестов прошли, включая сохранённый exc_info вне except для JSON/console. Python 3.14.7, structlog 26.1.0, pytest 9.2.0; HTTP-интеграция — FastAPI 0.162.0, Starlette 1.10.0, HTTPX2 2.16.0 |
 
 ## Навигация
 
@@ -98,7 +96,7 @@ flowchart LR
 | --- | --- |
 | `with logger.bind(...)` | Используйте новый logger либо `with bound_contextvars(...)` |
 | `JSONRenderer(serializer=str)` | serializer должен кодировать весь event dict в JSON. Оставьте default или JSON-совместимый encoder |
-| `structlog.dev.lazy(...)` | Такого публичного API в проверенной ветке нет. Проверьте уровень до дорогого вычисления |
+| `structlog.dev.lazy(...)` | Такого публичного API в structlog 26.1 нет. Проверьте уровень до дорогого вычисления |
 | `StackInfoRenderer` считают только ERROR+ | Он реагирует на `stack_info=True`, не на уровень сам по себе |
 | `get_logger("name")` считают stdlib logger | Возвращается structlog proxy; stdlib-интеграцию определяет LoggerFactory |
 | Повторяют configure/handlers в middleware | Настройте один раз при старте. Иначе возможны дубли и несовместимые цепочки |

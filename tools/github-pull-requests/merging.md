@@ -42,7 +42,7 @@ GitHub rebase-and-merge не тождественен последователь
 Затем нужен `git commit`.
 Не обходите GitHub-проверки локальным merge и прямым push в защищённую base.
 
-Справочный CLI-фрагмент, **внешнее изменение, не выполнялся**:
+Справочный CLI-фрагмент изменяет состояние GitHub:
 
 ```text
 gh pr merge 123 --squash
@@ -96,11 +96,9 @@ git fetch --prune origin
 До повторной перезаписи выясните причину изменения.
 [Reflog](../git/history.md) помогает изучить локальные прежние состояния.
 
-## Источники и границы проверки
+## Источники
 
 [Merge methods](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github),
 [CLI merge](https://cli.github.com/manual/gh_pr_merge), [git merge](https://git-scm.com/docs/git-merge),
 [git branch](https://git-scm.com/docs/git-branch).
-Сверка: 2026-11-06.
-Слияния и удаления веток на GitHub не выполнялись.
 Синтетические Git-сценарии находятся [в теме Git](../git/README.md).
