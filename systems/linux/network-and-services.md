@@ -2,9 +2,10 @@
 
 Уровень: продвинутый. Предпосылки: Linux-система, понимание IP/HTTP и правил администрирования.
 [К справочнику Linux](README.md).
+[Найдите процесс по заданному порту](process-by-port.md#найти-tcp-listener): команды, вывод, права и namespace разобраны отдельно.
 
 Все команды этой страницы — справочные фрагменты.
-На macOS команды **не выполнялись**.
+Поиск процесса по порту выполнен в отдельном Linux-контейнере; [сценарий и границы](process-by-port.md) указаны отдельно.
 Проверяйте активные изменения на отдельной учебной Linux-системе с разрешением владельца.
 
 ## Сеть: сначала чтение состояния
@@ -14,7 +15,7 @@
 | Интерфейсы, iproute2 | `ip -brief address` | Адреса и состояние интерфейсов |
 | Маршрут, iproute2 | `ip route` | Таблица маршрутов текущего network namespace |
 | TCP listeners, iproute2 | `ss -lnt` | Прослушиваемые адреса/порты без DNS-подстановки |
-| Процессы listeners | `ss -lntp` | PID/имена при достаточных правах |
+| Процесс на TCP-порту 8000 | `ss -lntp 'sport = :8000'` | [PID, права и namespace](process-by-port.md#найти-tcp-listener) |
 | Resolver через NSS, glibc | `getent ahosts example.com` | Результат системного механизма разрешения имён |
 | HTTP/TLS, curl | `curl --fail-with-body --connect-timeout 5 --max-time 10 https://example.com` | HTTP-ответ с ограничением времени; требует внешней сети |
 
@@ -118,4 +119,5 @@ Arch, Alpine и другие системы имеют свои менеджер
 [journalctl](https://www.freedesktop.org/software/systemd/man/latest/journalctl.html),
 [Debian APT](https://manpages.debian.org/bookworm/apt/apt.8.en.html),
 [DNF](https://dnf.readthedocs.io/en/latest/command_ref.html).
-Сверка: 2026-11-06. Linux runtime, службы, пакетные менеджеры, SSH и внешняя сеть не тестировались.
+Сверка: 2026-11-06. Поиск процесса по порту проверен [отдельно](process-by-port.md).
+Остальные сетевые рецепты, службы, пакетные менеджеры, SSH и внешняя доступность приложений не тестировались.
