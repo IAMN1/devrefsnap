@@ -1,5 +1,7 @@
 # Инструменты разработки
 
+[Найти пример по задаче или синониму](../tasks/README.md#git-и-github) — Git, отмена изменений, ветки и Pull Requests.
+
 Инструменты, общие для проектов на разных языках: управление версиями и совместная работа.
 Инструменты экосистемы Python, включая [uv](../python/tooling/uv/README.md) и [pytest](../python/testing/pytest/README.md),
 размещены в [разделе Python](../python/README.md).

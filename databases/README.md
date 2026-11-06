@@ -1,5 +1,7 @@
 # Базы данных
 
+[Найти пример по задаче или синониму](../tasks/README.md#базы-данных-и-sql) — SQL, ORM, PostgreSQL, SQLite и Redis.
+
 SQL и особенности конкретных СУБД: запросы, структура данных и работа с самой базой.
 Библиотеки доступа к БД из Python находятся в [разделе Python](../python/README.md),
 в частности [SQLAlchemy](../python/databases/sqlalchemy/README.md).
