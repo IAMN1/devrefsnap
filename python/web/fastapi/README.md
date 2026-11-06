@@ -18,7 +18,7 @@ FastAPI строит HTTP API из аннотаций Python и моделей P
 | Время запроса и CORS | `@app.middleware`, `CORSMiddleware` | [Middleware](recipes.md#middleware-и-cors) |
 | Сессия на запрос, startup/shutdown | `yield`, `lifespan`, SQLAlchemy | [База данных](database.md) |
 | Проверить API синхронно/асинхронно | `TestClient`, `ASGITransport` | [Тестирование](testing.md) |
-| Подменить зависимость в тесте | `app.dependency_overrides` | [Карточка выбора](testing.md#подмена-зависимости) · [Полный тест](dependency-overrides.md#полный-файл-тестов) |
+| Проверить обработчик без вызова реальной зависимости | `app.dependency_overrides` | [Карточка выбора](testing.md#подмена-зависимости) · [Самостоятельная программа](dependency-overrides.md#минимальный-самостоятельный-пример) |
 | Проверить пароль и JWT | `pwdlib`, `PyJWT`, `OAuth2PasswordBearer` | [Аутентификация](authentication.md) |
 | Workers, контейнер, OpenAPI | Uvicorn, Docker, `app.openapi()` | [Запуск и деплой](deployment.md) |
 

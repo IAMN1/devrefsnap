@@ -80,7 +80,7 @@
 | Проверить пароль и защитить маршрут токеном | auth, authentication, JWT, bearer, OAuth2, 401 | [FastAPI: полный пример аутентификации](../python/web/fastapi/authentication.md#полный-пример) |
 | Выдать сессию БД на запрос и закрыть ресурсы | SQLAlchemy, Session, AsyncSession, yield, lifespan | [FastAPI: sync-сессия](../python/web/fastapi/database.md#синхронный-sqlalchemy) · [Async и lifespan](../python/web/fastapi/database.md#async-sqlalchemy-и-lifespan) |
 | Проверить ответ FastAPI и неверный ввод | TestClient, httpx2, integration test, 422 | [FastAPI: TestClient](../python/web/fastapi/testing.md#синхронный-testclient) |
-| Подменить зависимость FastAPI в тесте и восстановить прежние подмены | Depends, dependency_overrides, override, заглушка, fake | [Карточка подмены](../python/web/fastapi/testing.md#подмена-зависимости) · [Полный тест](../python/web/fastapi/dependency-overrides.md#полный-файл-тестов) |
+| Проверить обработчик FastAPI без вызова реальной зависимости | Depends, dependency_overrides, override, подмена, заглушка, fake | [Карточка подмены](../python/web/fastapi/testing.md#подмена-зависимости) · [Самостоятельная программа](../python/web/fastapi/dependency-overrides.md#минимальный-самостоятельный-пример) |
 | Запустить API в контейнере | deploy, Dockerfile, Uvicorn, production | [FastAPI: контейнер](../python/web/fastapi/deployment.md#контейнер-для-минимального-приложения) |
 | Создать Flask-приложение и сгруппировать маршруты | app factory, create_app, Blueprint, jsonify | [Flask: полное приложение](../python/web/flask/application.md#полное-приложение) |
 | Проверить Flask-ответ и отказ без сервера | test_client, request context, 400, 404 | [Flask: полный набор проверок](../python/web/flask/testing.md#полный-набор-проверок) |
