@@ -162,6 +162,8 @@
 | Различить pipeline, транзакцию и optimistic locking | MULTI, EXEC, WATCH, atomic, атомарность | [Redis: механизмы](../databases/non-relational/redis/transactions-and-messaging.md#атомарность-транзакция-и-pipeline) · [Конфликт и ошибка](../databases/non-relational/redis/transactions-and-messaging.md#полный-пример-конфликт-и-ошибка-команды) |
 | Выбрать Pub/Sub или Streams и подтвердить сообщение | queue, stream, consumer group, XACK, доставка | [Redis: stream и Pub/Sub](../databases/non-relational/redis/transactions-and-messaging.md#полный-пример-stream-и-pubsub) |
 | Проверить сохранность и восстановление Redis | persistence, RDB, AOF, backup, restore | [Redis: сохранность и восстановление](../databases/non-relational/redis/operations.md#сохранность-и-восстановление) |
+| Создать RDB-копию Redis и восстановить в другом экземпляре | backup, restore, dump.rdb, BGSAVE, бэкап, бекап | [Карточка RDB](../databases/non-relational/redis/operations.md#создать-и-восстановить-rdb-копию) · [Полный пример](../databases/non-relational/redis/backup-and-restore.md#полный-пример) |
+| Проверить значения и сроки ключей после восстановления Redis | TTL, PTTL, PEXPIRETIME, expire, истечение | [Результат восстановления](../databases/non-relational/redis/backup-and-restore.md#проверить-результат) |
 | Найти расход памяти и медленные команды | memory, eviction, INFO, SLOWLOG, latency | [Redis: память и наблюдение](../databases/non-relational/redis/operations.md#память-и-наблюдение) |
 
 ## Linux и оболочка
