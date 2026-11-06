@@ -1,14 +1,17 @@
 # Моки и асинхронные тесты
 
-Уровень: продвинутый. Предпосылки: [demo_service.py](fixtures.md#полный-учебный-пример),
+Уровень: продвинутый.
+Предпосылки: [demo_service.py](fixtures.md#полный-учебный-пример),
 pytest, pytest-mock и pytest-asyncio в одном окружении.
 [К справочнику pytest](README.md).
 
 ## Проверить внешний контракт без сети
 
-Сохрани файл рядом с `demo_service.py`. Запуск:
-`python -m pytest -q test_async_mock.py --asyncio-mode=strict`.
-Полный пример; никаких HTTP-запросов нет, адаптер заменяется в модуле, который его использует.
+Сохраните файл рядом с `demo_service.py`.
+Запустите `python -m pytest -q test_async_mock.py --asyncio-mode=strict`.
+Ниже приведён полный пример.
+Пример не выполняет HTTP-запросы.
+Пример заменяет адаптер в модуле, который использует этот адаптер.
 
 <!-- example: pytest/test_async_mock.py -->
 ```python
@@ -54,25 +57,32 @@ async def test_async_result(inbox):
     assert await demo_service.uppercase(value) == "HELLO"
 ```
 
-Ожидается **4 passed**. Fixture освобождает/проверяет своё состояние и при исключении в тесте.
-`mocker` автоматически снимает подмены; `monkeypatch` восстанавливает изменённое окружение после теста.
+Ожидается **4 passed**.
+После теста fixture проверяет, что очередь пуста.
+Проверка выполняется также при исключении в тесте.
+`mocker` автоматически снимает подмены.
+`monkeypatch` восстанавливает изменённое окружение после теста.
 Проверка конкретного вызова уместна на границе адаптера, где аргумент является частью контракта.
 Подмена каждого внутреннего метода делает тест хрупким и скрывает реальные интеграционные ошибки.
 
 ## Async-фикстуры и event loop
 
-В strict mode `@pytest.mark.asyncio` обозначает тест, а async fixture оформляется
-`@pytest_asyncio.fixture`. В auto mode плагин сам принимает asyncio-тесты/фикстуры;
-при нескольких async-плагинах явный strict mode помогает разделить владение.
-Не переиспользуй объект, привязанный к закрытому loop. Scope fixture и `loop_scope` выбирают
-согласованно; для простых изолированных тестов оставляй function.
-`asyncio.run()` внутри уже работающего async-теста не нужен и вызовет ошибку.
+В strict mode `@pytest.mark.asyncio` обозначает тест.
+Оформляйте async fixture через `@pytest_asyncio.fixture`.
+В auto mode плагин сам принимает asyncio-тесты и фикстуры.
+При нескольких async-плагинах явный strict mode помогает разделить владение.
+Не переиспользуйте объект, привязанный к закрытому loop.
+Выбирайте scope fixture и `loop_scope` согласованно.
+Для простых изолированных тестов оставляйте function.
+`asyncio.run()` внутри уже работающего async-теста не нужен.
+Вызов приведёт к ошибке.
 
 ## Тестирование веб-приложений
 
-- Flask: отдельные fixture `app` и `client = app.test_client()`; [полный пример](../../web/flask/testing.md).
-- Django: используй `pytest-django`, настройки проекта и его fixture `client`/`db`;
-  один импорт `django.test.Client` не настраивает Django и не даёт безопасную тестовую БД.
+- Flask: создайте отдельные fixture `app` и `client = app.test_client()`. [Полный пример](../../web/flask/testing.md).
+- Django: используйте `pytest-django`, настройки проекта и его fixture `client`/`db`.
+  Один импорт `django.test.Client` не настраивает Django.
+  Этот импорт также не даёт безопасную тестовую БД.
 - Асинхронный HTTP-клиент не превращает синхронное WSGI-приложение в ASGI.
 
 ## Источники и проверка
@@ -81,5 +91,5 @@ async def test_async_result(inbox):
 [monkeypatch](https://docs.pytest.org/en/stable/how-to/monkeypatch.html),
 [pytest-asyncio concepts](https://pytest-asyncio.readthedocs.io/en/stable/concepts.html),
 [pytest-django helpers](https://pytest-django.readthedocs.io/en/latest/helpers.html).
-Выполнено 2026-11-06: pytest 9.2.0, pytest-mock 3.17.0, pytest-asyncio 1.4.1.post1;
-реальные Django-приложение, БД Django и внешние HTTP-интеграции не запускались.
+Выполнено 2026-11-06: pytest 9.2.0, pytest-mock 3.17.0, pytest-asyncio 1.4.1.post1.
+Реальные Django-приложение, БД Django и внешние HTTP-интеграции не запускались.

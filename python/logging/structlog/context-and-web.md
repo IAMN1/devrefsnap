@@ -2,7 +2,13 @@
 
 [Справочник](README.md) · [Конфигурация](configuration.md)
 
-**Уровень:** средний → продвинутый. Предпосылки: bind, contextvars, async и middleware. Сверено 2026-11-06 со structlog 26.1.0. Выполнено 2026-11-06: async-изоляция и FastAPI success/error проверены двумя тестами на Python 3.14.7, structlog 26.1.0, FastAPI 0.162.0, Starlette 1.10.0, HTTPX2 2.16.0, pytest 9.2.0, pytest-asyncio 1.4.1.post1. Django-проект не запускался. Все файлы используют `demo_logging.py` с соседней страницы.
+**Уровень:** средний → продвинутый.
+Предпосылки: bind, contextvars, async и middleware.
+Сверено 2026-11-06 со structlog 26.1.0.
+Выполнено 2026-11-06: async-изоляция и FastAPI success/error проверены двумя тестами.
+Окружение: Python 3.14.7, structlog 26.1.0, FastAPI 0.162.0, Starlette 1.10.0, HTTPX2 2.16.0, pytest 9.2.0, pytest-asyncio 1.4.1.post1.
+Django-проект не запускался.
+Все файлы используют `demo_logging.py` с соседней страницы.
 
 - [Локальный и контекстный bind](#локальный-и-контекстный-bind)
 - [FastAPI: граница запроса](#fastapi-граница-запроса)
@@ -10,9 +16,15 @@
 
 ## Локальный и контекстный bind
 
-`log.bind()` возвращает новый logger. Для временного общего контекста используй `bound_contextvars`, который восстанавливает прежние значения. `clear_contextvars()` нужен на границе новой работы, чтобы не унаследовать поля прошлого запроса.
+`log.bind()` возвращает новый logger.
+Для временного общего контекста используйте `bound_contextvars`.
+Контекстный менеджер восстанавливает прежние значения.
+На границе новой работы вызывайте `clear_contextvars()`.
+Этот вызов предотвращает наследование полей прошлого запроса.
 
-Полный `demo_context.py`; зависимости: `structlog`, для тестов `pytest`, `pytest-asyncio`.
+Ниже приведён полный пример `demo_context.py`.
+Зависимость: `structlog`.
+Для тестов нужны `pytest` и `pytest-asyncio`.
 
 <!-- example: structlog/demo_context.py -->
 ```python
@@ -68,11 +80,21 @@ async def test_task_context_isolation_and_cleanup():
     assert "request_id" not in events[-1]
 ```
 
-Ожидаются независимые item_id, общий request_id внутри задач и отсутствие обоих полей снаружи. Порядок событий **между** задачами не фиксируется. Прежний `structlog.threadlocal` устарел; для новых примеров используй contextvars. В гибридном sync/async приложении контексты могут быть изолированы: изменение из синхронной зависимости не обязано вернуться в async middleware. Проверяй фактический путь, не обещай автоматическое распространение во все потоки.
+Внутри задач ожидаются независимые item_id и общий request_id.
+Снаружи ожидается отсутствие обоих полей.
+Порядок событий **между** задачами не фиксируется.
+Прежний `structlog.threadlocal` устарел.
+Для новых примеров используйте contextvars.
+В гибридном sync/async приложении контексты могут быть изолированы.
+Изменение из синхронной зависимости не обязано вернуться в async middleware.
+Проверяйте фактический путь.
+Не обещайте автоматическое распространение во все потоки.
 
 ## FastAPI: граница запроса
 
-Полный `demo_web.py`; зависимости: `fastapi`, `httpx2`, `structlog`. Используется ASGI middleware, чтобы не добавлять ограничения распространения contextvars от BaseHTTPMiddleware.
+Ниже приведён полный пример `demo_web.py`.
+Зависимости: `fastapi`, `httpx2`, `structlog`.
+Пример использует ASGI middleware, чтобы не добавлять ограничения распространения contextvars от BaseHTTPMiddleware.
 
 <!-- example: structlog/demo_web.py -->
 ```python
@@ -164,13 +186,23 @@ def test_request_context_and_failure():
     assert "RuntimeError" in failed[0]["exception"]
 ```
 
-Запуск всех тестов темы: `python -m pytest -q -o asyncio_default_fixture_loop_scope=function`. Для ручного сервера создай конфигурацию логирования перед запуском приложения: `configure_logging()` из `demo_logging`; не делай это заново для каждого запроса. `response_started` означает отправку заголовков, `request_completed` — возврат ASGI-приложения; смысл этих событий различается для streaming. Необработанная ошибка может получить ответ `500` от внешнего ServerErrorMiddleware после очистки этого контекста.
+Запустите все тесты темы: `python -m pytest -q -o asyncio_default_fixture_loop_scope=function`.
+Для ручного сервера настройте логирование перед запуском приложения через `configure_logging()` из `demo_logging`.
+Не повторяйте настройку для каждого запроса.
+`response_started` означает отправку заголовков.
+`request_completed` означает возврат ASGI-приложения.
+При streaming смысл этих событий различается.
+Необработанная ошибка может получить ответ `500` от внешнего ServerErrorMiddleware после очистки этого контекста.
 
 ## Django: подключение middleware
 
-Этот вариант **сверен с документацией, но Django-проект не запускался**. Подключи стандартную интеграцию через `LOGGING`/`ProcessorFormatter` и цепочку `wrap_for_formatter`, как в [проверенном stdlib-рецепте](configuration.md#интеграция-со-stdlib-logging). Не вызывай настройку logging на каждый запрос.
+Этот вариант **сверен с документацией, но Django-проект не запускался**.
+Подключите стандартную интеграцию через `LOGGING`/`ProcessorFormatter` и цепочку `wrap_for_formatter`, как в [проверенном stdlib-рецепте](configuration.md#интеграция-со-stdlib-logging).
+Не вызывайте настройку logging на каждый запрос.
 
-Фрагмент модуля middleware для синхронного Django-приложения; в `MIDDLEWARE` ставится после AuthenticationMiddleware, если нужен `request.user`. Остальные settings/URL проекта здесь не определяются.
+Ниже приведён фрагмент модуля middleware для синхронного Django-приложения.
+Если нужен `request.user`, поставьте middleware в `MIDDLEWARE` после AuthenticationMiddleware.
+Остальные settings/URL проекта здесь не определяются.
 
 ```python
 from uuid import uuid4
@@ -197,6 +229,10 @@ class StructlogRequestMiddleware:
             clear_contextvars()
 ```
 
-Не обещай ловить все ошибки Django одним `except` вокруг get_response: framework может преобразовать исключение в HTTP-ответ раньше. Для traceback настрой обработку исключений/framework logging отдельно. Для async middleware реализуй соответствующий протокол, а не вызывай этот синхронный класс напрямую из event loop.
+Не рассчитывайте перехватить все ошибки Django одним `except` вокруг get_response.
+Framework может преобразовать исключение в HTTP-ответ раньше.
+Для traceback настройте обработку исключений/framework logging отдельно.
+Для async middleware реализуйте соответствующий протокол.
+Не вызывайте этот синхронный класс напрямую из event loop.
 
 Источники: [structlog contextvars](https://www.structlog.org/en/stable/contextvars.html), [async logging API](https://www.structlog.org/en/stable/api.html), [Starlette ASGI middleware и ограничения BaseHTTPMiddleware](https://starlette.dev/middleware/), [Django middleware](https://docs.djangoproject.com/en/6.0/topics/http/middleware/).

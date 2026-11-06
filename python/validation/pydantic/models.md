@@ -2,11 +2,18 @@
 
 [Справочник](README.md) · [Расширенные задачи](advanced.md)
 
-**Уровень:** базовый → средний. **Предпосылки:** классы, типы, Decimal и JSON. Сверено 2026-11-06 с Pydantic v2. Выполнено 2026-11-06: 16 тестов страницы прошли на Python 3.14.7, Pydantic 2.14.3, email-validator 2.3.0, pytest 9.2.0; timestamp-тесты также прошли при TZ=UTC и Europe/Moscow. Все файлы ниже помещаются в одну учебную папку. Установи `pydantic[email]` и `pytest`.
+**Уровень:** базовый → средний.
+**Предпосылки:** классы, типы, Decimal и JSON.
+Сверено 2026-11-06 с Pydantic v2.
+Выполнено 2026-11-06: 16 тестов страницы прошли на Python 3.14.7, Pydantic 2.14.3, email-validator 2.3.0, pytest 9.2.0.
+Timestamp-тесты также прошли при TZ=UTC и Europe/Moscow.
+Поместите все файлы ниже в одну учебную папку.
+Установите `pydantic[email]` и `pytest`.
 
 ## Модели, валидация и JSON
 
-Полный `demo_models.py`. Вход пользователя и публичный вывод намеренно разделены; пароль не возвращается.
+Полный пример `demo_models.py` разделяет вход пользователя и публичный вывод.
+Пример не возвращает пароль.
 
 <!-- example: pydantic/demo_models.py -->
 ```python
@@ -85,9 +92,20 @@ if __name__ == "__main__":
     print(product.model_dump(mode="json"))
 ```
 
-Запуск: `python demo_models.py`. Результат: JSON пользователя без пароля; у товара `final_price` равна `"0"`. `model_dump()` сохраняет Decimal, `mode="json"` делает строковое представление JSON-совместимым. Для выборочного вывода доступны `include`, `exclude`, `exclude_unset`, `exclude_none`; они не меняют правила входа. Сериализация с исключёнными обязательными полями не обязана проходить обратную проверку той же входной моделью.
+Запустите `python demo_models.py`.
+Результат содержит JSON пользователя без пароля.
+У товара `final_price` равна `"0"`.
+`model_dump()` сохраняет Decimal.
+Параметр `mode="json"` делает строковое представление JSON-совместимым.
+Для выборочного вывода используйте `include`, `exclude`, `exclude_unset` или `exclude_none`.
+Эти параметры не меняют правила входа.
+Сериализация с исключёнными обязательными полями не обязана проходить обратную проверку той же входной моделью.
 
-`created_at` требует timezone через `AwareDatetime`: значение без смещения отвергается, а `2026-11-06T12:00:00+03:00` сериализуется как `2026-11-06T09:00:00Z`. Преобразование не использует локальную timezone машины и выводит точность до секунды.
+Поле `created_at` требует timezone через `AwareDatetime`.
+Модель отвергает значение без смещения.
+Значение `2026-11-06T12:00:00+03:00` сериализуется как `2026-11-06T09:00:00Z`.
+Преобразование не использует локальную timezone машины.
+Вывод имеет точность до секунды.
 
 Полный `test_models.py`:
 
@@ -147,7 +165,8 @@ def test_recursive_model_and_independent_lists():
 
 ## Атрибуты, конфигурация и типы
 
-Полный `demo_types.py`: ORM-подобные объекты читаются без подключения БД. Для настоящего SQLAlchemy см. [его рецепты](../../databases/sqlalchemy/README.md).
+Полный пример `demo_types.py` читает ORM-подобные объекты без подключения БД.
+Для настоящего SQLAlchemy используйте [его рецепты](../../databases/sqlalchemy/README.md).
 
 <!-- example: pydantic/demo_types.py -->
 ```python
@@ -242,6 +261,12 @@ def test_scalar_types():
         Payload.model_validate({**data, "score": float("inf")})
 ```
 
-Запуск всех тестов страницы: `python -m pytest -q test_models.py test_types.py`. Ожидаются успешная проверка и отказы на указанных невалидных значениях. Телефон можно ограничить `Field(pattern=r'^\+?[1-9][0-9]{1,14}$')`, но такой синтаксический шаблон не подтверждает существование номера. `PaymentCardNumber` для новых примеров берётся из `pydantic_extra_types.payment` после установки `pydantic-extra-types`; не логируй платёжные данные ради проверки типа.
+Запустите все тесты страницы: `python -m pytest -q test_models.py test_types.py`.
+Ожидается успешная проверка допустимых значений.
+Для указанных невалидных значений ожидаются отказы.
+Телефон можно ограничить `Field(pattern=r'^\+?[1-9][0-9]{1,14}$')`.
+Этот синтаксический шаблон не подтверждает существование номера.
+После установки `pydantic-extra-types` импортируйте `PaymentCardNumber` для новых примеров из `pydantic_extra_types.payment`.
+Не логируйте платёжные данные ради проверки типа.
 
 Источники: [валидаторы](https://docs.pydantic.dev/latest/concepts/validators/), [сериализаторы](https://docs.pydantic.dev/latest/concepts/serialization/), [ConfigDict](https://docs.pydantic.dev/latest/api/config/), [стандартные типы](https://docs.pydantic.dev/latest/api/standard_library_types/), [PaymentCardNumber](https://docs.pydantic.dev/latest/api/pydantic_extra_types_payment/).

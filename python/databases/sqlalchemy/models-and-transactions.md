@@ -2,7 +2,12 @@
 
 [Справочник](README.md) · [Запросы](queries.md) · [Async и операции](async-and-operations.md)
 
-**Уровень:** базовый → средний, savepoint и custom type — продвинутый. Сверено 2026-11-06 с SQLAlchemy 2.1. Выполнено 2026-11-06: 4 теста страницы прошли на Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, pytest 9.2.0. Все примеры темы используют одну схему; зависимости: `sqlalchemy`, `pytest`. Создаётся только учебная SQLite в памяти.
+**Уровень:** базовый → средний, savepoint и custom type — продвинутый.
+Сверено 2026-11-06 с SQLAlchemy 2.1.
+Выполнено 2026-11-06: 4 теста страницы прошли на Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, pytest 9.2.0.
+Все примеры темы используют одну схему.
+Зависимости: `sqlalchemy`, `pytest`.
+Примеры создают только учебную SQLite в памяти.
 
 ## Единая схема для рецептов
 
@@ -129,11 +134,18 @@ def new_engine():
     return engine
 ```
 
-Для даты рождения, больших целых и бинарных данных есть `Date`, `BigInteger`, `LargeBinary`; тип/диалект выбирай по данным. `DateTime(timezone=True)` не гарантирует одинаковое хранение timezone во всех СУБД: SQLite-пример хранит серверное время без такой гарантии. JSON TypeDecorator показан ради расширения; если диалект поддерживает нужный JSON, встроенный `JSON` обычно проще. `MutableDict` отслеживает верхний уровень словаря; вложенные dict/list требуют отдельной стратегии изменений.
+Для даты рождения, больших целых и бинарных данных есть `Date`, `BigInteger` и `LargeBinary`.
+Выбирайте тип и диалект по данным.
+`DateTime(timezone=True)` не гарантирует одинаковое хранение timezone во всех СУБД.
+SQLite-пример хранит серверное время без такой гарантии.
+JSON TypeDecorator показывает способ расширения.
+Если диалект поддерживает нужный JSON, встроенный `JSON` обычно проще.
+`MutableDict` отслеживает верхний уровень словаря.
+Вложенные dict/list требуют отдельной стратегии изменений.
 
 ## CRUD, транзакции и savepoint
 
-Полный `demo_crud.py`; `User` создаётся со всеми обязательными полями.
+Полный пример `demo_crud.py` создаёт `User` со всеми обязательными полями.
 
 <!-- example: sqlalchemy/demo_crud.py -->
 ```python
@@ -169,7 +181,15 @@ if __name__ == "__main__":
     print(run())
 ```
 
-Запуск `python demo_crud.py` вернёт `['alice', 'bob']`. INSERT/UPDATE/DELETE меняют только эту временную базу, которая исчезнет после закрытия движка. `RETURNING` зависит от СУБД/версии; здесь проверяется SQLite из окружения запуска. Для существующей сессии учитывай autobegin: чтение тоже может открыть транзакцию, поэтому нельзя бездумно оборачивать уже начатую работу новым `session.begin()`.
+Запустите `python demo_crud.py`.
+Ожидаемый результат — `['alice', 'bob']`.
+INSERT/UPDATE/DELETE меняют только временную базу примера.
+База исчезнет после закрытия движка.
+`RETURNING` зависит от СУБД и версии.
+Здесь проверяется SQLite из окружения запуска.
+Для существующей сессии учитывайте autobegin.
+Чтение тоже может открыть транзакцию.
+Перед новым `session.begin()` проверьте, не началась ли транзакция.
 
 Полный `test_models.py` проверяет откат, savepoint, constraints, отношения и custom type:
 
@@ -250,8 +270,15 @@ def test_relations_enum_and_json():
         engine.dispose()
 ```
 
-Запуск: `python -m pytest -q test_models.py`. Savepoint должен пережить ошибку дублирующего email, а корректные изменения внешней транзакции — сохраниться. Исключение обрабатывается снаружи вложенного контекста; необработанное исключение вышло бы и из внешнего.
+Запустите `python -m pytest -q test_models.py`.
+Savepoint должен пережить ошибку дублирующего email.
+Корректные изменения внешней транзакции должны сохраниться.
+Пример обрабатывает исключение снаружи вложенного контекста.
+Необработанное исключение вышло бы и из внешнего контекста.
 
-Для FastAPI сессия выдаётся через зависимость с `yield`; полный [sync/async HTTP-рецепт](../../web/fastapi/database.md) находится в теме FastAPI. Транзакционную границу выбирай в одном месте, не распределяй commit между несогласованными слоями.
+В FastAPI зависимость с `yield` выдаёт сессию.
+Полный [sync/async HTTP-рецепт](../../web/fastapi/database.md) находится в теме FastAPI.
+Выбирайте транзакционную границу в одном месте.
+Не распределяйте commit между несогласованными слоями.
 
 Источники: [Declarative](https://docs.sqlalchemy.org/en/21/orm/declarative_tables.html), [отношения](https://docs.sqlalchemy.org/en/21/orm/basic_relationships.html), [транзакции/savepoint](https://docs.sqlalchemy.org/en/21/orm/session_transaction.html), [custom types](https://docs.sqlalchemy.org/en/21/core/custom_types.html), [MutableDict](https://docs.sqlalchemy.org/en/21/orm/extensions/mutable.html).
