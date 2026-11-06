@@ -16,41 +16,61 @@
 
 ## Каталог материалов
 
-| Тема | Где искать | Статус |
-| --- | --- | --- |
-| Типы Python | [Типы и операции](python/language/types/README.md) | Актуализировано |
-| Проектирование Python-проекта | [Решения, рабочий пакет и поставка](python/architecture/project-design/README.md) | Актуализировано |
-| Pydantic | [Валидация данных](python/validation/pydantic/README.md) | Актуализировано |
-| SQLAlchemy | [Справочник](python/databases/sqlalchemy/README.md), [простой пример N+1](python/databases/sqlalchemy/n-plus-one.md), [выбор загрузки](python/databases/sqlalchemy/relationship-loading.md) | Актуализировано |
-| pytest | [Тестирование](python/testing/pytest/README.md) | Актуализировано |
-| structlog | [Структурированные логи](python/logging/structlog/README.md) | Актуализировано |
-| uv | [Окружения и зависимости Python](python/tooling/uv/README.md) | Актуализировано |
-| FastAPI | [Веб-приложения и API](python/web/fastapi/README.md), [подмена зависимости в тесте](python/web/fastapi/testing.md#подмена-зависимости) | Актуализировано |
-| Flask | [WSGI-приложения, factory и тесты](python/web/flask/README.md) | Добавлено |
-| Go | [Язык, конкурентность и HTTP](go/README.md) | Добавлено |
-| SQL | [Общий справочник SQL](databases/sql/README.md) | Актуализировано |
-| PostgreSQL | [Справочник](databases/relational/postgresql/README.md), [копия и восстановление](databases/relational/postgresql/backup-and-restore.md) | Актуализировано |
-| SQLite | [Справочник](databases/relational/sqlite/README.md), [копия и восстановление](databases/relational/sqlite/backup-and-restore.md) | Актуализировано |
-| Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md) | Добавлено |
-| Git | [Выбор команд по рабочим задачам](tools/git/README.md) | Актуализировано |
-| GitHub Pull Requests | [Создание, ревью и слияние PR](tools/github-pull-requests/README.md) | Актуализировано |
-| Linux | [Оболочка, файлы, процессы и службы](systems/linux/README.md), [процесс по порту](systems/linux/process-by-port.md) | Добавлено |
-| Архитектурные принципы | [Карточки границ и компромиссов](architecture/principles.md), [проверки контрактов](architecture/contracts.md) | Добавлено |
-| SOLID | [Пять принципов: до / после](architecture/solid.md) | Добавлено |
-| Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md) | Добавлено |
+Столбец «Редактура» описывает работу с текстом и структурой материала.
+Сверку с документацией, запуск примеров и проверку с читателями учитывайте [отдельно](#как-читать-статусы-и-формат).
 
-[Проверка навигации и очередь улучшений](tasks/navigation-review.md) описывает результаты переработки Git, резервных копий, SQLAlchemy и подмены FastAPI, а также очередь остальных задач.
+| Тема | Где искать | Редактура |
+| --- | --- | --- |
+| Типы Python | [Типы и операции](python/language/types/README.md) | Переработано |
+| Проектирование Python-проекта | [Решения, рабочий пакет и поставка](python/architecture/project-design/README.md) | Переработано |
+| Pydantic | [Валидация данных](python/validation/pydantic/README.md) | Переработано |
+| SQLAlchemy | [Справочник](python/databases/sqlalchemy/README.md), [простой пример N+1](python/databases/sqlalchemy/n-plus-one.md), [выбор загрузки](python/databases/sqlalchemy/relationship-loading.md) | Переработано |
+| pytest | [Тестирование](python/testing/pytest/README.md) | Переработано |
+| structlog | [Структурированные логи](python/logging/structlog/README.md) | Переработано |
+| uv | [Окружения и зависимости Python](python/tooling/uv/README.md) | Переработано |
+| FastAPI | [Веб-приложения и API](python/web/fastapi/README.md), [подмена зависимости в тесте](python/web/fastapi/testing.md#подмена-зависимости) | Переработано |
+| Flask | [WSGI-приложения, factory и тесты](python/web/flask/README.md) | Оформлено |
+| Go | [Язык, конкурентность и HTTP](go/README.md) | Оформлено |
+| SQL | [Общий справочник SQL](databases/sql/README.md) | Переработано |
+| PostgreSQL | [Справочник](databases/relational/postgresql/README.md), [копия и восстановление](databases/relational/postgresql/backup-and-restore.md) | Переработано |
+| SQLite | [Справочник](databases/relational/sqlite/README.md), [копия и восстановление](databases/relational/sqlite/backup-and-restore.md) | Переработано |
+| Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md) | Оформлено |
+| Git | [Выбор команд по рабочим задачам](tools/git/README.md) | Переработано |
+| GitHub Pull Requests | [Создание, ревью и слияние PR](tools/github-pull-requests/README.md) | Переработано |
+| Linux | [Оболочка, файлы, процессы и службы](systems/linux/README.md), [процесс по порту](systems/linux/process-by-port.md) | Оформлено |
+| Архитектурные принципы | [Карточки границ и компромиссов](architecture/principles.md), [проверки контрактов](architecture/contracts.md) | Оформлено |
+| SOLID | [Пять принципов: до / после](architecture/solid.md) | Оформлено |
+| Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md) | Оформлено |
+
+[Проверка навигации и очередь улучшений](tasks/navigation-review.md) описывает переработку Git, резервных копий, SQLAlchemy, FastAPI и Linux, выполненные проверки и дальнейшие предложения.
 
 ## Как читать статусы и формат
 
 Материалы используют [русский профиль «STE 80%»](AGENTS.md#стиль-русского-текста-ste-80).
 Название обозначает редакторский стиль.
-Редактура стиля сама по себе не меняет статус технической проверки.
+Для материала различайте четыре независимых вида сведений:
 
-**Актуализировано** — существующая тема переработана по общему шаблону.
-**Добавлено** — новая тема оформлена по тому же правилу.
-Паспорт каждой страницы отдельно указывает источники и даты.
-Паспорт указывает выполненные примеры и сценарии, которые требуют дополнительного окружения.
+| Вид сведений | Как читать отметку | Где смотреть результат |
+| --- | --- | --- |
+| Редактура | «Переработано» — существующий материал переработан по шаблону; «Оформлено» — новый материал оформлен по шаблону | Столбец «Редактура» в каталоге |
+| Сверка с документацией | Утверждения сопоставлены с указанными источниками; учитывайте дату и ветку API | Поле «Сверено» / «Сверено с документацией», источники и границы на странице |
+| Выполненные примеры | Запущены только названные примеры и сценарии на указанных версиях | Поле «Выполнено» или раздел проверок; дата, точные версии и ограничения |
+| Удобство с читателями | Отметка требует наблюдений: нашёл ли читатель рецепт, выбрал ли приём, понял ли последствия | [План наблюдений по задачам](tasks/navigation-review.md#как-проверить-удобство-с-читателем); проверка пока не проводилась |
+
+Для архитектурных материалов сверка может опираться на первичные статьи и книги из списка источников.
+Сведения о проверках относятся к перечисленным сценариям и условиям конкретной страницы.
+Если результат не указан, считайте проверку неподтверждённой.
+Отметка о компиляции Python подтверждает проверку синтаксиса; сведения о запуске и поведении ищите отдельно.
+
+Например, паспорт [GitHub Pull Requests](tools/github-pull-requests/README.md) указывает сверку с документацией и отсутствие выполненных внешних действий GitHub.
+В [Linux](systems/linux/README.md) выполнен поиск процесса по порту, а сценарии systemd не запускались.
+Эти границы сохраняются независимо от редакторской отметки в каталоге.
+
+**Проверка удобства с читателями не проводилась.**
+Состояние зафиксировано в [журнале навигации от 2026-11-06](tasks/navigation-review.md).
+Запуски примеров, проверка ссылок и независимое ревью учитываются отдельно от наблюдений за читателями.
+
+### Формат и уровни
 
 Компактная тема остаётся одним файлом.
 Объёмная тема получает каталог с кратким `README.md` и подробными страницами по задачам.
