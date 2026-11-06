@@ -21,7 +21,7 @@
 | Типы Python | [Типы и операции](python/language/types/README.md) | Актуализировано |
 | Проектирование Python-проекта | [Решения, рабочий пакет и поставка](python/architecture/project-design/README.md) | Актуализировано |
 | Pydantic | [Валидация данных](python/validation/pydantic/README.md) | Актуализировано |
-| SQLAlchemy | [Справочник](python/databases/sqlalchemy/README.md), [N+1 и загрузка](python/databases/sqlalchemy/relationship-loading.md) | Актуализировано |
+| SQLAlchemy | [Справочник](python/databases/sqlalchemy/README.md), [простой пример N+1](python/databases/sqlalchemy/n-plus-one.md), [выбор загрузки](python/databases/sqlalchemy/relationship-loading.md) | Актуализировано |
 | pytest | [Тестирование](python/testing/pytest/README.md) | Актуализировано |
 | structlog | [Структурированные логи](python/logging/structlog/README.md) | Актуализировано |
 | uv | [Окружения и зависимости Python](python/tooling/uv/README.md) | Актуализировано |

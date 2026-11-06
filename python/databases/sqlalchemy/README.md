@@ -15,7 +15,7 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 | CRUD и откат | `Session`, `session.begin()`, `rollback()` | [Транзакции](models-and-transactions.md#crud-транзакции-и-savepoint) |
 | 1:N, N:1, 1:1, N:M | `relationship`, `ForeignKey`, `Table` | [Полная схема](models-and-transactions.md#единая-схема-для-рецептов) |
 | WHERE/JOIN/CTE/CASE/UNION/EXISTS | `select`, `func`, `aliased` | [Запросы](queries.md) |
-| Найти N+1 и выбрать загрузку | Счётчик, select-in, joined | [Выбор стратегии](relationship-loading.md#выбрать-стратегию) · [Найти N+1](relationship-loading.md#найти-n1) |
+| Устранить слишком много запросов при чтении коллекций | N+1, lazy, `selectinload` | [Карточка N+1](relationship-loading.md#найти-n1) · [Самостоятельная программа](n-plus-one.md#подготовка-и-запуск) |
 | Загрузить коллекцию для списка | `selectinload` или `joinedload` | [Select-in](relationship-loading.md#загрузить-коллекции-через-selectinload) · [Joined и unique](relationship-loading.md#загрузить-коллекцию-через-joinedload) |
 | Запретить неожиданный lazy SELECT | `raiseload` | [Карточка и ограничения](relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
 | Загрузить часть отношения своим JOIN | `contains_eager`, `populate_existing` | [Частичная коллекция](relationship-loading.md#загрузить-частичную-коллекцию-из-join) |
@@ -32,6 +32,7 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 | Сверено с документацией | 2026-11-06, SQLAlchemy 2.1 и Alembic |
 | Исходные проверки | 2026-11-06: в прежней редакции 10 Python-блоков скомпилированы, 9 тестов прошли, включая async FK/rollback; отдельный цикл Alembic upgrade/backfill/downgrade проверен на SQLite. Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, aiosqlite 0.22.1, Alembic 1.20.1, pytest 9.2.0 |
 | Запросы и загрузка выполнены | 2026-11-06: 21 тест запросов, загрузки и пакетной обработки; Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, pytest 9.2.0, greenlet 3.5.6. [Условия сравнения](loading-lab.md) |
+| Самостоятельный N+1 | [Синхронный пример с двумя моделями](n-plus-one.md): отдельная установка и проверки; общая схема ему не нужна |
 
 ## Навигация
 
@@ -44,6 +45,8 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 
 ## Базовый уровень
 
+Для первого знакомства с N+1 используйте [отдельную подготовку одного файла](n-plus-one.md#подготовка-и-запуск).
+Установка ниже относится к общей схеме и остальным рецептам раздела.
 Установите пакеты в отдельное окружение: `python -m pip install 'sqlalchemy[asyncio]==2.1.8' pytest`.
 Extra `asyncio` нужен общей модели с AsyncAttrs, даже для её синхронных рецептов.
 Для async добавьте `aiosqlite` и `pytest-asyncio`.
