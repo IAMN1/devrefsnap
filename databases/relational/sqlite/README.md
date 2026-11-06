@@ -7,13 +7,27 @@ SQLite — встраиваемая реляционная СУБД.
 
 [К базам данных](../../README.md) · [Общий SQL](../../sql/README.md) · [PostgreSQL](../postgresql/README.md)
 
+## Быстрый поиск
+
+| Задача | Команда / API | Где |
+| --- | --- | --- |
+| Подключиться и сделать CRUD | sqlite3.connect, execute, параметры | [Работающий пример Python](python-and-queries.md#полный-пример-блог-в-памяти) |
+| Включить внешние ключи | PRAGMA foreign_keys=ON | [Схема блога](python-and-queries.md) |
+| Выбрать тип | affinity / STRICT | [Типы и функции](python-and-queries.md#типы-функции-и-индексы) |
+| Посмотреть таблицы через CLI | .tables / .schema | [CLI](python-and-queries.md#cli-и-другие-языки) |
+| Получить согласованную копию | Connection.backup / .backup | [Python](backup-and-restore.md#создать-копию-через-python) · [CLI](backup-and-restore.md#создать-копию-через-cli) |
+| Восстановить и проверить копию | Новый файл, integrity/FK, данные | [Восстановление](backup-and-restore.md#восстановить-копию-в-новый-файл) · [Проверки](backup-and-restore.md#проверить-восстановленную-бд) |
+| Изменить структуру без потери связей | Транзакция и перестроение | [Миграция](backup-and-migrations.md#полный-пример-перестроение-таблицы) |
+| Разобрать busy / WAL | BEGIN IMMEDIATE / timeout / checkpoint | [Конкуренция](backup-and-migrations.md#конкуренция-и-wal) |
+
 | Параметр | Значение |
 | --- | --- |
-| Цель | SQLite 3.53; Python 3.14 sqlite3; использованные STRICT/RETURNING требуют SQLite 3.37+ / 3.35+ |
+| Цель | Python 3.14 sqlite3; SQLite 3.53.4 в Python, 3.54.0 в CLI-проверке копий. STRICT/RETURNING требуют SQLite 3.37+ / 3.35+ |
 | Сверено с документацией | 2026-11-06; текущие SQLite docs и Python 3.14; SQLite docs не фиксированы по major |
-| Выполнено | 2026-11-06: Python 3.14.7 / SQLite 3.53.4; оба полных Python-сценария и отдельный SQL-фрагмент функций, включая отказы ограничений, rollback и backup/restore |
+| Выполнено | 2026-11-06: Python 3.14.7 / SQLite 3.53.4; полные Python-примеры запросов, миграции и backup/restore; отдельный SQL-фрагмент функций; отказы ограничений и rollback |
 | Границы | Возможности сборки и поведение драйвера проверяются отдельно от установленного CLI |
-| Не проверено | CLI, другие языковые драйверы, конкурентный WAL и аварийное восстановление |
+| Backup CLI выполнено | 2026-11-06: sqlite3 3.54.0, macOS, Bash 3.2.57; бинарная и SQL-копия, восстановление и проверки. [Сценарий](backup-lab.md#проверить-cli-копию-и-sql-dump) |
+| Не проверено | Прочие CLI-рецепты, другие драйверы, конкурирующие записи во время backup, конкурентный WAL и аварийное восстановление |
 
 ## Навигация
 
@@ -23,18 +37,6 @@ SQLite — встраиваемая реляционная СУБД.
 - [Продвинутый уровень](#продвинутый-уровень)
 - [Частые ошибки](#частые-ошибки)
 - [Источники](#источники)
-
-## Быстрый поиск
-
-| Задача | Команда / API | Где |
-| --- | --- | --- |
-| Подключиться и сделать CRUD | sqlite3.connect, execute, параметры | [Работающий пример Python](python-and-queries.md#полный-пример-блог-в-памяти) |
-| Включить внешние ключи | PRAGMA foreign_keys=ON | [Схема блога](python-and-queries.md) |
-| Выбрать тип | affinity / STRICT | [Типы и функции](python-and-queries.md#типы-функции-и-индексы) |
-| Посмотреть таблицы через CLI | .tables / .schema | [CLI](python-and-queries.md#cli-и-другие-языки) |
-| Получить согласованную копию | Connection.backup / .backup | [Backup и восстановление](backup-and-migrations.md) |
-| Изменить структуру без потери связей | Транзакция и перестроение | [Миграция](backup-and-migrations.md#полный-пример-копия-восстановление-и-миграция) |
-| Разобрать busy / WAL | BEGIN IMMEDIATE / timeout / checkpoint | [Конкуренция](backup-and-migrations.md#конкуренция-и-wal) |
 
 ## Базовый уровень
 
@@ -60,7 +62,7 @@ SQLite хранит NULL, INTEGER, REAL, TEXT или BLOB.
 
 ## Продвинутый уровень
 
-[Backup, миграции и WAL](backup-and-migrations.md) — самостоятельные задачи.
+[Копия и восстановление](backup-and-restore.md) отделены от [миграции и WAL](backup-and-migrations.md).
 Во многих случаях WAL позволяет читателям работать одновременно с writer.
 Writer остаётся один.
 WAL не обеспечивает произвольное число параллельных записей.

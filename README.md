@@ -29,8 +29,8 @@
 | Flask | [WSGI-приложения, factory и тесты](python/web/flask/README.md) | Добавлено |
 | Go | [Язык, конкурентность и HTTP](go/README.md) | Добавлено |
 | SQL | [Общий справочник SQL](databases/sql/README.md) | Актуализировано |
-| PostgreSQL | [Справочник и практические страницы](databases/relational/postgresql/README.md) | Актуализировано |
-| SQLite | [Встраиваемая реляционная СУБД](databases/relational/sqlite/README.md) | Актуализировано |
+| PostgreSQL | [Справочник](databases/relational/postgresql/README.md), [копия и восстановление](databases/relational/postgresql/backup-and-restore.md) | Актуализировано |
+| SQLite | [Справочник](databases/relational/sqlite/README.md), [копия и восстановление](databases/relational/sqlite/backup-and-restore.md) | Актуализировано |
 | Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md) | Добавлено |
 | Git | [Выбор команд по рабочим задачам](tools/git/README.md) | Актуализировано |
 | GitHub Pull Requests | [Создание, ревью и слияние PR](tools/github-pull-requests/README.md) | Актуализировано |
@@ -39,7 +39,7 @@
 | SOLID | [Пять принципов: до / после](architecture/solid.md) | Добавлено |
 | Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md) | Добавлено |
 
-[Проверка навигации и очередь улучшений](tasks/navigation-review.md) описывает результаты редакторского обхода после переработки Git.
+[Проверка навигации и очередь улучшений](tasks/navigation-review.md) описывает результаты переработки Git и резервных копий, а также редакторского обхода остальных задач.
 
 ## Как читать статусы и формат
 

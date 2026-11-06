@@ -12,8 +12,8 @@
 | Тема | Содержание | Статус |
 | --- | --- | --- |
 | [SQL](sql/README.md) | Общие запросы и явно обозначенные различия диалектов | Актуализировано |
-| [PostgreSQL](relational/postgresql/README.md) | Реляционная серверная СУБД, запросы и эксплуатация | Актуализировано |
-| [SQLite](relational/sqlite/README.md) | Реляционная встраиваемая СУБД, backup и изменения схемы | Актуализировано |
+| [PostgreSQL](relational/postgresql/README.md) | Запросы, эксплуатация и [проверка резервной копии](relational/postgresql/backup-and-restore.md) | Актуализировано |
+| [SQLite](relational/sqlite/README.md) | Встраиваемая СУБД, [копия и восстановление](relational/sqlite/backup-and-restore.md), миграции | Актуализировано |
 | [Redis](non-relational/redis/README.md) | Структуры данных, TTL, кэш и обмен сообщениями | Добавлено |
 
 Общий SQL хранится отдельно от особенностей СУБД.
