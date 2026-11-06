@@ -32,12 +32,14 @@
 | PostgreSQL | [Справочник и практические страницы](databases/relational/postgresql/README.md) | Актуализировано |
 | SQLite | [Встраиваемая реляционная СУБД](databases/relational/sqlite/README.md) | Актуализировано |
 | Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md) | Добавлено |
-| Git | [Работа с репозиторием](tools/git/README.md) | Актуализировано |
+| Git | [Выбор команд по рабочим задачам](tools/git/README.md) | Актуализировано |
 | GitHub Pull Requests | [Создание, ревью и слияние PR](tools/github-pull-requests/README.md) | Актуализировано |
 | Linux | [Оболочка, файлы, процессы и службы](systems/linux/README.md) | Добавлено |
 | Архитектурные принципы | [Карточки границ и компромиссов](architecture/principles.md), [проверки контрактов](architecture/contracts.md) | Добавлено |
 | SOLID | [Пять принципов: до / после](architecture/solid.md) | Добавлено |
 | Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md) | Добавлено |
+
+[Проверка навигации и очередь улучшений](tasks/navigation-review.md) описывает результаты редакторского обхода после переработки Git.
 
 ## Как читать статусы и формат
 
