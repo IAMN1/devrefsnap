@@ -5,12 +5,32 @@
 Linux — ядро.
 Доступные команды определяют дистрибутив, libc, shell и набор утилит.
 
+## Быстрый поиск
+
+Команды в таблице — отдельные операции для своей системы.
+Поиск процесса по порту проверен в учебном Linux-контейнере; границы остальных проверок указаны ниже.
+
+| Задача | Команда | Подробнее |
+| --- | --- | --- |
+| Узнать каталог / окружение | `pwd`, `command -v bash`, `uname -s` | [Shell](shell-and-files.md) |
+| Посмотреть файлы | `ls -la`, `find . -type f -name '*.log'` | [Файлы](shell-and-files.md) |
+| Поиск по строкам | `grep -n 'ERROR' app.log` | [Поиск](shell-and-files.md#текст-потоки-и-коды-выхода) |
+| Скопировать / сравнить | `cp source destination`, `cmp source destination` | [Учебный скрипт](shell-and-files.md#безопасный-практический-пример) |
+| Проверить пользователя / права | `id`, `ls -ld path`, `umask` | [Права](permissions-and-processes.md) |
+| Снимок процессов | `ps -ef`, `ps -p PID -o pid,ppid,stat,args` | [Процессы](permissions-and-processes.md#процессы-и-сигналы) |
+| IP и маршруты, Linux | `ip -brief address`, `ip route` | [Сеть](network-and-services.md) |
+| Узнать, кто слушает TCP-порт 8000 | `ss -lntp 'sport = :8000'` | [Команда и PID](process-by-port.md#найти-tcp-listener) · [Права](process-by-port.md#если-pid-не-показан) · [Namespace](process-by-port.md#если-процесс-в-другом-namespace) |
+| systemd service, Linux | `systemctl status NAME.service` | [Службы](network-and-services.md#службы-systemd) |
+| Логи systemd | `journalctl -u NAME.service -n 50 --no-pager` | [Службы](network-and-services.md#службы-systemd) |
+
 | Параметр | Значение |
 | --- | --- |
 | Целевая среда | GNU/Linux; для shell-примеров явно выбран Bash |
 | Предпосылки | Обычный пользователь, терминал; административные операции изучайте на отдельной учебной системе |
 | Сверено с документацией | 2026-11-06, GNU Bash/Coreutils/Findutils/Grep, Linux man-pages, systemd, Debian APT и DNF |
-| Выполнено | 2026-11-06, только переносимые учебные скрипты Bash на macOS; Linux, GNU-specific flags, systemd, iproute2 и package managers не запускались |
+| Исходная проверка | 2026-11-06: переносимые учебные скрипты Bash на macOS |
+| Поиск процесса по порту | 2026-11-06: [учебный пример, версии и границы](process-by-port.md); Debian 13.6, iproute2 6.15.0, procps-ng 4.0.4, util-linux 2.41.5, Python 3.13.5 |
+| Остальные сценарии | GNU-specific flags, systemd и package managers как учебные рецепты не запускались |
 
 ## Навигация
 
@@ -23,23 +43,7 @@ Linux — ядро.
 - [Shell, файлы и поиск](shell-and-files.md)
 - [Права и процессы](permissions-and-processes.md)
 - [Сеть, службы и пакеты](network-and-services.md)
-
-## Быстрый поиск
-
-Команды в таблице — отдельные операции для своей системы. Linux-only строки на текущем macOS-хосте не выполнялись.
-
-| Задача | Команда | Подробнее |
-| --- | --- | --- |
-| Узнать каталог / окружение | `pwd`, `command -v bash`, `uname -s` | [Shell](shell-and-files.md) |
-| Посмотреть файлы | `ls -la`, `find . -type f -name '*.log'` | [Файлы](shell-and-files.md) |
-| Поиск по строкам | `grep -n 'ERROR' app.log` | [Поиск](shell-and-files.md#текст-потоки-и-коды-выхода) |
-| Скопировать / сравнить | `cp source destination`, `cmp source destination` | [Учебный скрипт](shell-and-files.md#безопасный-практический-пример) |
-| Проверить пользователя / права | `id`, `ls -ld path`, `umask` | [Права](permissions-and-processes.md) |
-| Снимок процессов | `ps -ef`, `ps -p PID -o pid,ppid,stat,args` | [Процессы](permissions-and-processes.md#процессы-и-сигналы) |
-| IP и маршруты, Linux | `ip -brief address`, `ip route` | [Сеть](network-and-services.md) |
-| TCP listeners, Linux | `ss -lnt` | [Сеть](network-and-services.md) |
-| systemd service, Linux | `systemctl status NAME.service` | [Службы](network-and-services.md#службы-systemd) |
-| Логи systemd | `journalctl -u NAME.service -n 50 --no-pager` | [Службы](network-and-services.md#службы-systemd) |
+- [Поиск процесса по порту](process-by-port.md)
 
 ## Базовый уровень
 

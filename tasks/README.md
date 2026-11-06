@@ -172,7 +172,8 @@
 | Найти файлы с пробелами и необычными именами | find, xargs, null delimiter, print0, имя файла | [Shell: поиск файлов](../systems/linux/shell-and-files.md#поиск-файлов-с-необычными-именами) |
 | Проверить права и владельца файла | permission, owner, chmod, umask, id | [Linux: права](../systems/linux/permissions-and-processes.md#прочитать-права) |
 | Найти процесс и корректно завершить свой дочерний процесс | ps, PID, kill, SIGTERM, wait, сигнал | [Процессы и сигналы](../systems/linux/permissions-and-processes.md#процессы-и-сигналы) · [Учебная проверка завершения](../systems/linux/permissions-and-processes.md#проверить-завершение-своего-дочернего-процесса) |
-| Узнать IP, маршрут и кто слушает порт | network, ip route, ss, socket, listener, TCP | [Linux: сеть](../systems/linux/network-and-services.md#сеть-сначала-чтение-состояния) |
+| Узнать IP и маршрут | network, ip route, интерфейс, адрес | [Linux: сеть](../systems/linux/network-and-services.md#сеть-сначала-чтение-состояния) |
+| Найти процесс, который занял TCP-порт | порт занят, address already in use, ss, PID, listener, socket | [Команда и вывод](../systems/linux/process-by-port.md#найти-tcp-listener) · [Права](../systems/linux/process-by-port.md#если-pid-не-показан) · [Namespace](../systems/linux/process-by-port.md#если-процесс-в-другом-namespace) |
 | Проверить службу и её журналы | systemd, systemctl, journalctl, service, logs | [Linux: службы systemd](../systems/linux/network-and-services.md#службы-systemd) |
 | Проверить свободное место и ресурсы | disk, df, du, free, память | [Linux: диск и ресурсы](../systems/linux/network-and-services.md#диск-и-ресурсы) |
 
