@@ -12,7 +12,7 @@
 - [Операционные системы](systems/README.md) — Linux, оболочка и эксплуатационные команды.
 - [Архитектура](architecture/README.md) — выбор по задаче, карточки SOLID, схемы и структуры пакетов.
 - [Инструменты разработки](tools/README.md) — Git и работа с Pull Requests на GitHub.
-- [Шаблоны](templates/README.md) — формат материалов; [правила работы](AGENTS.md).
+- [Шаблоны](templates/README.md) — формат материалов, [сравнение трёх вариантов подачи](templates/ste-comparison/README.md); [правила работы](AGENTS.md).
 
 ## Каталог материалов
 
