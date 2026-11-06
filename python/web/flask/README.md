@@ -8,8 +8,6 @@ Flask даёт маршрутизацию, request/response, шаблоны и �
 | --- | --- |
 | Ветка API | Flask 3.1.x |
 | Предпосылки | Python, HTTP, изолированное окружение; pytest для проверки |
-| Сверено с документацией | 2026-11-06, официальная документация Flask 3.1.x |
-| Выполнено | 2026-11-06, Python 3.14.7, Flask 3.1.3, Werkzeug 3.1.9, pytest 9.2.0; test client и SQLite lifecycle в temp-каталоге |
 
 ## Навигация
 
@@ -41,8 +39,8 @@ Flask даёт маршрутизацию, request/response, шаблоны и �
 
 ### Запустить API и проверить ответ
 
-В отдельном окружении выполните `python -m pip install Flask pytest`.
-Для точного воспроизведения используйте версии из паспорта выше.
+Для воспроизведения используйте Python 3.14.7.
+В отдельном окружении выполните `python -m pip install 'Flask==3.1.3' 'Werkzeug==3.1.9' 'pytest==9.2.0'`.
 Сохраните [flask_app.py](application.md) и [test_flask_app.py](testing.md) в одном каталоге.
 Запустите `python -m pytest -q test_flask_app.py`.
 HTTP-клиент тестов не открывает сетевой порт.

@@ -110,24 +110,15 @@ JUnit встроен в pytest.
 JSON-отчёт тестовых результатов требует выбранного плагина.
 Например, [pytest-json-report](https://github.com/numirias/pytest-json-report) использует `--json-report --json-report-file=report.json`.
 Этот отчёт не равен JSON-отчёту **coverage**.
-Здесь JSON-плагин не устанавливался и не выполнялся.
 Не скрывайте все DeprecationWarning.
 При обоснованной необходимости настройте узкий `filterwarnings` по категории, сообщению и модулю.
 Укажите причину фильтрации.
 
-## Что проверено
+## Среда примеров
 
-2026-11-06, macOS, CPython 3.14.7:
+Для воспроизведения используйте CPython 3.14.7.
+Установите пакеты в отдельное окружение: `python -m pip install 'pytest==9.2.0' 'pytest-mock==3.17.0' 'pytest-asyncio==1.4.1.post1' 'pytest-cov==7.1.0' 'pytest-xdist==3.8.0'`.
 
-- pytest 9.2.0: 13 основных + 4 mock/async сценария в отдельном временном каталоге.
-- pytest-mock 3.17.0, pytest-asyncio 1.4.1.post1: подмена адаптера, передача ошибки, async fixture/result.
-- pytest-cov 7.1.0: сформирован терминальный отчёт по `demo_service` и HTML.
-- pytest-xdist 3.8.0: тот же набор запущен с двумя workers.
-- Создан JUnit XML.
-- Проверена сборка тестов.
-- Проверен выбор тестов.
-
-Production CI, JSON-плагин и Django-стек не выполнялись.
 Покрытие показывает исполненные строки.
 Покрытие не доказывает достаточность утверждений.
 Проверяйте ошибочные входы.

@@ -7,8 +7,6 @@
 ## GitHub Actions
 
 Ниже приведён фрагмент шагов внутри job на подходящем runner.
-YAML сверён с документацией.
-Workflow не запускался.
 Проверяйте Actions refs отдельно.
 Фиксируйте Actions refs по политике проекта.
 Указанные major refs служат примером настройки.
@@ -37,7 +35,6 @@ Lock не заменяет проверку Python и платформы runner.
 
 Полный образец для простого непакетируемого приложения с `main.py` в корне.
 Подготовьте файлы проекта до сборки.
-Docker build/runtime **не выполнялись**.
 В Dockerfile оба Python-образа должны иметь совместимые пути, ОС и архитектуру.
 Для воспроизводимой production-сборки фиксируйте также digest образов.
 
@@ -72,7 +69,6 @@ CMD ["python", "main.py"]
 Установите pre-commit отдельно.
 Обеспечьте доступность uv в PATH.
 Фрагмент использует локальный check без автоматической перезаписи lock.
-Хук **не запускался**.
 
 ```yaml
 repos:
@@ -125,16 +121,13 @@ export UV_CONCURRENT_BUILDS=4
 | TLS failure | Проверьте имя сервера, время и цепочку CA. При необходимости используйте `--system-certs` или `SSL_CERT_FILE` по документации |
 
 `UV_INDEX_URL` — старое имя настройки.
-Установленный uv рекомендует `UV_DEFAULT_INDEX`.
-`UV_SSL_VERIFY=0` и `UV_LOG_LEVEL` не являются рецептами из проверенного help.
+Для uv 0.12.13 используйте `UV_DEFAULT_INDEX`.
+Не используйте `UV_SSL_VERIFY=0` и `UV_LOG_LEVEL` для настройки uv 0.12.13.
 Не отключайте проверку TLS ради того, чтобы установка «заработала».
 Отключение проверки меняет доверие к коду пакетов.
 
-## Источники и границы проверки
+## Источники
 
 [CI](https://docs.astral.sh/uv/guides/integration/github/), [Docker](https://docs.astral.sh/uv/guides/integration/docker/),
 [pre-commit](https://docs.astral.sh/uv/guides/integration/pre-commit/), [TLS](https://docs.astral.sh/uv/concepts/authentication/certificates/),
 [environment variables](https://docs.astral.sh/uv/reference/environment/).
-Сверка: 2026-11-06.
-В CI, Docker, pre-commit и внешних индексах выполнение не проводилось.
-Локально сверены help uv 0.12.13 и [offline-проект](projects.md).

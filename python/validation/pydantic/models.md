@@ -4,11 +4,9 @@
 
 **Уровень:** базовый → средний.
 **Предпосылки:** классы, типы, Decimal и JSON.
-Сверено 2026-11-06 с Pydantic v2.
-Выполнено 2026-11-06: 16 тестов страницы прошли на Python 3.14.7, Pydantic 2.14.3, email-validator 2.3.0, pytest 9.2.0.
-Timestamp-тесты также прошли при TZ=UTC и Europe/Moscow.
 Поместите все файлы ниже в одну учебную папку.
-Установите `pydantic[email]` и `pytest`.
+Используйте Python 3.14.7.
+Выполните `python -m pip install 'pydantic[email]==2.14.3' 'email-validator==2.3.0' 'pytest==9.2.0'`.
 
 ## Модели, валидация и JSON
 

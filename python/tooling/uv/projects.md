@@ -149,4 +149,3 @@ uv pip freeze
 [Управление зависимостями](https://docs.astral.sh/uv/concepts/projects/dependencies/),
 [lock/sync](https://docs.astral.sh/uv/concepts/projects/sync/),
 [интерфейс pip](https://docs.astral.sh/uv/pip/), [экспорт](https://docs.astral.sh/uv/concepts/projects/export/).
-Сверка: 2026-11-06. Выполнен только приведённый offline-сценарий, uv 0.12.13 / Python 3.14.7.

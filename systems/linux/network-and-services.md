@@ -5,7 +5,7 @@
 [Найдите процесс по заданному порту](process-by-port.md#найти-tcp-listener): команды, вывод, права и namespace разобраны отдельно.
 
 Все команды этой страницы — справочные фрагменты.
-Поиск процесса по порту выполнен в отдельном Linux-контейнере; [сценарий и границы](process-by-port.md) указаны отдельно.
+[Учебный пример поиска процесса](process-by-port.md#самостоятельный-учебный-пример) создаёт собственный сокет внутри Linux.
 Проверяйте активные изменения на отдельной учебной Linux-системе с разрешением владельца.
 
 ## Сеть: сначала чтение состояния
@@ -80,7 +80,6 @@ journalctl -u NAME.service --since '1 hour ago'
 Уточните версии найденных инструментов.
 Наличие одной команды не определяет всю систему.
 Таблица служит справочником.
-**Операции установки не выполнялись**.
 
 | Задача | Debian/Ubuntu, APT | RPM-системы с DNF |
 | --- | --- | --- |
@@ -108,10 +107,8 @@ Arch, Alpine и другие системы имеют свои менеджер
 Расхождения могут объясняться deleted-but-open files, sparse files и filesystem snapshots.
 В Linux `free -h` и `/proc/meminfo` помогают наблюдать память.
 Малое значение free не означает отсутствие доступной памяти.
-`/proc`, GNU df/du/free здесь не проверялись запуском.
-Системные файлы не очищались.
 
-## Источники и границы проверки
+## Источники
 
 [Linux ip](https://man7.org/linux/man-pages/man8/ip.8.html), [ss](https://man7.org/linux/man-pages/man8/ss.8.html),
 [curl](https://curl.se/docs/manpage.html),
@@ -119,5 +116,3 @@ Arch, Alpine и другие системы имеют свои менеджер
 [journalctl](https://www.freedesktop.org/software/systemd/man/latest/journalctl.html),
 [Debian APT](https://manpages.debian.org/bookworm/apt/apt.8.en.html),
 [DNF](https://dnf.readthedocs.io/en/latest/command_ref.html).
-Сверка: 2026-11-06. Поиск процесса по порту проверен [отдельно](process-by-port.md).
-Остальные сетевые рецепты, службы, пакетные менеджеры, SSH и внешняя доступность приложений не тестировались.

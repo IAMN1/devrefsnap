@@ -118,14 +118,13 @@ Flask — WSGI-приложение.
 Если модель/платформа Waitress подходит, можно использовать Waitress.
 Установка сервера и параметры workers/threads требуют отдельной проверки.
 Ниже приведена справочная команда.
-Команда **не выполнялась**:
+Для установленного Gunicorn:
 
 ```text
 gunicorn --bind 127.0.0.1:8000 'flask_app:create_app()'
 ```
 
 Команда предполагает установленный Gunicorn и импортируемый `flask_app`.
-Производительность и число workers здесь не измерялись.
 Reverse proxy может обеспечивать TLS и ограничивать запросы.
 Нужны health checks, тайм-ауты, graceful shutdown и сбор логов.
 Включайте `ProxyFix` только за доверенным proxy с точным числом hops.
@@ -137,7 +136,7 @@ Async views требуют соответствующей установки Fla
 Не запускайте долговечную фоновую задачу через `asyncio.create_task()` внутри view.
 Используйте отдельный worker/очередь с определёнными retry и состоянием задачи.
 
-## Источники и границы проверки
+## Источники
 
 [Configuration](https://flask.palletsprojects.com/en/stable/config/),
 [database tutorial](https://flask.palletsprojects.com/en/stable/tutorial/database/),
@@ -145,5 +144,3 @@ Async views требуют соответствующей установки Fla
 [Gunicorn](https://flask.palletsprojects.com/en/stable/deploying/gunicorn/),
 [proxy](https://flask.palletsprojects.com/en/stable/deploying/proxy_fix/),
 [async](https://flask.palletsprojects.com/en/stable/async-await/).
-2026-11-06: SQLite lifecycle выполнен на Python 3.14.7 / Flask 3.1.3.
-Production WSGI, TLS, proxy, migrations, сессии браузера и многопроцессная БД не запускались.

@@ -4,10 +4,7 @@
 
 **Уровень:** средний → продвинутый.
 Предпосылки: bind, contextvars, async и middleware.
-Сверено 2026-11-06 со structlog 26.1.0.
-Выполнено 2026-11-06: async-изоляция и FastAPI success/error проверены двумя тестами.
 Окружение: Python 3.14.7, structlog 26.1.0, FastAPI 0.162.0, Starlette 1.10.0, HTTPX2 2.16.0, pytest 9.2.0, pytest-asyncio 1.4.1.post1.
-Django-проект не запускался.
 Все файлы используют `demo_logging.py` с соседней страницы.
 
 - [Локальный и контекстный bind](#локальный-и-контекстный-bind)
@@ -196,8 +193,7 @@ def test_request_context_and_failure():
 
 ## Django: подключение middleware
 
-Этот вариант **сверен с документацией, но Django-проект не запускался**.
-Подключите стандартную интеграцию через `LOGGING`/`ProcessorFormatter` и цепочку `wrap_for_formatter`, как в [проверенном stdlib-рецепте](configuration.md#интеграция-со-stdlib-logging).
+Подключите стандартную интеграцию через `LOGGING`/`ProcessorFormatter` и цепочку `wrap_for_formatter`, как в [рецепте stdlib](configuration.md#интеграция-со-stdlib-logging).
 Не вызывайте настройку logging на каждый запрос.
 
 Ниже приведён фрагмент модуля middleware для синхронного Django-приложения.

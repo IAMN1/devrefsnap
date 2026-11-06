@@ -3,9 +3,6 @@
 [Справочник](README.md) · [Общая схема](models-and-transactions.md)
 
 **Уровень:** продвинутый.
-Сверено 2026-11-06 с SQLAlchemy 2.1 и Alembic.
-Выполнено 2026-11-06: async roundtrip/отношения, отказ при неверном FK с rollback и события проверены тремя тестами.
-Миграция с backfill/NOT NULL/откатом проверена отдельно на временном файле SQLite.
 Окружение: Python 3.14.7, SQLAlchemy 2.1.8, aiosqlite 0.22.1, SQLite 3.53.4, Alembic 1.20.1, pytest 9.2.0, pytest-asyncio 1.4.1.post1.
 Предпосылки: транзакции, async, различие изменения схемы и данных.
 
@@ -15,7 +12,7 @@
 
 ## Асинхронная сессия
 
-Установите `sqlalchemy[asyncio]`, `aiosqlite`, `pytest` и `pytest-asyncio`.
+Выполните `python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1' 'pytest==9.2.0' 'pytest-asyncio==1.4.1.post1'`.
 Ниже приведён полный пример `demo_async.py`.
 Возьмите остальные классы из `demo_models.py` этой темы.
 Драйвер использует только SQLite в памяти.
@@ -207,16 +204,12 @@ SQL-логи могут содержать значения параметров
 Применяйте соответствующую политику логирования.
 Для async обработчики событий часто подключают к `engine.sync_engine` / sync Session.
 В этом случае обработчик не объявляют как `async def`.
-Профилирование нагрузки и подбор параметров пула не выполнялись.
 
 Источники: [events](https://docs.sqlalchemy.org/en/21/core/event.html), [ORM events](https://docs.sqlalchemy.org/en/21/orm/events.html), [cache](https://docs.sqlalchemy.org/en/21/core/connections.html#sql-caching).
 
 ## Alembic: отдельный учебный проект
 
-Последовательность проверена 2026-11-06 на отдельной SQLite с синтетическим пользователем.
-Проверка охватила init/autogenerate/upgrade/current/history.
-Затем проверены добавление verified, backfill, NOT NULL и downgrade с сохранением остальных полей.
-Зависимость: `alembic`.
+Выполните `python -m pip install 'alembic==1.20.1'` в учебное окружение.
 Создайте отдельную пустую папку.
 Скопируйте туда `demo_models.py`.
 Не указывайте URL существующей пользовательской БД.

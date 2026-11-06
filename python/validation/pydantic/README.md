@@ -11,8 +11,6 @@ Pydantic также сериализует модели и строит JSON Sch
 | --- | --- |
 | API | Pydantic v2; новые параметры alias показаны для ветки 2.11+ |
 | Предпосылки | Типы Python, классы, JSON; синтаксис примеров Python 3.10+ |
-| Сверено с документацией | 2026-11-06, Pydantic v2, pydantic-settings и pydantic-extra-types |
-| Выполнено | 2026-11-06: 10 Python-блоков скомпилированы, 20 тестов прошли, включая timezone-aware ввод и UTC-сериализацию. Python 3.14.7, Pydantic 2.14.3, pytest 9.2.0; settings 2.16.2 и FastAPI 0.162.0 проверены в интеграциях |
 
 ## Навигация
 

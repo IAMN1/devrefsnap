@@ -96,9 +96,6 @@ curl --fail-with-body -H 'Content-Type: application/json' \
   -d '{"name":"Alice"}' http://127.0.0.1:5000/api/greet
 ```
 
-В этой проверке использован test client.
-Открытый HTTP-сервер не использовался.
-Сетевой запуск приведён как инструкция.
 Автоматические проверки — [на следующей странице](testing.md).
 
 ## Другие формы запроса и ответа
@@ -119,10 +116,9 @@ curl --fail-with-body -H 'Content-Type: application/json' \
 Затем приложение загружает шаблоны через `render_template`.
 Здесь `templates/` обозначает каталог приложения, а не шаблоны репозитория.
 
-## Источники и проверка
+## Источники
 
 [Quickstart](https://flask.palletsprojects.com/en/stable/quickstart/),
 [Blueprint](https://flask.palletsprojects.com/en/stable/blueprints/),
 [factory](https://flask.palletsprojects.com/en/stable/patterns/appfactories/),
 [error handling](https://flask.palletsprojects.com/en/stable/errorhandling/).
-2026-11-06: приложение скомпилировано и проверено HTTP test client на Flask 3.1.3 / Werkzeug 3.1.9.

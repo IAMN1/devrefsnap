@@ -25,17 +25,10 @@ PostgreSQL — реляционная серверная СУБД.
 
 | Параметр | Значение |
 | --- | --- |
-| Целевая ветка | PostgreSQL 18; синтаксис сверяется с документацией этой ветки |
+| Целевая ветка | PostgreSQL 18 |
 | Предпосылки | Основы SQL; сервер и клиентские утилиты PostgreSQL 18 |
-| Сверено с документацией | 2026-11-06, PostgreSQL 18; доступны release notes 18.6 |
-| Выполнено | 2026-11-06: все 12 SQL-блоков README, queries и schema-and-indexes в PostgreSQL 18.6 / PGlite 0.5.15, в памяти, WebAssembly; прошли пять групп проверок результатов |
-| Backup/restore выполнено | 2026-11-06: нативные PostgreSQL, pg_dump, pg_restore и psql 18.6 в отдельном контейнере; custom/plain и ожидаемые отказы. [Сценарий](backup-lab.md) |
-| Не проверено | Конкурентные блокировки, производительность, прочие административные операции, перенос рабочих прав и PITR |
-
-Это основное место темы и пилот актуализации.
-Паспорт относится к этому каталогу.
-Предыдущую редакцию можно найти в истории Git.
-PostgreSQL 19 RC не используется как стабильная цель.
+| Среда SQL-примеров | PostgreSQL 18.6 / PGlite 0.5.15, в памяти, WebAssembly |
+| Среда backup/restore | Сервер и клиентские утилиты PostgreSQL 18.6; отдельное учебное окружение |
 
 ## Навигация
 
@@ -97,4 +90,4 @@ ORDER BY price DESC, id;
 - [Документация PostgreSQL 18](https://www.postgresql.org/docs/18/) и [release notes 18.6](https://www.postgresql.org/docs/18/release-18-6.html).
 - [SELECT](https://www.postgresql.org/docs/18/sql-select.html), [изоляция транзакций](https://www.postgresql.org/docs/18/transaction-iso.html).
 - [TRUNCATE](https://www.postgresql.org/docs/18/sql-truncate.html), [WAL и PITR](https://www.postgresql.org/docs/18/continuous-archiving.html).
-- Проверенные предметные ссылки приведены также на каждой подробной странице.
+- Предметные ссылки приведены также на каждой подробной странице.

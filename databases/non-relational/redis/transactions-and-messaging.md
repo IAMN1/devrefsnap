@@ -6,9 +6,6 @@
 | --- | --- |
 | Уровни | Средний — pipeline/MULTI/WATCH; продвинутый — stream/доставка |
 | Предпосылки | Подготовка и REDIS_URL из [первого примера](data-and-caching.md#подготовка); standalone Redis 8.2 |
-| Сверено с документацией | 2026-11-06 |
-| Выполнено | 2026-11-06: оба полных сценария на Redis 8.2.11 / redis-py 8.1.0 / Python 3.14.7; проверены WATCH-отказ, runtime error без rollback, pending/ACK и Pub/Sub; свой Unix socket и ключи |
-| Не проверено | Cluster, failover, падение consumer с внешним побочным эффектом и повторная доставка при авариях |
 
 ## Атомарность, транзакция и pipeline
 
