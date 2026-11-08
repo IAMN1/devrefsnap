@@ -1,5 +1,14 @@
 # Выдать сессию БД на запрос
 
+Откройте страницу, если HTTP-обработчик должен получить собственную сессию БД и завершить транзакцию.
+Выберите sync- или async-пример по используемому драйверу.
+
+| Задача | Приём | Пример / подробности |
+| --- | --- | --- |
+| Использовать блокирующий драйвер | `def`, сессия через `yield` | [Синхронный пример](#синхронный-sqlalchemy) |
+| Использовать async-драйвер | `AsyncSession`, `async with`, lifespan | [Асинхронный пример](#async-sqlalchemy-и-lifespan) |
+| Проверить сохранение и отказ | Изолированная SQLite на тест | [Полные проверки](testing.md#сессии-бд-и-lifespan) |
+
 [Краткий справочник](README.md) · [Тестирование](testing.md) · [SQLAlchemy](../../databases/sqlalchemy/README.md)
 
 | Параметр | Значение |
@@ -118,7 +127,7 @@ FastAPI выполняет эти обработчики в пуле поток�
 Синхронный `create_all` в lifespan допустим здесь для крошечной учебной базы.
 В приложении применяйте миграции отдельным шагом.
 
-Источники: [SQLAlchemy: Session и транзакции](https://docs.sqlalchemy.org/en/20/orm/session_basics.html), [FastAPI: зависимости с yield](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/), [Pydantic: чтение атрибутов объектов](https://docs.pydantic.dev/latest/concepts/models/#arbitrary-class-instances).
+Источники: [SQLAlchemy: Session и транзакции](https://docs.sqlalchemy.org/en/21/orm/session_basics.html), [FastAPI: зависимости с yield](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/), [Pydantic: чтение атрибутов объектов](https://docs.pydantic.dev/latest/concepts/models/#arbitrary-class-instances).
 
 ## Async SQLAlchemy и lifespan
 
@@ -211,4 +220,4 @@ GET `/notes` возвращает список заметок.
 Старый пример с пакетом `databases` заменён одним SQLAlchemy API для sync/async.
 Тот же принцип lifespan применим и к другим клиентам.
 
-Источники: [FastAPI: lifespan](https://fastapi.tiangolo.com/advanced/events/), [SQLAlchemy: async API](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html), [AsyncSession и конкурентные задачи](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html#using-asyncsession-with-concurrent-tasks).
+Источники: [FastAPI: lifespan](https://fastapi.tiangolo.com/advanced/events/), [SQLAlchemy: async API](https://docs.sqlalchemy.org/en/21/orm/extensions/asyncio.html), [AsyncSession и конкурентные задачи](https://docs.sqlalchemy.org/en/21/orm/extensions/asyncio.html#using-asyncsession-with-concurrent-tasks).

@@ -44,7 +44,7 @@
 Подготовка ниже относится к остальным тестам страницы; для подмены достаточно [одного файла](dependency-overrides.md#минимальный-самостоятельный-пример).
 
 Сохраните приложения из связанных страниц в одной учебной папке.
-Нужные файлы: `main.py`, `uploads.py`, `middleware_app.py`, `db_app.py`, `async_db_app.py`, `auth_app.py`.
+Выберите нужные файлы: [main.py](http-api.md), [uploads.py](uploads.md), [middleware_app.py](middleware.md), [db_app.py и async_db_app.py](database.md), [auth_app.py](authentication.md).
 Разместите файлы тестов ниже рядом с приложениями.
 Для подмены начните с [самостоятельного примера в одном файле](dependency-overrides.md#минимальный-самостоятельный-пример).
 Дополнительно к зависимостям приложений установите:
@@ -53,7 +53,7 @@
 python -m pip install pytest pytest-asyncio httpx2
 ```
 
-Текущий Starlette рекомендует `httpx2`.
+В окружении Starlette 1.10.0 используйте `httpx2`.
 Прежний `httpx` ещё поддерживается, но его использование в TestClient устаревает.
 В старых окружениях пример async-клиента можно адаптировать импортом из `httpx`, сохраняя `ASGITransport`.
 Не используйте прямой `AsyncClient(app=app)`.
@@ -66,113 +66,29 @@ python -m pip install pytest pytest-asyncio httpx2
 
 ## Синхронный TestClient
 
-Полный файл `test_main.py` использует `main.py` из HTTP-рецепта.
-Фикстура очищает учебный словарь до и после каждого теста.
-Поэтому тесты не зависят от порядка запуска.
+**Ситуация:** POST `/items` должен создать Book с ценой `25`, а отрицательная цена должна дать отказ.
+**Изменение:** проверьте код ответа и содержимое на настоящем обработчике.
+Фрагмент теста для [полного `main.py`](http-api.md#http-api-с-валидацией):
 
-<!-- example: test_main.py -->
 ```python
-import pytest
 from fastapi.testclient import TestClient
-
 from main import app, items
 
-
-@pytest.fixture
-def client():
+items.clear()
+try:
+    with TestClient(app) as client:
+        created = client.post("/items", json={"name": "Book", "price": 25})
+        assert created.status_code == 201
+        assert created.json()["name"] == "Book"
+        assert client.post("/items", json={"name": "Book", "price": -1}).status_code == 422
+finally:
     items.clear()
-    with TestClient(app, raise_server_exceptions=False) as test_client:
-        yield test_client
-    items.clear()
-
-
-def test_crud(client):
-    created = client.post("/items", json={"name": "Book", "price": 25, "tags": ["python"]})
-    assert created.status_code == 201
-    item_id = created.json()["id"]
-    assert client.get(f"/items/{item_id}").json()["name"] == "Book"
-    listed = client.get("/items", params={"q": "Book", "tags": "python"})
-    assert len(listed.json()) == 1
-    changed = client.patch(f"/items/{item_id}", json={"price": 30})
-    assert changed.status_code == 200
-    assert changed.json()["name"] == "Book"
-    assert changed.json()["price"] == 30
-    replaced = client.put(f"/items/{item_id}", json={"name": "New", "price": 40})
-    assert replaced.status_code == 200
-    assert replaced.json()["tags"] == []
-    deleted = client.delete(f"/items/{item_id}")
-    assert deleted.status_code == 204
-    assert deleted.content == b""
-    assert client.get(f"/items/{item_id}").status_code == 404
-
-
-def test_invalid_input(client):
-    assert client.post("/items", json={"name": "Book", "price": -1}).status_code == 422
-    assert client.post("/items", json={"name": "premium", "price": 1}).status_code == 422
-    assert client.get("/items/not-an-integer").status_code == 422
-    assert client.get("/items", params={"limit": 0}).status_code == 422
-
-
-@pytest.mark.parametrize("method", ["POST", "PATCH"])
-@pytest.mark.parametrize("field", ["price", "tax"])
-@pytest.mark.parametrize("raw_value", ["1e999", "-1e999", '"Infinity"', '"-Infinity"', '"NaN"'])
-def test_nonfinite_numbers_are_rejected_without_state_change(client, method, field, raw_value):
-    original = client.post("/items", json={"name": "Book", "price": 25, "tax": 2}).json()
-    if field == "price":
-        raw = f'{{"name":"Book","price":{raw_value},"tax":2}}'
-    else:
-        raw = f'{{"name":"Book","price":25,"tax":{raw_value}}}'
-    path = "/items" if method == "POST" else f'/items/{original["id"]}'
-    response = client.request(method, path, content=raw, headers={"Content-Type": "application/json"})
-    assert response.status_code == 422
-    assert response.json()["detail"]
-    assert client.get("/items").json() == [original]
-
-
-def test_patch_revalidates_whole_model(client):
-    item_id = client.post("/items", json={"name": "premium", "price": 100}).json()["id"]
-    assert client.patch(f"/items/{item_id}", json={"price": 1}).status_code == 422
-    assert client.patch(f"/items/{item_id}", json={"name": None}).status_code == 422
-    assert client.get(f"/items/{item_id}").json()["price"] == 100
-
-
-def test_query_cookie_and_nested_path(client):
-    client.post("/items", json={"name": "Book", "price": 25, "tags": ["python", "web"]})
-    client.cookies.set("last_query", "Book")
-    assert len(client.get("/items").json()) == 1
-    assert client.get("/items", params={"q": "Other"}).json() == []
-    repeated = client.get("/items", params=[("tags", "python"), ("tags", "web")])
-    assert len(repeated.json()) == 1
-    nested = client.get("/users/2/items/3", params={"short": "true"})
-    assert nested.json() == {"user_id": 2, "item_id": 3, "short": True}
-
-
-def test_output_does_not_expose_password(client):
-    response = client.post("/user-preview", json={
-        "username": "alice", "email": "alice@example.com", "password": "secret123",
-    })
-    assert response.status_code == 200
-    assert response.json()["username"] == "alice"
-    assert "password" not in response.json()
-
-
-def test_custom_responses(client):
-    assert client.get("/stock/6").status_code == 409
-    assert client.get("/custom").headers["X-Custom"] == "demo"
-    assert "text/html" in client.get("/html").headers["content-type"]
-    redirect = client.get("/redirect", follow_redirects=False)
-    assert redirect.status_code == 307
-    assert redirect.headers["location"] == "/docs"
 ```
 
-Контекст `with TestClient(app)` запускает lifespan.
-Фикстура задаёт `raise_server_exceptions=False`.
-При этой настройке ошибка сервера превращается в ответ `500`.
-Такой ответ проваливает проверку статуса.
-По умолчанию необработанное исключение пробрасывается в тест.
-Числовой тест отправляет сырой JSON.
-Преобразование `1e999` в бесконечность не должно приводить к сохранению неверного товара.
-Это преобразование также не должно вызывать ошибку сериализации ответа.
+**Результат:** валидный товар создаётся, неверный ввод отвергается.
+Контекст `TestClient` запускает lifespan; словарь очищается даже при провале проверки.
+Фрагмент рассчитан на отдельный тестовый процесс без параллельного изменения общего словаря.
+[Полный модуль CRUD, PATCH, ошибок и выходной модели](testing-lab.md#синхронный-testclient).
 
 ## Подмена зависимости
 
@@ -224,203 +140,86 @@ def test_override():
 
 ## Асинхронный клиент
 
-Полный файл `test_async.py` использует `pytest-asyncio` и тот же `main.py`.
+**Ситуация:** тест уже выполняется в `async def`; запрос нужен без отдельного сервера.
+**Изменение:** используйте `ASGITransport` вместо удалённого аргумента `AsyncClient(app=...)`.
+Фрагмент async-теста для [полного `main.py`](http-api.md):
 
-<!-- example: test_async.py -->
 ```python
 import pytest
 from httpx2 import ASGITransport, AsyncClient
-
-from main import app, items
+from main import app
 
 
 @pytest.mark.asyncio
-async def test_async_request():
-    items.clear()
-    try:
-        async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
-            response = await client.post("/items", json={"name": "Async book", "price": 20})
-            assert response.status_code == 201
-            item_id = response.json()["id"]
-            assert (await client.get(f"/items/{item_id}")).json()["name"] == "Async book"
-    finally:
-        items.clear()
+async def test_root():
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        response = await client.get("/")
+        assert response.json() == {"message": "Каталог работает"}
 ```
 
-`ASGITransport` сам не запускает lifespan.
-У `main.py` нет startup-ресурсов.
-Если приложение имеет startup-ресурсы, установите `asgi-lifespan`.
-При наличии startup-ресурсов оберните работу клиента в `async with LifespanManager(app)` из `asgi_lifespan`.
-Для клиентов БД особенно важно создать и использовать ресурсы в корректном event loop.
-Не запускайте тесты общего in-memory-словаря параллельно в одном процессе.
+**Результат:** запрос выполняется в процессе теста.
+`ASGITransport` сам не запускает lifespan; для startup-ресурсов нужен отдельный LifespanManager.
+[Полный async-тест и границы очистки](testing-lab.md#асинхронный-клиент).
 
 ## Файлы и middleware
 
-Полный файл `test_integrations.py`.
-Содержимое файлов синтетическое.
-Тесты не читают реальные пользовательские файлы.
+**Ситуация:** `/upload` должен измерить синтетический файл, не читая пользовательские файлы с диска.
+**Изменение:** передайте имя, байты и media type через `files`.
+Фрагмент теста для [полного `uploads.py`](uploads.md):
 
-<!-- example: test_integrations.py -->
 ```python
 from fastapi.testclient import TestClient
+from uploads import app
 
-from middleware_app import app as middleware_app
-from uploads import MAX_BYTES, app as uploads_app
-
-
-def test_form_and_files():
-    with TestClient(uploads_app) as client:
-        assert client.post("/form", data={"username": "alice"}).json() == {"username": "alice"}
-        response = client.post("/upload", files={"file": ("demo.txt", b"abc", "text/plain")})
-        assert response.status_code == 200
-        assert response.json() == {"filename": "demo.txt", "size": 3}
-        multiple = client.post("/uploads", files=[
-            ("files", ("a.txt", b"a", "text/plain")),
-            ("files", ("b.txt", b"bb", "text/plain")),
-        ])
-        assert [item["size"] for item in multiple.json()] == [1, 2]
-        assert client.post("/upload").status_code == 422
-        too_big = client.post("/upload", files={"file": ("large.txt", b"x" * (MAX_BYTES + 1))})
-        assert too_big.status_code == 413
-
-
-def test_cors_and_timing():
-    with TestClient(middleware_app) as client:
-        response = client.get("/", headers={"Origin": "http://localhost:3000"})
-        assert response.status_code == 200
-        assert float(response.headers["X-Process-Time"]) >= 0
-        assert response.headers["Access-Control-Allow-Origin"] == "http://localhost:3000"
-        preflight = client.options("/", headers={
-            "Origin": "http://localhost:3000", "Access-Control-Request-Method": "GET",
-        })
-        assert preflight.status_code == 200
-        denied = client.get("/", headers={"Origin": "http://untrusted.example"})
-        assert "Access-Control-Allow-Origin" not in denied.headers
+with TestClient(app) as client:
+    response = client.post("/upload", files={"file": ("demo.txt", b"abc", "text/plain")})
+    assert response.status_code == 200
+    assert response.json() == {"filename": "demo.txt", "size": 3}
 ```
+
+**Результат:** обработчик возвращает размер `3`.
+Этот запрос не проверяет общий лимит HTTP-тела на прокси.
+[Полные проверки нескольких файлов, 413, CORS и preflight](testing-lab.md#файлы-и-middleware).
 
 ## Сессии БД и lifespan
 
-Полный файл `test_database.py`.
-Каждый тест получает свой файл SQLite в `tmp_path`.
-До запуска lifespan тест подменяет движок и фабрику.
-Основные учебные БД не меняются.
+**Ситуация:** повторный email должен дать `409`, а тест не должен менять учебную БД приложения.
+**Изменение:** до `TestClient` замените движок и фабрику на SQLite из `tmp_path`.
+Фрагмент теста с фикстурами `tmp_path` и `monkeypatch` для [полного `db_app.py`](database.md#синхронный-sqlalchemy):
 
-<!-- example: test_database.py -->
 ```python
-from fastapi.testclient import TestClient
+import db_app
 from sqlalchemy import create_engine
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
-import async_db_app
-import db_app
-
-
-def test_sync_database(tmp_path, monkeypatch):
-    engine = create_engine(f"sqlite:///{tmp_path / 'users.db'}", connect_args={"check_same_thread": False})
-    monkeypatch.setattr(db_app, "engine", engine)
-    monkeypatch.setattr(db_app, "SessionLocal", sessionmaker(engine))
-    with TestClient(db_app.app) as client:
-        body = {"username": "alice", "email": "alice@example.com"}
-        created = client.post("/users", json=body)
-        assert created.status_code == 201
-        assert created.json()["id"] == 1
-        assert client.post("/users", json=body).status_code == 409
-        assert len(client.get("/users").json()) == 1
-
-
-def test_async_database(tmp_path, monkeypatch):
-    engine = create_async_engine(f"sqlite+aiosqlite:///{tmp_path / 'notes.db'}")
-    monkeypatch.setattr(async_db_app, "engine", engine)
-    monkeypatch.setattr(async_db_app, "SessionLocal", async_sessionmaker(engine, expire_on_commit=False))
-    with TestClient(async_db_app.app) as client:
-        created = client.post("/notes", json={"text": "Учебная заметка"})
-        assert created.status_code == 201
-        assert client.get("/notes").json() == [{"id": 1, "text": "Учебная заметка"}]
-        assert client.post("/notes", json={"text": ""}).status_code == 422
+engine = create_engine(f"sqlite:///{tmp_path / 'users.db'}", connect_args={"check_same_thread": False})
+monkeypatch.setattr(db_app, "engine", engine)
+monkeypatch.setattr(db_app, "SessionLocal", sessionmaker(engine))
 ```
+
+**Результат:** lifespan создаёт схему в отдельном файле; зависимость получает сессии из тестовой фабрики.
+Сохраните подмену до выхода из контекста клиента, чтобы lifespan закрыл тестовый движок.
+Фрагмент подготавливает ресурс; сам HTTP-отказ проверяет [полный sync/async-модуль](testing-lab.md#сессии-бд-и-lifespan).
 
 ## Аутентификация
 
-Полный файл `test_auth.py`.
-До импорта приложения тесты назначают фиксированный учебный ключ в своём процессе.
-Назначение не зависит от переменной окружения родительского процесса.
-Для реального запуска выполните [подготовку ключа](authentication.md#подготовка).
+**Ситуация:** маршрут `/users/me` должен отвергать запрос без bearer-токена.
+**Изменение:** оставьте реальную зависимость аутентификации и проверьте HTTP-контракт.
+Фрагмент для [полного `auth_app.py`](authentication.md#полный-пример) после [подготовки учебного ключа](authentication.md#подготовка):
 
-<!-- example: test_auth.py -->
 ```python
-import os
-from datetime import datetime, timedelta, timezone
-
-import jwt
-import pytest
 from fastapi.testclient import TestClient
+from auth_app import app
 
-os.environ["JWT_SECRET_KEY"] = "testing-only-secret-key-never-use-in-production-1234567890"
-from auth_app import ALGORITHM, SECRET_KEY, app, issue_token, users
-
-
-def test_login_and_protected_route():
-    with TestClient(app) as client:
-        response = client.post("/token", data={"username": "alice", "password": "training-password-123"})
-        assert response.status_code == 200
-        assert response.json()["token_type"] == "bearer"
-        token = response.json()["access_token"]
-        me = client.get("/users/me", headers={"Authorization": f"Bearer {token}"})
-        assert me.status_code == 200
-        assert me.json() == {"username": "alice"}
-
-
-@pytest.mark.parametrize("username,password", [
-    ("alice", "wrong-password"), ("unknown", "training-password-123"),
-])
-def test_invalid_credentials(username, password):
-    with TestClient(app) as client:
-        response = client.post("/token", data={"username": username, "password": password})
-        assert response.status_code == 401
-        assert "access_token" not in response.json()
-
-
-def test_missing_token():
-    with TestClient(app) as client:
-        response = client.get("/users/me")
-        assert response.status_code == 401
-        assert response.headers["WWW-Authenticate"] == "Bearer"
-
-
-@pytest.mark.parametrize("kind", ["malformed", "expired", "wrong-key", "wrong-algorithm", "no-exp", "no-sub", "unknown-user"])
-def test_invalid_tokens(kind):
-    claims = {"sub": "alice", "exp": datetime.now(timezone.utc) + timedelta(minutes=1)}
-    key, algorithm = SECRET_KEY, ALGORITHM
-    if kind == "expired":
-        claims["exp"] = datetime.now(timezone.utc) - timedelta(minutes=1)
-    elif kind == "no-exp":
-        del claims["exp"]
-    elif kind == "no-sub":
-        del claims["sub"]
-    elif kind == "unknown-user":
-        claims["sub"] = "unknown"
-    elif kind == "wrong-key":
-        key = "different-test-key-1234567890123456789012345678901234567890"
-    elif kind == "wrong-algorithm":
-        algorithm = "HS384"
-    token = "not.a.valid-token" if kind == "malformed" else jwt.encode(claims, key, algorithm=algorithm)
-    with TestClient(app) as client:
-        response = client.get("/users/me", headers={"Authorization": f"Bearer {token}"})
-        assert response.status_code == 401
-        assert response.headers["WWW-Authenticate"] == "Bearer"
-
-
-def test_disabled_user(monkeypatch):
-    monkeypatch.setitem(users["alice"], "disabled", True)
-    with TestClient(app) as client:
-        token = issue_token("alice")
-        assert client.get("/users/me", headers={"Authorization": f"Bearer {token}"}).status_code == 401
+with TestClient(app) as client:
+    response = client.get("/users/me")
+    assert response.status_code == 401
+    assert response.headers["WWW-Authenticate"] == "Bearer"
 ```
 
-Эти тесты проверяют учебные контракты.
-Нагрузку, реальный прокси, HTTPS и интеграцию с внешним провайдером входа эти тесты не проверяют.
-Положительный HTTP-ответ не подтверждает защищённость всей системы.
+**Результат:** клиент получает `401` и запрос bearer-аутентификации.
+Подмена `current_user` скрыла бы эту проверку.
+[Полный модуль с паролями, подписями, сроком и заблокированным пользователем](testing-lab.md#аутентификация).
 
 ## Источники
 

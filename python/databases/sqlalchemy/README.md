@@ -1,6 +1,7 @@
 # SQLAlchemy: API 2.x
 
 SQLAlchemy объединяет SQL-конструктор Core и ORM с сессиями, отношениями и транзакциями.
+Откройте справочник для моделей, транзакций, запросов и выбора загрузки отношений.
 Справочник использует стиль `select()`.
 Примеры используют SQLAlchemy 2.1.
 Примеры сохраняют основные конструкции, введённые в 2.0.
@@ -43,6 +44,32 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 
 ## Базовый уровень
 
+### Записать пользователя в явной транзакции
+
+**Ситуация:** пользователь должен сохраниться при успехе и откатиться при исключении.
+**Изменение:** отделите жизнь сессии от транзакционной границы.
+Фрагмент использует `User` и `new_engine()` из [полной схемы](models-and-transactions.md#единая-схема-для-рецептов):
+
+```python
+from sqlalchemy.orm import Session
+from demo_models import User, new_engine
+
+engine = new_engine()
+try:
+    with Session(engine) as session, session.begin():
+        user = User(name="alice", email="alice@example.com")
+        session.add(user)
+        session.flush()
+        assert user.id is not None
+finally:
+    engine.dispose()
+```
+
+**Результат:** `flush` выдаёт id, а успешный выход из `begin` фиксирует транзакцию.
+SQLite существует только в памяти; после освобождения движка данные исчезают.
+[Полные CRUD и проверки отката](models-and-transactions.md#crud-транзакции-и-savepoint).
+
+
 Для первого знакомства с N+1 используйте [отдельную подготовку одного файла](n-plus-one.md#подготовка-и-запуск).
 Установка ниже относится к общей схеме и остальным рецептам раздела.
 Установите пакеты в отдельное окружение: `python -m pip install 'sqlalchemy[asyncio]==2.1.8' pytest`.
@@ -66,6 +93,8 @@ Extra `asyncio` нужен общей модели с AsyncAttrs, даже дл�
 Вызов `flush()` не выполняет commit.
 [Полный исполняемый пример](models-and-transactions.md).
 
+Схема показывает границу сессии и исходы явной транзакции:
+
 ```mermaid
 flowchart LR
     A[Открыть Session] -->|выделить границу работы| B[Начать транзакцию]
@@ -86,6 +115,27 @@ flowchart LR
 
 ## Средний уровень
 
+### Получить строки из нескольких колонок
+
+**Ситуация:** из подготовленных Alice и Bob нужны имена и возраст совершеннолетних.
+**Изменение:** выберите колонки явно и используйте `execute`, сохраняя обе колонки.
+Фрагмент использует Session с данными из [полного `seed()`](queries.md#select-join-подзапросы-и-cte):
+
+```python
+from sqlalchemy import select
+from demo_models import User
+
+rows = session.execute(
+    select(User.name, User.age).where(User.age >= 18).order_by(User.id)
+).all()
+assert rows == [("alice", 30)]
+```
+
+**Результат:** одна строка с двумя значениями.
+`scalars()` оставил бы только первую выбранную колонку.
+[Полный набор JOIN, CTE, EXISTS и проверки](queries.md).
+
+
 - `Mapped[str | None]` выводит nullable. Явный `nullable=` имеет приоритет. `Numeric` обычно возвращает `Decimal`. Аннотируйте соответствующее поле как Decimal.
 - `default` применяется на стороне Python/SQLAlchemy. `server_default` входит в DDL БД. `onupdate` не создаёт серверный trigger.
 - Обеспечивайте уникальность и внешние ключи через constraints. Для 1:1 скалярного `relationship` недостаточно. Нужен уникальный FK или PK.
@@ -93,6 +143,24 @@ flowchart LR
 - ORM `cascade="all, delete-orphan"` и FK `ON DELETE` — разные механизмы. [Схема и тесты](models-and-transactions.md) включают внешний ключ SQLite явно.
 
 ## Продвинутый уровень
+
+### Прочитать коллекции без запроса для каждого пользователя
+
+**Ситуация:** список пользователей должен включать все посты, а дополнительный SELECT допустим.
+**Изменение:** загрузите коллекции через `selectinload`.
+Фрагмент запроса из [самостоятельной программы с двумя моделями](n-plus-one.md#полная-программа):
+
+```python
+stmt = select(User).options(selectinload(User.posts)).order_by(User.id)
+users = session.scalars(stmt).all()
+rows = [(user.name, [post.title for post in user.posts]) for user in users]
+```
+
+**Результат учебного набора:** Alice с двумя постами и Bob с пустой коллекцией; два SELECT вместо трёх.
+Число запросов относится к двум пользователям и новой Session.
+Импорты и подготовка указаны в полной программе.
+[Выбор стратегии, цена JOIN и ограничения](relationship-loading.md#выбрать-стратегию).
+
 
 [Запросы](queries.md) описывают SQL-выражения и отдельную компиляцию PostgreSQL.
 [Карточки загрузки](relationship-loading.md) помогают выбрать состав отношений.
