@@ -1,230 +1,136 @@
 # Отмена, goroutines и общие данные
 
+Откройте страницу, чтобы обработать список параллельно или защитить данные нескольких goroutines.
+Примеры сохраняют порядок строк и ждут завершения всех запущенных workers перед возвратом.
 [Справочник Go](README.md) · [Файлы модуля](language.md#полный-модуль)
 
-**Уровень:** средний → продвинутый. Предпосылки: функции, slices, error и владение памятью.
-Примеры используют Go 1.27 и API `context`/`sync`.
-Эти файлы дополняют тот же модуль. Файлы используют только стандартную библиотеку.
+| Задача | Приём | Пример |
+| --- | --- | --- |
+| Обработать список с ограничением параллелизма | Фиксированные workers и индексы результата | [Worker pool](#ограниченный-worker-pool) |
+| Завершить работу по отмене | `context` в отправителе и workers | [Отмена](#отменить-обработку) |
+| Изменять общий счётчик без потерянных обновлений | Один mutex для чтения и записи | [Счётчик](#общие-данные-и-mutex) |
+| Проверить порядок, ошибки и гонки | Тесты и `-race` | [Проверка](#тесты-и-race-detector) |
 
-- [Ограниченный worker pool](#ограниченный-worker-pool)
-- [Общие данные и mutex](#общие-данные-и-mutex)
-- [Тесты и race detector](#тесты-и-race-detector)
+**Уровень:** средний → продвинутый.
+Предпосылки: функции, slices, error и владение памятью; Go 1.27.
+Фрагменты используют один [учебный модуль](language.md#полный-модуль) без сторонних библиотек.
+Сначала добавьте [worker.go, counter.go и worker_test.go](examples/concurrency-and-testing.md).
 
 ## Ограниченный worker pool
 
-Задача — обработать список строк с ограниченным количеством workers и сохранить порядок результата.
-Производитель закрывает канал.
-Вызывающий код получает результат только после завершения всех workers.
+**Ситуация:** список `go, python, rust` нужно перевести в верхний регистр двумя workers.
+Порядок ответа должен совпасть с входным порядком.
+Передайте каждому заданию индекс; дождитесь workers до чтения результата.
+
+**Пример — фрагмент внутри `main`; импорты: `context`, `fmt`, `example.com/cheatsheet`:**
+
+```go
+input := []string{"go", "python", "rust"}
+result, err := cheatsheet.Uppercase(context.Background(), input, 2)
+fmt.Println(result, err) // [GO PYTHON RUST] <nil>
+```
+
+**Результат:** две goroutines обрабатывают задания, но записывают отдельные индексы заранее созданного среза.
+Чтение начинается после `Wait`.
+Производитель закрывает канал после отправки заданий.
+Не изменяйте входной срез во время работы.
+Для коротких строк расходы на goroutines могут превысить пользу параллелизма; пример не измеряет ускорение.
+
+Схема показывает передачу заданий и условие возврата результата:
 
 ```mermaid
 flowchart LR
-    A[Вызывающий код и context] -->|передать ввод и context| P[Производитель заданий]
-    P -->|отправлять задания| C[Канал jobs]
-    C -->|получить задание| W1[Worker 1]
-    C -->|получить задание| W2[Worker 2]
-    W1 -->|записать свой индекс| R[Разные индексы результата]
-    W2 -->|записать свой индекс| R
-    P -->|закрыть jobs и ждать| G[WaitGroup.Wait]
-    W1 -->|Done при завершении| G
-    W2 -->|Done при завершении| G
-    G -->|все workers завершены| O[Результат или ошибка context]
-    R -->|читать после Wait| O
-    A -. отмена .-> P
-    A -. отмена .-> W1
-    A -. отмена .-> W2
+    P[Производитель] -->|отправить индекс и строку| C[Канал jobs]
+    C -->|получить задание| W[Два workers]
+    W -->|записать отдельный индекс| R[Срез результата]
+    P -->|закрыть канал после отправки| G[WaitGroup.Wait]
+    W -->|сообщить Done| G
+    G -->|разрешить чтение после завершения| R
 ```
 
-Полный `worker.go`:
+[Полный worker.go и схема отмены](examples/concurrency-and-testing.md#ограниченный-worker-pool)
 
-<!-- example: go/worker.go -->
+## Отменить обработку
+
+**Ситуация:** вызывающий код прекращает задачу; функция должна вернуть причину отмены.
+Передайте `context` первым аргументом; предусмотрите выход из блокирующего `select` у отправителя и workers.
+
+**Пример — самостоятельный фрагмент внутри `main`; импорты: `context`, `errors`, `fmt`, `example.com/cheatsheet`:**
+
 ```go
-package cheatsheet
-
-import (
-	"context"
-	"errors"
-	"strings"
-	"sync"
-)
-
-var ErrWorkers = errors.New("workers must be positive")
-
-func Uppercase(ctx context.Context, input []string, workers int) ([]string, error) {
-	if workers < 1 {
-		return nil, ErrWorkers
-	}
-	if err := ctx.Err(); err != nil {
-		return nil, err
-	}
-	if workers > len(input) {
-		workers = len(input)
-	}
-	type job struct {
-		index int
-		value string
-	}
-	jobs := make(chan job)
-	result := make([]string, len(input))
-	var group sync.WaitGroup
-	group.Add(workers)
-	for range workers {
-		go func() {
-			defer group.Done()
-			for {
-				select {
-				case <-ctx.Done():
-					return
-				case task, ok := <-jobs:
-					if !ok {
-						return
-					}
-					result[task.index] = strings.ToUpper(task.value)
-				}
-			}
-		}()
-	}
-sendLoop:
-	for index, value := range input {
-		select {
-		case <-ctx.Done():
-			break sendLoop
-		case jobs <- job{index: index, value: value}:
-		}
-	}
-	close(jobs)
-	group.Wait()
-	if err := ctx.Err(); err != nil {
-		return nil, err
-	}
-	return result, nil
-}
+ctx, cancel := context.WithCancel(context.Background())
+cancel()
+result, err := cheatsheet.Uppercase(ctx, []string{"go"}, 2)
+fmt.Println(result == nil, errors.Is(err, context.Canceled)) // true true
 ```
 
-Функция создаёт срез заранее.
-Каждый индекс записывает один worker.
-Чтение результата начинается после Wait.
-Не изменяйте входной срез во время работы.
-Workers проверяют отмену между заданиями.
+**Результат:** уже отменённый context отклоняет обработку до запуска workers.
+При отмене во время работы workers проверяют `Done()` между заданиями.
 Отмена не прерывает `strings.ToUpper` посередине операции.
-Если одновременно готовы несколько веток select, отмена не имеет абсолютного приоритета.
-Пример не гарантирует отсутствие заданий после cancel.
+Если готовы несколько веток `select`, отмена не имеет абсолютного приоритета.
+Пример не гарантирует отсутствие заданий после `cancel`.
+Для `WithTimeout` также вызывайте `cancel`, обычно через `defer`.
+
+[Полная реализация](examples/concurrency-and-testing.md#ограниченный-worker-pool) · [Тест отказа](examples/concurrency-and-testing.md#тесты-и-race-detector)
 
 ## Общие данные и mutex
 
-Полный `counter.go`. Если несколько goroutines меняют один счётчик, отдельные переменные каналов сами по себе не защищают его значение.
+**Ситуация:** двадцать goroutines увеличивают один счётчик по сто раз.
+Каждое увеличение должно сохраниться, а чтение не должно пересекаться с незащищённой записью.
+Используйте один mutex для обоих методов.
 
-<!-- example: go/counter.go -->
+**Пример — самостоятельный фрагмент внутри `main`; импорты: `fmt`, `sync`, `example.com/cheatsheet`:**
+
 ```go
-package cheatsheet
-
-import "sync"
-
-type Counter struct {
-	mu    sync.Mutex
-	value int
+var counter cheatsheet.Counter
+var group sync.WaitGroup
+for range 20 {
+    group.Add(1)
+    go func() {
+        defer group.Done()
+        for range 100 {
+            counter.Add(1)
+        }
+    }()
 }
-
-func (c *Counter) Add(delta int) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-	c.value += delta
-}
-
-func (c *Counter) Value() int {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-	return c.value
-}
+group.Wait()
+fmt.Println(counter.Value()) // 2000
 ```
 
-Нулевое значение Counter пригодно к использованию.
-Передавайте Counter указателем.
-Не копируйте mutex после начала использования.
-Lock защищает чтение и запись одного инварианта.
-Для независимого счётчика возможен atomic-тип.
-Не смешивайте atomic и обычные обращения к тому же значению.
+**Результат:** счётчик равен `2000` после завершения всех goroutines.
+Нулевое значение `Counter` пригодно к использованию.
+Передавайте `Counter` указателем; не копируйте mutex после начала использования.
+Канал переносит данные или сигналы; mutex защищает инвариант общей памяти.
+Для независимого счётчика возможен atomic-тип; не смешивайте atomic и обычные обращения к тому же значению.
+
+[Полный counter.go](examples/concurrency-and-testing.md#общие-данные-и-mutex)
 
 ## Тесты и race detector
 
-Полный `worker_test.go`:
-
-<!-- example: go/worker_test.go -->
-```go
-package cheatsheet
-
-import (
-	"context"
-	"errors"
-	"reflect"
-	"sync"
-	"testing"
-	"time"
-)
-
-func TestUppercasePreservesOrder(t *testing.T) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
-	got, err := Uppercase(ctx, []string{"go", "python", "rust"}, 2)
-	if err != nil || !reflect.DeepEqual(got, []string{"GO", "PYTHON", "RUST"}) {
-		t.Fatalf("Uppercase = %v, %v", got, err)
-	}
-	empty, err := Uppercase(ctx, nil, 2)
-	if err != nil || len(empty) != 0 {
-		t.Fatalf("empty input = %v, %v", empty, err)
-	}
-}
-
-func TestUppercaseRejectsInvalidWorkersAndCancellation(t *testing.T) {
-	if _, err := Uppercase(context.Background(), []string{"go"}, 0); !errors.Is(err, ErrWorkers) {
-		t.Fatalf("workers error = %v", err)
-	}
-	ctx, cancel := context.WithCancel(context.Background())
-	cancel()
-	if _, err := Uppercase(ctx, []string{"go"}, 2); !errors.Is(err, context.Canceled) {
-		t.Fatalf("cancellation error = %v", err)
-	}
-}
-
-func TestCounterConcurrentUpdates(t *testing.T) {
-	var counter Counter
-	var group sync.WaitGroup
-	for range 20 {
-		group.Add(1)
-		go func() {
-			defer group.Done()
-			for range 100 {
-				counter.Add(1)
-			}
-		}()
-	}
-	group.Wait()
-	if got := counter.Value(); got != 2000 {
-		t.Fatalf("counter = %d, want 2000", got)
-	}
-}
-```
+После добавления [полного worker_test.go](examples/concurrency-and-testing.md#тесты-и-race-detector) запустите команды из каталога модуля:
 
 ```bash
-go test ./...
+go test -count=1 ./...
 go vet ./...
-go test -race ./...
+go test -race -count=1 ./...
 ```
 
-Ожидаются исходный порядок строк и точное число инкрементов.
-При workers=0 или уже отменённом context ожидается отказ.
-Timeout теста ограничивает обработку.
-Timeout не доказывает отсутствие любых утечек goroutines.
-`-race` обнаруживает только гонки на реально выполненных путях.
-Логические race conditions и deadlock требуют отдельных тестов или анализа.
-Для повторяемой диагностики используйте `go test -count=1 ./...`.
-Не делайте вывод только по кешированному прогону.
+**Результат:** тесты проверяют порядок строк, пустой ввод, недопустимое число workers, отменённый context и точное число инкрементов.
+Race detector требует поддерживаемой платформы и средств сборки.
+`-race` обнаруживает гонки только на выполненных путях; логические гонки и deadlock требуют отдельных проверок.
+Timeout теста ограничивает ожидание, но не доказывает отсутствие любых утечек goroutines.
+`-count=1` отключает использование кешированного результата теста.
 
 | Ситуация | Что сделать |
 | --- | --- |
 | Создан `WithCancel` / `WithTimeout` | Вызовите cancel, обычно через defer |
-| Worker может блокироваться на send | Добавьте ветку `ctx.Done()` либо другой гарантированный путь завершения |
+| Worker блокируется на send | Добавьте `ctx.Done()` либо другой гарантированный путь завершения |
 | Нужно дождаться goroutines | Вызовите Add до запуска, Done в worker, Wait после запуска |
-| Сразу несколько ошибок worker | Нужна отдельная политика отмены/сбора ошибок; этот пример обрабатывает только ошибку context |
-| Канал nil | Send/receive блокируются; это допустимый инструмент только при осознанном select |
+| Несколько workers возвращают ошибки | Определите политику отмены/сбора; этот пример возвращает только ошибку context |
+| Канал равен nil | Send/receive блокируются; используйте это свойство только в осознанном select |
 
-Источники: [context](https://pkg.go.dev/context), [sync и модель синхронизации](https://pkg.go.dev/sync), [memory model](https://go.dev/ref/mem), [race detector](https://go.dev/doc/articles/race_detector), [testing](https://pkg.go.dev/testing).
+## Источники
+
+[context](https://pkg.go.dev/context), [sync](https://pkg.go.dev/sync),
+[memory model](https://go.dev/ref/mem), [race detector](https://go.dev/doc/articles/race_detector),
+[testing](https://pkg.go.dev/testing), [Go 1.27 release notes](https://go.dev/doc/go1.27).
