@@ -224,7 +224,7 @@
 | Передать действие как данные и определить повтор | Command, handler, request_id, dedup, replay | [Полный Command](../architecture/patterns/code-examples.md#command-запрос-обработчик-и-локальный-повтор) |
 | Сравнить слои, фичи и порты на деревьях пакетов | Layered, feature-oriented, Vertical Slice, Ports & Adapters, hexagonal | [Архитектурные подходы: организация кода](../architecture/patterns/architecture-patterns.md#организация-кода) |
 | Выбрать монолит или отдельные сервисы | modular monolith, microservices, deployment, релиз | [Границы развёртывания](../architecture/patterns/architecture-patterns.md#границы-развёртывания) |
-| Сохранить заказ и намерение публикации одной транзакцией | Transactional Outbox, relay, at-least-once, duplicate | [Полный Outbox и окно дубликата](../architecture/patterns/distributed-systems.md#полный-пример-outbox-и-дубликат-публикации) |
+| Сохранить заказ и намерение публикации одной транзакцией | Transactional Outbox, relay, at-least-once, duplicate | [Полный Outbox и окно дубликата](../architecture/patterns/outbox-example.md#полный-пример-outbox-и-дубликат-публикации) |
 | Компенсировать шаги распределённого процесса | Saga, orchestration, choreography, compensation | [Saga: шаги и компенсация](../architecture/patterns/distributed-systems.md#saga-согласовать-локальные-шаги) |
 | Разделить модели изменения и чтения | CQRS, command/query, read model, projection, Event Sourcing | [CQRS: границы разделения](../architecture/patterns/distributed-systems.md#cqrs-разделить-модели-записи-и-чтения) |
 | Ограниченно повторить временный отказ | Retry, backoff, jitter, deadline, idempotency, идемпотентность | [Retry: решение о повторе](../architecture/patterns/distributed-systems.md#retry-повторить-временный-отказ) |

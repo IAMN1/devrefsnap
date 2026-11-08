@@ -6,6 +6,17 @@
 Примеры запросов: «откат / undo», «резервная копия / backup», «повтор запроса / retry».
 Для обзора технологий выберите тему в таблице ниже или каталог раздела.
 
+## Быстрый вход
+
+| Ситуация | Как искать | Пример |
+| --- | --- | --- |
+| Помните задачу, но забыли название приёма | Найдите действие или синоним | [Указатель задач](tasks/README.md) |
+| Выбрали инструмент и хотите повторить синтаксис | Откройте быстрый поиск темы | [Каталог материалов](#каталог-материалов) |
+| Нужно выбрать между подходами | Сравните условия и ограничения в карточке | [Загрузка связанных данных](python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) |
+| Нужен первый самостоятельный запуск | Перейдите к полному примеру из карточки | [Python-пакет с тестами](python/architecture/project-design/example.md) |
+
+## Разделы
+
 - [Python](python/README.md) — язык, проектирование, библиотеки, FastAPI и Flask.
 - [Go](go/README.md) — язык, стандартная библиотека, конкурентность и тестирование.
 - [Базы данных](databases/README.md) — SQL, PostgreSQL, SQLite и Redis.
@@ -37,7 +48,7 @@
 | Linux | [Оболочка, файлы, процессы и службы](systems/linux/README.md), [процесс по порту](systems/linux/process-by-port.md) |
 | Архитектурные принципы | [Карточки границ и компромиссов](architecture/principles.md), [проверки контрактов](architecture/contracts.md) |
 | SOLID | [Пять принципов: до / после](architecture/solid.md) |
-| Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md) |
+| Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md), [проверка Outbox](architecture/patterns/outbox-example.md) |
 
 ## Как пользоваться материалами
 
