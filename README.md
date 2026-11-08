@@ -36,9 +36,9 @@
 | pytest | [Тестирование](python/testing/pytest/README.md) |
 | structlog | [Структурированные логи](python/logging/structlog/README.md) |
 | uv | [Окружения и зависимости Python](python/tooling/uv/README.md) |
-| FastAPI | [Веб-приложения и API](python/web/fastapi/README.md), [подмена зависимости в тесте](python/web/fastapi/testing.md#подмена-зависимости) |
+| FastAPI | [Веб-приложения и API](python/web/fastapi/README.md), [полное API](python/web/fastapi/http-api.md), [подмена зависимости в тесте](python/web/fastapi/testing.md#подмена-зависимости) |
 | Flask | [WSGI-приложения, factory и тесты](python/web/flask/README.md) |
-| Go | [Язык, конкурентность и HTTP](go/README.md) |
+| Go | [Язык, конкурентность и HTTP](go/README.md), [полный модуль](go/examples/language.md) |
 | SQL | [Общий справочник SQL](databases/sql/README.md) |
 | PostgreSQL | [Справочник](databases/relational/postgresql/README.md), [копия и восстановление](databases/relational/postgresql/backup-and-restore.md) |
 | SQLite | [Справочник](databases/relational/sqlite/README.md), [копия и восстановление](databases/relational/sqlite/backup-and-restore.md) |
