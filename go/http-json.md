@@ -1,176 +1,100 @@
 # Проверить JSON HTTP-запрос
 
+Откройте страницу, чтобы принять имя через JSON и различить неверный формат, пустое имя и слишком большое тело.
+Пример POST `/normalize` работает внутри процесса; регистрация и сохранение в БД в задачу не входят.
 [Справочник Go](README.md) · [Модуль](language.md#полный-модуль)
 
-**Уровень:** средний → продвинутый. Предпосылки: HTTP, структуры, error.
-Пример использует Go 1.27: `encoding/json`, `net/http` и `httptest`.
-Пример использует тот же модуль и стандартную библиотеку.
-TCP-сервер и внешние запросы не используются.
+| Задача | Приём | Пример |
+| --- | --- | --- |
+| Принять имя и убрать пробелы | Handler с проверкой типа и смысла данных | [Успешный запрос](#handler-с-границами-ввода) |
+| Отклонить лишнее или большое тело | Лимит размера и проверка единственного JSON-значения | [Границы ввода](#различить-ошибки-ввода) |
+| Проверить ответ без запуска сервера | `httptest.NewRecorder` | [Тест](#тест-без-сетевого-сервера) |
+| Перейти к внешним запросам | Timeout, ресурсы и завершение | [Эксплуатационные границы](#перед-настоящим-http-запуском) |
+
+**Уровень:** средний → продвинутый.
+Предпосылки: HTTP, структуры, error; Go 1.27.
+Пример использует только `encoding/json`, `net/http` и `httptest` из стандартной библиотеки.
+Добавьте [полные http.go и http_test.go](examples/http-json.md#handler-с-границами-ввода) в существующий учебный модуль.
 
 ## Handler с границами ввода
 
-Полный `http.go` содержит обработчик POST `/normalize`.
-Обработчик принимает имя, обрезает пробелы и возвращает JSON.
-Пример обрабатывает ввод без регистрации и сохранения в БД.
-Лимит 1 KiB выбран только для учебного тела запроса.
+**Ситуация:** клиент отправляет `{"name":" Alice "}`; ответ должен содержать имя `Alice`.
+Обработчик должен отклонить чужой Content-Type и пустое имя до записи успешного ответа.
+Нормализуйте имя после разбора JSON.
 
-<!-- example: go/http.go -->
+**Пример — фрагмент внутри теста полного модуля; импорты: `net/http`, `net/http/httptest`, `strings`:**
+
 ```go
-package cheatsheet
-
-import (
-	"encoding/json"
-	"errors"
-	"io"
-	"log"
-	"mime"
-	"net/http"
-	"strings"
-)
-
-const maxBodyBytes int64 = 1024
-
-type namePayload struct {
-	Name string `json:"name"`
-}
-
-func NewHandler() http.Handler {
-	mux := http.NewServeMux()
-	mux.HandleFunc("POST /normalize", normalizeName)
-	return mux
-}
-
-func decodeError(w http.ResponseWriter, err error) {
-	var limit *http.MaxBytesError
-	if errors.As(err, &limit) {
-		http.Error(w, "body too large", http.StatusRequestEntityTooLarge)
-		return
-	}
-	http.Error(w, "invalid JSON", http.StatusBadRequest)
-}
-
-func normalizeName(w http.ResponseWriter, r *http.Request) {
-	mediaType, _, err := mime.ParseMediaType(r.Header.Get("Content-Type"))
-	if err != nil || mediaType != "application/json" {
-		http.Error(w, "expected application/json", http.StatusUnsupportedMediaType)
-		return
-	}
-	r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
-	decoder := json.NewDecoder(r.Body)
-	decoder.DisallowUnknownFields()
-	var payload namePayload
-	if err := decoder.Decode(&payload); err != nil {
-		decodeError(w, err)
-		return
-	}
-	if err := decoder.Decode(new(any)); err != io.EOF {
-		if err == nil {
-			http.Error(w, "one JSON value required", http.StatusBadRequest)
-		} else {
-			decodeError(w, err)
-		}
-		return
-	}
-	payload.Name = strings.TrimSpace(payload.Name)
-	if payload.Name == "" {
-		http.Error(w, "name required", http.StatusUnprocessableEntity)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(payload); err != nil {
-		log.Printf("encode normalization response: %v", err)
-	}
-}
+request := httptest.NewRequest(http.MethodPost, "/normalize", strings.NewReader(`{"name":" Alice "}`))
+request.Header.Set("Content-Type", "application/json")
+recorder := httptest.NewRecorder()
+NewHandler().ServeHTTP(recorder, request)
+// recorder.Code == 200
+// recorder.Body.String() == "{\"name\":\"Alice\"}\n"
 ```
 
-Обработчик отдельно проверяет синтаксис JSON, число JSON-значений и бизнес-правило имени.
-`DisallowUnknownFields` запрещает неизвестные поля.
-`DisallowUnknownFields` не запрещает дубликаты ключей и не устраняет все особенности сопоставления регистра `encoding/json`.
+**Результат:** handler возвращает `200`, `application/json` и нормализованное имя.
+Ограничение тела `1 KiB` выбрано для учебного запроса; определите собственный лимит по контракту.
+Обработчик проверяет ошибку записи ответа, но уже отправленный статус изменить нельзя.
+
+[Полный http.go](examples/http-json.md#handler-с-границами-ввода)
+
+## Различить ошибки ввода
+
+**Ситуация:** недоверенный клиент может прислать неверный JSON, лишнее поле или второй объект.
+Проверьте формат, размер и число значений отдельно от правила непустого имени.
+
+**Пример — фрагмент настройки decoder внутри `normalizeName`:**
+
+```go
+r.Body = http.MaxBytesReader(w, r.Body, maxBodyBytes)
+decoder := json.NewDecoder(r.Body)
+decoder.DisallowUnknownFields()
+```
+
+Фрагмент требует полного обработчика: объявления `maxBodyBytes`, разбора ошибок и второй операции `Decode`, ожидающей `io.EOF`.
+Одна операция `Decode` сама по себе не запрещает второе JSON-значение.
+
+| Вход POST `/normalize` | Ожидаемый статус | Причина |
+| --- | --- | --- |
+| `{"name":" "}` | `422` | Имя пусто после удаления пробелов |
+| `{"name":` | `400` | Неверный JSON |
+| `{"name":123}` | `400` | Поле имеет неверный тип |
+| `{"name":"Alice","extra":1}` | `400` | Неизвестное поле |
+| `{"name":"Alice"}{"name":"Bob"}` | `400` | Больше одного JSON-значения |
+| Тело больше `1024` байтов | `413` при обнаружении превышения | Превышен учебный лимит |
+| Запрос без `application/json` | `415` | Неверный тип содержимого |
+
+**Ограничения:** обработчик может отклонить другое нарушение раньше превышения размера.
+`DisallowUnknownFields` не запрещает дубликаты ключей и не делает имена полей регистрозависимыми.
 Если контракт ограничивает эти случаи, добавьте отдельную проверку.
-Обработчик проверяет ошибку записи ответа после начала отправки.
-Изменить уже отправленный статус нельзя.
+
+[Полная обработка ошибок](examples/http-json.md#handler-с-границами-ввода)
 
 ## Тест без сетевого сервера
 
-Полный `http_test.go`:
+Сохраните [полный http_test.go](examples/http-json.md#тест-без-сетевого-сервера).
+Запустите `go test -count=1 ./...` из каталога модуля.
+Ожидаются нормализация имени и отдельные отказы `400/405/413/415/422`.
+Метод GET для `/normalize` возвращает `405`.
+Recorder вызывает handler без открытия TCP-порта.
 
-<!-- example: go/http_test.go -->
-```go
-package cheatsheet
-
-import (
-	"encoding/json"
-	"net/http"
-	"net/http/httptest"
-	"strings"
-	"testing"
-)
-
-func TestJSONHandler(t *testing.T) {
-	for _, tc := range []struct {
-		name, body string
-		want       int
-	}{
-		{"valid", `{"name":" Alice "}`, 200},
-		{"empty-name", `{"name":" "}`, 422},
-		{"malformed", `{"name":`, 400},
-		{"unknown-field", `{"name":"Alice","extra":1}`, 400},
-		{"wrong-type", `{"name":123}`, 400},
-		{"trailing-value", `{"name":"Alice"}{"name":"Bob"}`, 400},
-		{"oversized", `{"name":"` + strings.Repeat("x", 2048) + `"}`, 413},
-	} {
-		t.Run(tc.name, func(t *testing.T) {
-			request := httptest.NewRequest(http.MethodPost, "/normalize", strings.NewReader(tc.body))
-			request.Header.Set("Content-Type", "application/json")
-			recorder := httptest.NewRecorder()
-			NewHandler().ServeHTTP(recorder, request)
-			if recorder.Code != tc.want {
-				t.Fatalf("status = %d, want %d; body=%q", recorder.Code, tc.want, recorder.Body.String())
-			}
-			if tc.want == 200 {
-				var payload namePayload
-				if err := json.Unmarshal(recorder.Body.Bytes(), &payload); err != nil {
-					t.Fatal(err)
-				}
-				if payload.Name != "Alice" || recorder.Header().Get("Content-Type") != "application/json" {
-					t.Fatalf("response = %+v", payload)
-				}
-			}
-		})
-	}
-}
-
-func TestMethodAndMediaType(t *testing.T) {
-	request := httptest.NewRequest(http.MethodGet, "/normalize", nil)
-	recorder := httptest.NewRecorder()
-	NewHandler().ServeHTTP(recorder, request)
-	if recorder.Code != http.StatusMethodNotAllowed {
-		t.Fatalf("GET status = %d", recorder.Code)
-	}
-	request = httptest.NewRequest(http.MethodPost, "/normalize", strings.NewReader(`{"name":"Alice"}`))
-	recorder = httptest.NewRecorder()
-	NewHandler().ServeHTTP(recorder, request)
-	if recorder.Code != http.StatusUnsupportedMediaType {
-		t.Fatalf("media type status = %d", recorder.Code)
-	}
-}
-```
-
-Запустите `go test ./...`.
-Ожидаются нормализация имени и отдельные отказы 400/405/413/415/422.
-Recorder проверяет handler внутри процесса без открытия порта.
+- [ ] Проверьте имя и Content-Type успешного ответа.
+- [ ] Проверьте каждый отказ из таблицы.
+- [ ] Проверьте запрет GET для маршрута POST.
 
 ## Перед настоящим HTTP-запуском
 
 | Задача | Что настроить |
 | --- | --- |
-| Принимать внешние запросы | `http.Server` с осмысленными `ReadHeaderTimeout`, `IdleTimeout` и политикой body/deadline; значения зависят от streaming и клиентов |
-| Ограничить JSON | Лимит тела + лимиты структуры/числа элементов по требованиям; размер сам по себе не описывает всю стоимость обработки |
+| Принимать внешние запросы | `http.Server` с `ReadHeaderTimeout`, `IdleTimeout` и политикой body/deadline; значения зависят от streaming и клиентов |
+| Ограничить JSON | Размер тела и лимиты структуры/числа элементов по требованиям; размер не описывает всю стоимость обработки |
 | Делать исходящие запросы | Переиспользуемый `http.Client` с timeout, `NewRequestWithContext`, закрытие `response.Body`, ограниченное чтение |
 | Остановить сервер | `Server.Shutdown` с ограниченным context; отдельно управляйте фоновыми задачами |
 | Проверить эксплуатацию | Проверьте TLS, proxy, нагрузку, закрытие соединений и отмену запросов отдельными сценариями |
 
-Таблица помогает выбрать настройки для следующей задачи.
-Таблица не содержит псевдокод готового production-сервера.
+## Источники
 
-Источники: [encoding/json](https://pkg.go.dev/encoding/json), [net/http](https://pkg.go.dev/net/http), [httptest](https://pkg.go.dev/net/http/httptest), [context](https://pkg.go.dev/context).
+[encoding/json](https://pkg.go.dev/encoding/json), [net/http](https://pkg.go.dev/net/http),
+[httptest](https://pkg.go.dev/net/http/httptest), [context](https://pkg.go.dev/context),
+[Go 1.27 release notes](https://go.dev/doc/go1.27).

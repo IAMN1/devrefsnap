@@ -1,11 +1,99 @@
 # Язык, модуль и ошибки
 
+Откройте страницу, чтобы вспомнить обработку ввода, изменение объекта и операции с коллекциями.
+Примеры используют пользователя с именем и возрастом; неверный ввод не должен создавать или менять объект.
 [Справочник Go](README.md) · [Конкурентность](concurrency-and-testing.md) · [HTTP](http-json.md)
 
-**Уровень:** базовый → средний. Предпосылки: функции и коллекции.
-Примеры используют Go 1.27.
-Все блоки с именами файлов образуют **один** стандартный модуль.
-Сохраняйте относительные пути после `go/`.
+| Задача | Приём | Пример |
+| --- | --- | --- |
+| Создать пользователя из строк | Проверить ввод и вернуть `error` | [Ввод и причина ошибки](#проверить-ввод-и-причину-ошибки) |
+| Переименовать существующего пользователя | Pointer receiver и проверка до записи | [Изменение объекта](#изменить-объект-и-сохранить-интерфейс) |
+| Изменить копию списка независимо | Копирование элементов среза | [Коллекции и generics](#скопировать-срез-и-проверить-элемент) |
+| Вспомнить синтаксис | Короткие конструкции | [Таблица языка](#основные-конструкции) |
+| Собрать программу и тесты | Один модуль без внешних библиотек | [Полный модуль](#полный-модуль) |
+
+**Уровень:** базовый → средний.
+Предпосылки: функции и коллекции; для запуска нужен Go 1.27.
+Фрагменты ниже предполагают `import "example.com/cheatsheet"` в пакете `main` полного модуля.
+Импортируйте также указанные стандартные пакеты.
+[Полные файлы и тесты](examples/language.md#полный-модуль) содержат все импорты.
+
+## Проверить ввод и причину ошибки
+
+**Ситуация:** форма передаёт имя `" Alice "` и возраст строкой `"30"`.
+Нужно убрать пробелы и отличить неверный возраст от пустого имени.
+Верните ошибку до создания пользователя; сохраните причину через `%w`.
+
+**Пример — фрагмент внутри `main`; дополнительные импорты: `errors`, `fmt`:**
+
+```go
+user, err := cheatsheet.NewUser(" Alice ", "30")
+if err != nil {
+    fmt.Println(err)
+    return
+}
+fmt.Println(user.Name, user.Age) // Alice 30
+_, err = cheatsheet.NewUser("Alice", "-1")
+fmt.Println(errors.Is(err, cheatsheet.ErrInvalidAge)) // true
+```
+
+**Результат:** корректный ввод создаёт пользователя; отрицательный возраст возвращает распознаваемую причину.
+`errors.Is` проверяет причину в цепочке; `errors.As` извлекает ошибку определённого типа.
+Например, текст `"not-a-number"` даёт `*strconv.NumError`.
+`%v` форматирует текст и не сохраняет цепочку.
+Разбор `int` зависит от архитектуры; для фиксированного диапазона выберите `int64` и соответствующий parser.
+
+[Реализация NewUser](examples/language.md#полный-модуль) · [Тесты неверного ввода](#проверка-валидного-и-невалидного-ввода)
+
+## Изменить объект и сохранить интерфейс
+
+**Ситуация:** пользователь уже создан; переименование должно менять исходный объект только при непустом имени.
+Проверьте имя перед записью и используйте pointer receiver для `Rename`.
+Оставьте value receiver у `String`, если методу не нужно менять объект.
+
+**Пример — продолжение предыдущего фрагмента; используются `fmt` и `errors`:**
+
+```go
+err = user.Rename("Alice Doe")
+fmt.Println(err == nil, cheatsheet.Describe(user)) // true Alice Doe (30)
+err = user.Rename(" ")
+fmt.Println(errors.Is(err, cheatsheet.ErrEmptyName)) // true
+fmt.Println(user.Name) // Alice Doe
+```
+
+**Результат:** пустое имя не меняет пользователя.
+`User` удовлетворяет `fmt.Stringer` без объявления `implements`.
+`Rename` предполагает ненулевой указатель.
+`log.Fatal` завершает процесс через `os.Exit(1)` и не выполняет отложенные функции.
+В библиотеке верните ошибку вызывающему коду.
+
+[Полные методы, интерфейс и main](examples/language.md#полный-модуль)
+
+## Скопировать срез и проверить элемент
+
+**Ситуация:** нужно поменять список чисел для расчёта, сохранив исходный список.
+Скопируйте элементы до изменения; обычное присваивание среза разделяет память массива.
+
+**Пример — самостоятельный фрагмент внутри `main`; дополнительный импорт: `fmt`:**
+
+```go
+original := []int{1, 2, 3}
+copied := cheatsheet.Clone(original)
+copied[0] = 99
+fmt.Println(original[0], copied[0]) // 1 99
+fmt.Println(cheatsheet.Contains(original, 2)) // true
+counts := cheatsheet.Counts([]string{"go", "go", "python"})
+fmt.Println(counts["go"]) // 2
+_, ok := counts["missing"]
+fmt.Println(ok) // false
+```
+
+**Результат:** изменение числа в копии не затрагивает оригинал.
+`Clone` копирует элементы; вложенные указатели, maps и slices могут сохранять общие данные.
+`Contains[T comparable]` использует `==`; `any` не разрешает произвольные операции над типом.
+`Counts` создаёт map перед записью; порядок обхода map не задан.
+
+[Реализация и тесты коллекций](examples/language.md#проверка-валидного-и-невалидного-ввода)
 
 ## Основные конструкции
 
@@ -22,216 +110,32 @@
 | Константы | `const`, при необходимости `iota` для последовательностей |
 | Пропуск значения | `_`; не используйте `_` для молчаливого игнорирования важной ошибки |
 
-Таблица содержит фрагменты синтаксиса. Фрагменты не образуют отдельную программу.
+Таблица содержит фрагменты синтаксиса и не образует отдельную программу.
 `panic/recover` не заменяют обычный возврат `error`.
 `recover` срабатывает в отложенной функции соответствующей goroutine.
-В современном Go переменные `range`, объявленные через `:=`, создаются отдельно на каждой итерации.
+Начиная с Go 1.22, переменные `range`, объявленные через `:=`, создаются отдельно на каждой итерации.
 Это поведение не устраняет гонки на общих объектах.
 
 ## Полный модуль
 
-Файл `go.mod`:
-
-<!-- example: go/go.mod -->
-```text
-module example.com/cheatsheet
-
-go 1.27.0
-```
-
-Полный `model.go`:
-
-<!-- example: go/model.go -->
-```go
-package cheatsheet
-
-import (
-	"errors"
-	"fmt"
-	"strconv"
-	"strings"
-)
-
-var ErrEmptyName = errors.New("empty name")
-var ErrInvalidAge = errors.New("negative age")
-
-type User struct {
-	Name string `json:"name"`
-	Age  int    `json:"age"`
-}
-
-func NewUser(name, ageText string) (User, error) {
-	name = strings.TrimSpace(name)
-	if name == "" {
-		return User{}, fmt.Errorf("create user: %w", ErrEmptyName)
-	}
-	age, err := strconv.Atoi(ageText)
-	if err != nil {
-		return User{}, fmt.Errorf("parse age: %w", err)
-	}
-	if age < 0 {
-		return User{}, fmt.Errorf("create user: %w", ErrInvalidAge)
-	}
-	return User{Name: name, Age: age}, nil
-}
-
-func (u User) String() string {
-	return fmt.Sprintf("%s (%d)", u.Name, u.Age)
-}
-
-func (u *User) Rename(name string) error {
-	name = strings.TrimSpace(name)
-	if name == "" {
-		return ErrEmptyName
-	}
-	u.Name = name
-	return nil
-}
-
-var _ fmt.Stringer = User{}
-
-func Describe(value fmt.Stringer) string {
-	return value.String()
-}
-
-func Contains[T comparable](values []T, wanted T) bool {
-	for _, value := range values {
-		if value == wanted {
-			return true
-		}
-	}
-	return false
-}
-
-func Clone[T any](values []T) []T {
-	return append([]T(nil), values...)
-}
-
-func Counts(values []string) map[string]int {
-	counts := make(map[string]int)
-	for _, value := range values {
-		counts[value]++
-	}
-	return counts
-}
-```
-
-Метод `String` с value receiver позволяет `User` удовлетворять `fmt.Stringer`.
-Метод `Rename` с pointer receiver меняет исходный объект.
-Метод `Rename` предполагает ненулевой указатель.
-`Clone` копирует элементы среза.
-`Clone` не создаёт глубокую копию объектов, на которые ссылаются элементы.
-Ограничение `comparable` разрешает сравнение `==`.
-Ограничение `any` не разрешает произвольные операции над T.
-
-Полный `cmd/demo/main.go`:
-
-<!-- example: go/cmd/demo/main.go -->
-```go
-package main
-
-import (
-	"fmt"
-	"log"
-
-	"example.com/cheatsheet"
-)
-
-func main() {
-	user, err := cheatsheet.NewUser(" Alice ", "30")
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err := user.Rename("Alice Doe"); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(cheatsheet.Describe(user))
-	fmt.Println(cheatsheet.Contains([]string{"go", "python"}, "go"))
-}
-```
-
-`go run ./cmd/demo` выводит `Alice Doe (30)` и `true`.
-`log.Fatal` вызывает `os.Exit(1)`.
-При таком завершении отложенные функции не выполняются.
-В библиотечной функции возвращайте ошибку вызывающему коду.
+[Откройте go.mod, model.go и cmd/demo/main.go](examples/language.md#полный-модуль).
+Сохраните файлы в отдельном каталоге; используйте пути после `go/` в комментариях примеров.
+Запустите `go run ./cmd/demo`.
+Ожидаются `Alice Doe (30)` и `true`.
 
 ## Проверка валидного и невалидного ввода
 
-Полный `model_test.go`. Тесты входят в пакет и не требуют внешнего сервиса.
+[Сохраните полный model_test.go](examples/language.md#проверка-валидного-и-невалидного-ввода).
+Запустите `go test ./...` и `go vet ./...` из каталога модуля.
 
-<!-- example: go/model_test.go -->
-```go
-package cheatsheet
+- [ ] Проверьте успешное создание и переименование пользователя.
+- [ ] Проверьте пустое имя, отрицательный возраст и неверный формат числа.
+- [ ] Проверьте сохранность имени после отклонённого переименования.
+- [ ] Проверьте независимость числовых элементов копии среза.
 
-import (
-	"errors"
-	"reflect"
-	"strconv"
-	"testing"
-)
+## Источники
 
-func TestUserAndInterfaces(t *testing.T) {
-	user, err := NewUser(" Alice ", "30")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := user.Rename("Alice Doe"); err != nil {
-		t.Fatal(err)
-	}
-	if got := Describe(user); got != "Alice Doe (30)" {
-		t.Fatalf("Describe = %q", got)
-	}
-	if err := user.Rename(" "); !errors.Is(err, ErrEmptyName) {
-		t.Fatalf("Rename error = %v", err)
-	}
-	if user.Name != "Alice Doe" {
-		t.Fatal("invalid rename changed user")
-	}
-}
-
-func TestWrappedErrors(t *testing.T) {
-	for _, tc := range []struct {
-		name, age string
-		want      error
-	}{
-		{" ", "30", ErrEmptyName},
-		{"Alice", "-1", ErrInvalidAge},
-	} {
-		_, err := NewUser(tc.name, tc.age)
-		if !errors.Is(err, tc.want) {
-			t.Fatalf("error = %v, want cause %v", err, tc.want)
-		}
-	}
-	_, err := NewUser("Alice", "not-a-number")
-	var numberError *strconv.NumError
-	if !errors.As(err, &numberError) {
-		t.Fatalf("error has no NumError: %v", err)
-	}
-}
-
-func TestCollectionsAndGenerics(t *testing.T) {
-	original := []int{1, 2, 3}
-	copied := Clone(original)
-	copied[0] = 99
-	if original[0] != 1 || !Contains(original, 2) || Contains(original, 9) {
-		t.Fatal("clone or generic search failed")
-	}
-	counts := Counts([]string{"go", "go", "python"})
-	if !reflect.DeepEqual(counts, map[string]int{"go": 2, "python": 1}) {
-		t.Fatalf("counts = %v", counts)
-	}
-	if _, ok := counts["missing"]; ok {
-		t.Fatal("missing key unexpectedly present")
-	}
-}
-```
-
-Запустите `go test ./...`.
-Затем запустите `go vet ./...`.
-`fmt.Errorf("...: %w", err)` сохраняет цепочку причин.
-`%v` только форматирует текст.
-Если нужен тип или причина ошибки, не используйте сравнение текста как стабильный контракт.
-Разбор числа проверяет формат и диапазон int текущей архитектуры.
-Для сериализуемых идентификаторов при необходимости выбирайте явный `int64` и соответствующий parser.
-
-Источники: [спецификация](https://go.dev/ref/spec), [создание модуля](https://go.dev/doc/tutorial/create-module), [generics](https://go.dev/doc/tutorial/generics), [errors](https://pkg.go.dev/errors), [strconv](https://pkg.go.dev/strconv).
+[Спецификация](https://go.dev/ref/spec), [Go 1.27 release notes](https://go.dev/doc/go1.27),
+[изменение loop variables в Go 1.22](https://go.dev/doc/go1.22#language),
+[создание модуля](https://go.dev/doc/tutorial/create-module), [generics](https://go.dev/doc/tutorial/generics),
+[errors](https://pkg.go.dev/errors), [strconv](https://pkg.go.dev/strconv).
