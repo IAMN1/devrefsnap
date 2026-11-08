@@ -259,4 +259,3 @@ PATCH сначала объединяет поля.
 Тот же формат используется при повторной валидации PATCH.
 
 Источники: [ограничения параметров](https://fastapi.tiangolo.com/tutorial/query-params-str-validations/), [Pydantic v2 validators](https://docs.pydantic.dev/latest/concepts/validators/), [ограничения Field](https://docs.pydantic.dev/latest/api/fields/#pydantic.fields.Field), [обновление body](https://fastapi.tiangolo.com/tutorial/body-updates/), [выходная модель](https://fastapi.tiangolo.com/tutorial/response-model/), [обработка ошибок](https://fastapi.tiangolo.com/tutorial/handling-errors/).
-
