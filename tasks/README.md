@@ -42,7 +42,7 @@
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
 | Разложить Python-пакет по файлам | layout, src layout, package, структура проекта | [Проектирование: структура пакета](../python/architecture/project-design/structure-and-decisions.md#структура-python-пакета) |
-| Передать зависимости и собрать рабочий пакет | DI, bootstrap, composition root, адаптер, CLI | [Проектирование: полный пакет](../python/architecture/project-design/example.md#метаданные-и-структура) |
+| Передать зависимости и собрать рабочий пакет | DI, bootstrap, composition root, адаптер, CLI | [Проектирование: полный пакет](../python/architecture/project-design/example.md) |
 | Зафиксировать решение или проверить готовность изменения | ADR, checklist, release, архитектурное решение | [Запись ADR](../python/architecture/project-design/structure-and-decisions.md#записать-решение-adr) · [Проверки готовности](../python/architecture/project-design/delivery-and-evolution.md#проверки-готовности) |
 | Создать проект и запустить команду в окружении | uv, init, venv, run, виртуальное окружение | [uv: учебный проект](../python/tooling/uv/projects.md#учебный-проект-без-сети) |
 | Добавить, обновить или удалить зависимость | dependency, add, update, upgrade, remove, пакет | [uv: изменение зависимостей](../python/tooling/uv/projects.md#добавить-обновить-и-удалить) |
@@ -79,7 +79,7 @@
 | Настроить CORS или middleware | browser, cross-origin, заголовки, request middleware | [FastAPI: middleware и CORS](../python/web/fastapi/recipes.md#middleware-и-cors) |
 | Проверить пароль и защитить маршрут токеном | auth, authentication, JWT, bearer, OAuth2, 401 | [FastAPI: полный пример аутентификации](../python/web/fastapi/authentication.md#полный-пример) |
 | Выдать сессию БД на запрос и закрыть ресурсы | SQLAlchemy, Session, AsyncSession, yield, lifespan | [FastAPI: sync-сессия](../python/web/fastapi/database.md#синхронный-sqlalchemy) · [Async и lifespan](../python/web/fastapi/database.md#async-sqlalchemy-и-lifespan) |
-| Проверить ответ FastAPI и неверный ввод | TestClient, httpx2, integration test, 422 | [FastAPI: TestClient](../python/web/fastapi/testing.md#синхронный-testclient) |
+| Проверить ответ FastAPI и неверный ввод | TestClient, httpx2, integration test, 422 | [FastAPI: карточка TestClient](../python/web/fastapi/testing.md#синхронный-testclient) · [Полные проверки](../python/web/fastapi/testing-lab.md) |
 | Проверить обработчик FastAPI без вызова реальной зависимости | Depends, dependency_overrides, override, подмена, заглушка, fake, без сети, без БД | [Карточка подмены](../python/web/fastapi/testing.md#подмена-зависимости) · [Самостоятельная программа](../python/web/fastapi/dependency-overrides.md#минимальный-самостоятельный-пример) |
 | Вернуть исходные зависимости FastAPI после теста или ошибки | cleanup, finally, dependency_overrides, восстановление | [Самостоятельный пример](../python/web/fastapi/dependency-overrides.md#минимальный-самостоятельный-пример) · [Прежние подмены и исключения](../python/web/fastapi/dependency-overrides.md#полный-файл-тестов) |
 | Запустить API в контейнере | deploy, Dockerfile, Uvicorn, production | [FastAPI: контейнер](../python/web/fastapi/deployment.md#контейнер-для-минимального-приложения) |
@@ -95,7 +95,7 @@
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
 | Создать модуль, запустить, форматировать и проверить код | Golang, Голанг, go.mod, go run, gofmt, go test, go vet, race detector | [Go: команды учебного модуля](../go/README.md#команды-модуля) |
-| Вспомнить slices, maps, pointers, structs и generics | синтаксис, срез, указатель, receiver, интерфейс | [Go: конструкции](../go/language.md#основные-конструкции) · [Полный модуль](../go/language.md#полный-модуль) |
+| Вспомнить slices, maps, pointers, structs и generics | синтаксис, срез, указатель, receiver, интерфейс | [Go: конструкции](../go/language.md#основные-конструкции) · [Полный модуль](../go/examples/language.md#полный-модуль) |
 | Обернуть ошибку и проверить её причину | error wrapping, errors.Is, errors.As, %w | [Go: проверки валидного и невалидного ввода](../go/language.md#проверка-валидного-и-невалидного-ввода) |
 | Ограничить параллельную работу и отменить задачи | goroutine, worker pool, channel, context, select, cancel | [Go: ограниченный worker pool](../go/concurrency-and-testing.md#ограниченный-worker-pool) |
 | Защитить общую память | mutex, sync.Mutex, race, data race, счётчик | [Go: общие данные](../go/concurrency-and-testing.md#общие-данные-и-mutex) |
@@ -145,12 +145,12 @@
 
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
-| Подключить SQLite из Python и безопасно передать параметры | sqlite3, parameterized query, in-memory, foreign keys | [SQLite: полный блог в памяти](../databases/relational/sqlite/python-and-queries.md#полный-пример-блог-в-памяти) |
-| Управлять commit/rollback в Python | sqlite3, autocommit, transaction, транзакция | [SQLite: полный сценарий](../databases/relational/sqlite/python-and-queries.md#полный-пример-блог-в-памяти) · [Режимы транзакции](../databases/relational/sqlite/python-and-queries.md#транзакция-в-приложении) |
+| Подключить SQLite из Python и безопасно передать параметры | sqlite3, parameterized query, in-memory, foreign keys | [SQLite: короткий запрос](../databases/relational/sqlite/python-and-queries.md#полный-пример-блог-в-памяти) · [Полный блог](../databases/relational/sqlite/query-lab.md) |
+| Управлять commit/rollback в Python | sqlite3, autocommit, transaction, транзакция | [SQLite: полный сценарий](../databases/relational/sqlite/query-lab.md) · [Режимы транзакции](../databases/relational/sqlite/python-and-queries.md#транзакция-в-приложении) |
 | Создать резервную копию SQLite | backup, Connection.backup, .backup, бэкап, бекап | [Python](../databases/relational/sqlite/backup-and-restore.md#создать-копию-через-python) · [CLI](../databases/relational/sqlite/backup-and-restore.md#создать-копию-через-cli) |
 | Восстановить SQLite в новый файл | restore, .restore, .dump, SQL-копия | [Бинарная копия](../databases/relational/sqlite/backup-and-restore.md#восстановить-копию-в-новый-файл) · [SQL dump](../databases/relational/sqlite/backup-and-restore.md#создать-и-восстановить-sql-копию) |
 | Проверить восстановленную копию SQLite | integrity_check, foreign_key_check, verify backup, триггер | [SQLite: проверки результата](../databases/relational/sqlite/backup-and-restore.md#проверить-восстановленную-бд) · [Полные сценарии](../databases/relational/sqlite/backup-lab.md) |
-| Изменить схему SQLite с сохранением связей | migration, user_version, перестроение таблицы | [SQLite: миграция](../databases/relational/sqlite/backup-and-migrations.md#полный-пример-перестроение-таблицы) |
+| Изменить схему SQLite с сохранением связей | migration, user_version, перестроение таблицы | [SQLite: выбор миграции](../databases/relational/sqlite/backup-and-migrations.md#полный-пример-перестроение-таблицы) · [Полный пример](../databases/relational/sqlite/migration-lab.md) |
 | Разобраться с занятой БД и параллельным доступом | database is locked, busy_timeout, WAL, concurrent writes | [SQLite: конкуренция и WAL](../databases/relational/sqlite/backup-and-migrations.md#конкуренция-и-wal) |
 
 ### Redis
@@ -159,8 +159,8 @@
 | --- | --- | --- |
 | Выбрать структуру и задать срок жизни ключа | string, hash, list, set, sorted set, TTL, expire | [Redis: структуры и TTL](../databases/non-relational/redis/data-and-caching.md#полный-пример-структуры-и-ttl) |
 | Кешировать чтение и сбрасывать старое значение | cache-aside, invalidation, cache miss, кэш, кеш | [Redis: кеширование](../databases/non-relational/redis/data-and-caching.md#кеширование-cache-aside) |
-| Различить pipeline, транзакцию и optimistic locking | MULTI, EXEC, WATCH, atomic, атомарность | [Redis: механизмы](../databases/non-relational/redis/transactions-and-messaging.md#атомарность-транзакция-и-pipeline) · [Конфликт и ошибка](../databases/non-relational/redis/transactions-and-messaging.md#полный-пример-конфликт-и-ошибка-команды) |
-| Выбрать Pub/Sub или Streams и подтвердить сообщение | queue, stream, consumer group, XACK, доставка | [Redis: stream и Pub/Sub](../databases/non-relational/redis/transactions-and-messaging.md#полный-пример-stream-и-pubsub) |
+| Различить pipeline, транзакцию и optimistic locking | MULTI, EXEC, WATCH, atomic, атомарность | [Redis: механизмы](../databases/non-relational/redis/transactions-and-messaging.md#атомарность-транзакция-и-pipeline) · [Конфликт и ошибка](../databases/non-relational/redis/transactions-lab.md#полный-пример-конфликт-и-ошибка-команды) |
+| Выбрать Pub/Sub или Streams и подтвердить сообщение | queue, stream, consumer group, XACK, доставка | [Redis: выбор доставки](../databases/non-relational/redis/transactions-and-messaging.md#полный-пример-stream-и-pubsub) · [Полный пример](../databases/non-relational/redis/transactions-lab.md#полный-пример-stream-и-pubsub) |
 | Проверить сохранность и восстановление Redis | persistence, RDB, AOF, backup, restore | [Redis: сохранность и восстановление](../databases/non-relational/redis/operations.md#сохранность-и-восстановление) |
 | Создать RDB-копию Redis и восстановить в другом экземпляре | backup, restore, dump.rdb, BGSAVE, бэкап, бекап | [Карточка RDB](../databases/non-relational/redis/operations.md#создать-и-восстановить-rdb-копию) · [Полный пример](../databases/non-relational/redis/backup-and-restore.md#полный-пример) |
 | Скопировать AOF Redis и восстановить данные | appendonlydir, appendonly.aof.manifest, BASE, INCR, журнал, backup, restore | [Карточка AOF](../databases/non-relational/redis/operations.md#создать-и-восстановить-aof-копию) · [Состав файлов и пример](../databases/non-relational/redis/aof-backup-and-restore.md#разобрать-состав-файлов) |
