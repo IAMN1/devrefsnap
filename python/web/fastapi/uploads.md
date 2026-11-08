@@ -85,4 +85,3 @@ curl -F 'files=@uploads.py' -F 'files=@uploads.py' http://127.0.0.1:8000/uploads
 JSON body и multipart body — разные форматы одного запроса.
 
 Источники: [файлы](https://fastapi.tiangolo.com/tutorial/request-files/), [формы и файлы](https://fastapi.tiangolo.com/tutorial/request-forms-and-files/).
-
