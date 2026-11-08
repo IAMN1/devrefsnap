@@ -6,7 +6,7 @@
 
 | Задача | Приём | Пример |
 | --- | --- | --- |
-| Добавить ограничение через перестроение | Транзакция, копирование данных, восстановление зависимостей | [Полный пример](#полный-пример-перестроение-таблицы) |
+| Добавить ограничение через перестроение | Транзакция, копирование данных, восстановление зависимостей | [Полный пример](#перестроить-известную-таблицу) |
 | Получить и проверить резервную копию | Backup API или CLI | [Копия и восстановление](backup-and-restore.md) |
 | Разобрать busy и WAL | Короткие транзакции и план checkpoint | [Конкуренция](#конкуренция-и-wal) |
 
@@ -15,93 +15,33 @@
 | Уровень | Продвинутый |
 | Предпосылки | Python 3.14 со SQLite 3.37+; понимание FK и транзакций |
 
-## Полный пример: перестроение таблицы
+<a id="полный-пример-перестроение-таблицы"></a>
 
-Сохраните пример как `migration.py`.
-Выполните `python3.14 migration.py`.
-Зависимости входят в стандартную библиотеку Python.
-Скрипт создаёт и затем удаляет только собственный временный каталог с синтетической БД.
-Перед изменением своей схемы получите [проверенную резервную копию](backup-and-restore.md#проверить-восстановленную-бд).
+## Перестроить известную таблицу
 
-Пример перестраивает известную таблицу и заменяет её в одной транзакции.
-Пример не переносит произвольную схему с неизвестными views/triggers автоматически.
-Удаление таблицы ниже касается только созданной учебной БД.
+**Когда:** нужное изменение не поддерживается ALTER TABLE вашей версии или требуется перестроить известную схему.
+Перестроение может удалить зависимости; сначала получите [проверенную резервную копию](backup-and-restore.md#проверить-восстановленную-бд).
+В [полной программе](migration-lab.md#полный-пример-перестроение-таблицы) таблица `users` уже содержит `alice`, индекс и триггер.
+Таблица `posts` ссылается на `users`.
 
-<!-- example: sqlite/migration.py -->
-```python
-import sqlite3
-from contextlib import closing
-from pathlib import Path
-from tempfile import TemporaryDirectory
+**Пример — этапы программы, не готовый SQL-скрипт:**
 
-with TemporaryDirectory(prefix="sqlite-migration-") as directory:
-    folder = Path(directory)
-    with closing(sqlite3.connect(folder / "source.db", autocommit=True)) as db:
-        db.execute("PRAGMA foreign_keys = ON")
-        db.executescript("""
-            CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT NOT NULL) STRICT;
-            CREATE TABLE posts (
-                id INTEGER PRIMARY KEY,
-                user_id INTEGER NOT NULL REFERENCES users(id),
-                title TEXT NOT NULL
-            ) STRICT;
-            CREATE TABLE audit (username TEXT NOT NULL) STRICT;
-            CREATE INDEX users_username_idx ON users(username);
-            CREATE TRIGGER users_audit AFTER UPDATE ON users
-            BEGIN INSERT INTO audit VALUES (NEW.username); END;
-            INSERT INTO users VALUES (1, 'alice');
-            INSERT INTO posts VALUES (1, 1, 'SQLite');
-        """)
-        # Переключение FK выполняется вне транзакции, иначе PRAGMA не подействует.
-        db.execute("PRAGMA foreign_keys = OFF")
-        assert db.execute("PRAGMA foreign_keys").fetchone() == (0,)
-        try:
-            db.execute("BEGIN IMMEDIATE")
-            dependent_sql = db.execute("""
-                SELECT sql FROM sqlite_schema
-                WHERE tbl_name = 'users' AND type IN ('index', 'trigger') AND sql IS NOT NULL
-                ORDER BY type, name
-            """).fetchall()
-            db.execute("""CREATE TABLE users_new (
-                id INTEGER PRIMARY KEY,
-                username TEXT NOT NULL CHECK (username <> '')
-            ) STRICT""")
-            db.execute("INSERT INTO users_new (id, username) SELECT id, username FROM users")
-            db.execute("DROP TABLE users")
-            db.execute("ALTER TABLE users_new RENAME TO users")
-            for (sql,) in dependent_sql:
-                db.execute(sql)
-            assert db.execute("PRAGMA foreign_key_check").fetchall() == []
-            db.execute("COMMIT")
-        except BaseException:
-            if db.in_transaction:
-                db.execute("ROLLBACK")
-            raise
-        finally:
-            db.execute("PRAGMA foreign_keys = ON")
-
-        assert db.execute("PRAGMA foreign_keys").fetchone() == (1,)
-        db.execute("UPDATE users SET username = ? WHERE id = ?", ("alice-updated", 1))
-        assert db.execute("SELECT username FROM audit").fetchall() == [("alice-updated",)]
-        assert db.execute("SELECT user_id FROM posts").fetchall() == [(1,)]
-        assert "users_username_idx" in {row[1] for row in db.execute("PRAGMA index_list(users)")}
-        try:
-            db.execute("UPDATE users SET username = '' WHERE id = 1")
-        except sqlite3.IntegrityError:
-            pass
-        else:
-            raise AssertionError("Новый CHECK должен запретить пустое имя")
-        assert db.execute("PRAGMA foreign_key_check").fetchall() == []
-        print("SQLite", sqlite3.sqlite_version)
-        print("OK: FK, index/trigger preservation, migration CHECK")
+```text
+До: users(id, username NOT NULL); пустое имя допустимо
+Изменение: сохранить зависимости → создать users_new с CHECK(username <> '')
+Транзакция: скопировать строки → заменить users → восстановить индекс и триггер
+До COMMIT: проверить foreign_key_check
+После: включить FK вне транзакции → проверить данные, триггер и отказ CHECK
 ```
 
-**Результат:** пользователь получает имя `alice-updated`, триггер сохраняет запись аудита.
-Внешняя ссылка и индекс сохраняются.
-Новый CHECK отклоняет пустое имя.
-Для произвольной схемы дополнительно сохраните и скорректируйте views, triggers и другие зависимости.
-Следуйте официальной [процедуре перестроения](https://www.sqlite.org/lang_altertable.html#making_other_kinds_of_table_schema_changes).
-Включите копирование данных и замену таблицы в одну транзакцию.
+**Результат:** строки и связи сохранены; пустое имя отклоняется.
+Полная программа создаёт только собственную временную БД и содержит обработку отката при ошибке миграции.
+Для произвольной схемы дополнительно разберите views и другие зависимости.
+
+Начиная с SQLite 3.53.0, ALTER TABLE поддерживает также изменения NOT NULL и CHECK.
+Для таких изменений сначала проверьте [поддержку вашей версии](https://www.sqlite.org/lang_altertable.html).
+Перестроение в полном примере сохраняет полезный общий приём для изменений, которые выбранная версия напрямую не поддерживает.
+[Полный код, подготовка и проверки](migration-lab.md#полный-пример-перестроение-таблицы).
 
 ## Конкуренция и WAL
 
