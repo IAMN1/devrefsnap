@@ -14,7 +14,7 @@
 | [SQL](sql/README.md) | Общие запросы и явно обозначенные различия диалектов |
 | [PostgreSQL](relational/postgresql/README.md) | Запросы, эксплуатация и [проверка резервной копии](relational/postgresql/backup-and-restore.md) |
 | [SQLite](relational/sqlite/README.md) | Встраиваемая СУБД, [копия и восстановление](relational/sqlite/backup-and-restore.md), миграции |
-| [Redis](non-relational/redis/README.md) | Структуры данных, TTL, кэш, сообщения и [RDB-копия с восстановлением](non-relational/redis/backup-and-restore.md) |
+| [Redis](non-relational/redis/README.md) | Структуры данных, TTL, кэш, сообщения и [RDB](non-relational/redis/backup-and-restore.md) / [AOF-копии с восстановлением](non-relational/redis/aof-backup-and-restore.md) |
 
 Общий SQL хранится отдельно от особенностей СУБД.
 SQLite относится к реляционным базам.
