@@ -11,8 +11,8 @@ SQLite — встраиваемая реляционная СУБД.
 
 | Задача | Команда / API | Где |
 | --- | --- | --- |
-| Подключиться и сделать CRUD | sqlite3.connect, execute, параметры | [Работающий пример Python](python-and-queries.md#полный-пример-блог-в-памяти) |
-| Включить внешние ключи | PRAGMA foreign_keys=ON | [Схема блога](python-and-queries.md) |
+| Подключиться и сделать CRUD | sqlite3.connect, execute, параметры | [Короткий пример](python-and-queries.md#передать-значение-параметром) · [Полный блог](query-lab.md#полный-пример-блог-в-памяти) |
+| Включить внешние ключи | PRAGMA foreign_keys=ON | [Схема и проверка FK](query-lab.md#полный-пример-блог-в-памяти) |
 | Выбрать тип | affinity / STRICT | [Типы и функции](python-and-queries.md#типы-функции-и-индексы) |
 | Посмотреть таблицы через CLI | .tables / .schema | [CLI](python-and-queries.md#cli-и-другие-языки) |
 | Получить согласованную копию | Connection.backup / .backup | [Python](backup-and-restore.md#создать-копию-через-python) · [CLI](backup-and-restore.md#создать-копию-через-cli) |
@@ -36,7 +36,7 @@ SQLite — встраиваемая реляционная СУБД.
 
 ## Базовый уровень
 
-Начните с [полного Python-примера](python-and-queries.md#полный-пример-блог-в-памяти).
+Начните с [полного Python-примера](query-lab.md#полный-пример-блог-в-памяти).
 Пример создаёт users/posts/comments, выполняет JOIN и проверяет отказ для неверного внешнего ключа.
 `INTEGER PRIMARY KEY` обычно уже генерирует rowid.
 AUTOINCREMENT нужен, если ранее выданные rowid нельзя использовать повторно.

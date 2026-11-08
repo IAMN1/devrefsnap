@@ -1,5 +1,19 @@
 # Выбирать, изменять и анализировать данные
 
+Откройте страницу для выборки, изменения и анализа заказов в PostgreSQL 18.
+Зависимые фрагменты используют учебную схему `demo`; подготовка находится в отдельном полном примере.
+
+## Быстрый поиск
+
+| Задача | Приём | Пример / подробности |
+| --- | --- | --- |
+| Посчитать оплаты для всех пользователей | LEFT JOIN с фильтром в ON | [Короткий пример](#посчитать-оплаты-всех-пользователей) |
+| Отобрать товары и найти пользователя без заказов | WHERE, JOIN, NOT EXISTS | [Выборка](#выбрать-строки-и-объединить-таблицы) |
+| Получить изменённую строку или сделать upsert | RETURNING и ON CONFLICT | [Изменения](#изменить-данные-и-проверить-результат) |
+| Посчитать итоги, ранги и предыдущую сумму | GROUP BY, CTE и окна | [Аналитика](#группы-cte-и-оконные-функции) |
+| Обойти известное дерево | WITH RECURSIVE | [Обход](#рекурсивный-обход) |
+| Выбрать строковую, числовую или временную функцию | Таблица выражений с результатами | [Функции](#функции-для-повседневных-запросов) |
+
 [К справочнику PostgreSQL](README.md)
 
 | Параметр | Значение |
@@ -9,7 +23,8 @@
 
 ## Навигация
 
-- [Полный пример: учебная база](#полный-пример-учебная-база)
+- [Посчитать оплаты всех пользователей](#посчитать-оплаты-всех-пользователей)
+- [Полный SQL и запуск](query-lab.md#полный-пример-учебная-база)
 - [Выбрать строки и объединить таблицы](#выбрать-строки-и-объединить-таблицы)
 - [Изменить данные и проверить результат](#изменить-данные-и-проверить-результат)
 - [Группы, CTE и оконные функции](#группы-cte-и-оконные-функции)
@@ -17,105 +32,30 @@
 - [Функции для повседневных запросов](#функции-для-повседневных-запросов)
 - [Источники](#источники)
 
-## Полный пример: учебная база
+<a id="полный-пример-учебная-база"></a>
 
-**Базовый уровень.** Подготовьте отдельный учебный сервер или кластер.
-Команды оболочки ниже рассчитаны на локальный сервер с ролью `postgres`.
-При другой установке замените адрес и роль.
-Пароль вводится по запросу или берётся из настроенного password file.
+## Посчитать оплаты всех пользователей
 
-Сохраните следующий полный SQL-блок как `queries.sql` в текущем каталоге.
-Запустите команды оболочки ниже.
-Первая команда создаст новую БД.
-Если имя уже занято, команда завершится ошибкой.
-Существующие данные не удаляются.
+**Когда:** нужны итоги заказов по всем пользователям, включая пользователей без заказов.
+Подготовьте `demo.users`, `demo.products` и `demo.orders` по [полному SQL и запуску](query-lab.md#полный-пример-учебная-база).
+Фрагмент PostgreSQL 18 после этой подготовки:
 
-```bash
-createdb --host=127.0.0.1 --username=postgres --template=template0 cheatsheet_demo && \
-psql --host=127.0.0.1 --username=postgres --dbname=cheatsheet_demo \
-  --no-psqlrc --set=ON_ERROR_STOP=1 --file=queries.sql
-```
-
-Полный пример использует диалект PostgreSQL 18.
-Пример создаёт постоянную схему `demo` и данные в одной транзакции.
-Повторный запуск в той же БД остановится на существующей схеме.
-Скрипт не удаляет объекты.
-
-<!-- example: queries.sql -->
 ```sql
-BEGIN;
-
-CREATE SCHEMA demo;
-
-CREATE TABLE demo.users (
-    id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    username text NOT NULL UNIQUE,
-    email text NOT NULL UNIQUE,
-    is_active boolean NOT NULL DEFAULT true,
-    profile jsonb NOT NULL DEFAULT '{}'::jsonb,
-    created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE demo.products (
-    id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name text NOT NULL,
-    price numeric(10, 2) NOT NULL CHECK (price >= 0),
-    stock integer NOT NULL CHECK (stock >= 0),
-    description text NOT NULL DEFAULT ''
-);
-
-CREATE TABLE demo.orders (
-    id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id bigint NOT NULL REFERENCES demo.users(id) ON DELETE RESTRICT,
-    product_id bigint NOT NULL REFERENCES demo.products(id) ON DELETE RESTRICT,
-    amount numeric(10, 2) NOT NULL CHECK (amount > 0),
-    status text NOT NULL CHECK (status IN ('pending', 'paid', 'cancelled')),
-    ordered_at timestamptz NOT NULL
-);
-
-INSERT INTO demo.users (username, email, profile) VALUES
-    ('alice', 'alice@example.test', '{"city":"Moscow","tags":["vip"]}'),
-    ('bob', 'bob@example.test', '{"city":"Kazan"}'),
-    ('carol', 'carol@example.test', '{}');
-
-INSERT INTO demo.products (name, price, stock, description) VALUES
-    ('Keyboard', 100.00, 10, 'Mechanical keyboard'),
-    ('Mouse', 40.00, 5, 'Wireless mouse'),
-    ('Monitor', 300.00, 2, 'Large monitor');
-
-INSERT INTO demo.orders (user_id, product_id, amount, status, ordered_at) VALUES
-    (1, 1, 100.00, 'paid', '2026-11-01 12:00:00+00'),
-    (1, 2, 40.00, 'paid', '2026-11-02 12:00:00+00'),
-    (2, 3, 300.00, 'paid', '2026-11-03 12:00:00+00');
-
 SELECT u.username, COALESCE(SUM(o.amount), 0) AS paid_total
 FROM demo.users AS u
 LEFT JOIN demo.orders AS o ON o.user_id = u.id AND o.status = 'paid'
 GROUP BY u.id, u.username
 ORDER BY u.username;
-
-SAVEPOINT before_stock_change;
-UPDATE demo.products SET stock = stock - 1
-WHERE id = 1 AND stock > 0
-RETURNING name, stock;
-ROLLBACK TO SAVEPOINT before_stock_change;
-
-SELECT stock = 10 AS rollback_ok
-FROM demo.products WHERE id = 1;
-
-COMMIT;
 ```
 
-**Ожидаемый результат:** суммы `alice | 140.00`, `bob | 300.00`, `carol | 0`.
-`RETURNING` возвращает `Keyboard | 9`.
-`rollback_ok` равен `t`.
-После COMMIT исходный остаток равен `10`.
-Заказы здесь — учебные записи, а не полный алгоритм продажи со списанием товара.
-
-Все следующие фрагменты выполняются в соединении с `cheatsheet_demo` после этого примера.
-Используется явная схема `demo`, поэтому результат не зависит от `search_path`.
+**Результат:** `alice | 140.00`, `bob | 300.00`, `carol | 0`.
+Условие в `ON` сохраняет пользователей без оплаченных заказов.
+Эта схема показывает запросы и ограничения; схема не задаёт полный алгоритм продажи.
+Все зависимые фрагменты страницы выполняются в `cheatsheet_demo` после подготовки.
 
 ## Выбрать строки и объединить таблицы
+
+Нужны товары заданной цены, состав заказов или пользователи без заказов.
 
 **Базовый уровень.** Независимые фрагменты SQL на учебной схеме:
 
@@ -158,6 +98,8 @@ WHERE NOT EXISTS (SELECT 1 FROM demo.orders AS o WHERE o.user_id = u.id);
 Сравнение `= NULL` для такой проверки не подходит.
 
 ## Изменить данные и проверить результат
+
+Нужно изменить конкретную запись и получить её фактическое новое значение.
 
 **Базовый / средний уровень.** Фрагменты SQL независимы и завершаются ROLLBACK.
 Фрагменты временно меняют данные.
@@ -206,6 +148,8 @@ INSERT из SELECT имеет вид `INSERT INTO target (col1, col2) SELECT col
 
 ## Группы, CTE и оконные функции
 
+Нужны суммы по пользователям и позиция каждого заказа без потери строк.
+
 **Средний уровень.** Независимые фрагменты SQL, данные не меняются:
 
 ```sql
@@ -253,6 +197,9 @@ ORDER BY ordered_at, id;
 Для последнего элемента всей группы задайте `ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING`.
 
 ## Рекурсивный обход
+
+Данные образуют известное дерево руководителей без циклов.
+Нужно вернуть сотрудника и глубину от корня.
 
 **Продвинутый уровень.** Ниже приведён самостоятельный фрагмент SQL.
 Фрагмент не требует дополнительных таблиц:

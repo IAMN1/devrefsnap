@@ -1,11 +1,24 @@
 # Атомарные изменения и доставка сообщений
 
+Откройте страницу, если несколько изменений конкурируют или сообщения требуют определённой гарантии доставки.
+Сначала выберите границу атомарности и допустимое поведение при повторе или отключении.
+
+## Быстрый поиск
+
+| Условие задачи | Приём | Пример / подробности |
+| --- | --- | --- |
+| Команды независимы; важны сетевые ожидания | Pipeline без транзакции | [Сравнение](#атомарность-транзакция-и-pipeline) |
+| Группа изменений не допускает вмешательства | MULTI/EXEC | [Короткая карточка](#изменить-счётчик-и-срок-одной-группой) |
+| Изменение зависит от прочитанного значения | WATCH и ограниченный повтор | [Конфликт](transactions-lab.md#полный-пример-конфликт-и-ошибка-команды) |
+| Задачу подтверждают после обработки | Stream, pending и XACK | [Доставка](#подтвердить-обработанное-сообщение) |
+| Нужны только временные уведомления | Pub/Sub без истории | [Полная проверка](transactions-lab.md#полный-пример-stream-и-pubsub) |
+
 [К Redis](README.md)
 
 | Параметр | Значение |
 | --- | --- |
 | Уровни | Средний — pipeline/MULTI/WATCH; продвинутый — stream/доставка |
-| Предпосылки | Подготовка и REDIS_URL из [первого примера](data-and-caching.md#подготовка); standalone Redis 8.2 |
+| Предпосылки | Подготовка и REDIS_URL из [первого примера](data-lab.md#подготовка); standalone Redis 8.2 |
 
 ## Атомарность, транзакция и pipeline
 
@@ -26,124 +39,67 @@ DISCARD отменяет очередь до EXEC.
 При ошибке исполнения проверьте каждый результат.
 Не предполагайте полный откат.
 
-## Полный пример: конфликт и ошибка команды
+<a id="полный-пример-конфликт-и-ошибка-команды"></a>
 
-Сохраните пример как `transactions.py`.
-Выполните `python transactions.py` в подготовленном окружении.
-Скрипт намеренно вызывает конфликт WATCH и ошибку INCR.
-Скрипт проверяет оба результата и удаляет только свои ключи.
+## Изменить счётчик и срок одной группой
 
-<!-- example: redis/transactions.py -->
+**Когда:** счётчик и его срок нужно изменить без команд другого клиента внутри группы.
+Ниже — фрагмент [полной программы](transactions-lab.md#полный-пример-конфликт-и-ошибка-команды).
+`client` — подготовленный redis-py-клиент; `counter` — собственный ключ со значением `1`.
+
 ```python
-import os
-import uuid
-from redis import Redis
-from redis.exceptions import ResponseError, WatchError
-
-client = Redis.from_url(os.environ["REDIS_URL"], decode_responses=True, socket_timeout=3)
-prefix = f"cheatsheet:{{{uuid.uuid4().hex}}}:"
-counter, bad, after = [prefix + name for name in ("counter", "bad", "after")]
-try:
-    with client.pipeline(transaction=False) as pipe:
-        pipe.incr(counter)
-        pipe.incr(counter)
-        pipe.get(counter)
-        assert pipe.execute() == [1, 2, "2"]
-
-    client.set(counter, 0)
-    with client.pipeline() as pipe:
-        pipe.watch(counter)
-        observed = int(pipe.get(counter))
-        client.incr(counter)  # Другой запрос через другое соединение пула.
-        pipe.multi()
-        pipe.set(counter, observed + 10)
-        try:
-            pipe.execute()
-        except WatchError:
-            pass
-        else:
-            raise AssertionError("WATCH должен отклонить изменение")
-    assert client.get(counter) == "1"
-
-    with client.pipeline(transaction=True) as pipe:
-        pipe.incr(counter)
-        pipe.expire(counter, 60)
-        assert pipe.execute() == [2, True]
-
-    client.set(bad, "not-an-integer")
-    with client.pipeline(transaction=True) as pipe:
-        pipe.incr(bad)
-        pipe.set(after, "applied")
-        results = pipe.execute(raise_on_error=False)
-    assert isinstance(results[0], ResponseError)
-    assert results[1] is True
-    assert client.get(after) == "applied"
-    print("OK: pipeline, WATCH conflict, MULTI/EXEC and no runtime rollback")
-finally:
-    client.unlink(counter, bad, after)
-    client.close()
+with client.pipeline(transaction=True) as pipe:
+    pipe.incr(counter)
+    pipe.expire(counter, 60)
+    results = pipe.execute()
+assert results == [2, True]
 ```
 
-Результат — OK.
+**Результат:** счётчик равен `2`, срок установлен на 60 секунд.
+MULTI/EXEC не откатывает успешные команды после runtime error другой команды.
+[Полная программа](transactions-lab.md#полный-пример-конфликт-и-ошибка-команды) отдельно проверяет это ограничение и конфликт WATCH.
+
 После WatchError приложение обычно читает данные заново и ограниченно повторяет операцию.
-Пример намеренно не повторяет операцию, чтобы явно проверить отказ.
+Полная программа намеренно не повторяет операцию, чтобы явно проверить отказ.
 Для нескольких ключей в Redis Cluster нужна совместимость hash slots.
 Операции одной транзакции не образуют распределённую транзакцию по произвольным шардам.
 
-## Полный пример: stream и Pub/Sub
+<a id="полный-пример-stream-и-pubsub"></a>
 
-**Продвинутый уровень.** Сохраните пример как `messaging.py`.
-Выполните `python messaging.py`.
-Пример создаёт stream с собственной группой.
-Pub/Sub-подписка ограничена одной доставкой без бесконечного цикла.
+## Подтвердить обработанное сообщение
 
-<!-- example: redis/messaging.py -->
+**Когда:** задача должна оставаться в pending до успешной прикладной обработки.
+Ниже — фрагмент [полной программы](transactions-lab.md#полный-пример-stream-и-pubsub).
+`client` — подготовленный redis-py-клиент; `stream` — собственный stream с группой `workers` и одной новой записью.
+
 ```python
-import os
-import uuid
-from redis import Redis
-
-client = Redis.from_url(os.environ["REDIS_URL"], decode_responses=True, socket_timeout=3)
-prefix = f"cheatsheet:{{{uuid.uuid4().hex}}}:"
-stream, channel = prefix + "stream", prefix + "channel"
-try:
-    client.xgroup_create(stream, "workers", id="0", mkstream=True)
-    message_id = client.xadd(stream, {"order_id": "42"})
-    deliveries = client.xreadgroup("workers", "worker-1", {stream: ">"}, count=1, block=500)
-    assert deliveries == [[stream, [(message_id, {"order_id": "42"})]]]
-    assert client.xpending(stream, "workers")["pending"] == 1
-    # Здесь должна завершиться прикладная обработка; только затем ACK.
-    assert client.xack(stream, "workers", message_id) == 1
-    assert client.xpending(stream, "workers")["pending"] == 0
-
-    with client.pubsub() as subscriber:
-        subscriber.subscribe(channel)
-        confirmation = subscriber.get_message(timeout=1)
-        assert confirmation is not None and confirmation["type"] == "subscribe"
-        assert client.publish(channel, "updated") == 1
-        notification = subscriber.get_message(timeout=1)
-        assert notification is not None
-        assert notification["type"] == "message" and notification["data"] == "updated"
-    print("OK: stream delivery/pending/ACK and bounded Pub/Sub notification")
-finally:
-    client.unlink(stream)
-    client.close()
+deliveries = client.xreadgroup("workers", "worker-1", {stream: ">"}, count=1, block=500)
+message_id, fields = deliveries[0][1][0]
+# Сначала надёжно завершите прикладную обработку fields.
+client.xack(stream, "workers", message_id)
+assert client.xpending(stream, "workers")["pending"] == 0
 ```
 
-Результат — OK.
-Пример проверяет доставку, pending до ACK и отсутствие pending после ACK.
+**Результат:** XACK снимает запись с pending группы после обработки.
+Фрагмент предполагает непустую доставку; реальный обработчик должен проверить пустой результат.
+ACK не удаляет тело сообщения и не делает внешний побочный эффект атомарным.
+[Полная программа](transactions-lab.md#полный-пример-stream-и-pubsub) создаёт stream и проверяет отдельную Pub/Sub-доставку.
+
+Полная программа проверяет доставку, pending до ACK и отсутствие pending после ACK.
 В примере нет внешнего побочного эффекта.
 В реальной обработке отправляйте ACK после надёжного завершения работы.
 При повторной доставке обработчик должен быть идемпотентным.
 
+Схема сравнивает путь сообщения через stream и временный канал Pub/Sub:
+
 ```mermaid
 flowchart LR
-    P[Издатель] --> S[Stream: записи с id]
-    S --> G[Consumer group: доставка и pending]
-    G --> W[Обработчик]
-    W --> A[XACK после обработки]
-    P --> C[Pub/Sub канал]
-    C --> L[Подключённые подписчики]
+    P[Издатель] -->|XADD| S[Stream: записи с id]
+    S -->|XREADGROUP| G[Consumer group: доставка и pending]
+    G -->|получить задачу| W[Обработчик]
+    W -->|подтвердить успех| A[XACK после обработки]
+    P -->|PUBLISH| C[Pub/Sub канал]
+    C -->|доставить сейчас| L[Подключённые подписчики]
     C -. Нет истории для отключённых .-> N[Событие потеряно для них]
 ```
 
@@ -162,4 +118,5 @@ Pub/Sub имеет at-most-once доставку.
 
 - [Транзакции / WATCH / ошибки](https://redis.io/docs/latest/develop/using-commands/transactions/), [pipelining](https://redis.io/docs/latest/develop/using-commands/pipelining/).
 - [Streams](https://redis.io/docs/latest/develop/data-types/streams/), [XACK](https://redis.io/docs/latest/commands/xack/), [XAUTOCLAIM](https://redis.io/docs/latest/commands/xautoclaim/).
-- [Pub/Sub и гарантии](https://redis.io/docs/latest/develop/pubsub/), [redis-py pipeline](https://redis.readthedocs.io/en/stable/advanced_features.html).
+- [Pub/Sub и гарантии](https://redis.io/docs/latest/develop/pubsub/), [redis-py pipeline](https://redis.readthedocs.io/en/v8.1.0/advanced_features.html).
+- [Redis 8.2.11: release notes](https://github.com/redis/redis/releases/tag/8.2.11).
