@@ -10,7 +10,7 @@ Redis не заменяет реляционные ограничения.
 | Параметр | Значение |
 | --- | --- |
 | Целевая ветка | Redis Open Source 8.2 |
-| Клиенты примеров | Python 3.14 и redis-py 8.1.0; RDB-сценарий использует redis-cli 8.2.11 без redis-py |
+| Клиенты примеров | Python 3.14 и redis-py 8.1.0; RDB/AOF-сценарии используют redis-cli 8.2.11 без redis-py |
 | Среда примеров | Redis 8.2.11, redis-py 8.1.0, Python 3.14.7; отдельный процесс с синтетическими ключами |
 
 ## Навигация
@@ -33,6 +33,7 @@ Redis не заменяет реляционные ограничения.
 | Доставить задачу с учётом подтверждения | Stream, XREADGROUP/XACK | [Сообщения](transactions-and-messaging.md#полный-пример-stream-и-pubsub) |
 | Отправить временное уведомление подписчику | Pub/Sub | [Разница со stream](transactions-and-messaging.md#полный-пример-stream-и-pubsub) |
 | Создать RDB-копию и проверить восстановление | BGSAVE, PTTL, PEXPIRETIME | [Карточка](operations.md#создать-и-восстановить-rdb-копию) · [Один файл и запуск](backup-and-restore.md#подготовить-запуск) |
+| Скопировать AOF и проверить восстановление | Manifest, BASE, INCR, TTL | [Карточка](operations.md#создать-и-восстановить-aof-копию) · [Один файл и запуск](aof-backup-and-restore.md#подготовить-запуск) |
 | Сохранность, память, безопасность | RDB/AOF, eviction, ACL/TLS | [Эксплуатация](operations.md) |
 
 ## Базовый уровень

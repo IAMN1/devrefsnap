@@ -31,7 +31,7 @@
 | SQL | [Общий справочник SQL](databases/sql/README.md) |
 | PostgreSQL | [Справочник](databases/relational/postgresql/README.md), [копия и восстановление](databases/relational/postgresql/backup-and-restore.md) |
 | SQLite | [Справочник](databases/relational/sqlite/README.md), [копия и восстановление](databases/relational/sqlite/backup-and-restore.md) |
-| Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md), [RDB-копия и восстановление](databases/non-relational/redis/backup-and-restore.md) |
+| Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md), [RDB-копия](databases/non-relational/redis/backup-and-restore.md), [AOF-копия и восстановление](databases/non-relational/redis/aof-backup-and-restore.md) |
 | Git | [Выбор команд по рабочим задачам](tools/git/README.md) |
 | GitHub Pull Requests | [Создание, ревью и слияние PR](tools/github-pull-requests/README.md) |
 | Linux | [Оболочка, файлы, процессы и службы](systems/linux/README.md), [процесс по порту](systems/linux/process-by-port.md) |
