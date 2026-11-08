@@ -45,11 +45,10 @@
 
 ## Средний уровень
 
-Короткие блоки ниже показывают вызов.
-Это **продолжения указанных полных примеров**.
-Определения функций и классов находятся по ссылке.
-Сначала выполните соответствующий полный блок.
-Затем добавьте короткий блок в тот же файл.
+Короткие блоки показывают суть приёма на месте.
+Это самостоятельные мини-примеры со стандартной библиотекой Python 3.14.
+Валидация, дополнительные реализации и проверки отказов находятся в связанных полных примерах.
+Таблицы ролей называют участников полных примеров.
 
 ### Strategy: подменить алгоритм
 
@@ -63,16 +62,26 @@
 | Контракт стратегии | `ShippingRule` | Описывает вызываемый объект `Callable[[int], int]` |
 | Реализации | `flat_rate`, `CarrierAdapter` | Считают стоимость по разным правилам |
 
-**Продолжение [примера доставки](code-examples.md#полный-пример-strategy-adapter-и-декоратор):**
+**Мини-пример:** передайте функцию расчёта как аргумент.
 
 ```python
+def quote_shipping(grams, rule):
+    return rule(grams)
+
+
+def flat_rate(grams):
+    return 500
+
+
 assert quote_shipping(500, flat_rate) == 500
-assert quote_shipping(500, CarrierAdapter(LegacyCarrier())) == 400
+assert quote_shipping(500, lambda grams: 300 + grams // 5) == 400
 ```
 
 **Результат:** один потребитель даёт 500 или 400 центов в зависимости от переданного правила.
 Вызывающий код выбирает правило.
-Сама аннотация типа не проверяет контракт.
+Аннотация типа в полной версии сама не проверяет контракт.
+Мини-пример принимает уже проверенный вес.
+[Полная версия](code-examples.md#полный-пример-strategy-adapter-и-декоратор) проверяет вход и результат.
 
 ### Adapter: перевести внешний контракт
 
@@ -85,17 +94,29 @@ assert quote_shipping(500, CarrierAdapter(LegacyCarrier())) == 400
 | Адаптер | `CarrierAdapter.__call__` | Переводит единицы и округляет вверх до целого цента |
 | Потребитель | `quote_shipping` | Видит только контракт `ShippingRule` |
 
-**Продолжение [примера доставки](code-examples.md#полный-пример-strategy-adapter-и-декоратор):**
+**Мини-пример:** переведите вход и выход внешнего расчёта.
 
 ```python
-rule = CarrierAdapter(LegacyCarrier())
-assert quote_shipping(501, rule) == 401
+from decimal import Decimal, ROUND_CEILING
+
+
+def legacy_quote(kilograms):
+    return Decimal("3.00") + Decimal("2.00") * kilograms
+
+
+def adapted_quote(grams):
+    units = legacy_quote(Decimal(grams) / 1000)
+    return int((units * 100).quantize(Decimal("1"), rounding=ROUND_CEILING))
+
+
+assert adapted_quote(501) == 401
 ```
 
 **Результат:** 501 г → 0,501 кг → 4,002 денежной единицы → 401 цент.
 Округление является частью контракта адаптера.
 Отдельно согласуйте ошибки SDK.
 Отдельно согласуйте обработку недопустимых значений.
+[Полная версия с `CarrierAdapter`](code-examples.md#полный-пример-strategy-adapter-и-декоратор) соединяет адаптер со Strategy.
 
 ### Decorator: добавить поведение вокруг вызова
 
@@ -109,12 +130,20 @@ assert quote_shipping(501, rule) == 401
 | Создатель обёртки | `audited` | Возвращает функцию того же контракта |
 | Обёртка | `wrapped` | Вызывает правило, записывает событие, возвращает результат |
 
-**Продолжение [примера доставки](code-examples.md#полный-пример-strategy-adapter-и-декоратор):**
+**Мини-пример:** верните обёртку с прежним способом вызова.
 
 ```python
+def audited(rule, events):
+    def wrapped(grams):
+        result = rule(grams)
+        events.append((grams, result))
+        return result
+    return wrapped
+
+
 events = []
-rule = audited(make_rule("legacy"), events)
-assert quote_shipping(500, rule) == 400
+rule = audited(lambda grams: 400, events)
+assert rule(500) == 400
 assert events == [(500, 400)]
 ```
 
@@ -124,6 +153,7 @@ assert events == [(500, 400)]
 При этой ошибке событие не записывается.
 Отдельно задайте политику сбоя записи аудита.
 Отдельно задайте порядок нескольких обёрток.
+[Полная композиция](code-examples.md#полный-пример-strategy-adapter-и-декоратор) добавляет адаптер и фабрику.
 
 ### Factory: собрать нужную реализацию
 
@@ -136,11 +166,19 @@ assert events == [(500, 400)]
 | Фабрика | `make_rule` | Выбирает тариф и собирает адаптер с `LegacyCarrier` |
 | Результат сборки | `ShippingRule` | Позволяет клиенту не разбирать имя тарифа |
 
-**Продолжение [примера доставки](code-examples.md#полный-пример-strategy-adapter-и-декоратор):**
+**Мини-пример:** скройте выбор реализации за функцией.
 
 ```python
-rule = make_rule("legacy")
-assert quote_shipping(500, rule) == 400
+def make_rule(name):
+    rules = {"flat": lambda grams: 500, "weight": lambda grams: 300 + grams // 5}
+    try:
+        return rules[name]
+    except KeyError:
+        raise ValueError("Неизвестный тариф") from None
+
+
+rule = make_rule("weight")
+assert rule(500) == 400
 ```
 
 **Результат:** собран подходящий вызываемый объект.
@@ -158,19 +196,20 @@ assert quote_shipping(500, rule) == 400
 | Подписчик / observer | `Listener`, например `calls.append` | Принимает событие |
 | Управление подпиской | `subscribe`, `unsubscribe` | Определяет, кто получит следующее событие |
 
-**Продолжение [примера Observer](code-examples.md#observer-подписка-отписка-и-ошибка-слушателя):**
+**Мини-пример:** передайте событие каждому подписанному обработчику.
 
 ```python
-events = OrderEvents()
 calls = []
-events.subscribe(calls.append)
-events.publish("order-paid")
+listeners = [calls.append]
+for listener in tuple(listeners):
+    listener("order-paid")
 assert calls == ["order-paid"]
 ```
 
 **Результат:** слушатель вызван синхронно.
 В примере слушатели идут по порядку подписки.
 Первая ошибка останавливает рассылку.
+[Полная версия `OrderEvents`](code-examples.md#observer-подписка-отписка-и-ошибка-слушателя) добавляет подписку и отписку.
 Отписывайте подписчиков в нужный момент их времени жизни.
 Доставка после падения процесса требует другого механизма.
 Пример такого механизма — [Outbox](architecture-patterns.md#распределённые-сценарии).
@@ -187,17 +226,34 @@ assert calls == ["order-paid"]
 | Обработчик | `ReserveStockHandler` | Проверяет запрос, применяет его и задаёт политику повтора |
 | Получатель действия / receiver | `stock` | Хранит учебные остатки, которые меняет обработчик |
 
-**Продолжение [примера Command](code-examples.md#command-запрос-обработчик-и-локальный-повтор):**
+**Мини-пример:** храните параметры отдельно от обработчика.
 
 ```python
-handler = ReserveStockHandler({"book": 3})
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class ReserveStock:
+    sku: str
+    quantity: int
+    request_id: str
+
+
+def handle(command, stock):
+    stock[command.sku] -= command.quantity
+    return stock[command.sku]
+
+
+stock = {"book": 3}
 command = ReserveStock("book", 1, "request-1")
-assert handler(command) == 2
+assert handle(command, stock) == 2
 ```
 
 **Результат:** зарезервирована одна книга.
 Осталось две книги.
 Сама команда не обеспечивает хранение, undo, retry или идемпотентность.
+Мини-пример принимает допустимый запрос и достаточный остаток.
+Повтор мини-примера уменьшит остаток ещё раз.
 В полном примере локальная таблица handler обрабатывает повтор с тем же ID.
 Для внешнего действия undo может быть [бизнес-компенсацией](architecture-patterns.md#распределённые-сценарии).
 
