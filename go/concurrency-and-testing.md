@@ -13,8 +13,8 @@
 
 **Уровень:** средний → продвинутый.
 Предпосылки: функции, slices, error и владение памятью; Go 1.27.
-Фрагменты используют один [учебный модуль](language.md#полный-модуль) без сторонних библиотек.
-Сначала добавьте [worker.go, counter.go и worker_test.go](examples/concurrency-and-testing.md).
+Фрагменты используют стандартную библиотеку.
+Сохраните [worker.go, counter.go и worker_test.go](examples/concurrency-and-testing.md) вместе с `go.mod` по [подготовке примера](examples/concurrency-and-testing.md#подготовка).
 
 ## Ограниченный worker pool
 
@@ -70,6 +70,7 @@ fmt.Println(result == nil, errors.Is(err, context.Canceled)) // true true
 Если готовы несколько веток `select`, отмена не имеет абсолютного приоритета.
 Пример не гарантирует отсутствие заданий после `cancel`.
 Для `WithTimeout` также вызывайте `cancel`, обычно через `defer`.
+Не используйте context как контейнер произвольных параметров.
 
 [Полная реализация](examples/concurrency-and-testing.md#ограниченный-worker-pool) · [Тест отказа](examples/concurrency-and-testing.md#тесты-и-race-detector)
 
