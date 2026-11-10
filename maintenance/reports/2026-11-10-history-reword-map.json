@@ -1,6 +1,6 @@
 {
   "date": "2026-11-10",
-  "scope": "User-approved message rewrite; repository trees and author/committer dates preserved",
+  "scope": "User-approved rewrite of 11 historical messages; file trees and author/committer dates preserved",
   "commit_count": 47,
   "changed_message_count": 11,
   "removed_obsolete_signatures": 11,
@@ -356,6 +356,22 @@
       "new": "4838474783ee430479c8437689bd9c969c953ab2",
       "tree": "a2bb488a6ea728cc7362b2a06f0235ac6ba7a898",
       "message_changed": false
+    }
+  ],
+  "followup_service_merge_type_correction": [
+    {
+      "old": "4838474783ee430479c8437689bd9c969c953ab2",
+      "new": "230ec1abd587a5d9a01ba24110474767d6f5d78a",
+      "tree_unchanged": true,
+      "old_subject": "merge: integrate current CI foundation into reference simplification",
+      "new_subject": "chore: integrate CI foundation into reference simplification"
+    },
+    {
+      "old": "a597fd1dab740aba3ef695f080288c6c907988b1",
+      "new": "b5942c64b796edca02421fcbb41a899d3e780fca",
+      "tree_unchanged": true,
+      "old_subject": "docs: define contribution conventions and record publication checks",
+      "new_subject": "docs: define contribution conventions and record publication checks"
     }
   ]
 }
