@@ -1,0 +1,77 @@
+name: Materials CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: materials-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+  PIP_NO_CACHE_DIR: '1'
+  PYTHONDONTWRITEBYTECODE: '1'
+
+jobs:
+  materials-static:
+    name: materials-static
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout proposed merge
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4; verified 2026-11-10
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; verified 2026-11-10
+        with:
+          python-version: '3.13'
+      - name: Install pinned checker dependencies
+        run: |
+          python -I -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-ci.txt
+      - name: Check materials without executing examples
+        run: |
+          ulimit -t 120
+          ulimit -v 2097152
+          python -I scripts/check_materials.py
+      - name: Show review signals from added lines
+        if: ${{ !cancelled() }}
+        env:
+          REVIEW_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          ulimit -t 120
+          ulimit -v 2097152
+          python -I scripts/review_signals.py --base "$REVIEW_BASE"
+
+  checker-tests:
+    name: checker-tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout proposed merge
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4; verified 2026-11-10
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6; verified 2026-11-10
+        with:
+          python-version: '3.13'
+      - name: Install pinned checker dependencies
+        run: |
+          python -I -m pip install --require-hashes --only-binary=:all: -r scripts/requirements-ci.txt
+      - name: Test failures and non-execution boundaries
+        run: |
+          ulimit -t 120
+          ulimit -v 2097152
+          python -I -m unittest discover -s scripts/tests -v
