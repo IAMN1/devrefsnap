@@ -6,7 +6,6 @@ from collections import Counter
 from html.parser import HTMLParser
 import json
 from pathlib import Path
-import re
 import subprocess
 import sys
 import unicodedata
@@ -20,6 +19,11 @@ MAX_FILE_BYTES = 1024 * 1024
 MAX_TOTAL_BYTES = 20 * 1024 * 1024
 MAX_FILES = 2000
 PARSER = MarkdownIt("commonmark").enable("table")
+
+
+def emit(row):
+    # Runner принимает legacy ##[...] даже внутри JSON-строки.
+    print(json.dumps(row, ensure_ascii=True).replace("#", r"\u0023"))
 
 
 class HTMLTargets(HTMLParser):
@@ -115,14 +119,15 @@ def check(root):
             continue
         tokens, anchors, links = parse_page(text)
         pages[path] = (anchors, links)
-        lines = text.splitlines()
         for token in tokens:
             if token.type != "fence":
                 continue
             counts["fences"] += 1
             line = token.map[0] + 1
-            last = lines[token.map[1] - 1].lstrip(" >\t").rstrip()
-            if token.map[1] <= token.map[0] + 1 or not re.fullmatch(re.escape(token.markup[0]) + "{" + str(len(token.markup)) + ",}", last):
+            # При закрытии диапазон содержит opener + content + closer.
+            # Префиксы цитат и списков уже разобраны Markdown-парсером.
+            content_lines = token.content.count("\n") + bool(token.content and not token.content.endswith("\n"))
+            if token.map[1] - token.map[0] != content_lines + 2:
                 issue(path, line, "fence-close", "Ограждение кода не закрыто")
             language = token.info.strip().split()[0] if token.info.strip() else ""
             if language not in LANGUAGES:
@@ -183,8 +188,8 @@ def main():
     args = parser.parse_args()
     issues, counts = check(args.root)
     for row in issues:
-        print(json.dumps(row, ensure_ascii=True))
-    print(json.dumps({"status": "failed" if issues else "passed", **counts, "errors": len(issues)}))
+        emit(row)
+    emit({"status": "failed" if issues else "passed", **counts, "errors": len(issues)})
     return bool(issues)
 
 

@@ -88,6 +88,33 @@ class MaterialsTests(unittest.TestCase):
         self.write("README.md", "````markdown\r\n```python\r\nx = 1\r\n```\r\n````\r\n")
         self.check()
 
+    def test_false_closer_inside_fence_is_rejected(self):
+        for last in ("> ```", "    ```"):
+            with self.subTest(last=last):
+                self.write("README.md", "```text\nhello\n" + last + "\n")
+                self.check(1, "fence-close")
+
+    def test_unicode_line_separator_is_content_and_eof_without_newline_is_not_a_closer(self):
+        self.write("README.md", "```text\na\u2028b\n```\n")
+        self.check()
+        self.write("README.md", "```text\nhello")
+        self.check(1, "fence-close")
+
+    def test_real_blockquote_and_list_fences_are_accepted(self):
+        self.write("README.md", "> ```text\n> hello\n> ```\n\n- Item\n\n  ```text\n  hello\n  ```\n")
+        self.check()
+
+    def test_legacy_workflow_command_in_filename_is_escaped(self):
+        for name in ("##[error]INJECTED.md", "##[add-mask]INJECTED.md", "##[stop-commands]INJECTED.md"):
+            self.write(name, "```bad##[error]INJECTED\nexample\n```\n")
+        run = subprocess.run([sys.executable, str(CHECKER), "--root", str(self.root)],
+                             capture_output=True, text=True, timeout=10)
+        self.assertEqual(run.returncode, 1)
+        self.assertNotIn("##[", run.stdout)
+        rows = [json.loads(line) for line in run.stdout.splitlines()]
+        self.assertEqual({row["path"] for row in rows if "path" in row},
+                         {"##[error]INJECTED.md", "##[add-mask]INJECTED.md", "##[stop-commands]INJECTED.md"})
+
     def test_python_syntax_error_fails(self):
         self.write("README.md", "```python\ndef broken(:\n    pass\n```\n")
         self.check(1, "python-syntax")

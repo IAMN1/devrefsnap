@@ -11,10 +11,15 @@ PATTERNS = {
     "external-url": r"(?:https?|ftp|ssh)://|\bwww\.",
     "dependency": r"\b(?:pip3?\s+install|uv\s+(?:add|pip)|npm\s+(?:install|ci)|go\s+get|apt(?:-get)?\s+install|brew\s+install)\b|\b(?:requirements|dependencies)\b",
     "network": r"\b(?:curl|wget|ssh|scp|rsync|nc|netcat)\b|\brequests\.|\bhttpx\.|urllib\.request|\.(?:post|put|send|sendall|urlopen)\s*\(",
-    "tls": r"--insecure|--no-check-certificate|\bcurl\s+[^\n]*\s-[a-z]*k\b|verify\s*=\s*False|CERT_NONE|_create_unverified_context",
+    "tls": r"--insecure|--no-check-certificate|\bcurl\b[^\n]*\s-[a-z]*k[a-z]*\b|verify\s*=\s*False|CERT_NONE|_create_unverified_context",
     "destructive": r"\b(?:rm|chmod|chown|mkfs|dd)\b|shutil\.rmtree|\bgit\s+(?:reset|clean|restore)\b|\bgit\s+push\b.*(?:--force|-f\b)|\b(?:DROP|TRUNCATE)\s+(?:TABLE|DATABASE)\b|\b(?:eval|exec)\s*\(|os\.system|subprocess\.",
 }
 COMPILED = {name: re.compile(pattern, re.IGNORECASE) for name, pattern in PATTERNS.items()}
+
+
+def emit(row):
+    # Сохраняем JSON и убираем legacy-префиксы команд runner из данных.
+    print(json.dumps(row, ensure_ascii=True).replace("#", r"\u0023"))
 
 
 def classify(path, text):
@@ -60,9 +65,9 @@ def main():
         for name, locations in sorted(hits.items()):
             totals[name] += 1
             # Не выводим исходный текст, HTML или workflow-команды из PR.
-            print(json.dumps({"path": path, "signal": name, "lines": locations[:20],
-                              "additional_lines": max(0, len(locations) - 20)}, ensure_ascii=True))
-    print(json.dumps({"review_signal_files": dict(totals), "blocking": False}))
+            emit({"path": path, "signal": name, "lines": locations[:20],
+                  "additional_lines": max(0, len(locations) - 20)})
+    emit({"review_signal_files": dict(totals), "blocking": False})
     return 0
 
 
@@ -70,5 +75,5 @@ if __name__ == "__main__":
     try:
         sys.exit(main())
     except (OSError, ValueError, subprocess.SubprocessError) as error:
-        print(json.dumps({"error": str(error)}, ensure_ascii=True))
+        emit({"error": str(error)})
         sys.exit(1)

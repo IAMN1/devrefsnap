@@ -30,6 +30,9 @@ class SignalsTests(unittest.TestCase):
             ("python -m pip install example", "dependency"),
             ("requests.post(endpoint, data=payload)", "network"),
             ("curl --insecure https://example.invalid", "tls"),
+            ("curl -k https://example.invalid", "tls"),
+            ("curl -ksS https://example.invalid", "tls"),
+            ("curl -sS -k https://example.invalid", "tls"),
             ("session.get(url, verify=False)", "tls"),
             ("rm -rf ./synthetic-data", "destructive"),
             ("git push --force origin main", "destructive"),
@@ -61,6 +64,8 @@ class SignalsTests(unittest.TestCase):
             marker = root / "EXECUTED"
             page.write_text(f"# Example\n::error::curl $(touch {marker})\nrm -rf synthetic\n")
             (root / ":(exclude)*").write_text("curl https://example.invalid\n")
+            for name in ("##[error]INJECTED.md", "##[add-mask]INJECTED.md", "##[stop-commands]INJECTED.md"):
+                (root / name).write_text("curl https://example.invalid\n")
             git("add", "--all")
             git("commit", "-qm", "change")
             run = subprocess.run([sys.executable, str(SCRIPT), "--base", base], cwd=root,
@@ -68,6 +73,7 @@ class SignalsTests(unittest.TestCase):
             self.assertEqual(run.returncode, 0, run.stderr)
             rows = [json.loads(line) for line in run.stdout.splitlines()]
             self.assertTrue(any(row.get("path") == ":(exclude)*" and row.get("signal") == "network" for row in rows))
+            self.assertNotIn("##[", run.stdout)
             self.assertIn("network", run.stdout)
             self.assertIn("destructive", run.stdout)
             self.assertFalse(marker.exists())
