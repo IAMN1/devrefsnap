@@ -64,4 +64,4 @@
 GitHub отображает схемы прямо в Markdown.
 Подробнее: [диаграммы в GitHub Markdown](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams).
 В редакторе без поддержки Mermaid виден исходный текст схемы.
-[Шаблоны материалов](templates/README.md) · [Правила для авторов](AGENTS.md) · [Сопровождение](maintenance/README.md)
+[Шаблоны материалов](templates/README.md) · [Правила для авторов](AGENTS.md) · [Сопровождение](maintenance/README.md) · [Статические проверки и ревью PR](scripts/README.md)
