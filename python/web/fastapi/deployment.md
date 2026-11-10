@@ -23,7 +23,7 @@
 
 ## Разработка и несколько процессов
 
-Используйте Python 3.14.7, FastAPI 0.162.0 и Uvicorn 0.54.0.
+Используйте Python 3.14, FastAPI 0.162.0 и Uvicorn 0.54.0.
 Выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]==0.54.0'`.
 
 ```bash

@@ -14,17 +14,12 @@
 
 **Уровень:** средний → продвинутый.
 Предпосылки: generics, `Annotated`, переменные окружения.
-Core Schema нужна только для низкоуровневых расширений.
-
-- [Generic, TypeAdapter и собственный тип](#generic-typeadapter-и-собственный-тип)
-- [Настройки приложения](#настройки-приложения)
-- [Query-модель FastAPI](#query-модель-fastapi)
-- [Миграция и производительность](#миграция-и-производительность)
+Каждый пример ниже имеет собственные зависимости; установите только пакеты выбранной задачи.
 
 ## Generic, TypeAdapter и собственный тип
 
-Для воспроизведения используйте Python 3.14.7.
-Выполните `python -m pip install 'pydantic==2.14.3' 'pytest==9.2.0' 'pydantic-settings==2.16.2' 'fastapi==0.162.0' 'httpx2==2.16.0'`.
+Для воспроизведения используйте Python 3.14.
+Выполните `python -m pip install 'pydantic==2.14.3' 'pytest==9.2.0'`.
 Сохраните полный пример как `demo_advanced.py`.
 Возьмите файл `demo_types.py` с [предыдущей страницы](models.md#атрибуты-конфигурация-и-типы).
 
@@ -120,7 +115,7 @@ def test_custom_type_validation_and_schema():
 
 ## Настройки приложения
 
-Зависимость: `pydantic-settings`.
+В отдельном окружении выполните `python -m pip install 'pydantic-settings==2.16.2' 'pytest==9.2.0'`.
 Полный пример `demo_settings.py` читает только переменные с учебным префиксом.
 Пример не подключается к БД.
 
@@ -169,7 +164,7 @@ def test_settings_environment_and_required_value(monkeypatch):
 
 ## Query-модель FastAPI
 
-Зависимости: `fastapi`, `httpx2`, `pytest`.
+В отдельном окружении выполните `python -m pip install 'fastapi==0.162.0' 'httpx2==2.16.0' 'pytest==9.2.0'`.
 Ниже приведён полный пример `demo_query.py`.
 Вызов `Query()` явно задаёт заполнение модели из URL, а не из body.
 
@@ -211,7 +206,8 @@ def test_query_model():
         assert client.get("/items").status_code == 422
 ```
 
-Запустите `python -m pytest -q` из папки со всеми файлами темы.
+Запустите только нужный модуль: `python -m pytest -q test_advanced.py`, `test_settings.py` или `test_query.py`.
+Для вывода JSON выполните `python demo_advanced.py` из учебной папки этого примера.
 [Источник FastAPI](https://fastapi.tiangolo.com/tutorial/query-param-models/).
 Остальные HTTP-задачи находятся в [справочнике FastAPI](../../web/fastapi/README.md).
 

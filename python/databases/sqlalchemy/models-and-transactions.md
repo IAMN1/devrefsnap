@@ -12,8 +12,9 @@
 [Справочник](README.md) · [Запросы](queries.md) · [Async и операции](async-and-operations.md)
 
 **Уровень:** базовый → средний, savepoint и custom type — продвинутый.
-Все примеры темы используют одну схему.
-Среда примеров: Python 3.14.7 и SQLite 3.53.4.
+Расширенные рецепты используют общую схему ниже.
+Для первого знакомства с загрузкой достаточно [двух моделей в одном файле](n-plus-one.md).
+Запускайте примеры на Python 3.14 с SQLite из стандартного модуля `sqlite3`.
 Выполните `python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'pytest==9.2.0'`.
 Общая база наследует AsyncAttrs; импорт asyncio в SQLAlchemy 2.1 требует greenlet через extra `asyncio`.
 [Пояснение установки](https://docs.sqlalchemy.org/en/21/faq/installation.html#i-m-getting-an-error-about-greenlet-not-being-installed-when-i-try-to-use-asyncio).

@@ -14,7 +14,7 @@
 
 **Уровень:** средний → продвинутый.
 Предпосылки: SQL JOIN/агрегация и Session.
-Окружение: Python 3.14.7, SQLAlchemy 2.1.8, SQLite 3.53.4, pytest 9.2.0.
+Для запуска нужны Python 3.14, SQLAlchemy 2.1.8 и pytest 9.2.0; SQLite входит в Python.
 Файлы используют `demo_models.py`.
 Установите `sqlalchemy[asyncio]` и `pytest` в отдельное окружение.
 
@@ -131,7 +131,6 @@ def test_query_results():
 Для N+1 и выбора loader откройте [карточки загрузки отношений](relationship-loading.md).
 Для чтения по частям откройте [большие выборки](streaming.md).
 Полные проверки отношений находятся в [loading-lab.md](loading-lab.md).
-Эти задачи вынесены отдельно, чтобы примеры SELECT не мешали выбору загрузки.
 
 ## PostgreSQL: компиляция без подключения
 
