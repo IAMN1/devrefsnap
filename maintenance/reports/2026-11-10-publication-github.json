@@ -1,0 +1,90 @@
+{
+  "observed_at_utc": "2026-11-10T09:00:34.665064+00:00",
+  "scope": "Verification after simplification PR #3 and cleanup of its three completed branches",
+  "repository": {
+    "default_branch": "main",
+    "full_name": "IAMN1/Python_cheat_sheet",
+    "merge_commit_message": "BLANK",
+    "merge_commit_title": "PR_TITLE",
+    "squash_merge_commit_message": "BLANK",
+    "squash_merge_commit_title": "PR_TITLE",
+    "visibility": "private"
+  },
+  "main": {
+    "name": "main",
+    "protected": false,
+    "sha": "240ff7f76ede0b74f92d76004995c68230c821c6"
+  },
+  "actions": {
+    "enabled": true,
+    "allowed_actions": "selected",
+    "selected_actions_url": "https://api.github.com/repositories/1120216134/actions/permissions/selected-actions",
+    "sha_pinning_required": true
+  },
+  "workflow_permissions": {
+    "default_workflow_permissions": "read",
+    "can_approve_pull_request_reviews": false
+  },
+  "private_fork_policy": {
+    "run_workflows_from_fork_pull_requests": true,
+    "send_write_tokens_to_workflows": false,
+    "send_secrets_and_variables": false,
+    "require_approval_for_fork_pr_workflows": true
+  },
+  "pr": {
+    "base_sha": "d1771a93e097b5c9edbd8a9fc0c98dab4b9ff390",
+    "head_sha": "382833f4b6b231d39ecaafa54ec1c6f1e7af0a2a",
+    "html_url": "https://github.com/IAMN1/Python_cheat_sheet/pull/3",
+    "merge_commit_sha": "240ff7f76ede0b74f92d76004995c68230c821c6",
+    "merged": true,
+    "number": 3,
+    "state": "closed",
+    "title": "docs: simplify reference pages and example preparation"
+  },
+  "pr_ci": {
+    "conclusion": "success",
+    "event": "pull_request",
+    "head_sha": "382833f4b6b231d39ecaafa54ec1c6f1e7af0a2a",
+    "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786599608",
+    "id": 42786599608,
+    "status": "completed"
+  },
+  "post_merge_ci": {
+    "conclusion": "success",
+    "event": "push",
+    "head_sha": "240ff7f76ede0b74f92d76004995c68230c821c6",
+    "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786777448",
+    "id": 42786777448,
+    "status": "completed"
+  },
+  "post_merge_jobs": [
+    {
+      "conclusion": "success",
+      "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786777448/job/129729878150",
+      "name": "materials-static",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786777448/job/129729878652",
+      "name": "checker-tests",
+      "status": "completed"
+    }
+  ],
+  "branch_cleanup": {
+    "observed_at_utc": "2026-11-10T08:59:20.223056+00:00",
+    "main_sha": "240ff7f76ede0b74f92d76004995c68230c821c6",
+    "deleted_branches": {
+      "codex/safe-ci": "15294330a905f5d12828c0b5d4d53bdcda884a77",
+      "codex/ci-verification-report": "6cb75e42d1c89177a897a7c4cbb40a2c306c7ee2",
+      "codex/simplify-reference": "382833f4b6b231d39ecaafa54ec1c6f1e7af0a2a"
+    },
+    "all_deleted_tips_were_ancestors_of_main": true,
+    "local_branches_after_cleanup": [
+      "main"
+    ],
+    "remote_heads_after_cleanup": [
+      "240ff7f76ede0b74f92d76004995c68230c821c6\trefs/heads/main"
+    ]
+  }
+}
