@@ -1,0 +1,361 @@
+{
+  "date": "2026-11-10",
+  "scope": "User-approved message rewrite; repository trees and author/committer dates preserved",
+  "commit_count": 47,
+  "changed_message_count": 11,
+  "removed_obsolete_signatures": 11,
+  "trees_unchanged": true,
+  "backup_bundle": "2026-11-10-before-history-reword.bundle (local Codex backups; not published)",
+  "approved_message_changes": [
+    {
+      "old": "3c6433f1309c72817208c71527b197feefe9106d",
+      "new": "b5b1649e31d20ba906a63d078a24c25e8d2eb423",
+      "old_message": "add Cheat Sheets",
+      "new_message": "docs: add Python types, pytest, and FastAPI cheat sheets"
+    },
+    {
+      "old": "e08317f5ab156d6ce16d9c3d54b8004c1730f423",
+      "new": "f1f7c8009aae035d669edb12b8ef9d35eeae9695",
+      "old_message": "Add files via upload",
+      "new_message": "docs(git): add command and workflow reference"
+    },
+    {
+      "old": "78f7ed3ba7cc1ad8053e260755b580e8e7d35f75",
+      "new": "cde56e25ea01f5b05a49ef89482d261e5afb6230",
+      "old_message": "add cheatsheets of uv and sqlalchemy",
+      "new_message": "docs: add uv and SQLAlchemy cheat sheets"
+    },
+    {
+      "old": "0df196e5a0e568d1a6d8401715921bd432f231fd",
+      "new": "de71aa50861f45259fb2a6ac4456cec61218f987",
+      "old_message": "Added CheatSheets for Sql general use, Sqlite, PostgreSql",
+      "new_message": "docs: add SQL, SQLite, and PostgreSQL cheat sheets"
+    },
+    {
+      "old": "a50ece64f0fc49232e2b2308953d939d8c8aac73",
+      "new": "c7a3e4099b69d18ca7354618dd61958b738c60c2",
+      "old_message": "added pydantic v2 cheat sheet",
+      "new_message": "docs(pydantic): add Pydantic v2 reference"
+    },
+    {
+      "old": "77dd15280d404b8b83111f04071b32504ad45d06",
+      "new": "d17beba2eca10ff2841b4f1f40f01a6195084bf9",
+      "old_message": "Added a cheat sheet for the structlog\n\nAdded a cheat sheet for the \"structlog\" library for logging",
+      "new_message": "docs(structlog): add structured logging reference\n\nAdded a cheat sheet for the \"structlog\" library for logging"
+    },
+    {
+      "old": "793d1957c6f5492bd6d8ab7eeab03813733859e6",
+      "new": "7e36fe66008ac047c48a777dafadd4eb4d7695eb",
+      "old_message": "added cheat sheet for designing python apps",
+      "new_message": "docs(architecture): add Python project design guide"
+    },
+    {
+      "old": "131230592b2ac807ca4e9146af013123f269ea6f",
+      "new": "c7818a689aae3d2c0cf3f847c27a2813366c13ab",
+      "old_message": "Update Git_Cheat_Sheet.md\n\nAdded information on best practices for writing commits",
+      "new_message": "docs(git): explain commit message best practices\n\nExplain how to write meaningful commit subjects and descriptions."
+    },
+    {
+      "old": "df61c1a9fed03de1fc11ff7ff5ac487121a561e5",
+      "new": "a8da1866d9c917a050a972d4fa8ee3cddf45e73b",
+      "old_message": "Add github_PR_cheat_sheet",
+      "new_message": "docs(github): explain pull request creation and review"
+    },
+    {
+      "old": "9e1ab9ed67f47b305cb7ed7f545742ed1e38b630",
+      "new": "2b19936f9b4807870d29b46d22d2adf3dd56e119",
+      "old_message": "Merge pull request #1 from IAMN1/codex/safe-ci\n\nci: безопасные статические проверки материалов",
+      "new_message": "ci: add restricted static checks for repository materials (#1)\n\nValidate local links, code fences, and Python/Bash syntax without executing documentation examples.\n\nRun checks on GitHub-hosted runners with read-only tokens and pinned Actions and dependencies."
+    },
+    {
+      "old": "5afa5a82ffddc1c3c210171aee2d102380b4df9b",
+      "new": "d1771a93e097b5c9edbd8a9fc0c98dab4b9ff390",
+      "old_message": "Merge pull request #2 from IAMN1/codex/ci-verification-report\n\ndocs: результаты настройки CI и ограничения main",
+      "new_message": "docs: record CI verification and GitHub permissions (#2)\n\nRecord successful CI runs, applied GitHub Actions permissions, and current branch protection limitations."
+    }
+  ],
+  "sha_map": [
+    {
+      "old": "3c6433f1309c72817208c71527b197feefe9106d",
+      "new": "b5b1649e31d20ba906a63d078a24c25e8d2eb423",
+      "tree": "f6ec2b61bc907b1b91c72e5f334a4ae7bda89c8b",
+      "message_changed": true
+    },
+    {
+      "old": "e08317f5ab156d6ce16d9c3d54b8004c1730f423",
+      "new": "f1f7c8009aae035d669edb12b8ef9d35eeae9695",
+      "tree": "b8bb898739dbb4e45f292e6ea1cf3437bfa39846",
+      "message_changed": true
+    },
+    {
+      "old": "78f7ed3ba7cc1ad8053e260755b580e8e7d35f75",
+      "new": "cde56e25ea01f5b05a49ef89482d261e5afb6230",
+      "tree": "ad619302b180ca7ba9d7af26df868650d4a23279",
+      "message_changed": true
+    },
+    {
+      "old": "0df196e5a0e568d1a6d8401715921bd432f231fd",
+      "new": "de71aa50861f45259fb2a6ac4456cec61218f987",
+      "tree": "e449e5d11fe7b53e2eb142aa01a08dc6a108dfef",
+      "message_changed": true
+    },
+    {
+      "old": "a50ece64f0fc49232e2b2308953d939d8c8aac73",
+      "new": "c7a3e4099b69d18ca7354618dd61958b738c60c2",
+      "tree": "bd8648f7352c57c2b432b5442e12c530badedb0e",
+      "message_changed": true
+    },
+    {
+      "old": "77dd15280d404b8b83111f04071b32504ad45d06",
+      "new": "d17beba2eca10ff2841b4f1f40f01a6195084bf9",
+      "tree": "bac275661e6bc1fd20b420f9c6e2b0b35691f6d7",
+      "message_changed": true
+    },
+    {
+      "old": "793d1957c6f5492bd6d8ab7eeab03813733859e6",
+      "new": "7e36fe66008ac047c48a777dafadd4eb4d7695eb",
+      "tree": "6cf978d97cee4186c6f8b936b4f9fd51be75a7fd",
+      "message_changed": true
+    },
+    {
+      "old": "131230592b2ac807ca4e9146af013123f269ea6f",
+      "new": "c7818a689aae3d2c0cf3f847c27a2813366c13ab",
+      "tree": "4687d13bd5f61151439817664bb8b744aa4d05af",
+      "message_changed": true
+    },
+    {
+      "old": "df61c1a9fed03de1fc11ff7ff5ac487121a561e5",
+      "new": "a8da1866d9c917a050a972d4fa8ee3cddf45e73b",
+      "tree": "b4be8f1dd39a54509cfae17bb6ffe20941d3be70",
+      "message_changed": true
+    },
+    {
+      "old": "fdd20405c66666583d1499b556a710663f284607",
+      "new": "93fd81414aa33b316d9bfe64a3a77cfb66aec840",
+      "tree": "01980bb86304c8f7d81a75e4c5a0e550437d6425",
+      "message_changed": false
+    },
+    {
+      "old": "eea16a93405baaf9dc9ec5eb63a0be4cb7ba8944",
+      "new": "51e29875ae9ab39d909af4f2c190ab2495006410",
+      "tree": "4d09a5f25887db134f508329665e5d2be6b9483b",
+      "message_changed": false
+    },
+    {
+      "old": "10cd677ee02d320ef403cedff9f32cbd223abed2",
+      "new": "9d71e013819a847095258cc771db4bea6802fd86",
+      "tree": "e315562b4525396ed4327f2632ea75f5026bfb0f",
+      "message_changed": false
+    },
+    {
+      "old": "e661d5245b9102d1f769e297804cd8328ff624fb",
+      "new": "aef305d4602d171bf9225a03b9e4b443387df490",
+      "tree": "eabe0ab926dc0564a13d493cd31ed09d880004fd",
+      "message_changed": false
+    },
+    {
+      "old": "74967397a0c9502caf6006f8e86a6b24630b84ff",
+      "new": "96a06a9f3003f8afc52a9fae05bbdb277f41157f",
+      "tree": "a126d24eb90a163903b8b0e52cd892f42b749efb",
+      "message_changed": false
+    },
+    {
+      "old": "5565946b04d1baa23064eba90b3d98288bde0e88",
+      "new": "bff5f07f9b19645b5701f3627ebcae03f66aa5d2",
+      "tree": "a7483ae45059134e963c5e8d32a51d251e5c240a",
+      "message_changed": false
+    },
+    {
+      "old": "38f05cb11dbcd622cb0ab9cafe5733db50b41aad",
+      "new": "56f86b43440a44b5b1678b579f1c03c3e93de427",
+      "tree": "2522aa16795ba6fb40bbe332403ee930d64f4fbc",
+      "message_changed": false
+    },
+    {
+      "old": "c7bb0a0c75a639721a76bf94303b8d1c1291f456",
+      "new": "12c144b5dd3e8316d4cb1350824724637127e3dc",
+      "tree": "eafc0f0b573552d6562a0b07ca5f0f09b1e502d9",
+      "message_changed": false
+    },
+    {
+      "old": "ca552b7bf1c7abf651734040edeecb9d58246e18",
+      "new": "459e08321adeccc4d7e8445fbea5bc1797090dfb",
+      "tree": "9bbfbd5364082b6eab9e581080216b8b87d78cd2",
+      "message_changed": false
+    },
+    {
+      "old": "73ed631c9f40dfc0be6e0bb94f33f36f6f26c204",
+      "new": "98d8787bfff5dd2dd8f068bda633a886083ab530",
+      "tree": "e99b555745a043105581f09712b9beb7e9a861c3",
+      "message_changed": false
+    },
+    {
+      "old": "6fcdf885e020d7fed121ff2ef1e396c99e9bdbd4",
+      "new": "51c234af311b599d81586dc71fdde02c42b2dbe2",
+      "tree": "f3a23022da4a52e836102e2aa524848500beeb63",
+      "message_changed": false
+    },
+    {
+      "old": "dc1b41f205884944bc6638d783889a91005f4aca",
+      "new": "dfb2b80fcf7559643b10f10f5d3c67e822f37bda",
+      "tree": "28171fdf040ffa3cadc0c152e6ec9d42451e924e",
+      "message_changed": false
+    },
+    {
+      "old": "cece3b7a398e7712f1e5d9e0a26e227cf70ca082",
+      "new": "f446d495af4c139733718e48a741623c6caab0d8",
+      "tree": "63abca14d8d8b448445be165445b7c1d53c5e2bc",
+      "message_changed": false
+    },
+    {
+      "old": "4322ac548e1ea996bf87079a06fa51e9b3a243ff",
+      "new": "8ded0bc5932545174e1ff68306347cf894184dd8",
+      "tree": "ca5dd85763b270f42a9cc4e16a3e9e0cacabead6",
+      "message_changed": false
+    },
+    {
+      "old": "26d0996ff8d074fa3e77f1e06ba0a66395b7dc8d",
+      "new": "6009a620d38bf996e9cf0b663a0037b8570a49e3",
+      "tree": "ecd1dea526b516e1964d17ccbb9c9b4a93096537",
+      "message_changed": false
+    },
+    {
+      "old": "241a623b8ca1723e0994cf338ad778f15c05e724",
+      "new": "fc53f8c0667b7da4214d4a56b6f1d8bf7cbcc1db",
+      "tree": "8a76748079128eea00244e408ce855de92e02701",
+      "message_changed": false
+    },
+    {
+      "old": "74b86e98e7beb8daba06010481992e27f54b03c2",
+      "new": "07df565ed6d581a3c9f5a10f77ae89130684cddc",
+      "tree": "3420139d6c52ef8a480e8539efe2eb43e94d3b1f",
+      "message_changed": false
+    },
+    {
+      "old": "6ddac2cb1877f0b15b2eaaa82d02973cf54bbc65",
+      "new": "ae61b285a037cd38e84103f779fd703eedcf9da7",
+      "tree": "17481f26b6d60d3548ff3c4af84eb8b525984084",
+      "message_changed": false
+    },
+    {
+      "old": "8f348aa1a273742e7697d29813f5db7280c251e1",
+      "new": "5fefdb3bd6a721da42439a5ffe1842f261005883",
+      "tree": "48328256f7adb155087e7b0890c8dc41d209517a",
+      "message_changed": false
+    },
+    {
+      "old": "51a390b16781a2b5af5f92c9343e6fbc0c62d0e6",
+      "new": "f91b8caf5b7d0a0a93e8611933b3f407058f5060",
+      "tree": "123ef5869973d60886b385d9958d8f881369e26e",
+      "message_changed": false
+    },
+    {
+      "old": "84e4a9af70339ed062dcd68491af9dbc84062e95",
+      "new": "314b44828b5b0234b5a976955125bfc063ee880c",
+      "tree": "5b659a8ec7463d3977296669256729ac211e87c5",
+      "message_changed": false
+    },
+    {
+      "old": "d146fda4b96a1eb8adf34015bbd345afcdec5cd5",
+      "new": "504ad699f51569d5256520196a324517b351f18c",
+      "tree": "67e0c02f154a84b7a8a7aab119e4da84c691a7f5",
+      "message_changed": false
+    },
+    {
+      "old": "98432dccfdc73ea548d015f98181c680eeaebdbe",
+      "new": "257ea91a0b3953b100604d8064bf377f16f78653",
+      "tree": "ef6aa4ee0b24c78beb3bfbbd8bada6306278d0a7",
+      "message_changed": false
+    },
+    {
+      "old": "4f61f0df343fbb07228a50dbba24811b4d95f6cb",
+      "new": "071f5b819d099820be13f9cfa80897058744b0a4",
+      "tree": "9b3f8d9d8827512a495cb1b07f3be36e4eca4bdc",
+      "message_changed": false
+    },
+    {
+      "old": "160c82d4ea3dede40eb3a2f65ee158aeadb9b758",
+      "new": "cc419e65c0cb48b45f113bf71c3f4506f2154e6f",
+      "tree": "afa06239625f977e2174a93307d7e0c82233365a",
+      "message_changed": false
+    },
+    {
+      "old": "e1c5a5669b2a7d5a98b364a6884ef96b8bdd8916",
+      "new": "911913a35a13ba1ec9d206fe34f25c6ec2876dc8",
+      "tree": "ffa7f31866cff1729e260c220e31dad85e46a7d1",
+      "message_changed": false
+    },
+    {
+      "old": "7662ab8b47b0a5d6a8d38b29b9c4aba26d03a005",
+      "new": "eae4e810f4675821e0662f95d87cf3bab209bd8f",
+      "tree": "6d40d40145d56453460fd66e3d373d378da61348",
+      "message_changed": false
+    },
+    {
+      "old": "4581b414b16cf2a8ee9d3866a6d1706c5f2f5de2",
+      "new": "0e053c33de238ca122c72fe484bb057b793a291b",
+      "tree": "76f3ed2140e73f5b7c2cc71b4fecbccf07e7faf5",
+      "message_changed": false
+    },
+    {
+      "old": "926394cfd4266c305fd0e4044cc87737db1bbd97",
+      "new": "29112859d338368ad15d321e2b0784d4ed567197",
+      "tree": "5bc619bcae0b19a69edd756a812b69a2429392aa",
+      "message_changed": false
+    },
+    {
+      "old": "8b41872db67eb99b781fa2bca5d32c62f43993a4",
+      "new": "3b3c99836f3c202a22cf791763d886cab9463da5",
+      "tree": "4eaff33afbeb4a84fa0cf8618c51cf004ef4eb02",
+      "message_changed": false
+    },
+    {
+      "old": "b27e1c62de57924b63d04aad13a83b48b75b2e1d",
+      "new": "7707a48e28514a6133688e0dea54e431c6677704",
+      "tree": "e95089312c18fc2d78d2739ac737dde9ffc887a1",
+      "message_changed": false
+    },
+    {
+      "old": "27004f1d99447afade2b62f4e2896f3dd6f61bb0",
+      "new": "a65b6da7ee266d1e0743d99d8a562621fde31546",
+      "tree": "f9445f66478f49e254c8e65594b93d4852a1eab7",
+      "message_changed": false
+    },
+    {
+      "old": "324882ec83954d3b8d972b98dd5323c21e80f8a1",
+      "new": "b0aa40c8c34b4fac28ee73f22de49ecf05c640a2",
+      "tree": "7744db5180ba0d4855634e7a4dc2456eba4ae752",
+      "message_changed": false
+    },
+    {
+      "old": "b7b1eab6932a3508be528f04016e21967e04527d",
+      "new": "15294330a905f5d12828c0b5d4d53bdcda884a77",
+      "tree": "04e55f4016e7544ab35033d12ebee3be2713d302",
+      "message_changed": false
+    },
+    {
+      "old": "9e1ab9ed67f47b305cb7ed7f545742ed1e38b630",
+      "new": "2b19936f9b4807870d29b46d22d2adf3dd56e119",
+      "tree": "04e55f4016e7544ab35033d12ebee3be2713d302",
+      "message_changed": true
+    },
+    {
+      "old": "e67ff55cc530ae3be743ba358c58a89e45c88e39",
+      "new": "6cb75e42d1c89177a897a7c4cbb40a2c306c7ee2",
+      "tree": "cb060627ae7aa325b02ed107655ed8906bb3ee38",
+      "message_changed": false
+    },
+    {
+      "old": "5afa5a82ffddc1c3c210171aee2d102380b4df9b",
+      "new": "d1771a93e097b5c9edbd8a9fc0c98dab4b9ff390",
+      "tree": "cb060627ae7aa325b02ed107655ed8906bb3ee38",
+      "message_changed": true
+    },
+    {
+      "old": "7e359bf4427ad3985fd2c06a0abdc25e2e0defa6",
+      "new": "4838474783ee430479c8437689bd9c969c953ab2",
+      "tree": "a2bb488a6ea728cc7362b2a06f0235ac6ba7a898",
+      "message_changed": false
+    }
+  ]
+}
