@@ -12,7 +12,7 @@
 [Справочник](README.md) · [Общая схема](models-and-transactions.md)
 
 **Уровень:** продвинутый.
-Окружение: Python 3.14.7, SQLAlchemy 2.1.8, aiosqlite 0.22.1, SQLite 3.53.4, Alembic 1.20.1, pytest 9.2.0, pytest-asyncio 1.4.1.post1.
+Используйте Python 3.14; установите зависимости выбранного примера перед его запуском.
 Предпосылки: транзакции, async, различие изменения схемы и данных.
 
 - [Асинхронная сессия](#асинхронная-сессия)
@@ -131,6 +131,8 @@ async def test_async_foreign_key_rejection_and_rollback():
 
 ## События и диагностика
 
+Используйте `demo_models.py` и [зависимости общей схемы](models-and-transactions.md#единая-схема-для-рецептов).
+Для наблюдения SQL не нужны aiosqlite и Alembic.
 Полный пример `demo_observe.py` показывает engine event и session events.
 Пример удаляет обработчики после работы.
 Поэтому повторный запуск не удваивает обработчики.
@@ -194,7 +196,7 @@ def test_observed_commit_and_insert():
     assert all(value >= 0 for value in elapsed)
 ```
 
-Запустите все тесты темы: `python -m pytest -q -o asyncio_default_fixture_loop_scope=function`.
+Запустите `python -m pytest -q test_observe.py`.
 Измеряемое время охватывает выполнение DBAPI cursor.
 Измерение не охватывает полный lifecycle HTTP-запроса или все расходы ORM.
 
@@ -218,16 +220,16 @@ SQL-логи могут содержать значения параметров
 
 ## Alembic: отдельный учебный проект
 
-Выполните `python -m pip install 'alembic==1.20.1'` в учебное окружение.
-Создайте отдельную пустую папку.
-Скопируйте туда `demo_models.py`.
+Создайте отдельную пустую папку и виртуальное окружение.
+Сохраните [полную общую схему](models-and-transactions.md#единая-схема-для-рецептов) как `demo_models.py` в этой папке.
+Extra `asyncio` нужен импорту `AsyncAttrs` из общей схемы, даже для синхронной миграции.
 Не указывайте URL существующей пользовательской БД.
 Проверка SQLite не подтверждает миграцию других диалектов.
 
 Команды оболочки:
 
 ```bash
-python -m pip install alembic
+python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'alembic==1.20.1'
 alembic init alembic
 ```
 

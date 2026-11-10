@@ -13,8 +13,8 @@
 
 **Уровень:** средний → продвинутый.
 Предпосылки: bind, contextvars, async и middleware.
-Окружение: Python 3.14.7, structlog 26.1.0, FastAPI 0.162.0, Starlette 1.10.0, HTTPX2 2.16.0, pytest 9.2.0, pytest-asyncio 1.4.1.post1.
-Все файлы используют `demo_logging.py` с соседней страницы.
+Используйте Python 3.14 и [demo_logging.py](configuration.md#самостоятельная-конфигурация) для настройки логгера.
+Зависимости задач и веб-примера указаны отдельно ниже.
 
 - [Локальный и контекстный bind](#локальный-и-контекстный-bind)
 - [FastAPI: граница запроса](#fastapi-граница-запроса)
@@ -29,8 +29,7 @@
 Этот вызов предотвращает наследование полей прошлого запроса.
 
 Ниже приведён полный пример `demo_context.py`.
-Зависимость: `structlog`.
-Для тестов нужны `pytest` и `pytest-asyncio`.
+В учебном окружении выполните `python -m pip install 'structlog==26.1.0' 'pytest==9.2.0' 'pytest-asyncio==1.4.1.post1'`.
 
 <!-- example: structlog/demo_context.py -->
 ```python
@@ -86,6 +85,7 @@ async def test_task_context_isolation_and_cleanup():
     assert "request_id" not in events[-1]
 ```
 
+Запустите `python -m pytest -q test_context.py -o asyncio_default_fixture_loop_scope=function`.
 Внутри задач ожидаются независимые item_id и общий request_id.
 Снаружи ожидается отсутствие обоих полей.
 Порядок событий **между** задачами не фиксируется.
@@ -99,7 +99,7 @@ async def test_task_context_isolation_and_cleanup():
 ## FastAPI: граница запроса
 
 Ниже приведён полный пример `demo_web.py`.
-Зависимости: `fastapi`, `httpx2`, `structlog`.
+В отдельном окружении выполните `python -m pip install 'structlog==26.1.0' 'fastapi==0.162.0' 'starlette==1.10.0' 'httpx2==2.16.0' 'pytest==9.2.0'`.
 Пример использует ASGI middleware, чтобы не добавлять ограничения распространения contextvars от BaseHTTPMiddleware.
 
 <!-- example: structlog/demo_web.py -->
@@ -192,7 +192,7 @@ def test_request_context_and_failure():
     assert "RuntimeError" in failed[0]["exception"]
 ```
 
-Запустите все тесты темы: `python -m pytest -q -o asyncio_default_fixture_loop_scope=function`.
+Запустите `python -m pytest -q test_web.py`.
 Для ручного сервера настройте логирование перед запуском приложения через `configure_logging()` из `demo_logging`.
 Не повторяйте настройку для каждого запроса.
 `response_started` означает отправку заголовков.

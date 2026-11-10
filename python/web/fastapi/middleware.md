@@ -12,15 +12,12 @@
 [Карточки HTTP](recipes.md) · [Справочник FastAPI](README.md) · [Проверки](testing.md)
 
 Уровень: средний.
-Среда: Python 3.14.7, FastAPI 0.162.0, Pydantic 2.14.3.
-Установите [точные зависимости](testing.md#среда-примеров) в отдельное окружение.
+Используйте Python 3.14.
+В отдельном окружении выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]'`.
 
 ## Middleware и CORS
 
-**Уровень:** средний.
-**Задача:** добавить время обработки и разрешить браузерные запросы с конкретного origin.
 Сохраните самостоятельный пример в файле `middleware_app.py`.
-Базовые зависимости те же, что для `minimal.py`.
 
 <!-- example: middleware_app.py -->
 ```python

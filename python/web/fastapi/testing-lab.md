@@ -15,10 +15,11 @@
 
 Уровень: средний; async и БД — продвинутый.
 Предпосылки: pytest, HTTP; для async — `async`/`await`.
-Используйте [точные зависимости](testing.md#среда-примеров) и [подготовку учебных файлов](testing.md#подготовка).
+Установите [пакеты выбранного приложения](testing.md#среда-примеров) и [подготовьте нужные файлы](testing.md#подготовка).
 Полные файлы приложений: [main.py](http-api.md), [uploads.py](uploads.md), [middleware_app.py](middleware.md), [БД](database.md), [JWT](authentication.md).
 Сохраните нужное приложение и соответствующий тест рядом.
-Запустите `python -m pytest -q -o asyncio_default_fixture_loop_scope=function`.
+Запустите `python -m pytest -q ИМЯ_ТЕСТОВОГО_ФАЙЛА.py`.
+Для async-тестов добавьте `-o asyncio_default_fixture_loop_scope=function`.
 
 ## Синхронный TestClient
 

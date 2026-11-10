@@ -12,16 +12,13 @@
 [Карточки HTTP](recipes.md) · [Справочник FastAPI](README.md) · [Проверки](testing.md)
 
 Уровень: базовый → средний.
-Среда: Python 3.14.7, FastAPI 0.162.0, Pydantic 2.14.3.
-Установите [точные зависимости](testing.md#среда-примеров) в отдельное окружение.
+Для запуска нужны Python 3.14, FastAPI 0.162.0 и Pydantic 2.14.3.
 
 ## HTTP API с валидацией
 
-**Уровень:** базовый → средний.
-**Задача:** создать небольшой CRUD с разделением path/query/body, проверкой полей и управляемыми ответами.
 **Предпосылки:** функции, типы, HTTP-методы.
 
-В отдельной папке установите `fastapi==0.162.0`, `uvicorn[standard]` и `pydantic[email]`.
+В отдельном окружении выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'pydantic[email]==2.14.3'`.
 Создайте полный файл `main.py`:
 
 <!-- example: main.py -->

@@ -27,27 +27,31 @@
 - [Сессии БД и lifespan](#сессии-бд-и-lifespan)
 - [Аутентификация](#аутентификация)
 
-## Среда примеров
+<a id="среда-примеров"></a>
 
-Для одной подмены используйте [отдельную установку и один файл](dependency-overrides.md#минимальный-самостоятельный-пример).
-Зависимости ниже нужны другим примерам этой страницы.
+## Зависимости по задаче
 
-Для воспроизведения используйте Python 3.14.7.
-Установите зависимости в отдельное окружение:
+Для подмены используйте [самостоятельный пример с отдельной установкой](dependency-overrides.md#минимальный-самостоятельный-пример).
+Для остальных тестов создайте учебное окружение на Python 3.14.
+Установите общие пакеты: `python -m pip install 'fastapi==0.162.0' 'starlette==1.10.0' 'pytest==9.2.0' 'httpx2==2.16.0'`.
+Затем добавьте только зависимости выбранного приложения:
 
-- API и ввод: `python -m pip install 'fastapi==0.162.0' 'pydantic[email]==2.14.3' 'starlette==1.10.0' 'httpx2==2.16.0' 'python-multipart==0.0.33' 'email-validator==2.3.0'`.
-- Тесты: `python -m pip install 'pytest==9.2.0' 'pytest-asyncio==1.4.1.post1'`.
-- База данных и JWT: `python -m pip install 'sqlalchemy==2.1.8' 'aiosqlite==0.22.1' 'PyJWT==2.15.1' 'pwdlib[argon2]==0.3.1'`.
+| Тестируемое приложение | Дополнительная установка |
+| --- | --- |
+| [main.py: CRUD и валидация](http-api.md) | `python -m pip install 'pydantic[email]==2.14.3' 'email-validator==2.3.0'` |
+| [uploads.py: multipart](uploads.md) | `python -m pip install 'python-multipart==0.0.33'` |
+| [middleware_app.py: CORS](middleware.md) | Дополнительные пакеты не нужны |
+| [db_app.py: sync-БД](database.md#синхронный-sqlalchemy) | `python -m pip install 'sqlalchemy==2.1.8' 'pydantic[email]==2.14.3' 'email-validator==2.3.0'` |
+| [async_db_app.py: async-БД](database.md#async-sqlalchemy-и-lifespan) | `python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1'` |
+| [auth_app.py: пароль и JWT](authentication.md) | `python -m pip install 'python-multipart==0.0.33' 'PyJWT==2.15.1' 'pwdlib[argon2]==0.3.1'` |
 
 ## Подготовка
 
-Подготовка ниже относится к остальным тестам страницы; для подмены достаточно [одного файла](dependency-overrides.md#минимальный-самостоятельный-пример).
-
-Сохраните приложения из связанных страниц в одной учебной папке.
-Выберите нужные файлы: [main.py](http-api.md), [uploads.py](uploads.md), [middleware_app.py](middleware.md), [db_app.py и async_db_app.py](database.md), [auth_app.py](authentication.md).
-Разместите файлы тестов ниже рядом с приложениями.
-Для подмены начните с [самостоятельного примера в одном файле](dependency-overrides.md#минимальный-самостоятельный-пример).
-Дополнительно к зависимостям приложений установите:
+Сохраните выбранное приложение и соответствующий [полный тестовый модуль](testing-lab.md) рядом в учебной папке.
+Для файла `test_integrations.py` нужны оба приложения: `uploads.py` и `middleware_app.py`.
+Для файла `test_database.py` нужны оба варианта БД и их зависимости.
+Для async-теста добавьте `pytest-asyncio==1.4.1.post1`.
+Отдельная команда установки инструментов async-теста:
 
 ```bash
 python -m pip install pytest pytest-asyncio httpx2
@@ -59,8 +63,8 @@ python -m pip install pytest pytest-asyncio httpx2
 Не используйте прямой `AsyncClient(app=app)`.
 Этот аргумент удалён из HTTPX в 0.28.0.
 
-Из учебной папки запустите `python -m pytest -q -o asyncio_default_fixture_loop_scope=function`.
-Опция явно задаёт область event loop для async-фикстур.
+Из учебной папки запустите `python -m pytest -q ИМЯ_ТЕСТОВОГО_ФАЙЛА.py`.
+Для async-тестов добавьте `-o asyncio_default_fixture_loop_scope=function`, чтобы явно задать область event loop.
 Тесты выполняют запросы внутри процесса.
 Сервер Uvicorn и внешняя сеть не нужны.
 

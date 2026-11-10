@@ -16,7 +16,7 @@
 | Уровень | Средний: синхронная сессия; продвинутый: async и жизненный цикл |
 | Предпосылки | SQL, транзакции, SQLAlchemy, `Depends`; для async — `async with` |
 
-Для воспроизведения установите зависимости из [среды примеров](testing.md#среда-примеров).
+Используйте Python 3.14; установите пакеты выбранного варианта ниже.
 
 Оба примера самостоятельны.
 Не объединяйте `Base`, движки и фабрики сессий из разных примеров.
@@ -25,7 +25,7 @@
 
 ## Синхронный SQLAlchemy
 
-Установите в отдельное окружение `fastapi==0.162.0`, `uvicorn[standard]`, `sqlalchemy`, `pydantic[email]`.
+В отдельном окружении выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'sqlalchemy==2.1.8' 'pydantic[email]==2.14.3'`.
 Сохраните полный пример в файле `db_app.py`:
 
 <!-- example: db_app.py -->
@@ -131,7 +131,7 @@ FastAPI выполняет эти обработчики в пуле поток�
 
 ## Async SQLAlchemy и lifespan
 
-Установите дополнительно `sqlalchemy[asyncio]` и `aiosqlite`.
+Для независимого async-примера выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1'`.
 Сохраните полный независимый пример в файле `async_db_app.py`:
 
 <!-- example: async_db_app.py -->
@@ -217,7 +217,6 @@ GET `/notes` возвращает список заметок.
 
 Страница не реализует production-миграции, пул PostgreSQL, relationship lazy loading и восстановление БД.
 Это самостоятельные задачи SQLAlchemy/Alembic.
-Старый пример с пакетом `databases` заменён одним SQLAlchemy API для sync/async.
 Тот же принцип lifespan применим и к другим клиентам.
 
 Источники: [FastAPI: lifespan](https://fastapi.tiangolo.com/advanced/events/), [SQLAlchemy: async API](https://docs.sqlalchemy.org/en/21/orm/extensions/asyncio.html), [AsyncSession и конкурентные задачи](https://docs.sqlalchemy.org/en/21/orm/extensions/asyncio.html#using-asyncsession-with-concurrent-tasks).
