@@ -78,13 +78,17 @@ selectinload: 2 SELECT; [('alice', ['Python', 'SQL']), ('bob', [])]
 ```
 
 Both strategies read every user and post, including Bob's empty collection.
-The assertions check the returned rows and the query count separately. Leave assertions enabled when you run the example.
+The assertions check the returned rows and the query count separately.
+Run `python n_plus_one.py` to keep these checks active. The `-O` flag disables assertions.
 
 The counter recognizes statements that start with `SELECT`. SQL that starts with a comment or a CTE needs a different counter.
-The counts apply to one collection, two users, and fresh sessions on the specified versions. Measure rows, time, and memory with your own data to assess performance.
+The counts measure `SELECT` statements for one collection, two users, and fresh sessions on the specified versions.
+Measure rows, execution time, and memory separately with your own data to assess performance.
 
 The [extended lab in Russian](../../../../../python/databases/sqlalchemy/loading-lab.md) covers `joinedload`, missing `unique()`, `raiseload`, and nested and partial collections.
-That lab uses a separate schema and setup. This program exercises a small sequential workload on synchronous SQLite.
+That lab uses a separate schema and setup.
+This program tests a small sequential workload on synchronous SQLite.
+Async sessions, other databases, larger data sets, and concurrent access require separate checks.
 
 ## Sources
 
