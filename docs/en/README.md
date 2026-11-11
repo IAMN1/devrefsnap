@@ -1,4 +1,5 @@
 <a id="шпаргалки-по-разработке"></a>
+<a name="english-reference"></a>
 # Development cheat sheets
 
 [Русский](../ru/README.md) · [Contributing](../../CONTRIBUTING.md#english)
