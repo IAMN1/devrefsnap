@@ -1,85 +1,43 @@
 # SQLite
 
-SQLite — встраиваемая реляционная СУБД.
-Приложение работает с библиотекой без отдельного сервера.
-Файл базы удобен для локальных приложений, тестов и встроенного хранения.
-Учитывайте конкуренцию записи отдельно.
-
-[К базам данных](../../README.md) · [Общий SQL](../../sql/README.md) · [PostgreSQL](../postgresql/README.md)
-
-<a id="навигация"></a>
-
-## Быстрый поиск
-
-| Задача | Команда / API | Где |
-| --- | --- | --- |
-| Подключиться и сделать CRUD | sqlite3.connect, execute, параметры | [Короткий пример](python-and-queries.md#передать-значение-параметром) · [Полный блог](query-lab.md#полный-пример-блог-в-памяти) |
-| Включить внешние ключи | PRAGMA foreign_keys=ON | [Схема и проверка FK](query-lab.md#полный-пример-блог-в-памяти) |
-| Выбрать тип | affinity / STRICT | [Типы и функции](python-and-queries.md#типы-функции-и-индексы) |
-| Посмотреть таблицы через CLI | .tables / .schema | [CLI](python-and-queries.md#cli-и-другие-языки) |
-| Получить согласованную копию | Connection.backup / .backup | [Python](backup-and-restore.md#создать-копию-через-python) · [CLI](backup-and-restore.md#создать-копию-через-cli) |
-| Восстановить и проверить копию | Новый файл, integrity/FK, данные | [Восстановление](backup-and-restore.md#восстановить-копию-в-новый-файл) · [Проверки](backup-and-restore.md#проверить-восстановленную-бд) |
-| Изменить структуру без потери связей | Транзакция и перестроение | [Миграция](backup-and-migrations.md#полный-пример-перестроение-таблицы) |
-| Разобрать busy / WAL | BEGIN IMMEDIATE / timeout / checkpoint | [Конкуренция](backup-and-migrations.md#конкуренция-и-wal) |
-
-| Параметр | Значение |
-| --- | --- |
-| Python-примеры | Python 3.14 со штатным sqlite3; для команд оболочки нужны sqlite3 CLI и Bash |
-| Границы API | STRICT доступен начиная с SQLite 3.37; RETURNING — начиная с 3.35 |
-| Границы | Возможности сборки и поведение драйвера проверяются отдельно от установленного CLI |
+[Русский](../../../docs/ru/databases/relational/sqlite/README.md) · [English](../../../docs/en/databases/relational/sqlite/README.md)
 
 <a id="базовый-уровень"></a>
 
-## Подключиться и выбрать тип данных
+- [базовый-уровень](../../../docs/ru/databases/relational/sqlite/README.md#базовый-уровень)
 
-Начните с [полного Python-примера](query-lab.md#полный-пример-блог-в-памяти).
-Пример создаёт users/posts/comments, выполняет JOIN и проверяет отказ для неверного внешнего ключа.
-`INTEGER PRIMARY KEY` обычно уже генерирует rowid.
-AUTOINCREMENT нужен, если ранее выданные rowid нельзя использовать повторно.
-AUTOINCREMENT добавляет накладные расходы.
+<a id="быстрый-поиск"></a>
 
-В SQLite нет отдельных встроенных классов хранения BOOLEAN, DATETIME и JSON.
-SQLite хранит NULL, INTEGER, REAL, TEXT или BLOB.
-Объявление столбца влияет на affinity.
-Для жёсткой проверки типов существует STRICT, но поддерживаемые имена типов ограничены.
+- [Быстрый поиск](../../../docs/ru/databases/relational/sqlite/README.md#быстрый-поиск)
 
-<a id="средний-уровень"></a>
+<a id="источники"></a>
 
-## Обеспечить ограничения и транзакции
+- [Источники](../../../docs/ru/databases/relational/sqlite/README.md#источники)
 
-Используйте [параметризованные запросы, RETURNING, индексы и явное управление транзакцией](python-and-queries.md).
-Включайте внешние ключи для каждого соединения **до** начала транзакции.
-`CHECK(age >= 0)` не запрещает NULL.
-Если NULL недопустим, добавьте NOT NULL.
-Отражайте сложные ограничения в схеме.
-Не ограничивайте проверку только интерфейсом приложения.
+<a id="навигация"></a>
+
+- [навигация](../../../docs/ru/databases/relational/sqlite/README.md#навигация)
+
+<a id="обеспечить-ограничения-и-транзакции"></a>
+
+- [Обеспечить ограничения и транзакции](../../../docs/ru/databases/relational/sqlite/README.md#обеспечить-ограничения-и-транзакции)
+
+<a id="подключиться-и-выбрать-тип-данных"></a>
+
+- [Подключиться и выбрать тип данных](../../../docs/ru/databases/relational/sqlite/README.md#подключиться-и-выбрать-тип-данных)
 
 <a id="продвинутый-уровень"></a>
 
-## Учесть WAL и восстановление
+- [продвинутый-уровень](../../../docs/ru/databases/relational/sqlite/README.md#продвинутый-уровень)
 
-[Копия и восстановление](backup-and-restore.md) отделены от [миграции и WAL](backup-and-migrations.md).
-Во многих случаях WAL позволяет читателям работать одновременно с writer.
-Writer остаётся один.
-WAL не обеспечивает произвольное число параллельных записей.
-Активная БД может использовать файлы `-wal` и `-shm`.
-Копирование только основного файла не является универсальным безопасным резервным копированием.
-Получайте согласованную копию через backup API или штатные инструменты.
+<a id="средний-уровень"></a>
 
-## Частые ошибки
+- [средний-уровень](../../../docs/ru/databases/relational/sqlite/README.md#средний-уровень)
 
-| Симптом | Причина / действие |
-| --- | --- |
-| FK/CASCADE не сработали | Проверьте PRAGMA foreign_keys в каждом соединении, вне транзакции |
-| Строка оказалась в числовом столбце | Обычная affinity гибкая; рассмотрите STRICT и CHECK |
-| database is locked | Короткие транзакции, контролируемое ожидание, отсутствие долгого writer; timeout не устраняет конфликт |
-| DELETE ... LIMIT дал syntax error | Нужна опция сборки SQLITE_ENABLE_UPDATE_DELETE_LIMIT; переносимый вариант — подзапрос id с LIMIT |
-| .tables не работает через execute | Это команда CLI, не SQL; у dot-команд нет inline-комментариев |
-| `with connection` закрыл БД | Контекст транзакции не закрывает соединение; используйте close/closing |
-| После миграции исчезли индексы/триггеры | Они должны быть сохранены и воссозданы при перестроении таблицы |
+<a id="учесть-wal-и-восстановление"></a>
 
-## Источники
+- [Учесть WAL и восстановление](../../../docs/ru/databases/relational/sqlite/README.md#учесть-wal-и-восстановление)
 
-- [SQLite: назначение](https://www.sqlite.org/about.html), [типизация](https://www.sqlite.org/datatype3.html), [STRICT](https://www.sqlite.org/stricttables.html).
-- [Внешние ключи](https://www.sqlite.org/foreignkeys.html), [AUTOINCREMENT](https://www.sqlite.org/autoinc.html), [DELETE LIMIT](https://www.sqlite.org/lang_delete.html#optional_limit_and_order_by_clauses).
-- [Python 3.14 sqlite3](https://docs.python.org/3.14/library/sqlite3.html), [история версий SQLite](https://www.sqlite.org/changes.html).
+<a id="частые-ошибки"></a>
+
+- [Частые ошибки](../../../docs/ru/databases/relational/sqlite/README.md#частые-ошибки)

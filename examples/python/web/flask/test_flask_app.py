@@ -1,0 +1,74 @@
+import pytest
+
+from flask_app import create_app
+
+
+@pytest.fixture
+def app():
+    return create_app({"TESTING": True, "MAX_CONTENT_LENGTH": 1024})
+
+
+@pytest.fixture
+def client(app):
+    return app.test_client()
+
+
+def test_item(client):
+    response = client.get("/api/items/1")
+    assert response.status_code == 200
+    assert response.is_json
+    assert response.json == {"id": 1, "name": "apple"}
+
+
+def test_greet(client):
+    response = client.post("/api/greet", json={"name": " Alice "})
+    assert response.status_code == 200
+    assert response.json == {"greeting": "Hello, Alice"}
+
+
+@pytest.mark.parametrize("payload", [{}, {"name": " "}, {"name": 12}, []])
+def test_invalid_name(client, payload):
+    response = client.post("/api/greet", json=payload)
+    assert response.status_code == 400
+    assert response.json["error"] == "Bad Request"
+
+
+def test_media_type(client):
+    response = client.post("/api/greet", data="name=Alice")
+    assert response.status_code == 415
+
+
+def test_malformed_json(client):
+    response = client.post("/api/greet", data="{", content_type="application/json")
+    assert response.status_code == 400
+
+
+def test_unknown_item(client):
+    response = client.get("/api/items/99")
+    assert response.status_code == 404
+    assert response.json["message"] == "item not found"
+
+
+def test_method_not_allowed_preserves_header(client):
+    response = client.post("/api/items/1")
+    assert response.status_code == 405
+    assert "GET" in response.headers["Allow"]
+
+
+def test_template_escapes_input(client):
+    response = client.get("/", query_string={"name": "<b>Alice</b>"})
+    assert response.status_code == 200
+    assert "&lt;b&gt;Alice&lt;/b&gt;" in response.text
+    assert "<b>Alice</b>" not in response.text
+
+
+def test_body_limit(client):
+    response = client.post("/api/greet", json={"name": "x" * 2048})
+    assert response.status_code == 413
+
+
+def test_factory_instances_do_not_share_config():
+    first = create_app({"TESTING": True, "DEMO_VALUE": "first"})
+    second = create_app({"TESTING": True, "DEMO_VALUE": "second"})
+    assert first.config["DEMO_VALUE"] == "first"
+    assert second.config["DEMO_VALUE"] == "second"

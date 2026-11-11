@@ -1,9 +1,7 @@
 # Языковые версии / Language editions
 
-[Русский](ru/README.md) · [English](en/README.md) · [Все материалы / Full catalog](../README.md)
+[Русский](ru/README.md) · [English](en/README.md)
 
-У каждой языковой версии пилота свой каталог. Страницы одной темы имеют одинаковый путь внутри этих каталогов.
-Обе страницы ссылаются на один [исполняемый пример](../examples/README.md).
+Выберите язык, затем тему или задачу. Обе версии используют [общие полные примеры](../examples/README.md).
 
-Each language has its own catalog. Topic pages use matching paths within their language directories.
-Both pages link to the same [runnable example](../examples/README.md).
+Choose a language, then a topic or task. Both editions use [shared complete examples](../examples/README.md).

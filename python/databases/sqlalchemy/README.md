@@ -1,197 +1,43 @@
 # SQLAlchemy: API 2.x
 
-SQLAlchemy объединяет SQL-конструктор Core и ORM с сессиями, отношениями и транзакциями.
-Откройте справочник для моделей, транзакций, запросов и выбора загрузки отношений.
-Справочник использует стиль `select()`.
-Примеры используют SQLAlchemy 2.1.
-Примеры сохраняют основные конструкции, введённые в 2.0.
-
-[Каталог Python](../../README.md) · [FastAPI и сессия на запрос](../../web/fastapi/database.md)
-
-## Быстрый поиск
-
-| Задача | API | Где |
-| --- | --- | --- |
-| Модель, типы, defaults, constraints | `DeclarativeBase`, `Mapped`, `mapped_column` | [Модели](models-and-transactions.md#единая-схема-для-рецептов) |
-| CRUD и откат | `Session`, `session.begin()`, `rollback()` | [Транзакции](models-and-transactions.md#crud-транзакции-и-savepoint) |
-| 1:N, N:1, 1:1, N:M | `relationship`, `ForeignKey`, `Table` | [Полная схема](models-and-transactions.md#единая-схема-для-рецептов) |
-| WHERE/JOIN/CTE/CASE/UNION/EXISTS | `select`, `func`, `aliased` | [Запросы](queries.md) |
-| Устранить слишком много запросов при чтении коллекций | N+1, lazy, `selectinload` | [Карточка N+1](relationship-loading.md#найти-n1) · [Самостоятельная программа](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#подготовка-и-запуск) |
-| Выбрать загрузку коллекции по объёму и ограничениям | `selectinload` или `joinedload` | [Таблица решений](relationship-loading.md#выбрать-стратегию) · [Select-in](relationship-loading.md#загрузить-коллекции-через-selectinload) · [Joined и unique](relationship-loading.md#загрузить-коллекцию-через-joinedload) |
-| Загрузить автора каждого поста | Сравнить повторение полей и число SELECT | [Одиночная связь](relationship-loading.md#загрузить-одиночную-связь) |
-| Запретить неожиданный lazy SELECT | `raiseload` | [Карточка и ограничения](relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
-| Загрузить часть отношения своим JOIN | `contains_eager`, `populate_existing` | [Частичная коллекция](relationship-loading.md#загрузить-частичную-коллекцию-из-join) |
-| Обработать большую выборку | `yield_per`, `partitions` | [Пакеты и ограничения](streaming.md) |
-| Async-сессия и атрибуты | `AsyncSession`, `AsyncAttrs`, `awaitable_attrs` | [Async](async-and-operations.md#асинхронная-сессия) |
-| UPSERT / FOR UPDATE / частичный индекс | Диалект PostgreSQL | [Компиляция PostgreSQL](queries.md#postgresql-компиляция-без-подключения) |
-| События, SQL-логи и время запроса | `event`, `logging`, `perf_counter` | [Наблюдение](async-and-operations.md#события-и-диагностика) |
-| Изменить схему | Alembic | [Миграции](async-and-operations.md#alembic-отдельный-учебный-проект) |
-
-| Параметр | Значение |
-| --- | --- |
-| API / диалект | SQLAlchemy 2.1; исполняемые примеры SQLite, PostgreSQL отдельно помечен |
-| Предпосылки | Python, SQL, транзакции; async-рецепт требует `async with` |
-| Самостоятельный N+1 | [Синхронный пример с двумя моделями](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md): отдельная установка и проверки; общая схема ему не нужна |
-
-<a id="навигация"></a>
+[Русский](../../../docs/ru/python/databases/sqlalchemy/README.md) · [English](../../../docs/en/python/databases/sqlalchemy/README.md)
 
 <a id="базовый-уровень"></a>
 
-## Записать пользователя в явной транзакции
+- [базовый-уровень](../../../docs/ru/python/databases/sqlalchemy/README.md#базовый-уровень)
 
-**Ситуация:** пользователь должен сохраниться при успехе и откатиться при исключении.
-**Изменение:** отделите жизнь сессии от транзакционной границы.
-Фрагмент использует `User` и `new_engine()` из [полной схемы](models-and-transactions.md#единая-схема-для-рецептов):
+<a id="быстрый-поиск"></a>
 
-```python
-from sqlalchemy.orm import Session
-from demo_models import User, new_engine
+- [Быстрый поиск](../../../docs/ru/python/databases/sqlalchemy/README.md#быстрый-поиск)
 
-engine = new_engine()
-try:
-    with Session(engine) as session, session.begin():
-        user = User(name="alice", email="alice@example.com")
-        session.add(user)
-        session.flush()
-        assert user.id is not None
-finally:
-    engine.dispose()
-```
+<a id="записать-пользователя-в-явной-транзакции"></a>
 
-**Результат:** `flush` выдаёт id, а успешный выход из `begin` фиксирует транзакцию.
-SQLite существует только в памяти; после освобождения движка данные исчезают.
-[Полные CRUD и проверки отката](models-and-transactions.md#crud-транзакции-и-savepoint).
+- [Записать пользователя в явной транзакции](../../../docs/ru/python/databases/sqlalchemy/README.md#записать-пользователя-в-явной-транзакции)
 
+<a id="источники"></a>
 
-Для первого знакомства с N+1 используйте [отдельную подготовку одного файла](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#подготовка-и-запуск).
-Установка ниже относится к общей схеме и остальным рецептам раздела.
-Установите пакеты в отдельное окружение: `python -m pip install 'sqlalchemy[asyncio]==2.1.8' pytest`.
-Extra `asyncio` нужен общей модели с AsyncAttrs, даже для её синхронных рецептов.
-Для async добавьте `aiosqlite` и `pytest-asyncio`.
+- [Источники](../../../docs/ru/python/databases/sqlalchemy/README.md#источники)
 
-| Компонент | Назначение |
-| --- | --- |
-| `Engine` / `Connection` | Доступ к драйверу/пулу; конкретное соединение |
-| `MetaData` / `Table` / `Column` | Описание схемы Core; `Column` нужен и в 2.x |
-| `DeclarativeBase`, `Mapped[T]` | ORM-отображение и аннотации; `Mapped` не обязателен для всех допустимых стилей |
-| `Session` | Identity map и единица работы; не общий потокобезопасный контейнер |
-| `select()` | Описание запроса; SQL выполняется через сессию/соединение |
-| `Result` / `ScalarResult` | Строки / значения первого выбранного столбца |
+<a id="навигация"></a>
 
-`with Session(engine)` закрывает сессию, но сам не делает commit.
-При успехе `with session.begin()` фиксирует транзакцию.
-При исключении контекст откатывает транзакцию.
-`flush()` отправляет изменения в БД внутри транзакции.
-Метод также выдаёт сгенерированные id.
-Вызов `flush()` не выполняет commit.
-[Полный исполняемый пример](models-and-transactions.md).
+- [навигация](../../../docs/ru/python/databases/sqlalchemy/README.md#навигация)
 
-Схема показывает границу сессии и исходы явной транзакции:
+<a id="получить-строки-из-нескольких-колонок"></a>
 
-```mermaid
-flowchart LR
-    A[Открыть Session] -->|выделить границу работы| B[Начать транзакцию]
-    B -->|выполнить изменения| C[Изменить объекты]
-    C -->|синхронизировать с БД| D[flush: отправить SQL]
-    D -->|завершить успешно| E[Успех: commit]
-    D -->|обработать ошибку| F[Ошибка: rollback]
-    E -->|освободить ресурсы| G[Закрыть Session]
-    F -->|освободить ресурсы| G
-```
-
-| Чтение | Результат |
-| --- | --- |
-| `session.get(User, id)` | Объект либо `None`, с учётом identity map |
-| `session.scalars(select(User)).all()` | Список ORM-объектов |
-| `session.execute(select(User.name, User.email))` | Строки из двух выбранных значений |
-| `result.scalar_one()` / `scalar_one_or_none()` | Контроль числа результатов; больше одной строки — ошибка |
-
-<a id="средний-уровень"></a>
-
-## Получить строки из нескольких колонок
-
-**Ситуация:** из подготовленных Alice и Bob нужны имена и возраст совершеннолетних.
-**Изменение:** выберите колонки явно и используйте `execute`, сохраняя обе колонки.
-Фрагмент использует Session с данными из [полного `seed()`](queries.md#select-join-подзапросы-и-cte):
-
-```python
-from sqlalchemy import select
-from demo_models import User
-
-rows = session.execute(
-    select(User.name, User.age).where(User.age >= 18).order_by(User.id)
-).all()
-assert rows == [("alice", 30)]
-```
-
-**Результат:** одна строка с двумя значениями.
-`scalars()` оставил бы только первую выбранную колонку.
-[Полный набор JOIN, CTE, EXISTS и проверки](queries.md).
-
-
-- `Mapped[str | None]` выводит nullable. Явный `nullable=` имеет приоритет. `Numeric` обычно возвращает `Decimal`. Аннотируйте соответствующее поле как Decimal.
-- `default` применяется на стороне Python/SQLAlchemy. `server_default` входит в DDL БД. `onupdate` не создаёт серверный trigger.
-- Обеспечивайте уникальность и внешние ключи через constraints. Для 1:1 скалярного `relationship` недостаточно. Нужен уникальный FK или PK.
-- `Enum(MyEnum)` по умолчанию хранит **имена** членов. Для строковых значений задайте `values_callable`. Для целочисленного хранения нужна соответствующая отдельная модель столбца/конвертации.
-- ORM `cascade="all, delete-orphan"` и FK `ON DELETE` — разные механизмы. [Схема и тесты](models-and-transactions.md) включают внешний ключ SQLite явно.
+- [Получить строки из нескольких колонок](../../../docs/ru/python/databases/sqlalchemy/README.md#получить-строки-из-нескольких-колонок)
 
 <a id="продвинутый-уровень"></a>
 
-## Прочитать коллекции без запроса для каждого пользователя
+- [продвинутый-уровень](../../../docs/ru/python/databases/sqlalchemy/README.md#продвинутый-уровень)
 
-**Ситуация:** список пользователей должен включать все посты, а дополнительный SELECT допустим.
-**Изменение:** загрузите коллекции через `selectinload`.
-Фрагмент запроса из [самостоятельной программы с двумя моделями](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#полная-программа):
+<a id="прочитать-коллекции-без-запроса-для-каждого-пользователя"></a>
 
-```python
-stmt = select(User).options(selectinload(User.posts)).order_by(User.id)
-users = session.scalars(stmt).all()
-rows = [(user.name, [post.title for post in user.posts]) for user in users]
-```
+- [Прочитать коллекции без запроса для каждого пользователя](../../../docs/ru/python/databases/sqlalchemy/README.md#прочитать-коллекции-без-запроса-для-каждого-пользователя)
 
-**Результат учебного набора:** Alice с двумя постами и Bob с пустой коллекцией; два SELECT вместо трёх.
-Число запросов относится к двум пользователям и новой Session.
-Импорты и подготовка указаны в полной программе.
-[Выбор стратегии, цена JOIN и ограничения](relationship-loading.md#выбрать-стратегию).
+<a id="средний-уровень"></a>
 
+- [средний-уровень](../../../docs/ru/python/databases/sqlalchemy/README.md#средний-уровень)
 
-[Запросы](queries.md) описывают SQL-выражения и отдельную компиляцию PostgreSQL.
-[Карточки загрузки](relationship-loading.md) помогают выбрать состав отношений.
-[Большие выборки](streaming.md) описывают пакетную обработку отдельно.
-Для полных коллекций списка начните с `selectinload`, если дополнительные SELECT допустимы.
-Для небольшой коллекции сравните `joinedload`, учитывая повторение полей родителя и обязательный `unique()`.
-Для одиночной связи сопоставьте число SELECT и повторение полей связанного объекта.
-[Таблица решений и ограничения запроса](relationship-loading.md#выбрать-стратегию) описывает условия выбора.
-Количество SELECT само по себе не доказывает ускорение.
+<a id="частые-ошибки"></a>
 
-[Async и эксплуатация](async-and-operations.md) описывают сессию на задачу, события и миграции.
-Выбирайте размер пула, `max_overflow`, `pool_recycle` и `pool_pre_ping` по драйверу и лимитам БД.
-Числа из примеров не являются универсальными настройками.
-
-Компиляционный cache SQLAlchemy не кэширует строки результата.
-Наличие cache не означает server-side prepared statement.
-Для новых примеров не нужен устаревший `sqlalchemy.ext.baked`.
-Переиспользуйте параметризованные выражения.
-Измеряйте запросы.
-
-## Частые ошибки
-
-| Симптом | Исправление |
-| --- | --- |
-| Сессия «rolled back» после flush | Вызовите `rollback()` перед повторным использованием либо завершите контекст транзакции |
-| `DetachedInstanceError` | Заранее загрузите нужные поля/отношения или преобразуйте объект в DTO до закрытия сессии |
-| Надежда на `expire_on_commit=False` как полное лечение | Он предотвращает expiry при commit, но не загружает отсутствующие отношения |
-| Отношение не заполнено после обычного JOIN | JOIN фильтрует строки; для eager loading нужны loader options / `contains_eager` |
-| `metadata` как ORM-атрибут | Имя зарезервировано Declarative. Используйте другое Python-имя с SQL-именем столбца |
-| Один AsyncSession в `gather()` | Выделите сессию на конкурентную задачу |
-
-`Session.query()` — legacy API.
-`Query.get()` заменён на `Session.get()`.
-Не объявляйте все конструкции с `Column` запрещёнными.
-Не возвращайте library-level autocommit.
-Задавайте явные транзакционные границы задачи.
-
-## Источники
-
-- [SQLAlchemy 2.1](https://docs.sqlalchemy.org/en/21/), [отображения](https://docs.sqlalchemy.org/en/21/orm/declarative_tables.html), [Session](https://docs.sqlalchemy.org/en/21/orm/session_basics.html).
-- [Загрузка отношений](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html), [async](https://docs.sqlalchemy.org/en/21/orm/extensions/asyncio.html), [миграция 2.0](https://docs.sqlalchemy.org/en/20/changelog/migration_20.html).
+- [Частые ошибки](../../../docs/ru/python/databases/sqlalchemy/README.md#частые-ошибки)

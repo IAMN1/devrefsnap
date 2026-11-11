@@ -134,10 +134,16 @@ class MaterialsTests(unittest.TestCase):
         self.write("README.md", "```bash\nif true; then\n```\n")
         self.check(1, "bash-syntax")
 
+    def test_standalone_shell_example_rejects_unclosed_if(self):
+        self.write("README.md", "[Script](examples/topic/demo.sh)\n")
+        self.write("examples/topic/demo.sh", "if true; then\n")
+        self.check(1, "bash-syntax")
+
     def test_python_and_bash_payloads_and_bash_env_are_not_executed(self):
         marker = self.root / "EXECUTED"
         init = self.write("evil-env", f"touch '{marker}'\n")
         self.write("examples/topic/demo.py", f"from pathlib import Path\nPath({str(marker)!r}).touch()\n")
+        self.write("examples/topic/demo.sh", f"touch '{marker}'\nx=$(touch '{marker}')\n")
         self.write("README.md", (
             f"```python\nfrom pathlib import Path\nPath({str(marker)!r}).touch()\n```\n"
             f"```bash\ntouch '{marker}'\nx=$(touch '{marker}')\n"

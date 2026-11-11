@@ -98,6 +98,18 @@ def check(root):
             line = first_line + (getattr(error, "lineno", 1) or 1) - 1
             issue(path, line, "python-syntax", str(error))
 
+    def check_bash(path, source, first_line):
+        try:
+            result = subprocess.run(
+                ["/bin/bash", "--noprofile", "--norc", "-n"],
+                input=source, capture_output=True, text=True,
+                env={"PATH": "/usr/bin:/bin", "LC_ALL": "C"}, timeout=5,
+            )
+            if result.returncode:
+                issue(path, first_line, "bash-syntax", result.stderr.strip())
+        except subprocess.TimeoutExpired:
+            issue(path, first_line, "bash-syntax", "Превышен предел разбора Bash: 5 секунд")
+
     def walk(directory):
         for path in sorted(directory.iterdir()):
             if path.name in IGNORED_DIRS:
@@ -106,16 +118,18 @@ def check(root):
                 issue(path, 1, "symlink", "Символьные ссылки не поддерживаются проверкой")
             elif path.is_dir():
                 yield from walk(path)
-            elif path.suffix.lower() == ".md" or (path.suffix == ".py" and path.is_relative_to(examples)):
+            elif path.suffix.lower() == ".md" or (path.suffix in {".py", ".sh"} and path.is_relative_to(examples)):
                 yield path
 
     total_bytes = 0
     for path in walk(root):
         is_python_file = path.suffix == ".py"
-        counts["python_files" if is_python_file else "markdown"] += 1
+        is_shell_file = path.suffix == ".sh"
+        kind = "python_files" if is_python_file else "bash_files" if is_shell_file else "markdown"
+        counts[kind] += 1
         size = path.stat().st_size
         total_bytes += size
-        if counts["markdown"] + counts["python_files"] > MAX_FILES or total_bytes > MAX_TOTAL_BYTES:
+        if counts["markdown"] + counts["python_files"] + counts["bash_files"] > MAX_FILES or total_bytes > MAX_TOTAL_BYTES:
             issue(path, 1, "limit", "Превышен общий предел объёма материалов")
             break
         if size > MAX_FILE_BYTES:
@@ -128,6 +142,9 @@ def check(root):
             text = path.read_text(encoding="utf-8")
         except UnicodeError:
             issue(path, 1, "encoding", "Ожидается UTF-8")
+            continue
+        if is_shell_file:
+            check_bash(path, text, 1)
             continue
         tokens, anchors, links = parse_page(text)
         pages[path] = (anchors, links)
@@ -149,16 +166,7 @@ def check(root):
                 check_python(path, token.content, line + 1, flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT)
             elif language in {"bash", "sh", "shell"}:
                 counts["bash"] += 1
-                try:
-                    result = subprocess.run(
-                        ["/bin/bash", "--noprofile", "--norc", "-n"],
-                        input=token.content, capture_output=True, text=True,
-                        env={"PATH": "/usr/bin:/bin", "LC_ALL": "C"}, timeout=5,
-                    )
-                    if result.returncode:
-                        issue(path, line, "bash-syntax", result.stderr.strip())
-                except subprocess.TimeoutExpired:
-                    issue(path, line, "bash-syntax", "Превышен предел разбора Bash: 5 секунд")
+                check_bash(path, token.content, line)
 
     for path, (_, links) in pages.items():
         for line, link in links:

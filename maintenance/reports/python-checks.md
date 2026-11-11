@@ -20,7 +20,18 @@ Lazy loading выполнил 3 SELECT, `selectinload` выполнил 2 SELECT
 Локально прошли `scripts/check_materials.py`, 26 тестов checker и `git diff --check`.
 Тесты подтвердили отказ для верхнеуровневого `await` в самостоятельном файле и отсутствие исполнения примеров.
 Этот прогон проверяет последовательное чтение двух пользователей в SQLite в памяти.
-GitHub Actions проверяется при публикации PR. Двуязычная синхронизация остаётся отдельной задачей.
+GitHub Actions проверяется при публикации PR.
+
+### Контрольный прогон актуализации N+1
+
+11 ноября 2026 года повторно проверены обе страницы и общий файл. Изменения версий, текста и примера не понадобились.
+
+- **Документация.** SQLAlchemy 2.1.8 остаётся текущим выпуском ветки 2.1. Его примечания к выпуску описывают изменение публикации пакетов на PyPI. Подтверждены lazy loading, пакетная загрузка через `selectinload`, требование tuple `IN` для составных ключей, управление сессией и событие счётчика. [Выпуски SQLAlchemy](https://www.sqlalchemy.org/download.html) · [Журнал 2.1](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8) · [Загрузка отношений](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#select-in-loading) · [Сессии](https://docs.sqlalchemy.org/en/21/orm/session_basics.html) · [События](https://docs.sqlalchemy.org/en/21/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute).
+- **Python и установка.** В журнале Python проверены выпуски 3.14.7–3.14.10. Изменения `sqlite3` в этих выпусках не требуют правок сценария. Обе страницы требуют Python 3.14 с доступным `sqlite3`. Сверены создание и активация `venv` в bash/zsh, установка точной версии через `pip` и отключение `assert` ключом `-O`. [Журнал Python 3.14](https://docs.python.org/3.14/whatsnew/changelog.html#python-3-14-10-final) · [sqlite3](https://docs.python.org/3.14/library/sqlite3.html) · [venv](https://docs.python.org/3.14/library/venv.html) · [pip](https://pip.pypa.io/en/stable/cli/pip_install/) · [Ключ `-O`](https://docs.python.org/3.14/using/cmdline.html#cmdoption-O).
+- **Выполнение.** В новом `venv` на macOS arm64 с Python 3.14.7 и SQLite 3.53.4 установлены SQLAlchemy 2.1.8 и транзитивный `typing-extensions` 4.16.0. Прямой доступ к PyPI был недоступен, поэтому зависимости установлены из локального кэша через `uv pip install --offline`. Команда `python n_plus_one.py` завершилась успешно. Вывод совпал с обеими страницами. Lazy loading выполнил 3 `SELECT`, `selectinload` выполнил 2 `SELECT` и вернул те же данные, включая пустую коллекцию.
+- **Статические проверки.** В отдельном `venv` с зависимостями из `scripts/requirements-ci.txt` прошли `python -IB scripts/check_materials.py` и `python -IB -m unittest discover -s scripts/tests -v`. Проверяющий скрипт обработал 336 Markdown-файлов без ошибок. Прошли все 27 тестов инструментов и `git diff --check`.
+
+Выполнение подтверждено для последовательного чтения двух пользователей в SQLite в памяти. Python 3.14.10 проверен по журналу изменений. Установка через сеть, другие СУБД, async и нагрузка в этом прогоне не проверялись.
 
 ## SQLAlchemy и Alembic — 6 ноября
 
@@ -30,11 +41,11 @@ GitHub Actions проверяется при публикации PR. Двуяз
 
 | Сценарий | Выполнение и результат |
 | --- | --- |
-| [Общая схема и транзакции](../../python/databases/sqlalchemy/models-and-transactions.md) | `test_models.py`: 4 теста прошли |
-| [Async и события](../../python/databases/sqlalchemy/async-and-operations.md) | 3 теста: roundtrip/отношения, неверный FK с rollback, наблюдение SQL |
-| [Запросы](../../python/databases/sqlalchemy/queries.md) | 1 тест результатов SQLite; 4 PostgreSQL-выражения скомпилированы без сервера |
-| [Потоковое чтение](../../python/databases/sqlalchemy/streaming.md) | `test_streaming.py`: 5 проверок обработки и ожидаемых ошибок на SQLite |
-| [Миграция](../../python/databases/sqlalchemy/async-and-operations.md#alembic-отдельный-учебный-проект) | init/autogenerate/upgrade/current/history; добавление `verified`, backfill, NOT NULL и downgrade сохранили остальные поля |
+| [Общая схема и транзакции](../../docs/ru/python/databases/sqlalchemy/models-and-transactions.md) | `test_models.py`: 4 теста прошли |
+| [Async и события](../../docs/ru/python/databases/sqlalchemy/async-and-operations.md) | 3 теста: roundtrip/отношения, неверный FK с rollback, наблюдение SQL |
+| [Запросы](../../docs/ru/python/databases/sqlalchemy/queries.md) | 1 тест результатов SQLite; 4 PostgreSQL-выражения скомпилированы без сервера |
+| [Потоковое чтение](../../docs/ru/python/databases/sqlalchemy/streaming.md) | `test_streaming.py`: 5 проверок обработки и ожидаемых ошибок на SQLite |
+| [Миграция](../../docs/ru/python/databases/sqlalchemy/async-and-operations.md#alembic-отдельный-учебный-проект) | init/autogenerate/upgrade/current/history; добавление `verified`, backfill, NOT NULL и downgrade сохранили остальные поля |
 
 Миграция выполнена на отдельном файле SQLite с синтетическим пользователем.
 PostgreSQL-сервер, пул под нагрузкой и server-side cursors других драйверов не проверялись.
@@ -54,7 +65,7 @@ PostgreSQL-сервер, пул под нагрузкой и server-side cursors
 
 ### Расширенная лабораторная загрузки
 
-После уточнения [выбора стратегии](../../python/databases/sqlalchemy/relationship-loading.md) итоговый `test_relationship_loading.py` прошёл 22 теста.
+После уточнения [выбора стратегии](../../docs/ru/python/databases/sqlalchemy/relationship-loading.md) итоговый `test_relationship_loading.py` прошёл 22 теста.
 Проверены `demo_models.py`, `demo_queries.py` и четыре короткие карточки на той же среде.
 
 | Условие | Фактический результат |
@@ -76,7 +87,7 @@ API сверены 6 ноября с документацией SQLAlchemy 2.1 �
 
 ## FastAPI: восстановление подмен — 6 и 7 ноября
 
-[Примеры подмены](../../python/web/fastapi/dependency-overrides.md) используют Python 3.14.7, FastAPI 0.162.0,
+[Примеры подмены](../../docs/ru/python/web/fastapi/dependency-overrides.md) используют Python 3.14.7, FastAPI 0.162.0,
 Pydantic 2.14.3, Starlette 1.10.0, HTTPX2 2.16.0 и pytest 9.2.0.
 Каждый комплект извлечён из Markdown и запущен из своей папки.
 
@@ -110,12 +121,12 @@ uv выбрал managed-интерпретатор при запросе `--pyth
 
 | Группа | Фактические основные пакеты | Результат |
 | --- | --- | --- |
-| [pytest](../../python/testing/pytest/README.md) | pytest 9.2.0, pytest-mock 3.17.0, pytest-asyncio 1.4.1.post1 | 17 passed |
-| [Pydantic](../../python/validation/pydantic/README.md) | Pydantic 2.14.3, pydantic-settings 2.16.2, email-validator 2.3.0 | 20 passed |
-| [structlog](../../python/logging/structlog/README.md) | structlog 26.1.0, FastAPI 0.162.0 | 7 passed |
-| [SQLAlchemy](../../python/databases/sqlalchemy/README.md) | SQLAlchemy 2.1.8, greenlet 3.5.6, aiosqlite 0.22.1 | 35 passed |
-| [FastAPI](../../python/web/fastapi/README.md) | FastAPI 0.162.0, Starlette 1.10.0, HTTPX2 2.16.0, python-multipart 0.0.33, PyJWT 2.15.1, pwdlib 0.3.1 | 53 passed |
-| [Flask](../../python/web/flask/README.md) | Flask 3.1.3, Werkzeug 3.1.9 | 14 passed |
+| [pytest](../../docs/ru/python/testing/pytest/README.md) | pytest 9.2.0, pytest-mock 3.17.0, pytest-asyncio 1.4.1.post1 | 17 passed |
+| [Pydantic](../../docs/ru/python/validation/pydantic/README.md) | Pydantic 2.14.3, pydantic-settings 2.16.2, email-validator 2.3.0 | 20 passed |
+| [structlog](../../docs/ru/python/logging/structlog/README.md) | structlog 26.1.0, FastAPI 0.162.0 | 7 passed |
+| [SQLAlchemy](../../docs/ru/python/databases/sqlalchemy/README.md) | SQLAlchemy 2.1.8, greenlet 3.5.6, aiosqlite 0.22.1 | 35 passed |
+| [FastAPI](../../docs/ru/python/web/fastapi/README.md) | FastAPI 0.162.0, Starlette 1.10.0, HTTPX2 2.16.0, python-multipart 0.0.33, PyJWT 2.15.1, pwdlib 0.3.1 | 53 passed |
+| [Flask](../../docs/ru/python/web/flask/README.md) | Flask 3.1.3, Werkzeug 3.1.9 | 14 passed |
 
 Итого 146 тестов: допустимые входы, валидация, отказ доступа, rollback, изоляция данных и очистка контекста.
 Типы дополнительно выполнены через `python demo_types.py`: проверки чисел, коллекций, ошибок преобразования и копий прошли.

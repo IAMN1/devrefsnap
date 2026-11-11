@@ -1,6 +1,6 @@
 # Устранить лишние запросы при чтении коллекции
 
-[English](../../../../en/python/databases/sqlalchemy/n-plus-one.md) · [Русский каталог](../../../README.md)
+[English](../../../../en/python/databases/sqlalchemy/n-plus-one.md)
 
 Откройте страницу, если цикл по пользователям выполняет отдельный SQL-запрос для постов каждого пользователя.
 Пример сравнивает два способа чтения одинаковых данных.
@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | Понять причину лишних запросов | Различить lazy-загрузку и eager loading | [Термины и изменение запроса](#почему-возникает-n1) |
 | Повторить пример с нуля | Установить SQLAlchemy и сохранить файл | [Подготовка и запуск](#подготовка-и-запуск) · [Полная программа](#полная-программа) |
-| Проверить другие стратегии и сложные случаи | Сравнить joinedload, raiseload и частичные коллекции | [Отдельная лабораторная](../../../../../python/databases/sqlalchemy/loading-lab.md) |
+| Проверить другие стратегии и сложные случаи | Сравнить joinedload, raiseload и частичные коллекции | [Отдельная лабораторная](loading-lab.md) |
 
 Уровень: средний; первое знакомство с загрузкой отношений ORM.
 Предпосылки: функции и классы Python, аннотации типов, циклы, `with`, `try`/`finally`, `assert` и основы SQL SELECT.
@@ -52,7 +52,7 @@ stmt = select(User).options(selectinload(User.posts)).order_by(User.id)
 **Результат:** для двух пользователей число SELECT уменьшается с трёх до двух при том же составе постов.
 Для больших выборок `selectinload` выполняет запросы по пакетам ключей; два SELECT не являются общей гарантией.
 Для составного ключа нужна поддержка tuple IN со стороны СУБД.
-Для выбора другой стратегии откройте [таблицу решений](../../../../../python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию).
+Для выбора другой стратегии откройте [таблицу решений](relationship-loading.md#выбрать-стратегию).
 
 ## Подготовка и запуск
 
@@ -107,7 +107,7 @@ selectinload: 2 SELECT; [('alice', ['Python', 'SQL']), ('bob', [])]
 
 Для своих данных отдельно измерьте объём результата, время и память.
 
-Сравнение `joinedload`, отказ без `unique()`, `raiseload`, вложенные и частичные коллекции находятся в [полной лабораторной](../../../../../python/databases/sqlalchemy/loading-lab.md).
+Сравнение `joinedload`, отказ без `unique()`, `raiseload`, вложенные и частичные коллекции находятся в [полной лабораторной](loading-lab.md).
 Лабораторная использует расширенную схему с отдельной подготовкой.
 Async, другие СУБД, большие объёмы и конкурентный доступ этот пример не проверяет.
 
@@ -119,4 +119,4 @@ Async, другие СУБД, большие объёмы и конкурент�
 - [События выполнения SQL](https://docs.sqlalchemy.org/en/21/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute).
 - [Release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
 
-[Карточки загрузки](../../../../../python/databases/sqlalchemy/relationship-loading.md) · [Справочник SQLAlchemy](../../../../../python/databases/sqlalchemy/README.md) · [Указатель задач](../../../../../tasks/README.md#sql-и-доступ-из-python)
+[Карточки загрузки](relationship-loading.md) · [Справочник SQLAlchemy](README.md) · [Указатель задач](../../../tasks/README.md#sql-и-доступ-из-python)

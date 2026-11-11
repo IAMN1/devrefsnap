@@ -1,6 +1,6 @@
 # Проверка RDB-копии Redis — 2026-11-07
 
-[Полный сценарий](../../databases/non-relational/redis/backup-and-restore.md) извлечён из Markdown как `rdb_backup.py`.
+[Полный сценарий](../../docs/ru/databases/non-relational/redis/backup-and-restore.md) извлечён из Markdown как `rdb_backup.py`.
 Среда: macOS arm64, Python 3.14.7, Redis server и redis-cli 8.2.11.
 Использованы учебные бинарные файлы `/private/tmp/cheat-sheet-redis-build/redis-8.2.11/src/`.
 Программе достаточно стандартной библиотеки Python.

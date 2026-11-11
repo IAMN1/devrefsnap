@@ -1,0 +1,27 @@
+name: Предложить тему / Propose a topic
+description: Новая шпаргалка, пример или процедура / New cheat sheet, example, or procedure
+body:
+  - type: markdown
+    attributes:
+      value: Пишите на русском или английском языке. / Write in Russian or English.
+  - type: textarea
+    id: reader-task
+    attributes:
+      label: Задача читателя / Reader task
+      description: Опишите, что читатель хочет сделать и в какой ситуации. / Describe what the reader wants to do and in what situation.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-result
+    attributes:
+      label: Ожидаемый результат / Expected result
+      description: Укажите, какой пример или порядок действий поможет читателю и что он должен получить. / Describe the example or procedure the reader needs and the result it should produce.
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: Связанные материалы / Related material
+      description: |
+        Если известны, укажите ближайшую страницу справочника, версии инструментов и официальные источники.
+        If known, include the closest reference page, tool versions, and official sources.

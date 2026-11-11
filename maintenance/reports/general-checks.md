@@ -13,15 +13,15 @@
 
 | Материал | Проверенные результаты |
 | --- | --- |
-| [Контракты](../../architecture/contracts.md) | Резерв, отказ при 0/True/нехватке, недопустимый остаток; цена 2400, отказ количества 0, подстановка и неправильная ошибка |
-| [Доставка, Observer, Command](../../architecture/patterns/code-examples.md) | Тарифы, единицы, округление; результат обёртки и аудит; порядок/отписка/ошибка слушателя; повтор команды и конфликт ID |
-| [Outbox](../../architecture/patterns/outbox-example.md) | Rollback обеих записей при UNIQUE-отказе; дубликат публикации после смоделированного сбоя |
+| [Контракты](../../docs/ru/architecture/contracts.md) | Резерв, отказ при 0/True/нехватке, недопустимый остаток; цена 2400, отказ количества 0, подстановка и неправильная ошибка |
+| [Доставка, Observer, Command](../../docs/ru/architecture/patterns/code-examples.md) | Тарифы, единицы, округление; результат обёртки и аудит; порядок/отписка/ошибка слушателя; повтор команды и конфликт ID |
+| [Outbox](../../docs/ru/architecture/patterns/outbox-example.md) | Rollback обеих записей при UNIQUE-отказе; дубликат публикации после смоделированного сбоя |
 
 БД Outbox находилась в памяти; брокер заменён списком, worker один.
 Настоящие процессные сбои, диск, надёжный аудит, сеть и конкурентные вызовы не проверялись.
 Деревья архитектуры показывают возможную реализацию; они не являются запущенными приложениями.
 
-[Пакет catalog_demo](../../python/architecture/project-design/example.md) проверен 6 и 8 ноября в отдельном окружении.
+[Пакет catalog_demo](../../docs/ru/python/architecture/project-design/example.md) проверен 6 и 8 ноября в отдельном окружении.
 Использованы uv 0.12.13, Pydantic 2.14.3, pydantic-settings 2.16.2, pytest 9.2.0.
 `uv sync --group dev` и `python -m pytest -q` дали 9 passed.
 `python -m catalog_demo book` дал `book: Python guide`.
@@ -32,7 +32,7 @@ Python 3.14, PyPA и Pydantic Settings сверены с первичными и
 ## Go — 6, 8 и 10 ноября
 
 Среда запусков: Go 1.27.1 darwin/arm64, только стандартная библиотека, временные caches, `GOTOOLCHAIN=local`.
-Файлы [полных примеров](../../go/examples/language.md) извлечены из Markdown.
+Файлы [полных примеров](../../docs/ru/go/examples/language.md) извлечены из Markdown.
 6 и 8 ноября прошли `go test`, `go vet`, `go test -race`; 8 ноября использован `-count=1`.
 Восемь исходных тестовых функций проверили ввод, данные, HTTP и конкурентность.
 `go run ./cmd/demo` дал `Alice Doe (30)` и `true`.
@@ -62,7 +62,7 @@ Race detector проверил выполненные пути; он не док
 | `bash conflicts.sh` | `conflicts OK`: реальные merge/rebase-конфликты; abort восстановил состояние, continue завершил операцию |
 | `bash remotes.sh` | `remote lease and cleanup OK`: устаревший lease отклонён до и после fetch; коммит второй копии сохранён |
 
-[Полные сценарии](../../tools/git/README.md#быстрый-поиск) доступны из карточек Git.
+[Полные сценарии](../../docs/ru/tools/git/README.md#быстрый-поиск) доступны из карточек Git.
 Отдельные пробы 6 ноября проверили новый staged-файл, источник restore, stash `--index`, новый ID после amend и revert abort/continue.
 Подтверждены потеря мешающего untracked-пути при hard reset и отказ `branch -d` после squash.
 Успешный `branch -d` относительно upstream сам по себе не доказал включение в main.
@@ -87,7 +87,7 @@ GitHub-рецепты проверены по документации и `gh 2.
 
 ## Linux: владелец порта — 6 ноября
 
-[port_probe.py](../../systems/linux/process-by-port.md#самостоятельный-учебный-пример) выполнен в одноразовом Debian 13.6 arm64 контейнере без внешней сети.
+[port_probe.py](../../docs/ru/systems/linux/process-by-port.md#самостоятельный-учебный-пример) выполнен в одноразовом Debian 13.6 arm64 контейнере без внешней сети.
 Среда: Linux 7.0.14-linuxkit, iproute2 6.15.0, procps-ng 4.0.4, util-linux 2.41.5, Python 3.13.5.
 Пример также прошёл под UID 65534 без sudo.
 Создан только собственный loopback-сокет с портом ОС; чужие процессы не останавливались.
