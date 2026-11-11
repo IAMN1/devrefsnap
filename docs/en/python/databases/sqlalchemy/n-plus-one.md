@@ -1,6 +1,6 @@
 # Avoid N+1 queries when loading a collection
 
-[Русский](../../../../ru/python/databases/sqlalchemy/n-plus-one.md) · [English catalog](../../../README.md)
+[Русский](../../../../ru/python/databases/sqlalchemy/n-plus-one.md)
 
 Use this example if looping over users runs a separate SQL query for each user's posts.
 The program reads the same data with two loading strategies. It uses two synchronous ORM models in one file.
@@ -9,7 +9,7 @@ The program reads the same data with two loading strategies. It uses two synchro
 | --- | --- | --- |
 | Explain the extra queries | Compare lazy and eager loading | [Why N+1 happens](#why-n1-happens) |
 | Run the example from scratch | Install SQLAlchemy and save one file | [Setup and run](#setup-and-run) · [Full program](#full-program) |
-| Compare more loading strategies | Try `joinedload`, `raiseload`, and partial collections | [Extended lab in Russian](../../../../../python/databases/sqlalchemy/loading-lab.md) |
+| Compare more loading strategies | Try `joinedload`, `raiseload`, and partial collections | [Extended lab](loading-lab.md) |
 
 You need Python 3.14, SQLAlchemy 2.1.8, and Python's `sqlite3` module.
 The example assumes that you know Python classes, type annotations, loops, context managers, `try`/`finally`, assertions, and basic SQL `SELECT`.
@@ -38,7 +38,7 @@ Each comparison starts with a new `Session` so previously loaded posts cannot hi
 
 For two users, `selectinload` reduces the number of `SELECT` statements from three to two and returns the same posts.
 Larger selections can require several batches of keys. Composite primary keys require database support for tuple `IN`.
-See the [strategy table in Russian](../../../../../python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) for other options.
+See the [strategy table](relationship-loading.md#choose-a-strategy) for other options.
 
 ## Setup and run
 
@@ -85,7 +85,7 @@ The counter recognizes statements that start with `SELECT`. SQL that starts with
 The counts measure `SELECT` statements for one collection, two users, and fresh sessions on the specified versions.
 Measure rows, execution time, and memory separately with your own data to assess performance.
 
-The [extended lab in Russian](../../../../../python/databases/sqlalchemy/loading-lab.md) covers `joinedload`, missing `unique()`, `raiseload`, and nested and partial collections.
+The [extended lab](loading-lab.md) covers `joinedload`, missing `unique()`, `raiseload`, and nested and partial collections.
 That lab uses a separate schema and setup.
 This program tests a small sequential workload on synchronous SQLite.
 Async sessions, other databases, larger data sets, and concurrent access require separate checks.

@@ -30,11 +30,11 @@ GitHub Actions проверяется при публикации PR. Двуяз
 
 | Сценарий | Выполнение и результат |
 | --- | --- |
-| [Общая схема и транзакции](../../python/databases/sqlalchemy/models-and-transactions.md) | `test_models.py`: 4 теста прошли |
-| [Async и события](../../python/databases/sqlalchemy/async-and-operations.md) | 3 теста: roundtrip/отношения, неверный FK с rollback, наблюдение SQL |
-| [Запросы](../../python/databases/sqlalchemy/queries.md) | 1 тест результатов SQLite; 4 PostgreSQL-выражения скомпилированы без сервера |
-| [Потоковое чтение](../../python/databases/sqlalchemy/streaming.md) | `test_streaming.py`: 5 проверок обработки и ожидаемых ошибок на SQLite |
-| [Миграция](../../python/databases/sqlalchemy/async-and-operations.md#alembic-отдельный-учебный-проект) | init/autogenerate/upgrade/current/history; добавление `verified`, backfill, NOT NULL и downgrade сохранили остальные поля |
+| [Общая схема и транзакции](../../docs/ru/python/databases/sqlalchemy/models-and-transactions.md) | `test_models.py`: 4 теста прошли |
+| [Async и события](../../docs/ru/python/databases/sqlalchemy/async-and-operations.md) | 3 теста: roundtrip/отношения, неверный FK с rollback, наблюдение SQL |
+| [Запросы](../../docs/ru/python/databases/sqlalchemy/queries.md) | 1 тест результатов SQLite; 4 PostgreSQL-выражения скомпилированы без сервера |
+| [Потоковое чтение](../../docs/ru/python/databases/sqlalchemy/streaming.md) | `test_streaming.py`: 5 проверок обработки и ожидаемых ошибок на SQLite |
+| [Миграция](../../docs/ru/python/databases/sqlalchemy/async-and-operations.md#alembic-отдельный-учебный-проект) | init/autogenerate/upgrade/current/history; добавление `verified`, backfill, NOT NULL и downgrade сохранили остальные поля |
 
 Миграция выполнена на отдельном файле SQLite с синтетическим пользователем.
 PostgreSQL-сервер, пул под нагрузкой и server-side cursors других драйверов не проверялись.
@@ -54,7 +54,7 @@ PostgreSQL-сервер, пул под нагрузкой и server-side cursors
 
 ### Расширенная лабораторная загрузки
 
-После уточнения [выбора стратегии](../../python/databases/sqlalchemy/relationship-loading.md) итоговый `test_relationship_loading.py` прошёл 22 теста.
+После уточнения [выбора стратегии](../../docs/ru/python/databases/sqlalchemy/relationship-loading.md) итоговый `test_relationship_loading.py` прошёл 22 теста.
 Проверены `demo_models.py`, `demo_queries.py` и четыре короткие карточки на той же среде.
 
 | Условие | Фактический результат |
@@ -76,7 +76,7 @@ API сверены 6 ноября с документацией SQLAlchemy 2.1 �
 
 ## FastAPI: восстановление подмен — 6 и 7 ноября
 
-[Примеры подмены](../../python/web/fastapi/dependency-overrides.md) используют Python 3.14.7, FastAPI 0.162.0,
+[Примеры подмены](../../docs/ru/python/web/fastapi/dependency-overrides.md) используют Python 3.14.7, FastAPI 0.162.0,
 Pydantic 2.14.3, Starlette 1.10.0, HTTPX2 2.16.0 и pytest 9.2.0.
 Каждый комплект извлечён из Markdown и запущен из своей папки.
 
@@ -110,12 +110,12 @@ uv выбрал managed-интерпретатор при запросе `--pyth
 
 | Группа | Фактические основные пакеты | Результат |
 | --- | --- | --- |
-| [pytest](../../python/testing/pytest/README.md) | pytest 9.2.0, pytest-mock 3.17.0, pytest-asyncio 1.4.1.post1 | 17 passed |
-| [Pydantic](../../python/validation/pydantic/README.md) | Pydantic 2.14.3, pydantic-settings 2.16.2, email-validator 2.3.0 | 20 passed |
-| [structlog](../../python/logging/structlog/README.md) | structlog 26.1.0, FastAPI 0.162.0 | 7 passed |
-| [SQLAlchemy](../../python/databases/sqlalchemy/README.md) | SQLAlchemy 2.1.8, greenlet 3.5.6, aiosqlite 0.22.1 | 35 passed |
-| [FastAPI](../../python/web/fastapi/README.md) | FastAPI 0.162.0, Starlette 1.10.0, HTTPX2 2.16.0, python-multipart 0.0.33, PyJWT 2.15.1, pwdlib 0.3.1 | 53 passed |
-| [Flask](../../python/web/flask/README.md) | Flask 3.1.3, Werkzeug 3.1.9 | 14 passed |
+| [pytest](../../docs/ru/python/testing/pytest/README.md) | pytest 9.2.0, pytest-mock 3.17.0, pytest-asyncio 1.4.1.post1 | 17 passed |
+| [Pydantic](../../docs/ru/python/validation/pydantic/README.md) | Pydantic 2.14.3, pydantic-settings 2.16.2, email-validator 2.3.0 | 20 passed |
+| [structlog](../../docs/ru/python/logging/structlog/README.md) | structlog 26.1.0, FastAPI 0.162.0 | 7 passed |
+| [SQLAlchemy](../../docs/ru/python/databases/sqlalchemy/README.md) | SQLAlchemy 2.1.8, greenlet 3.5.6, aiosqlite 0.22.1 | 35 passed |
+| [FastAPI](../../docs/ru/python/web/fastapi/README.md) | FastAPI 0.162.0, Starlette 1.10.0, HTTPX2 2.16.0, python-multipart 0.0.33, PyJWT 2.15.1, pwdlib 0.3.1 | 53 passed |
+| [Flask](../../docs/ru/python/web/flask/README.md) | Flask 3.1.3, Werkzeug 3.1.9 | 14 passed |
 
 Итого 146 тестов: допустимые входы, валидация, отказ доступа, rollback, изоляция данных и очистка контекста.
 Типы дополнительно выполнены через `python demo_types.py`: проверки чисел, коллекций, ошибок преобразования и копий прошли.

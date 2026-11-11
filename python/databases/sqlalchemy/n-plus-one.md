@@ -1,9 +1,23 @@
 # Устранить лишние запросы при чтении коллекции
 
-[Откройте пример N+1](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md) в русском каталоге.
+[Русский](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md) · [English](../../../docs/en/python/databases/sqlalchemy/n-plus-one.md)
 
-- <a id="почему-возникает-n1"></a>[Почему возникает N+1](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#почему-возникает-n1).
-- <a id="подготовка-и-запуск"></a>[Подготовка и запуск](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#подготовка-и-запуск).
-- <a id="полная-программа"></a>[Полная программа](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#полная-программа).
-- <a id="результат-и-ограничения"></a>[Результат и ограничения](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#результат-и-ограничения).
-- <a id="источники"></a>[Источники](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#источники).
+<a id="источники"></a>
+
+- [источники](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#источники)
+
+<a id="подготовка-и-запуск"></a>
+
+- [подготовка-и-запуск](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#подготовка-и-запуск)
+
+<a id="полная-программа"></a>
+
+- [полная-программа](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#полная-программа)
+
+<a id="почему-возникает-n1"></a>
+
+- [почему-возникает-n1](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#почему-возникает-n1)
+
+<a id="результат-и-ограничения"></a>
+
+- [результат-и-ограничения](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#результат-и-ограничения)

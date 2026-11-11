@@ -11,7 +11,7 @@
 Пять групп проверили JOIN/суммы, rollback, окна, JSONB/FTS, четыре индекса, откат партиций и materialized view.
 Это не исполнение всех фрагментов на нативном сервере.
 
-[Полный backup-сценарий](../../databases/relational/postgresql/backup-lab.md) выполнен отдельно на нативном PostgreSQL 18.6.
+[Полный backup-сценарий](../../docs/ru/databases/relational/postgresql/backup-lab.md) выполнен отдельно на нативном PostgreSQL 18.6.
 Сервер, `pg_dump`, `pg_restore`, `psql` и `createdb` имели одну версию.
 Среда: одноразовый Debian Linux arm64 контейнер, Bash 5.2.37, без внешней сети и опубликованных портов.
 Запущен `bash backup-lab.sh` с исходным `queries.sql` и проверками `verify-backup.sql` из Markdown.
@@ -36,10 +36,10 @@
 
 | Сценарий | Команда и результат |
 | --- | --- |
-| [Запросы](../../databases/relational/sqlite/query-lab.md) | Пример `demo.py`: JOIN, параметры, FK/STRICT-отказ, RETURNING, CASCADE и rollback прошли |
-| [Миграция известной схемы](../../databases/relational/sqlite/migration-lab.md) | `python migration.py`: сохранены FK, индекс и триггер; новый CHECK отклонил пустое имя |
-| [Backup API](../../databases/relational/sqlite/backup-lab.md#проверить-backup-api) | `python backup.py`: снимок открытой WAL-БД восстановлен; независимые изменения источника, схема, триггер, ограничения и отказы проверены |
-| [CLI-копии](../../databases/relational/sqlite/backup-lab.md#проверить-cli-копию-и-sql-dump) | `bash backup-cli.sh`: `.backup`, `.restore`, `.dump` и SQL restore; integrity/FK, индекс, триггер и сохранность источника прошли |
+| [Запросы](../../docs/ru/databases/relational/sqlite/query-lab.md) | Пример `demo.py`: JOIN, параметры, FK/STRICT-отказ, RETURNING, CASCADE и rollback прошли |
+| [Миграция известной схемы](../../docs/ru/databases/relational/sqlite/migration-lab.md) | `python migration.py`: сохранены FK, индекс и триггер; новый CHECK отклонил пустое имя |
+| [Backup API](../../docs/ru/databases/relational/sqlite/backup-lab.md#проверить-backup-api) | `python backup.py`: снимок открытой WAL-БД восстановлен; независимые изменения источника, схема, триггер, ограничения и отказы проверены |
+| [CLI-копии](../../docs/ru/databases/relational/sqlite/backup-lab.md#проверить-cli-копию-и-sql-dump) | `bash backup-cli.sh`: `.backup`, `.restore`, `.dump` и SQL restore; integrity/FK, индекс, триггер и сохранность источника прошли |
 
 Независимый рецензент повторил оба backup-сценария и миграцию 6 ноября.
 8 ноября на Python 3.14.7 / SQLite 3.53.4 повторены запросы и миграция из конечных Markdown-блоков.
@@ -58,7 +58,7 @@ Backup-сценарии 8 и 10 ноября не повторялись.
 Проверены результаты запросов и сохранность данных после отката.
 MySQL 8.4, SQL Server 17.x и Oracle не запускались; различия диалектов сверены с документацией.
 
-8 ноября `demo.sql` из [лабораторной SQL](../../databases/sql/query-lab.md) выполнен через `sqlite3.Connection.executescript()` в памяти.
+8 ноября `demo.sql` из [лабораторной SQL](../../docs/ru/databases/sql/query-lab.md) выполнен через `sqlite3.Connection.executescript()` в памяти.
 Суммы: alice=14000, bob=0, carol=0; после savepoint сумма заказа осталась 10000.
 Конкурентные сеансы, показанные CLI-команды и производительность этой проверкой не подтверждены.
 
@@ -77,7 +77,7 @@ Cache-aside интеграция, eviction, аварийная повторна�
 ### Исправление TTL-карточки — 8 ноября
 
 Независимое ревью выявило P2: `SET KEEPTTL` создавал бессрочный ключ, если прежний ключ исчез.
-[Карточка](../../databases/non-relational/redis/data-and-caching.md#обновить-значение-и-сохранить-срок) исправлена на `xx=True, keepttl=True` с обработкой `None`.
+[Карточка](../../docs/ru/databases/non-relational/redis/data-and-caching.md#обновить-значение-и-сохранить-срок) исправлена на `xx=True, keepttl=True` с обработкой `None`.
 `XX` не проверяет наличие TTL; конкурентный `PERSIST` требует отдельного атомарного протокола.
 Полный `data.py` не менялся.
 

@@ -1,6 +1,6 @@
 # Проверка AOF-копии Redis — 2026-11-08
 
-[Полный сценарий](../../databases/non-relational/redis/aof-backup-and-restore.md) извлечён из Markdown как `aof_backup.py`.
+[Полный сценарий](../../docs/ru/databases/non-relational/redis/aof-backup-and-restore.md) извлечён из Markdown как `aof_backup.py`.
 Среда: macOS arm64, Python 3.14.7, Redis server и redis-cli 8.2.11; только стандартная библиотека Python.
 Официальный архив 8.2.11 собран во временном каталоге с `MALLOC=libc BUILD_TLS=no`.
 Системная служба Redis не устанавливалась.
