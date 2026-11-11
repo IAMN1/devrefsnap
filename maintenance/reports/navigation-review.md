@@ -41,6 +41,13 @@ Backup/restore SQLite отделён от миграции схемы.
 Серверные сценарии PostgreSQL и Redis в этом цикле повторно не запускались.
 Проверки публикации в GitHub Actions относятся к отдельному запуску.
 
+## Правила участия
+
+2026-11-11. В локальной ветке `codex/bilingual-reference` проверили [правила участия](../../CONTRIBUTING.md) и входы из обоих каталогов.
+На Python 3.14.7 прошли `python -I scripts/check_materials.py` и все 27 тестов `python -I -m unittest discover -s scripts/tests -v`.
+PyYAML 6.0.3 разобрал обе формы без повторных ключей. Сверили типы полей, уникальные `id`, флаги `required` и расположение шаблона PR. [Схема форм GitHub](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema) · [Шаблон PR](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository).
+Появление форм и подстановка шаблона в интерфейсе GitHub требуют проверки после слияния в ветку по умолчанию. GitHub применяет `required` для полей `input` и `textarea` в публичных репозиториях.
+
 ## Архив STE
 
 Сравнение [трёх вариантов](../../templates/ste-comparison/README.md) сохраняет редакторский эксперимент.

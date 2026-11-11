@@ -1,7 +1,7 @@
 <a id="шпаргалки-по-разработке"></a>
 # Development cheat sheets
 
-[Русский](../ru/README.md)
+[Русский](../ru/README.md) · [Contributing](../../CONTRIBUTING.md#english)
 
 A reference for Python, Go, databases, Linux, development tools, and architecture.
 Find an action through the [task and synonym index](tasks/README.md), or choose a familiar tool in the catalog.

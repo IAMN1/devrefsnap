@@ -24,4 +24,4 @@ Python, Go, SQL, PostgreSQL, SQLite, Redis, Linux, Git, architecture, and practi
 
 - [Как пользоваться материалами](docs/ru/README.md#как-пользоваться-материалами) · [Using the reference](docs/en/README.md#use-the-materials)
 
-[Правила для авторов](AGENTS.md) · [Сопровождение](maintenance/README.md) · [Проверки](scripts/README.md)
+[Участие в проекте / Contributing](CONTRIBUTING.md) · [Правила для авторов](AGENTS.md) · [Сопровождение](maintenance/README.md) · [Проверки](scripts/README.md)

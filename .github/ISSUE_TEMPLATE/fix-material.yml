@@ -1,0 +1,29 @@
+name: Исправить или обновить материал / Fix or update material
+description: Ошибка, устаревший пример или расхождение перевода / Error, outdated example, or translation mismatch
+body:
+  - type: markdown
+    attributes:
+      value: Пишите на русском или английском языке. / Write in Russian or English.
+  - type: input
+    id: page
+    attributes:
+      label: Страница и раздел / Page and section
+      description: Дайте ссылку на раздел или укажите путь к файлу. / Link to the section or provide the file path.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Что исправить / What needs to change
+      description: |
+        Опишите проблему и ожидаемый результат. Если проблема есть и в парной версии, укажите её страницу.
+        Describe the problem and expected result. If the other edition has the same problem, link to its page.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Как проверить / How to verify
+      description: |
+        Для ошибки в примере укажите версии, шаги и фактический вывод. Для обновления API приложите официальный источник нужной версии.
+        For a broken example, include versions, steps, and actual output. For an API update, link to an official source for the relevant version.
