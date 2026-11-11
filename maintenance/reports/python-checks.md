@@ -22,6 +22,17 @@ Lazy loading выполнил 3 SELECT, `selectinload` выполнил 2 SELECT
 Этот прогон проверяет последовательное чтение двух пользователей в SQLite в памяти.
 GitHub Actions проверяется при публикации PR.
 
+### Контрольный прогон актуализации N+1
+
+11 ноября 2026 года повторно проверены обе страницы и общий файл. Изменения версий, текста и примера не понадобились.
+
+- **Документация.** SQLAlchemy 2.1.8 остаётся текущим выпуском ветки 2.1. Его примечания к выпуску описывают изменение публикации пакетов на PyPI. Подтверждены lazy loading, пакетная загрузка через `selectinload`, требование tuple `IN` для составных ключей, управление сессией и событие счётчика. [Выпуски SQLAlchemy](https://www.sqlalchemy.org/download.html) · [Журнал 2.1](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8) · [Загрузка отношений](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#select-in-loading) · [Сессии](https://docs.sqlalchemy.org/en/21/orm/session_basics.html) · [События](https://docs.sqlalchemy.org/en/21/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute).
+- **Python и установка.** В журнале Python проверены выпуски 3.14.7–3.14.10. Изменения `sqlite3` в этих выпусках не требуют правок сценария. Обе страницы требуют Python 3.14 с доступным `sqlite3`. Сверены создание и активация `venv` в bash/zsh, установка точной версии через `pip` и отключение `assert` ключом `-O`. [Журнал Python 3.14](https://docs.python.org/3.14/whatsnew/changelog.html#python-3-14-10-final) · [sqlite3](https://docs.python.org/3.14/library/sqlite3.html) · [venv](https://docs.python.org/3.14/library/venv.html) · [pip](https://pip.pypa.io/en/stable/cli/pip_install/) · [Ключ `-O`](https://docs.python.org/3.14/using/cmdline.html#cmdoption-O).
+- **Выполнение.** В новом `venv` на macOS arm64 с Python 3.14.7 и SQLite 3.53.4 установлены SQLAlchemy 2.1.8 и транзитивный `typing-extensions` 4.16.0. Прямой доступ к PyPI был недоступен, поэтому зависимости установлены из локального кэша через `uv pip install --offline`. Команда `python n_plus_one.py` завершилась успешно. Вывод совпал с обеими страницами. Lazy loading выполнил 3 `SELECT`, `selectinload` выполнил 2 `SELECT` и вернул те же данные, включая пустую коллекцию.
+- **Статические проверки.** В отдельном `venv` с зависимостями из `scripts/requirements-ci.txt` прошли `python -IB scripts/check_materials.py` и `python -IB -m unittest discover -s scripts/tests -v`. Проверяющий скрипт обработал 336 Markdown-файлов без ошибок. Прошли все 27 тестов инструментов и `git diff --check`.
+
+Выполнение подтверждено для последовательного чтения двух пользователей в SQLite в памяти. Python 3.14.10 проверен по журналу изменений. Установка через сеть, другие СУБД, async и нагрузка в этом прогоне не проверялись.
+
 ## SQLAlchemy и Alembic — 6 ноября
 
 Среда: macOS arm64, Python 3.14.7, SQLite 3.53.4, SQLAlchemy 2.1.8, pytest 9.2.0, greenlet 3.5.6.
