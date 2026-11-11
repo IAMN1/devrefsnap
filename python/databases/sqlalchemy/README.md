@@ -16,7 +16,7 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 | CRUD и откат | `Session`, `session.begin()`, `rollback()` | [Транзакции](models-and-transactions.md#crud-транзакции-и-savepoint) |
 | 1:N, N:1, 1:1, N:M | `relationship`, `ForeignKey`, `Table` | [Полная схема](models-and-transactions.md#единая-схема-для-рецептов) |
 | WHERE/JOIN/CTE/CASE/UNION/EXISTS | `select`, `func`, `aliased` | [Запросы](queries.md) |
-| Устранить слишком много запросов при чтении коллекций | N+1, lazy, `selectinload` | [Карточка N+1](relationship-loading.md#найти-n1) · [Самостоятельная программа](n-plus-one.md#подготовка-и-запуск) |
+| Устранить слишком много запросов при чтении коллекций | N+1, lazy, `selectinload` | [Карточка N+1](relationship-loading.md#найти-n1) · [Самостоятельная программа](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#подготовка-и-запуск) |
 | Выбрать загрузку коллекции по объёму и ограничениям | `selectinload` или `joinedload` | [Таблица решений](relationship-loading.md#выбрать-стратегию) · [Select-in](relationship-loading.md#загрузить-коллекции-через-selectinload) · [Joined и unique](relationship-loading.md#загрузить-коллекцию-через-joinedload) |
 | Загрузить автора каждого поста | Сравнить повторение полей и число SELECT | [Одиночная связь](relationship-loading.md#загрузить-одиночную-связь) |
 | Запретить неожиданный lazy SELECT | `raiseload` | [Карточка и ограничения](relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
@@ -31,7 +31,7 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 | --- | --- |
 | API / диалект | SQLAlchemy 2.1; исполняемые примеры SQLite, PostgreSQL отдельно помечен |
 | Предпосылки | Python, SQL, транзакции; async-рецепт требует `async with` |
-| Самостоятельный N+1 | [Синхронный пример с двумя моделями](n-plus-one.md): отдельная установка и проверки; общая схема ему не нужна |
+| Самостоятельный N+1 | [Синхронный пример с двумя моделями](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md): отдельная установка и проверки; общая схема ему не нужна |
 
 <a id="навигация"></a>
 
@@ -63,7 +63,7 @@ SQLite существует только в памяти; после освоб�
 [Полные CRUD и проверки отката](models-and-transactions.md#crud-транзакции-и-savepoint).
 
 
-Для первого знакомства с N+1 используйте [отдельную подготовку одного файла](n-plus-one.md#подготовка-и-запуск).
+Для первого знакомства с N+1 используйте [отдельную подготовку одного файла](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#подготовка-и-запуск).
 Установка ниже относится к общей схеме и остальным рецептам раздела.
 Установите пакеты в отдельное окружение: `python -m pip install 'sqlalchemy[asyncio]==2.1.8' pytest`.
 Extra `asyncio` нужен общей модели с AsyncAttrs, даже для её синхронных рецептов.
@@ -141,7 +141,7 @@ assert rows == [("alice", 30)]
 
 **Ситуация:** список пользователей должен включать все посты, а дополнительный SELECT допустим.
 **Изменение:** загрузите коллекции через `selectinload`.
-Фрагмент запроса из [самостоятельной программы с двумя моделями](n-plus-one.md#полная-программа):
+Фрагмент запроса из [самостоятельной программы с двумя моделями](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#полная-программа):
 
 ```python
 stmt = select(User).options(selectinload(User.posts)).order_by(User.id)

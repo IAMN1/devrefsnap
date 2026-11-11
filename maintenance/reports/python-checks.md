@@ -1,8 +1,26 @@
 # Проверки Python-примеров
 
-Ниже сохранены исторические запуски 2026-11-06–10.
+Ниже сохранены результаты запусков с исходными датами и версиями.
 Сверка документации учитывалась отдельно от выполнения кода.
 Результаты относятся к указанным версиям и сценариям; остальные версии не проверены.
+
+## Двуязычный пилот N+1
+
+11 ноября 2026 года проверены зеркальные пути, переходы между языками и ссылки на общий файл.
+[Русская страница](../../docs/ru/python/databases/sqlalchemy/n-plus-one.md) · [English page](../../docs/en/python/databases/sqlalchemy/n-plus-one.md).
+Прежний адрес сохраняет якоря и ведёт к тем же разделам русской страницы.
+Полный [файл Python](../../examples/python/databases/sqlalchemy/n_plus_one.py) совпадает с исходным блоком.
+
+Сверены описание [select-in loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#select-in-loading) и [release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+Среда запуска: macOS arm64, Python 3.14.7, SQLite 3.53.4, SQLAlchemy 2.1.8, typing-extensions 4.16.0.
+В отдельное временное окружение установлена зависимость SQLAlchemy через `uv pip install --offline`.
+Из временной папки запущен `python -B n_plus_one.py`. Проверки данных прошли, вывод совпал с обеими страницами.
+Lazy loading выполнил 3 SELECT, `selectinload` выполнил 2 SELECT для тех же пользователей и постов.
+
+Локально прошли `scripts/check_materials.py`, 26 тестов checker и `git diff --check`.
+Тесты подтвердили отказ для верхнеуровневого `await` в самостоятельном файле и отсутствие исполнения примеров.
+Этот прогон проверяет последовательное чтение двух пользователей в SQLite в памяти.
+GitHub Actions проверяется при публикации PR. Двуязычная синхронизация остаётся отдельной задачей.
 
 ## SQLAlchemy и Alembic — 6 ноября
 
@@ -23,7 +41,7 @@ PostgreSQL-сервер, пул под нагрузкой и server-side cursors
 
 ### Самостоятельный N+1
 
-[Один файл](../../python/databases/sqlalchemy/n-plus-one.md) выполнен с SQLAlchemy 2.1.8 и typing_extensions 4.16.0.
+[Один файл](../../docs/ru/python/databases/sqlalchemy/n-plus-one.md) выполнен с SQLAlchemy 2.1.8 и typing_extensions 4.16.0.
 Отсутствие greenlet и pytest проверено; общая схема с `AsyncAttrs` не импортируется.
 `python n_plus_one.py` дал точный ожидаемый вывод.
 Семь временных проверок `unittest` прошли с `-W error`; независимый рецензент повторил все семь.

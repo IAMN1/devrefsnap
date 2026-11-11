@@ -123,6 +123,13 @@ class MaterialsTests(unittest.TestCase):
         self.write("README.md", "```python\nawait client.get('item')\n```\n")
         self.check()
 
+    def test_standalone_python_example_rejects_top_level_await(self):
+        self.write("README.md", "[Полный пример](examples/topic/demo.py)\n")
+        self.write("examples/topic/demo.py", "await client.get('item')\n")
+        rows = self.check(1, "python-syntax")
+        self.assertEqual(rows[0]["path"], "examples/topic/demo.py")
+        self.assertEqual(rows[0]["line"], 1)
+
     def test_bash_syntax_error_fails(self):
         self.write("README.md", "```bash\nif true; then\n```\n")
         self.check(1, "bash-syntax")
@@ -130,6 +137,7 @@ class MaterialsTests(unittest.TestCase):
     def test_python_and_bash_payloads_and_bash_env_are_not_executed(self):
         marker = self.root / "EXECUTED"
         init = self.write("evil-env", f"touch '{marker}'\n")
+        self.write("examples/topic/demo.py", f"from pathlib import Path\nPath({str(marker)!r}).touch()\n")
         self.write("README.md", (
             f"```python\nfrom pathlib import Path\nPath({str(marker)!r}).touch()\n```\n"
             f"```bash\ntouch '{marker}'\nx=$(touch '{marker}')\n"
