@@ -85,10 +85,18 @@ def parse_page(text):
 
 def check(root):
     root = root.resolve()
+    examples = root / "examples"
     issues, pages, counts = [], {}, Counter()
 
     def issue(path, line, code, message):
         issues.append(dict(path=str(path.relative_to(root)), line=line, code=code, message=message))
+
+    def check_python(path, source, first_line, *, flags=0):
+        try:
+            compile(source, "<example>", "exec", flags=flags, dont_inherit=True)
+        except (SyntaxError, ValueError) as error:
+            line = first_line + (getattr(error, "lineno", 1) or 1) - 1
+            issue(path, line, "python-syntax", str(error))
 
     def walk(directory):
         for path in sorted(directory.iterdir()):
@@ -98,19 +106,23 @@ def check(root):
                 issue(path, 1, "symlink", "Символьные ссылки не поддерживаются проверкой")
             elif path.is_dir():
                 yield from walk(path)
-            elif path.suffix.lower() == ".md":
+            elif path.suffix.lower() == ".md" or (path.suffix == ".py" and path.is_relative_to(examples)):
                 yield path
 
     total_bytes = 0
     for path in walk(root):
-        counts["markdown"] += 1
+        is_python_file = path.suffix == ".py"
+        counts["python_files" if is_python_file else "markdown"] += 1
         size = path.stat().st_size
         total_bytes += size
-        if counts["markdown"] > MAX_FILES or total_bytes > MAX_TOTAL_BYTES:
-            issue(path, 1, "limit", "Превышен общий предел объёма Markdown")
+        if counts["markdown"] + counts["python_files"] > MAX_FILES or total_bytes > MAX_TOTAL_BYTES:
+            issue(path, 1, "limit", "Превышен общий предел объёма материалов")
             break
         if size > MAX_FILE_BYTES:
-            issue(path, 1, "limit", "Markdown-файл больше 1 MiB")
+            issue(path, 1, "limit", "Файл материала больше 1 MiB")
+            continue
+        if is_python_file:
+            check_python(path, path.read_bytes(), 1)
             continue
         try:
             text = path.read_text(encoding="utf-8")
@@ -134,10 +146,7 @@ def check(root):
                 issue(path, line, "fence-language", f"Неизвестный или отсутствующий язык: {language!r}")
             if language in {"python", "py"}:
                 counts["python"] += 1
-                try:
-                    compile(token.content, "<markdown>", "exec", flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT, dont_inherit=True)
-                except (SyntaxError, ValueError) as error:
-                    issue(path, line + (getattr(error, "lineno", 1) or 1), "python-syntax", str(error))
+                check_python(path, token.content, line + 1, flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT)
             elif language in {"bash", "sh", "shell"}:
                 counts["bash"] += 1
                 try:

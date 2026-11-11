@@ -13,7 +13,7 @@
 
 **Уровень:** базовый → средний, savepoint и custom type — продвинутый.
 Расширенные рецепты используют общую схему ниже.
-Для первого знакомства с загрузкой достаточно [двух моделей в одном файле](n-plus-one.md).
+Для первого знакомства с загрузкой достаточно [двух моделей в одном файле](../../../docs/ru/python/databases/sqlalchemy/n-plus-one.md).
 Запускайте примеры на Python 3.14 с SQLite из стандартного модуля `sqlite3`.
 Выполните `python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'pytest==9.2.0'`.
 Общая база наследует AsyncAttrs; импорт asyncio в SQLAlchemy 2.1 требует greenlet через extra `asyncio`.

@@ -1,6 +1,8 @@
 # Шпаргалки по разработке
 
-Русскоязычный справочник по Python, Go, базам данных, Linux, инструментам и архитектуре.
+[Русский каталог](#каталог-материалов) · [English](docs/en/README.md)
+
+Справочник по Python, Go, базам данных, Linux, инструментам и архитектуре.
 Найдите действие через [указатель задач и синонимов](tasks/README.md) или выберите знакомый инструмент в каталоге.
 
 ## Быстрый вход
@@ -28,7 +30,7 @@
 | Типы Python | [Типы и операции](python/language/types/README.md) |
 | Проектирование Python-проекта | [Решения, рабочий пакет и поставка](python/architecture/project-design/README.md) |
 | Pydantic | [Валидация данных](python/validation/pydantic/README.md) |
-| SQLAlchemy | [Справочник](python/databases/sqlalchemy/README.md), [простой пример N+1](python/databases/sqlalchemy/n-plus-one.md), [выбор загрузки по данным и ограничениям](python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) |
+| SQLAlchemy | [Справочник](python/databases/sqlalchemy/README.md), [простой пример N+1](docs/ru/python/databases/sqlalchemy/n-plus-one.md), [выбор загрузки по данным и ограничениям](python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) |
 | pytest | [Тестирование](python/testing/pytest/README.md) |
 | structlog | [Структурированные логи](python/logging/structlog/README.md) |
 | uv | [Окружения и зависимости Python](python/tooling/uv/README.md) |
@@ -64,4 +66,4 @@
 GitHub отображает схемы прямо в Markdown.
 Подробнее: [диаграммы в GitHub Markdown](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams).
 В редакторе без поддержки Mermaid виден исходный текст схемы.
-[Шаблоны материалов](templates/README.md) · [Правила для авторов](AGENTS.md) · [Сопровождение](maintenance/README.md) · [Статические проверки и ревью PR](scripts/README.md)
+[Языковые версии](docs/README.md) · [Шаблоны материалов](templates/README.md) · [Правила для авторов](AGENTS.md) · [Сопровождение](maintenance/README.md) · [Статические проверки и ревью PR](scripts/README.md)
