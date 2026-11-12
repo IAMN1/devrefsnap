@@ -76,6 +76,25 @@ When `async with` exits successfully, both tasks are finished. The script gets t
 If a task raises an ordinary exception, the group requests cancellation of the remaining tasks and waits for them to finish.
 Use sequential waits if the second operation needs the result of the first.
 
+The diagram shows when each operation starts and when both results are available on a successful run.
+
+```mermaid
+flowchart LR
+    subgraph Sequential["Sequential"]
+        direction TB
+        SeqA["fetch('A')"] -->|"A finishes"| SeqB["fetch('B')"]
+        SeqB -->|"B finishes"| SeqDone["Results A and B"]
+    end
+    subgraph Concurrent["Concurrent"]
+        direction TB
+        Group["TaskGroup"] -->|"create_task"| TaskA["fetch('A')"]
+        Group -->|"create_task"| TaskB["fetch('B')"]
+        TaskA -->|"A finishes"| GroupDone["Results A and B"]
+        TaskB -->|"B finishes"| GroupDone
+    end
+    Sequential ~~~ Concurrent
+```
+
 ## Run the comparison
 
 Open the [complete `demo.py` file](../../../../examples/python/language/asyncio/demo.py). Run the command from the repository root.

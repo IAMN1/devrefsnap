@@ -155,7 +155,7 @@ After successfully changing history, compare the result and run project checks.
 Only then run the push snippet.
 
 ```bash
-: "${expected:?Сначала сохраните ожидаемый SHA в этой оболочке}"
+: "${expected:?Record the expected SHA in this shell first}"
 git push --force-with-lease="refs/heads/feature/profile:$expected" origin HEAD:refs/heads/feature/profile
 ```
 

@@ -168,5 +168,5 @@ assert counts.dump_json([1, 2]) == b"[1,2]"
 
 ## Источники
 
-- [Модели](https://docs.pydantic.dev/latest/concepts/models/), [поля](https://docs.pydantic.dev/latest/concepts/fields/), [сериализация](https://docs.pydantic.dev/latest/concepts/serialization/).
-- [ConfigDict](https://docs.pydantic.dev/latest/api/config/), [миграция](https://docs.pydantic.dev/latest/migration/), [производительность](https://docs.pydantic.dev/latest/concepts/performance/).
+- [Модели](https://pydantic.dev/docs/validation/latest/concepts/models/), [поля](https://pydantic.dev/docs/validation/latest/concepts/fields/), [сериализация](https://pydantic.dev/docs/validation/latest/concepts/serialization/).
+- [ConfigDict](https://pydantic.dev/docs/validation/latest/api/pydantic/config/), [миграция](https://pydantic.dev/docs/validation/latest/get-started/migration/), [производительность](https://pydantic.dev/docs/validation/latest/concepts/performance/).

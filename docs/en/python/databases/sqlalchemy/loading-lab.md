@@ -7,7 +7,7 @@ Compare SELECT counts on identical data and check relationship contents.
 The scenario uses only a fresh in-memory SQLite database.
 [Selection cards](relationship-loading.md) · [Large result sets](streaming.md) · [Reference](README.md).
 For an introduction to N+1, start with [two models in one file](n-plus-one.md#setup-and-run).
-For partial collections, nested relationships, and Session state, use the extended schema below.
+Use the extended schema below for nested relationships and the [filtering and refresh cards](filtered-relationships.md).
 
 | Task | Check | Where |
 | --- | --- | --- |

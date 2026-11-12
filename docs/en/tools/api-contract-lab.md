@@ -4,6 +4,12 @@
 
 Check that a TypeScript client gets the expected HTTP response from FastAPI. FastAPI reads a book from PostgreSQL. Docker Compose runs all three components locally and in GitHub Actions.
 
+| Task | Approach | Where to start |
+| --- | --- | --- |
+| Check API responses on your computer | `docker compose run --build --rm client` | [Local run](#run-the-check-locally) |
+| Repeat the check in CI | Run the workflow manually | [GitHub Actions](#repeat-the-check-in-github-actions) |
+| Find out why a local check failed | Client output and service logs | [Diagnose a failed check](#diagnose-a-failed-check) |
+
 The contract specifies which HTTP status and JSON fields the client expects from the server. `GET /books/1` returns `200` and `{"id":1,"title":"The Hobbit"}`. `GET /books/999` returns `404` and `{"detail":"Book not found"}`.
 
 ```mermaid
@@ -54,6 +60,8 @@ On success, the client exits with code `0` and prints two lines.
 OK GET /books/1 -> 200 The Hobbit
 OK GET /books/999 -> 404 Book not found
 ```
+
+### Diagnose a failed check
 
 The client exits with a nonzero code for an unexpected status, a missing required field, or an incorrect field value. Additional fields are allowed. The message `GET /books/999: expected HTTP 404, got 200` means the server returned a success response for a missing book.
 

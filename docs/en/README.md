@@ -10,12 +10,12 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 <a id="быстрый-вход"></a>
 ## Quick start
 
-| Situation | How to look | Example |
+| What you need | How to start | Example |
 | --- | --- | --- |
-| You remember the task but forgot the technique's name | Find an action or synonym | [Task index](tasks/README.md) |
-| You chose a tool and want to review syntax | Open the topic's quick lookup | [Material catalog](#material-catalog) |
-| You need to choose between approaches | Compare conditions and limitations in the card | [Loading related data](python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
-| You need a first standalone run | Follow the card to a complete example | [Python package with tests](python/architecture/project-design/example.md) |
+| Run your first example | Open a page with dependencies, a command, and expected output | [Python numbers and collections](python/language/types/recipes.md) · [First C program](c/README.md#first-run) |
+| Solve a work task | Find the action, command, or symptom in the [task index](tasks/README.md) | [Extract a JSON field](tools/http-json.md#extract-a-json-field) |
+| Look up familiar syntax | Choose a topic in the [catalog](#material-catalog) and open the relevant card | [C# collections](csharp/syntax.md#collections) |
+| Choose an approach or diagnose a failure | Compare the conditions, results, and limits | [Choose a way to load related data](python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
 
 <a id="разделы"></a>
 ## Sections

@@ -92,10 +92,10 @@ Command consequences and example limitations appear there as well.
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
 | Send a request from the terminal, inspect status and headers, and extract a JSON field | curl, jq, HTTP status code, body | [HTTP and JSON](../tools/http-json.md) |
-| Create a FastAPI route with path/query/body parameters and validation | REST, endpoint, request, response, 422 | [FastAPI HTTP API with validation](../python/web/fastapi/recipes.md#http-api-with-validation) |
+| Create a FastAPI route with path/query/body parameters and validation | REST, endpoint, request, response, 422 | [Quick card](../python/web/fastapi/recipes.md#http-api-with-validation) · [Complete HTTP API](../python/web/fastapi/http-api.md#http-api-with-validation) |
 | Pass a dependency to a FastAPI handler | Depends, dependency injection, sub-dependency | [How FastAPI dependencies work](../python/web/fastapi/recipes.md#how-dependencies-work) |
-| Accept a form or file | upload, multipart, Form, UploadFile | [FastAPI forms and files](../python/web/fastapi/recipes.md#forms-and-file-uploads) |
-| Configure CORS or middleware | browser, cross-origin, headers, request middleware | [FastAPI middleware and CORS](../python/web/fastapi/recipes.md#middleware-and-cors) |
+| Accept a form or file | upload, multipart, Form, UploadFile | [Quick card](../python/web/fastapi/recipes.md#forms-and-file-uploads) · [Complete upload example](../python/web/fastapi/uploads.md#forms-and-file-uploads) |
+| Configure CORS or middleware | browser, cross-origin, headers, request middleware | [Quick card](../python/web/fastapi/recipes.md#middleware-and-cors) · [Complete middleware and CORS example](../python/web/fastapi/middleware.md#middleware-and-cors) |
 | Verify a password and protect a route with a token | auth, authentication, JWT, bearer, OAuth2, 401 | [Complete FastAPI authentication example](../python/web/fastapi/authentication.md#complete-example) |
 | Provide a database session per request and close resources | SQLAlchemy, Session, AsyncSession, yield, lifespan | [Synchronous FastAPI session](../python/web/fastapi/database.md#synchronous-sqlalchemy) · [Async and lifespan](../python/web/fastapi/database.md#async-sqlalchemy-and-lifespan) |
 | Test a FastAPI response and invalid input | TestClient, httpx2, integration test, 422 | [FastAPI TestClient card](../python/web/fastapi/testing.md#synchronous-testclient) · [Complete checks](../python/web/fastapi/testing-lab.md) |
@@ -179,9 +179,9 @@ The diagram shows the artifacts in a typical console build. Arrow labels identif
 | Avoid excessive database queries when reading collections | SQLAlchemy, N+1, lazy loading, eager loading, SELECT counter | [N+1 card](../python/databases/sqlalchemy/relationship-loading.md#find-n1) · [Example and SELECT count chart](../python/databases/sqlalchemy/n-plus-one.md) |
 | Choose loading for collections and scalar relationships | selectinload, joinedload, unique, relationship, result size, LIMIT | [SQLAlchemy decision table](../python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
 | Prevent unintended lazy loading | raiseload, unexpected SQL, InvalidRequestError | [SQLAlchemy error in place of a SELECT](../python/databases/sqlalchemy/relationship-loading.md#detect-unplanned-lazy-loading) |
-| Filter parents and load all their children | JOIN, filter, complete collection, selectinload | [SQLAlchemy parents and complete collections](../python/databases/sqlalchemy/relationship-loading.md#filter-parents-and-load-complete-collections) |
-| Populate a relationship from your own JOIN result | contains_eager, filtered collection, partial collection | [SQLAlchemy partial collection](../python/databases/sqlalchemy/relationship-loading.md#load-a-partial-collection-from-a-join) |
-| Replace an already-loaded relationship | populate_existing, expire_all, identity map | [Refresh a SQLAlchemy collection](../python/databases/sqlalchemy/relationship-loading.md#refresh-an-already-loaded-collection) |
+| Filter parents and load all their children | JOIN, filter, complete collection, selectinload | [SQLAlchemy parents and complete collections](../python/databases/sqlalchemy/filtered-relationships.md#filter-parents-and-load-complete-collections) |
+| Populate a relationship from your own JOIN result | contains_eager, filtered collection, partial collection | [SQLAlchemy partial collection](../python/databases/sqlalchemy/filtered-relationships.md#load-a-partial-collection-from-a-join) |
+| Replace an already-loaded relationship | populate_existing, expire_all, identity map | [Refresh a SQLAlchemy collection](../python/databases/sqlalchemy/filtered-relationships.md#refresh-an-already-loaded-collection) |
 | Process a large ORM result in batches | yield_per, partitions, streaming, memory | [SQLAlchemy batch processing](../python/databases/sqlalchemy/streaming.md) |
 | Use an async ORM session | AsyncSession, AsyncAttrs, awaitable_attrs, asyncio | [SQLAlchemy async session](../python/databases/sqlalchemy/async-and-operations.md#async-session) |
 | Change a schema through a migration | Alembic, revision, upgrade, downgrade, migration | [Standalone Alembic project](../python/databases/sqlalchemy/async-and-operations.md#alembic-in-a-separate-practice-project) |

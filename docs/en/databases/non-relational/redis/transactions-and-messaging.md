@@ -81,7 +81,7 @@ This snippet comes from the [complete program](transactions-lab.md#complete-stre
 ```python
 deliveries = client.xreadgroup("workers", "worker-1", {stream: ">"}, count=1, block=500)
 message_id, fields = deliveries[0][1][0]
-# Сначала надёжно завершите прикладную обработку fields.
+# Finish processing fields reliably before acknowledging the entry.
 client.xack(stream, "workers", message_id)
 assert client.xpending(stream, "workers")["pending"] == 0
 ```

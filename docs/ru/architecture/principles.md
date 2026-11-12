@@ -170,5 +170,5 @@ flowchart LR
 ## Источники
 
 - [Robert C. Martin: SRP](https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html) — причины изменений.
-- [Alistair Cockburn: Ports & Adapters](https://alistair.cockburn.us/hexagonal-architecture/) — изоляция приложения.
+- [Alistair Cockburn: Ports & Adapters](https://alistair.cockburn.us/hexagonal-architecture) — изоляция приложения.
 - [Martin Fowler: Yagni](https://martinfowler.com/bliki/Yagni.html), [Danilo Sato: Parallel Change](https://martinfowler.com/bliki/ParallelChange.html).

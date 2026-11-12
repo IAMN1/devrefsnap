@@ -107,4 +107,4 @@ For example, `UserView.model_construct(id="wrong", name="Alice")` preserves an i
 This explanatory snippet refers to `demo_types.py`.
 Use validation at input boundaries.
 
-See [custom types](https://docs.pydantic.dev/latest/concepts/types/), [TypeAdapter](https://docs.pydantic.dev/latest/concepts/type_adapter/), [generics and create_model](https://docs.pydantic.dev/latest/concepts/models/), [migration guide and bump-pydantic](https://docs.pydantic.dev/latest/migration/), and [performance](https://docs.pydantic.dev/latest/concepts/performance/).
+See [custom types](https://pydantic.dev/docs/validation/latest/concepts/types/), [TypeAdapter](https://pydantic.dev/docs/validation/latest/concepts/type_adapter/), [generics and create_model](https://pydantic.dev/docs/validation/latest/concepts/models/), [migration guide and bump-pydantic](https://pydantic.dev/docs/validation/latest/get-started/migration/), and [performance](https://pydantic.dev/docs/validation/latest/concepts/performance/).

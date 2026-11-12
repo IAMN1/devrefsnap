@@ -16,7 +16,8 @@ Detailed examples are provided in standalone recipes.
 | --- | --- | --- |
 | Start an API | `uvicorn minimal:app --reload` | [First run](#first-run) |
 | CRUD, path/query/body, validation | `Path`, `Query`, `BaseModel`, `Field` | [Complete CRUD](http-api.md#http-api-with-validation) |
-| Responses, errors, output model | `response_model`, `HTTPException`, `JSONResponse` | [Models and responses](http-api.md#http-api-with-validation) |
+| Return a specific status or error message | `HTTPException`, `JSONResponse` | [Models and responses](http-api.md#http-api-with-validation) |
+| Omit the password from a response | `response_model=UserOut` | [Reference card and test](#return-a-public-model-without-a-password) |
 | Inspect an HTTP response from the terminal | `curl -i`, `jq` | [HTTP and JSON](../../../tools/http-json.md) |
 | Function, class, sub-dependency | `Annotated[T, Depends(...)]` | [Dependencies](recipes.md#how-dependencies-work) |
 | Form, one or several files | `Form`, `UploadFile`, `File` | [Complete application](uploads.md#forms-and-file-uploads) |
@@ -25,7 +26,7 @@ Detailed examples are provided in standalone recipes.
 | Test the API synchronously or asynchronously | `TestClient`, `ASGITransport` | [Testing](testing.md) |
 | Test a handler without calling the real dependency | `app.dependency_overrides` | [Selection card](testing.md#dependency-override) · [Standalone program](dependency-overrides.md#minimal-standalone-example) |
 | Restore dependencies after a test or error | `try` / `finally` | [Complete restoration checks](dependency-overrides.md#complete-test-file) |
-| Verify a password and JWT | `pwdlib`, `PyJWT`, `OAuth2PasswordBearer` | [Authentication](authentication.md) |
+| Verify a password and JWT | `pwdlib`, `PyJWT`, `OAuth2PasswordBearer` | [Authentication](authentication.md) · [Access and rejection tests](testing-lab.md#authentication) |
 | Workers, containers, OpenAPI | Uvicorn, Docker, `app.openapi()` | [Startup and deployment](deployment.md) |
 
 | Parameter | Value |
@@ -103,7 +104,7 @@ Define constraints with `Field`.
 Define custom rules with `field_validator` and `model_validator`.
 Declare a separate output model that omits the password.
 Specify the output model in `response_model`.
-[Consistent CRUD and models](recipes.md#http-api-with-validation).
+[Consistent CRUD and models](http-api.md#http-api-with-validation).
 
 <a id="средний-уровень"></a>
 
@@ -112,7 +113,7 @@ Specify the output model in `response_model`.
 
 **Situation** — `/user-preview` accepts a password, but the HTTP response must omit it.
 **Change** — set a separate `UserOut` model through `response_model`.
-The snippet comes from the [complete HTTP application](recipes.md#http-api-with-validation), where both models are already defined.
+This snippet shows the `preview_user` handler. The complete application defines `UserIn` and `UserOut`.
 
 ```python
 @app.post("/user-preview", response_model=UserOut)
@@ -122,7 +123,7 @@ async def preview_user(user: UserIn):
 
 **Result** — a request with `username`, `email`, and `password` returns public fields with `password` omitted.
 A prebuilt `Response` bypasses normal response-model filtering.
-[Complete application](recipes.md#http-api-with-validation) · [Password-omission check](testing.md#synchronous-testclient).
+See the [complete HTTP example](http-api.md#http-api-with-validation) for run instructions. Find `test_output_does_not_expose_password` in [`test_main.py`](../../../../../examples/python/web/fastapi/test_main.py).
 
 
 | Task | What to remember |
@@ -156,7 +157,7 @@ def get_session() -> Generator[Session, None, None]:
 **Result** — exiting the dependency closes the session. The handler receives it through `Depends(get_session)`.
 The Session context does not commit by itself.
 In the complete example, the handler explicitly commits or rolls back the transaction.
-[Sync/async applications](database.md) · [Database and lifespan checks](testing.md#database-sessions-and-lifespan).
+[Sync/async applications](database.md) · [Database and lifespan checks](testing-lab.md#database-sessions-and-lifespan).
 
 
 - **Lifecycle and databases** — create shared resources in `lifespan`. Close shared resources in `lifespan`. Provide a session per request through `yield`. Use synchronous SQLAlchemy in `def` handlers. `async def` requires a nonblocking client. [Sync and async variants](database.md).
@@ -182,5 +183,5 @@ In the complete example, the handler explicitly commits or rolls back the transa
 - [FastAPI release notes 0.162.0](https://fastapi.tiangolo.com/release-notes/#01620-2026-10-23).
 - [Query parameters](https://fastapi.tiangolo.com/tutorial/query-params-str-validations/), [response models](https://fastapi.tiangolo.com/tutorial/response-model/).
 - [When to use async or def](https://fastapi.tiangolo.com/async/), [lifespan](https://fastapi.tiangolo.com/advanced/events/).
-- [Pydantic v2 migration](https://docs.pydantic.dev/latest/migration/).
+- [Pydantic v2 migration](https://pydantic.dev/docs/validation/latest/get-started/migration/).
 - [FastAPI async tests](https://fastapi.tiangolo.com/advanced/async-tests/).

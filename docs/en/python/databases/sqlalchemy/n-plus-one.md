@@ -101,3 +101,5 @@ Async sessions, other databases, larger data sets, and concurrent access require
 - [ORM quick start](https://docs.sqlalchemy.org/en/21/orm/quickstart.html) · [Session basics](https://docs.sqlalchemy.org/en/21/orm/session_basics.html).
 - [SQL execution events](https://docs.sqlalchemy.org/en/21/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute).
 - [SQLAlchemy 2.1.8 release notes](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+
+[Relationship loading cards](relationship-loading.md) · [SQLAlchemy reference](README.md) · [Task index](../../../tasks/README.md#sql-and-access-from-python)

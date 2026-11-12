@@ -95,6 +95,21 @@ git status --short
 
 Workflow — файл с описанием запуска. `workflow_dispatch` включает ручной запуск с параметром `fail_test`. Задание `integration` выполняется на машине GitHub с Ubuntu 24.04. GitHub запускает PostgreSQL как контейнер сервиса и выделяет свободный порт на машине задания. Шаг `Run database test` подключается через `127.0.0.1` и использует этот порт. Задание запускает тест напрямую на машине GitHub. Локально тест выполнялся в контейнере `app`.
 
+Схема сравнивает, где выполняется тест и по какому адресу тест подключается к PostgreSQL.
+
+```mermaid
+flowchart LR
+    subgraph Local["Локальный запуск · сеть Compose"]
+        direction TB
+        LocalTest["Тест в контейнере app"] -->|"postgres:5432"| LocalDB["Контейнер PostgreSQL"]
+    end
+    subgraph CI["GitHub Actions · задание integration"]
+        direction TB
+        RunnerTest["Тест на машине GitHub"] -->|"127.0.0.1 и выделенный порт"| ServiceDB["Контейнер сервиса PostgreSQL"]
+    end
+    Local ~~~ CI
+```
+
 Разрешение `contents: read` позволяет получить файлы репозитория. Обе операции `uses` закреплены полными SHA коммитов официальных actions. Настройка секретов репозитория для этого примера не нужна.
 
 1. Откройте **Actions → PostgreSQL integration test → Run workflow** на GitHub.

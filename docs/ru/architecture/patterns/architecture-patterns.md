@@ -296,6 +296,6 @@ Outbox бывает нужен и монолиту, который публик�
 
 ## Источники
 
-- Организация кода: [Cockburn](https://alistair.cockburn.us/hexagonal-architecture/), [Bogard](https://www.jimmybogard.com/vertical-slice-architecture/), [Microsoft: layers / tiers](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/n-tier).
+- Организация кода: [Cockburn](https://alistair.cockburn.us/hexagonal-architecture), [Bogard](https://www.jimmybogard.com/vertical-slice-architecture/), [Microsoft: layers / tiers](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/n-tier).
 - Выпуск и границы: [Fowler / Lewis: Microservices](https://martinfowler.com/articles/microservices.html), [Fowler: Monolith First](https://martinfowler.com/bliki/MonolithFirst.html).
 - Источники по данным и отказам собраны [на подробной странице](distributed-systems.md#источники).

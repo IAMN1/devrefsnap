@@ -67,4 +67,4 @@
 После установки `pydantic-extra-types` импортируйте `PaymentCardNumber` для новых примеров из `pydantic_extra_types.payment`.
 Не логируйте платёжные данные ради проверки типа.
 
-Источники: [валидаторы](https://docs.pydantic.dev/latest/concepts/validators/), [сериализаторы](https://docs.pydantic.dev/latest/concepts/serialization/), [ConfigDict](https://docs.pydantic.dev/latest/api/config/), [стандартные типы](https://docs.pydantic.dev/latest/api/standard_library_types/), [PaymentCardNumber](https://docs.pydantic.dev/latest/api/pydantic_extra_types_payment/).
+Источники: [валидаторы](https://pydantic.dev/docs/validation/latest/concepts/validators/), [сериализаторы](https://pydantic.dev/docs/validation/latest/concepts/serialization/), [ConfigDict](https://pydantic.dev/docs/validation/latest/api/pydantic/config/), [стандартные типы](https://pydantic.dev/docs/validation/latest/api/pydantic/standard_library_types/), [PaymentCardNumber](https://pydantic.dev/docs/validation/latest/api/pydantic-extra-types/pydantic_extra_types_payment/).

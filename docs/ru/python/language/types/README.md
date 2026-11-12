@@ -212,7 +212,7 @@ flowchart LR
 
 ## Источники
 
-- [Стандартные типы Python 3.14](https://docs.python.org/3.14/library/stdtypes.html).
+- [Стандартные типы Python 3.14](https://docs.python.org/3.14/builtins/stdtypes.html).
 - [collections](https://docs.python.org/3.14/library/collections.html), [Decimal](https://docs.python.org/3.14/library/decimal.html).
 - [Копирование](https://docs.python.org/3.14/library/copy.html), [sys: размер и ссылки](https://docs.python.org/3.14/library/sys.html).
 - [Модель данных и hash](https://docs.python.org/3.14/reference/datamodel.html#object.__hash__), [аннотации](https://docs.python.org/3.14/library/typing.html).

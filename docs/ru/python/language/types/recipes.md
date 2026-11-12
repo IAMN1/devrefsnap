@@ -3,32 +3,26 @@
 
 [English](../../../../en/python/language/types/recipes.md)
 
-Откройте страницу, чтобы выполнить проверки чисел, коллекций и копий на синтетических данных.
-Полная программа дополняет [короткие карточки типов](README.md).
-
-[К справочнику типов](README.md)
-
-**Уровень:** базовый → продвинутый.
-**Предпосылки:** Python 3.14, стандартная библиотека.
+Запустите пример на Python 3.14, чтобы проверить числа, коллекции и копирование данных. Пример использует стандартную библиотеку и данные в памяти. Синтаксис и объяснения находятся в [карточках типов](README.md).
 
 
 ## Полная программа
 
-Сохраните полный пример как `demo_types.py`.
-Пример работает с данными в памяти без файлов и сети.
+Откройте [исходный файл `demo_types.py`](../../../../../examples/python/language/types/demo_types.py). Выполните команду из корня репозитория.
 
-[`types/demo_types.py`](../../../../../examples/python/language/types/demo_types.py)
+```bash
+python3.14 examples/python/language/types/demo_types.py
+```
 
 
 ## Результат и границы
 
-Запустите `python demo_types.py`.
 Результат — одна строка `types: numbers, collections, conversion errors and copies OK`.
 При нарушении показанного свойства выполнение завершится с `AssertionError`.
 Пример не измеряет память или скорость.
 Запускайте пример без `-O`.
 Параметр `-O` отключает assert.
 
-Источники: [стандартные типы](https://docs.python.org/3.14/library/stdtypes.html),
+Источники: [стандартные типы](https://docs.python.org/3.14/builtins/stdtypes.html),
 [collections](https://docs.python.org/3.14/library/collections.html), [copy](https://docs.python.org/3.14/library/copy.html),
 [decimal](https://docs.python.org/3.14/library/decimal.html).

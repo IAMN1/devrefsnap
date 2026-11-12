@@ -3,7 +3,7 @@
 
 [English](../../en/tools/README.md)
 
-[Найти пример по задаче или синониму](../tasks/README.md#git-и-github) — Git, отмена изменений, ветки и Pull Requests.
+Найдите пример по задаче или синониму в указателе [HTTP и JSON](../tasks/README.md#http-api-и-веб-приложения), [Docker Compose и CI](../tasks/README.md#docker-compose-и-ci) или [Git и GitHub](../tasks/README.md#git-и-github).
 
 Раздел содержит общие инструменты для проектов на разных языках.
 Материалы охватывают проверку HTTP, запуск приложений с зависимостями, CI, управление версиями и совместную работу.

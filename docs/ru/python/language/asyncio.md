@@ -76,6 +76,25 @@ print(first_task.result(), second_task.result())
 Если задача завершится обычным исключением, группа запросит отмену оставшихся задач и дождётся их завершения.
 Используйте последовательное ожидание, если второй операции нужен результат первой.
 
+На схеме показано, когда начинаются операции и когда доступны оба результата при успешном выполнении.
+
+```mermaid
+flowchart LR
+    subgraph Sequential["Последовательно"]
+        direction TB
+        SeqA["fetch('A')"] -->|"A завершилась"| SeqB["fetch('B')"]
+        SeqB -->|"B завершилась"| SeqDone["Результаты A и B"]
+    end
+    subgraph Concurrent["Конкурентно"]
+        direction TB
+        Group["TaskGroup"] -->|"create_task"| TaskA["fetch('A')"]
+        Group -->|"create_task"| TaskB["fetch('B')"]
+        TaskA -->|"A завершилась"| GroupDone["Результаты A и B"]
+        TaskB -->|"B завершилась"| GroupDone
+    end
+    Sequential ~~~ Concurrent
+```
+
 ## Запустить сравнение
 
 Откройте [полный файл `demo.py`](../../../../examples/python/language/asyncio/demo.py). Выполните команду из корня репозитория.

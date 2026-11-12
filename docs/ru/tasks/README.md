@@ -93,10 +93,10 @@
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
 | Отправить запрос из терминала, увидеть статус и заголовки, извлечь поле JSON | curl, jq, HTTP status, код ответа, тело | [HTTP и JSON](../tools/http-json.md) |
-| Создать FastAPI-маршрут с path/query/body и валидацией | REST, endpoint, request, response, 422 | [FastAPI: HTTP API с валидацией](../python/web/fastapi/recipes.md#http-api-с-валидацией) |
+| Создать FastAPI-маршрут с path/query/body и валидацией | REST, endpoint, request, response, 422 | [Карточка](../python/web/fastapi/recipes.md#http-api-с-валидацией) · [Полное HTTP API](../python/web/fastapi/http-api.md#http-api-с-валидацией) |
 | Передать зависимость в обработчик FastAPI | Depends, dependency injection, подзависимость | [FastAPI: как устроены зависимости](../python/web/fastapi/recipes.md#как-устроены-зависимости) |
-| Принять форму или файл | upload, multipart, Form, UploadFile | [FastAPI: формы и файлы](../python/web/fastapi/recipes.md#формы-и-загрузка-файлов) |
-| Настроить CORS или middleware | browser, cross-origin, заголовки, request middleware | [FastAPI: middleware и CORS](../python/web/fastapi/recipes.md#middleware-и-cors) |
+| Принять форму или файл | upload, multipart, Form, UploadFile | [Карточка](../python/web/fastapi/recipes.md#формы-и-загрузка-файлов) · [Полный пример загрузки](../python/web/fastapi/uploads.md#формы-и-загрузка-файлов) |
+| Настроить CORS или middleware | browser, cross-origin, заголовки, request middleware | [Карточка](../python/web/fastapi/recipes.md#middleware-и-cors) · [Полный пример middleware и CORS](../python/web/fastapi/middleware.md#middleware-и-cors) |
 | Проверить пароль и защитить маршрут токеном | auth, authentication, JWT, bearer, OAuth2, 401 | [FastAPI: полный пример аутентификации](../python/web/fastapi/authentication.md#полный-пример) |
 | Выдать сессию БД на запрос и закрыть ресурсы | SQLAlchemy, Session, AsyncSession, yield, lifespan | [FastAPI: sync-сессия](../python/web/fastapi/database.md#синхронный-sqlalchemy) · [Async и lifespan](../python/web/fastapi/database.md#async-sqlalchemy-и-lifespan) |
 | Проверить ответ FastAPI и неверный ввод | TestClient, httpx2, integration test, 422 | [FastAPI: карточка TestClient](../python/web/fastapi/testing.md#синхронный-testclient) · [Полные проверки](../python/web/fastapi/testing-lab.md) |
@@ -180,9 +180,9 @@
 | Устранить лишние запросы к БД при чтении коллекций | SQLAlchemy, N+1, lazy loading, eager loading, счётчик SELECT | [Карточка N+1](../python/databases/sqlalchemy/relationship-loading.md#найти-n1) · [Пример с графиком числа SELECT](../python/databases/sqlalchemy/n-plus-one.md) |
 | Выбрать загрузку коллекций и одиночных связей | selectinload, joinedload, unique, relationship, объём результата, LIMIT | [SQLAlchemy: таблица выбора](../python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) |
 | Запретить непредвиденную lazy-загрузку | raiseload, неожиданный SQL, InvalidRequestError | [SQLAlchemy: ошибка вместо SELECT](../python/databases/sqlalchemy/relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
-| Фильтровать родителей и получить все дочерние строки | JOIN, filter, полная коллекция, selectinload | [SQLAlchemy: родители и полные коллекции](../python/databases/sqlalchemy/relationship-loading.md#отфильтровать-родителей-и-загрузить-полные-коллекции) |
-| Заполнить отношение результатом своего JOIN | contains_eager, filtered collection, частичная коллекция | [SQLAlchemy: частичная коллекция](../python/databases/sqlalchemy/relationship-loading.md#загрузить-частичную-коллекцию-из-join) |
-| Заменить уже загруженное отношение | populate_existing, expire_all, identity map | [SQLAlchemy: обновить коллекцию](../python/databases/sqlalchemy/relationship-loading.md#обновить-уже-загруженную-коллекцию) |
+| Фильтровать родителей и получить все дочерние строки | JOIN, filter, полная коллекция, selectinload | [SQLAlchemy: родители и полные коллекции](../python/databases/sqlalchemy/filtered-relationships.md#отфильтровать-родителей-и-загрузить-полные-коллекции) |
+| Заполнить отношение результатом своего JOIN | contains_eager, filtered collection, частичная коллекция | [SQLAlchemy: частичная коллекция](../python/databases/sqlalchemy/filtered-relationships.md#загрузить-частичную-коллекцию-из-join) |
+| Заменить уже загруженное отношение | populate_existing, expire_all, identity map | [SQLAlchemy: обновить коллекцию](../python/databases/sqlalchemy/filtered-relationships.md#обновить-уже-загруженную-коллекцию) |
 | Обработать большую ORM-выборку по частям | yield_per, partitions, streaming, память | [SQLAlchemy: пакетная обработка](../python/databases/sqlalchemy/streaming.md) |
 | Использовать async-сессию ORM | AsyncSession, AsyncAttrs, awaitable_attrs, asyncio | [SQLAlchemy: асинхронная сессия](../python/databases/sqlalchemy/async-and-operations.md#асинхронная-сессия) |
 | Изменить схему через миграцию | Alembic, revision, upgrade, downgrade, migration | [SQLAlchemy: отдельный проект Alembic](../python/databases/sqlalchemy/async-and-operations.md#alembic-отдельный-учебный-проект) |

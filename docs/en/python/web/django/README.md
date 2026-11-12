@@ -12,7 +12,8 @@ Django maps Python models to database tables and provides a built-in admin inter
 
 ## Setup
 
-Use Python 3.14 and Django 5.2.19 from the 5.2 LTS series for the [example project](../../../../../examples/python/web/django/manage.py). SQLite is available through Python's `sqlite3` module.
+The example project is in `examples/python/web/django`. Use [`manage.py`](../../../../../examples/python/web/django/manage.py) to run project commands.
+Use Python 3.14 and Django 5.2.19 from the 5.2 LTS series. The Django version is set in [`requirements.txt`](../../../../../examples/python/web/django/requirements.txt). SQLite is available through Python's `sqlite3` module.
 
 On macOS or Linux, open a terminal in the repository root. Change to the example directory, create and activate a virtual environment, and install the dependencies.
 

@@ -166,5 +166,5 @@ Benchmark `frozen`, `__slots__`, or claimed speedups such as “up to 50x” bef
 <a id="источники"></a>
 ## Sources
 
-- [Models](https://docs.pydantic.dev/latest/concepts/models/), [fields](https://docs.pydantic.dev/latest/concepts/fields/), [serialization](https://docs.pydantic.dev/latest/concepts/serialization/).
-- [ConfigDict](https://docs.pydantic.dev/latest/api/config/), [migration](https://docs.pydantic.dev/latest/migration/), [performance](https://docs.pydantic.dev/latest/concepts/performance/).
+- [Models](https://pydantic.dev/docs/validation/latest/concepts/models/), [fields](https://pydantic.dev/docs/validation/latest/concepts/fields/), [serialization](https://pydantic.dev/docs/validation/latest/concepts/serialization/).
+- [ConfigDict](https://pydantic.dev/docs/validation/latest/api/pydantic/config/), [migration](https://pydantic.dev/docs/validation/latest/get-started/migration/), [performance](https://pydantic.dev/docs/validation/latest/concepts/performance/).
