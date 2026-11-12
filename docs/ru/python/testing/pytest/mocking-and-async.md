@@ -15,6 +15,7 @@
 Уровень: продвинутый.
 Предпосылки: [demo_service.py](fixtures.md#полный-учебный-пример),
 pytest, pytest-mock и pytest-asyncio в одном окружении.
+Для асинхронного теста пригодятся [основы `asyncio`](../../language/asyncio.md).
 [К справочнику pytest](README.md).
 Точные версии пакетов указаны в [среде примеров](configuration.md#среда-примеров).
 

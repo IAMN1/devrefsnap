@@ -21,6 +21,7 @@ Go — статически типизированный компилируем�
 | Struct, метод, интерфейс, generics | Value/pointer receiver, ограничения типов | [Объект и интерфейс](language.md#изменить-объект-и-сохранить-интерфейс) |
 | Ошибка с причиной | `%w`, `errors.Is`, `errors.As` | [Тесты языка](language.md#проверка-валидного-и-невалидного-ввода) |
 | Отмена, каналы и ограниченные workers | `context`, `select`, `WaitGroup` | [Конкурентность](concurrency-and-testing.md) |
+| Отменить исходящий HTTP-запрос или задать дедлайн | `context.WithCancel`, `context.WithTimeout` | [Контекст HTTP-запроса](context.md) |
 | Защитить общее состояние | `sync.Mutex` | [Счётчик](concurrency-and-testing.md#общие-данные-и-mutex) |
 | JSON/HTTP, ограничения, тесты | `json.Decoder`, `MaxBytesReader`, `httptest` | [HTTP и JSON](http-json.md) |
 | Формат, тесты, анализ, гонки | `gofmt`, `go test`, `go vet`, `-race` | [Команды](#команды-модуля) |
@@ -105,8 +106,9 @@ Race detector требует поддерживаемой платформы и 
 
 [Worker pool](concurrency-and-testing.md) ограничивает число goroutines и ждёт их завершения.
 Отмена context кооперативная; канал и mutex выбираются по владению данными.
+[Отмена и дедлайн](context.md) показаны на запросах к локальному HTTP-серверу.
 [HTTP-рецепт](http-json.md) разделяет синтаксис JSON и смысл данных.
-`httptest` вызывает handler внутри процесса; настройки внешнего сервера разобраны [отдельно](http-json.md#перед-настоящим-http-запуском).
+Рецепт проверяет обработчик через `httptest.NewRecorder`. Настройки внешнего сервера разобраны [отдельно](http-json.md#перед-настоящим-http-запуском).
 
 
 ## Частые ошибки

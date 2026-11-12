@@ -63,6 +63,8 @@ FastAPI выполняет эти обработчики в пуле поток�
 
 ## Async SQLAlchemy и lifespan
 
+Если вы впервые используете `async def` и `await`, начните с [основ asyncio](../../language/asyncio.md).
+
 Для независимого async-примера выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1'`.
 Сохраните полный независимый пример в файле `async_db_app.py`:
 

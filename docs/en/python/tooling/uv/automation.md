@@ -17,6 +17,8 @@ Advanced level.
 Requires a working project with `pyproject.toml`, `uv.lock`, and tests.
 [uv reference](README.md).
 
+For a first run, use the [Docker Compose and GitHub Actions practice project](../../../tools/compose-and-github-actions.md).
+
 
 ## GitHub Actions
 

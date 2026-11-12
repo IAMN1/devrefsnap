@@ -17,6 +17,7 @@ Detailed examples are provided in standalone recipes.
 | Start an API | `uvicorn minimal:app --reload` | [First run](#first-run) |
 | CRUD, path/query/body, validation | `Path`, `Query`, `BaseModel`, `Field` | [Complete CRUD](http-api.md#http-api-with-validation) |
 | Responses, errors, output model | `response_model`, `HTTPException`, `JSONResponse` | [Models and responses](http-api.md#http-api-with-validation) |
+| Inspect an HTTP response from the terminal | `curl -i`, `jq` | [HTTP and JSON](../../../tools/http-json.md) |
 | Function, class, sub-dependency | `Annotated[T, Depends(...)]` | [Dependencies](recipes.md#how-dependencies-work) |
 | Form, one or several files | `Form`, `UploadFile`, `File` | [Complete application](uploads.md#forms-and-file-uploads) |
 | Request timing and CORS | `@app.middleware`, `CORSMiddleware` | [Complete application](middleware.md#middleware-and-cors) |

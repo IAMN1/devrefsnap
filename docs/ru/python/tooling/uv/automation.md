@@ -17,6 +17,8 @@
 Предпосылки: работающий проект с `pyproject.toml`, `uv.lock` и тестами.
 [К справочнику uv](README.md).
 
+Для первого запуска используйте [учебный проект с Docker Compose и GitHub Actions](../../../tools/compose-and-github-actions.md).
+
 
 ## GitHub Actions
 

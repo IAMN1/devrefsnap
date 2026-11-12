@@ -17,6 +17,7 @@ Choose an ORM, API schema, authentication, and migrations separately.
 | Query / JSON / path | `request.args`, `request.get_json()`, `<int:item_id>` | [Application](application.md) |
 | Return JSON | `jsonify(...)`, `(response, status)` tuple | [Application](application.md) |
 | Client error | `abort(400)` and an HTTPException handler | [Application](application.md) |
+| Inspect an HTTP response from the terminal | `curl -i`, `jq` | [HTTP and JSON](../../../tools/http-json.md) |
 | Test without a server | `app.test_client()` | [Testing](testing.md) |
 | Resource per context | `g`, `teardown_appcontext` | [Database](configuration-and-deployment.md#connection-lifecycle) |
 | Local development | `flask --app flask_app:create_app run --debug` | [Running](application.md#run-and-check) |
