@@ -62,6 +62,8 @@ node "$client_dir/client.mjs"
 
 Остановите сервер через `Ctrl+C` в первом терминале. Временные каталоги находятся по путям `$api_env` и `$client_dir`.
 
+В [сквозном примере](../tools/api-contract-lab.md) такой клиент проверяет два ответа FastAPI с PostgreSQL локально и в CI.
+
 ## Источники
 
 - [TypeScript Handbook о сужении типов](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).

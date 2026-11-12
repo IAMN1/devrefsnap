@@ -8,7 +8,8 @@ Run a sample Python application with PostgreSQL on your computer. Then run the i
 | --- | --- | --- |
 | Check the application's response | `docker compose up` and a request to `/health` | [Terminal on your computer](#run-the-application-locally) |
 | Check the PostgreSQL query | `python -m unittest -v` | [Application container](#run-the-test-locally) |
-| Diagnose a test failure in CI | `Run workflow` with the `fail_test` input | [Actions tab on GitHub](#run-the-test-in-github-actions) |
+| Reproduce a test failure in CI | `Run workflow` with the `fail_test` input | [Run it on GitHub](#run-the-test-in-github-actions) |
+| Find the cause of a failure in an existing run | Open the failed step | [GitHub Actions log](#find-the-cause-in-the-log) |
 
 ## Preparation
 
@@ -101,6 +102,12 @@ A workflow is a file that defines a run. `workflow_dispatch` enables manual runs
 3. Open the new run, the **integration** job, and the **Run database test** step. Find `OK` in the successful run's log.
 4. Start the workflow again. Turn on **Make the test fail on purpose**. Open the same step in the new run's log.
 
+If the **Run workflow** button is missing, check the file path on the default branch, Actions settings, and your write access.
+
+## Find the cause in the log
+
+If you already have a practice run, open **Actions → PostgreSQL integration test**. Select the failed run. Open the **integration** job, then the **Run database test** step.
+
 For the practice failure, find `test_reports_current_database` and the `self.assertEqual` line from `test_app.py`. Compare the actual and expected database names. This excerpt shows the relevant message.
 
 ```text
@@ -109,7 +116,7 @@ AssertionError: 'compose_lab' != 'intentional_failure'
 
 `compose_lab` came from PostgreSQL. The test used `intentional_failure` based on the workflow input. If the run fails before it reaches `self.assertEqual`, open the log of the first failed step. For example, `OperationalError` in the test step points to a PostgreSQL connection problem.
 
-To recover, start a new run with the input turned off. **Re-run jobs** repeats the run with the original input. If the **Run workflow** button is missing, check the file path on the default branch, Actions settings, and your write access.
+To recover, start a new run with the input turned off. **Re-run jobs** repeats the run with the original input.
 
 ## Clean up the practice environment
 
@@ -132,3 +139,4 @@ GitHub removes the PostgreSQL container when the job finishes. You can open the 
 - Action releases. [`actions/checkout` v7.0.1](https://github.com/actions/checkout/releases/tag/v7.0.1) and [`actions/setup-python` v7.0.0](https://github.com/actions/setup-python/releases/tag/v7.0.0).
 
 If your project already has `uv.lock`, use the [uv recipes for CI and Docker](../python/tooling/uv/automation.md).
+To check an HTTP contract from TypeScript with one command locally and in CI, see the [end-to-end lab](api-contract-lab.md).

@@ -91,7 +91,7 @@
 
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
-| Отправить запрос из терминала, проверить ответ и извлечь поле | curl, jq, HTTP status, статус, заголовки, тело, JSON | [HTTP и JSON](../tools/http-json.md) |
+| Отправить запрос из терминала, увидеть статус и заголовки, извлечь поле JSON | curl, jq, HTTP status, код ответа, тело | [HTTP и JSON](../tools/http-json.md) |
 | Создать FastAPI-маршрут с path/query/body и валидацией | REST, endpoint, request, response, 422 | [FastAPI: HTTP API с валидацией](../python/web/fastapi/recipes.md#http-api-с-валидацией) |
 | Передать зависимость в обработчик FastAPI | Depends, dependency injection, подзависимость | [FastAPI: как устроены зависимости](../python/web/fastapi/recipes.md#как-устроены-зависимости) |
 | Принять форму или файл | upload, multipart, Form, UploadFile | [FastAPI: формы и файлы](../python/web/fastapi/recipes.md#формы-и-загрузка-файлов) |
@@ -217,7 +217,9 @@
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
 | Запустить приложение и учебную БД одной командой | Docker Compose, PostgreSQL, compose up, контейнер, healthcheck | [Compose: локальный запуск](../tools/compose-and-github-actions.md#запустить-приложение-локально) |
-| Запустить тесты в CI и найти упавшую проверку | GitHub Actions, workflow, job, logs, журнал, assert, тест | [GitHub Actions: запуск и журнал](../tools/compose-and-github-actions.md#запустить-тест-в-github-actions) |
+| Запустить тесты в CI | GitHub Actions, workflow, job, Run workflow | [GitHub Actions: ручной запуск](../tools/compose-and-github-actions.md#запустить-тест-в-github-actions) |
+| Найти упавшую проверку в журнале CI | GitHub Actions, logs, журнал, assert, тест | [GitHub Actions: причина падения](../tools/compose-and-github-actions.md#найти-причину-падения-в-журнале) |
+| Проверить статус и структуру ответа API одним тестом локально и в CI | API contract, FastAPI, PostgreSQL, TypeScript, Docker Compose, GitHub Actions | [Сквозная проверка контракта](../tools/api-contract-lab.md) |
 
 
 ## Git и GitHub

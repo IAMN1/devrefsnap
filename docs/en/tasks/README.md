@@ -90,7 +90,7 @@ Command consequences and example limitations appear there as well.
 
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
-| Send a request from the terminal, inspect the response, and extract a field | curl, jq, HTTP status, headers, body, JSON | [HTTP and JSON](../tools/http-json.md) |
+| Send a request from the terminal, inspect status and headers, and extract a JSON field | curl, jq, HTTP status code, body | [HTTP and JSON](../tools/http-json.md) |
 | Create a FastAPI route with path/query/body parameters and validation | REST, endpoint, request, response, 422 | [FastAPI HTTP API with validation](../python/web/fastapi/recipes.md#http-api-with-validation) |
 | Pass a dependency to a FastAPI handler | Depends, dependency injection, sub-dependency | [How FastAPI dependencies work](../python/web/fastapi/recipes.md#how-dependencies-work) |
 | Accept a form or file | upload, multipart, Form, UploadFile | [FastAPI forms and files](../python/web/fastapi/recipes.md#forms-and-file-uploads) |
@@ -215,7 +215,9 @@ Command consequences and example limitations appear there as well.
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
 | Start an app and a practice database with one command | Docker Compose, PostgreSQL, compose up, container, healthcheck | [Run the app with Compose](../tools/compose-and-github-actions.md#run-the-application-locally) |
-| Run tests in CI and find the failed check | GitHub Actions, workflow, job, logs, assert, test | [GitHub Actions runs and logs](../tools/compose-and-github-actions.md#run-the-test-in-github-actions) |
+| Run tests in CI | GitHub Actions, workflow, job, Run workflow | [Run GitHub Actions manually](../tools/compose-and-github-actions.md#run-the-test-in-github-actions) |
+| Find a failed check in a CI log | GitHub Actions, logs, assert, test | [Diagnose the failure in GitHub Actions](../tools/compose-and-github-actions.md#find-the-cause-in-the-log) |
+| Check an API response status and shape with the same test locally and in CI | API contract, FastAPI, PostgreSQL, TypeScript, Docker Compose, GitHub Actions | [End-to-end contract check](../tools/api-contract-lab.md) |
 
 <a id="git-и-github"></a>
 ## Git and GitHub

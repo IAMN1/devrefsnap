@@ -52,6 +52,7 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 | Redis | [Data structures, caching, and messaging](databases/non-relational/redis/README.md), [RDB backup](databases/non-relational/redis/backup-and-restore.md), [AOF backup and restore](databases/non-relational/redis/aof-backup-and-restore.md) |
 | curl and jq | [Send a request and inspect the HTTP response](tools/http-json.md) |
 | Docker Compose and GitHub Actions | [Run an app with PostgreSQL and test it in CI](tools/compose-and-github-actions.md) |
+| HTTP API contract | [FastAPI, PostgreSQL, and TypeScript in Compose and CI](tools/api-contract-lab.md) |
 | Git | [Choose commands by task](tools/git/README.md) |
 | GitHub Pull Requests | [Create, review, and merge PRs](tools/github-pull-requests/README.md) |
 | Linux | [Shell, files, processes, and services](systems/linux/README.md), [find a process by port](systems/linux/process-by-port.md) |

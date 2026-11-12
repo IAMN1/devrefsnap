@@ -52,6 +52,7 @@
 | Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md), [RDB-копия](databases/non-relational/redis/backup-and-restore.md), [AOF-копия и восстановление](databases/non-relational/redis/aof-backup-and-restore.md) |
 | curl и jq | [Запрос и разбор HTTP-ответа](tools/http-json.md) |
 | Docker Compose и GitHub Actions | [Приложение с PostgreSQL и тесты в CI](tools/compose-and-github-actions.md) |
+| Контракт HTTP API | [FastAPI, PostgreSQL и TypeScript в Compose и CI](tools/api-contract-lab.md) |
 | Git | [Выбор команд по рабочим задачам](tools/git/README.md) |
 | GitHub Pull Requests | [Создание, ревью и слияние PR](tools/github-pull-requests/README.md) |
 | Linux | [Оболочка, файлы, процессы и службы](systems/linux/README.md), [процесс по порту](systems/linux/process-by-port.md) |

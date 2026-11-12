@@ -21,7 +21,25 @@
 `actionlint` 1.7.12 проверил исходный [учебный workflow](../../examples/tools/compose-and-github-actions/workflow-example.yml) и его копию по пути `.github/workflows/postgres-test.yml` во временном репозитории.
 Команду теста из workflow выполнили отдельно в новом venv на macOS arm64 с Python 3.14.7. PostgreSQL 18.6 работал в отдельном контейнере со случайным локальным портом.
 Значения переменной `LAB_FORCE_FAILURE` 0, 1 и 0 дали `OK`, ошибку с кодом 1 и `OK`.
-Ручной запуск, порт контейнера и порядок чтения журнала сверили с официальной документацией. Выполнение на GitHub-hosted runner остаётся непроверенным. [Docker Compose Quickstart](https://docs.docker.com/compose/gettingstarted/) · [Сервис PostgreSQL в GitHub Actions](https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers) · [Ручной запуск](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow) · [Журналы GitHub Actions](https://docs.github.com/en/actions/how-tos/monitor-workflows/use-workflow-run-logs).
+Ручной запуск, порт контейнера и порядок чтения журнала сверили с официальной документацией. [Docker Compose Quickstart](https://docs.docker.com/compose/gettingstarted/) · [Сервис PostgreSQL в GitHub Actions](https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers) · [Ручной запуск](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow) · [Журналы GitHub Actions](https://docs.github.com/en/actions/how-tos/monitor-workflows/use-workflow-run-logs).
+
+### Проверка на GitHub
+
+В приватном учебном репозитории установили исходный workflow по пути `.github/workflows/postgres-test.yml`. Оба запуска выполнены на коммите `f72cc81` с Ubuntu 24.04, Python 3.14.10 и сервисом PostgreSQL 18.6.
+
+- `gh workflow run postgres-test.yml --ref main -f fail_test=true` дал отказ в шаге `Run database test`. Журнал содержит `test_reports_current_database`, `AssertionError: 'compose_lab' != 'intentional_failure'` и код 1. [Отказ](https://github.com/IAMN1/python-cheat-sheet-actions-lab-20261112/actions/runs/43265099266)
+- Новый запуск с `-f fail_test=false` прошёл. В том же шаге видны `test_reports_current_database … ok` и `OK`. [Успешный повтор](https://github.com/IAMN1/python-cheat-sheet-actions-lab-20261112/actions/runs/43265365559)
+
+## Контракт FastAPI и TypeScript — 12 ноября
+
+В [сквозном примере](../../docs/ru/tools/api-contract-lab.md) одна команда `docker compose run --build --rm client` компилирует TypeScript и проверяет реальный HTTP-ответ FastAPI с PostgreSQL. Код клиента проверяет статус, форму JSON и учебные значения.
+
+Локальная среда — Docker Engine 29.9.3 на Linux arm64, Compose 5.7.0, Python 3.14.10, FastAPI 0.162.0, Uvicorn 0.54.0, Psycopg 3.3.9, PostgreSQL 18.6, Node.js 26.8.2 и TypeScript 6.0.3. `docker compose config -q` и `actionlint` 1.7.12 прошли. В отдельных копиях клиент вернул код 1 при HTTP 200 со строковым `id` и при HTTP 200 вместо 404 для отсутствующей книги. Обе схемы отрисовали в Mermaid 11.17.2.
+
+Локальный прогон на пустом томе вывел обе строки `OK GET` и завершился с кодом 0. После `down --volumes` проверили отсутствие контейнеров, сетей и томов тестовых проектов.
+
+На GitHub запустили образец `.github/workflows/api-contract.yml` с коммита `a1eb3e8` приватного учебного репозитория. Файлы и workflow побайтово совпадают с примером справочника. Команда на Ubuntu 24.04 вывела `OK GET /books/1 -> 200 The Hobbit` и `OK GET /books/999 -> 404 Book not found`. Шаг очистки удалил сеть и том `books-data`. [Запуск сквозной проверки](https://github.com/IAMN1/python-cheat-sheet-actions-lab-20261112/actions/runs/43265665681)
+Ветки диагностики и очистки сквозного workflow после отказа на GitHub отдельно не запускались. Два отказа контракта воспроизвели локально.
 
 ## Go context — 12 ноября
 
