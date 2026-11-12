@@ -4,7 +4,7 @@
 
 [Русский](docs/ru/README.md) · [English](docs/en/README.md)
 
-Python, Go, SQL, PostgreSQL, SQLite, Redis, Linux, Git, architecture, and practical examples.
+Python, Go, C, C#, C++, TypeScript, SQL, PostgreSQL, SQLite, Redis, Linux, Git, architecture, and practical examples.
 
 [Указатель задач](docs/ru/tasks/README.md) · [Task index](docs/en/tasks/README.md)
 

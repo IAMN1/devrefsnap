@@ -4,7 +4,7 @@
 
 [English](../en/README.md) · [Участие в проекте](../../CONTRIBUTING.md#русский)
 
-Справочник по Python, Go, TypeScript, алгоритмам, базам данных, Linux, инструментам и архитектуре.
+Справочник по Python, Go, C, C#, C++, TypeScript, алгоритмам, базам данных, Linux, инструментам и архитектуре.
 Найдите действие через [указатель задач и синонимов](tasks/README.md) или выберите знакомый инструмент в каталоге.
 
 
@@ -22,6 +22,9 @@
 
 - [Python](python/README.md) — язык, проектирование, библиотеки, FastAPI, Flask и Django.
 - [Go](go/README.md) — язык, стандартная библиотека, конкурентность и тестирование.
+- [C](c/README.md) — синтаксис C17, память, сборка и тесты, паттерны и области применения.
+- [C#](csharp/README.md) — C# 14 и .NET 10, NuGet, тесты и выбор фреймворка по задаче.
+- [C++](cpp/README.md) — C++20, стандартная библиотека, управление ресурсами, зависимости и тесты.
 - [TypeScript](typescript/README.md) — типизация HTTP-клиента и проверка JSON.
 - [Алгоритмы](algorithms/README.md) — оценка числа операций через Big O.
 - [Базы данных](databases/README.md) — SQL, PostgreSQL, SQLite и Redis.
@@ -46,6 +49,9 @@
 | Django | [Модель, миграция, админка и тесты](python/web/django/README.md) |
 | Flask | [WSGI-приложения, factory и тесты](python/web/flask/README.md) |
 | Go | [Язык, конкурентность и HTTP](go/README.md), [тайм-аут и отмена HTTP-запроса](go/context.md), [полный модуль](go/examples/language.md) |
+| C | [Первый запуск](c/README.md), [синтаксис](c/syntax.md), [сборка, библиотеки и тесты](c/tooling-and-testing.md), [практики и области применения](c/practice.md) |
+| C# | [Первый запуск](csharp/README.md), [синтаксис](csharp/syntax.md), [NuGet и тесты](csharp/tooling-and-testing.md), [практики и области применения](csharp/practice.md) |
+| C++ | [Первый запуск](cpp/README.md), [синтаксис](cpp/syntax.md), [сборка, библиотеки и тесты](cpp/tooling-and-testing.md), [практики и области применения](cpp/practice.md) |
 | SQL | [Общий справочник SQL](databases/sql/README.md) |
 | PostgreSQL | [Справочник](databases/relational/postgresql/README.md), [копия и восстановление](databases/relational/postgresql/backup-and-restore.md) |
 | SQLite | [Справочник](databases/relational/sqlite/README.md), [копия и восстановление](databases/relational/sqlite/backup-and-restore.md) |

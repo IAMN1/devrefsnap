@@ -14,6 +14,7 @@ Links lead to a specific card, commands, or example in the main material.
 | Validate data, write tests, or configure logs | [Validation, tests, and logging](#validation-tests-and-logging) |
 | Send an HTTP request, write an API, or protect a route | [HTTP and web applications](#http-apis-and-web-applications) |
 | Review Go, cancel tasks, or protect shared data | [Go](#go-language-and-concurrency) |
+| Look up syntax, build a program, or choose a library for C, C#, or C++ | [C, C#, and C++](#c-family-basics) |
 | Query data, run a transaction, or create a backup | [Databases and SQL](#databases-and-sql) |
 | Find a file, process, network port, or service log | [Linux and shell](#linux-and-shell) |
 | Run an app with PostgreSQL or diagnose a failed CI test | [Docker Compose and CI](#docker-compose-and-ci) |
@@ -122,6 +123,41 @@ Command consequences and example limitations appear there as well.
 | Set an HTTP request timeout or cancel the request | context, WithTimeout, WithCancel, deadline, NewRequestWithContext | [Go HTTP request timeout and cancellation](../go/context.md#check-three-outcomes) |
 | Protect shared memory | mutex, sync.Mutex, race, data race, counter | [Go shared data](../go/concurrency-and-testing.md#shared-data-and-mutexes) |
 | Test concurrent code and detect races | concurrency test, go test -race, race detector | [Go tests and race detector](../go/concurrency-and-testing.md#tests-and-the-race-detector) |
+
+<a id="c-family-basics"></a>
+
+<a id="c-c-and-c-basics"></a>
+
+## C, C#, and C++
+
+| Task | Synonyms and API names | Direct link |
+| --- | --- | --- |
+| Build and run a C program | C17, clang, main, printf, linking | [C first run](../c/README.md#first-run) |
+| Pass an array to a C function | size_t, sizeof, pointer, bounds | [C arrays and memory](../c/README.md#arrays-and-memory) |
+| Look up C syntax and memory management | struct, enum, pointer, malloc, free, const | [C syntax](../c/syntax.md) |
+| Add a library and test a function in C | CMake, vcpkg, FetchContent, CTest, Unity | [C dependencies](../c/tooling-and-testing.md#packages) · [Tests](../c/tooling-and-testing.md#tests) |
+| Choose tools for C and organize the code | embedded, driver, systems software, resource ownership | [C patterns](../c/practice.md#patterns) · [Application areas](../c/practice.md#application-areas) |
+| Build and run a C# project | C#, C Sharp, .NET SDK, csproj, dotnet build, dotnet run | [C# first run](../csharp/README.md#first-run) |
+| Add a number to a list or validate a C# argument | `List<T>`, Add, foreach, TryParse, exit code | [C# collections](../csharp/README.md#collections) · [Common mistakes](../csharp/README.md#common-mistakes) |
+| Look up C# syntax | nullable, record, generics, LINQ, async, await | [C# syntax](../csharp/syntax.md) |
+| Install a NuGet package or run C# tests | pip, NuGet, PackageReference, dotnet restore, dotnet test | [C# packages](../csharp/tooling-and-testing.md#packages) · [Tests](../csharp/tooling-and-testing.md#tests) |
+| Choose a .NET framework and define component boundaries | ASP.NET Core, EF Core, DI, desktop, games | [C# patterns](../csharp/practice.md#patterns) · [Application areas](../csharp/practice.md#application-areas) |
+| Build and run a C++ program | C++20, clang++, main, cout, linking | [C++ first run](../cpp/README.md#first-run) |
+| Add an element to a vector and check the index | std::vector, push_back, size, at, out_of_range | [C++ collections](../cpp/README.md#collections) · [Common mistakes](../cpp/README.md#common-mistakes) |
+| Look up C++ syntax and lifetime rules | RAII, const, reference, move, template, lambda | [C++ syntax](../cpp/syntax.md) |
+| Add a C++ library and run tests | CMake, vcpkg, Conan, CTest, GoogleTest | [C++ dependencies](../cpp/tooling-and-testing.md#packages) · [Tests](../cpp/tooling-and-testing.md#tests) |
+| Choose tools for C++ and organize the code | RAII, Qt, Unreal Engine, embedded, low latency | [C++ patterns](../cpp/practice.md#patterns) · [Application areas](../cpp/practice.md#application-areas) |
+
+<details>
+<summary>Compare the path from source code to a running program</summary>
+
+The diagram shows the artifacts in a typical console build. Arrow labels identify the command or stage that creates the next artifact or starts the process.
+
+![C and C++ compile source to an object file and link an executable. In .NET, the SDK restores dependencies and builds a DLL with IL, which runs on the .NET runtime.](../../assets/language-toolchains-en.svg)
+
+[Clang stages](https://releases.llvm.org/21.1.0/tools/clang/docs/CommandGuide/clang.html) · [.NET builds](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-build) · [.NET execution](https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process)
+
+</details>
 
 <a id="базы-данных-и-sql"></a>
 ## Databases and SQL

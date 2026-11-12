@@ -4,7 +4,7 @@
 
 [Русский](../ru/README.md) · [Contributing](../../CONTRIBUTING.md#english)
 
-A reference for Python, Go, TypeScript, algorithms, databases, Linux, development tools, and architecture.
+A reference for Python, Go, C, C#, C++, TypeScript, algorithms, databases, Linux, development tools, and architecture.
 Find an action through the [task and synonym index](tasks/README.md), or choose a familiar tool in the catalog.
 
 <a id="быстрый-вход"></a>
@@ -22,6 +22,9 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 
 - [Python](python/README.md) covers the language, design, libraries, FastAPI, Flask, and Django.
 - [Go](go/README.md) covers the language, standard library, concurrency, and testing.
+- [C](c/README.md) covers C17 syntax, memory, builds and tests, design patterns, and application areas.
+- [C#](csharp/README.md) covers C# 14 and .NET 10, NuGet, testing, and framework selection.
+- [C++](cpp/README.md) covers C++20, the standard library, resource management, dependencies, and testing.
 - [TypeScript](typescript/README.md) covers typing an HTTP client and validating JSON.
 - [Algorithms](algorithms/README.md) covers estimating operation counts with Big O.
 - [Databases](databases/README.md) covers SQL, PostgreSQL, SQLite, and Redis.
@@ -46,6 +49,9 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 | Django | [Model, migration, admin, and tests](python/web/django/README.md) |
 | Flask | [WSGI applications, factories, and tests](python/web/flask/README.md) |
 | Go | [Language, concurrency, and HTTP](go/README.md), [HTTP request timeout and cancellation](go/context.md), [complete module](go/examples/language.md) |
+| C | [First run](c/README.md), [syntax](c/syntax.md), [builds, libraries, and testing](c/tooling-and-testing.md), [practices and application areas](c/practice.md) |
+| C# | [First run](csharp/README.md), [syntax](csharp/syntax.md), [NuGet and testing](csharp/tooling-and-testing.md), [practices and application areas](csharp/practice.md) |
+| C++ | [First run](cpp/README.md), [syntax](cpp/syntax.md), [builds, libraries, and testing](cpp/tooling-and-testing.md), [practices and application areas](cpp/practice.md) |
 | SQL | [General SQL reference](databases/sql/README.md) |
 | PostgreSQL | [Reference](databases/relational/postgresql/README.md), [backup and restore](databases/relational/postgresql/backup-and-restore.md) |
 | SQLite | [Reference](databases/relational/sqlite/README.md), [backup and restore](databases/relational/sqlite/backup-and-restore.md) |
