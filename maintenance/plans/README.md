@@ -16,6 +16,11 @@
 
 - [Напомнить о защите main](public-release.md).
 
+## Django, TypeScript и Big O
+
+Вводные материалы охватывают [модель, миграцию, админку и тесты Django](../../docs/ru/python/web/django/README.md), [клиент TypeScript для учебного FastAPI](../../docs/ru/typescript/README.md) и [сравнение линейного и квадратичного числа операций](../../docs/ru/algorithms/README.md#big-o).
+Следующий этап — ревью и публикация этих материалов.
+
 ## Проверить удобство с читателями
 
 Проверка с читателями ещё не проводилась.

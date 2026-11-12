@@ -4,7 +4,7 @@
 
 [Русский](../ru/README.md) · [Contributing](../../CONTRIBUTING.md#english)
 
-A reference for Python, Go, databases, Linux, development tools, and architecture.
+A reference for Python, Go, TypeScript, algorithms, databases, Linux, development tools, and architecture.
 Find an action through the [task and synonym index](tasks/README.md), or choose a familiar tool in the catalog.
 
 <a id="быстрый-вход"></a>
@@ -20,8 +20,10 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 <a id="разделы"></a>
 ## Sections
 
-- [Python](python/README.md) covers the language, design, libraries, FastAPI, and Flask.
+- [Python](python/README.md) covers the language, design, libraries, FastAPI, Flask, and Django.
 - [Go](go/README.md) covers the language, standard library, concurrency, and testing.
+- [TypeScript](typescript/README.md) covers typing an HTTP client and validating JSON.
+- [Algorithms](algorithms/README.md) covers estimating operation counts with Big O.
 - [Databases](databases/README.md) covers SQL, PostgreSQL, SQLite, and Redis.
 - [Operating systems](systems/README.md) covers Linux, the shell, and operational commands.
 - [Architecture](architecture/README.md) covers task-based selection, SOLID cards, diagrams, and package layouts.
@@ -41,6 +43,7 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 | structlog | [Structured logging](python/logging/structlog/README.md) |
 | uv | [Python environments and dependencies](python/tooling/uv/README.md) |
 | FastAPI | [Web applications and APIs](python/web/fastapi/README.md), [complete API](python/web/fastapi/http-api.md), [override a dependency in a test](python/web/fastapi/testing.md#dependency-override) |
+| Django | [Model, migration, admin, and tests](python/web/django/README.md) |
 | Flask | [WSGI applications, factories, and tests](python/web/flask/README.md) |
 | Go | [Language, concurrency, and HTTP](go/README.md), [HTTP request timeout and cancellation](go/context.md), [complete module](go/examples/language.md) |
 | SQL | [General SQL reference](databases/sql/README.md) |
@@ -55,6 +58,8 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 | Design principles | [Boundary and trade-off cards](architecture/principles.md), [contract checks](architecture/contracts.md) |
 | SOLID | [Five principles with before and after examples](architecture/solid.md) |
 | Patterns | [Choose by task](architecture/patterns/README.md), [complete examples](architecture/patterns/code-examples.md), [data and failures](architecture/patterns/distributed-systems.md), [Outbox checks](architecture/patterns/outbox-example.md) |
+| TypeScript | [Typed client for FastAPI](typescript/README.md) |
+| Big O | [Linear and quadratic growth](algorithms/README.md#big-o) |
 
 <a id="как-пользоваться-материалами"></a>
 ## Use the materials

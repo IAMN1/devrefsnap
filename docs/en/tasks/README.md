@@ -19,6 +19,7 @@ Links lead to a specific card, commands, or example in the main material.
 | Run an app with PostgreSQL or diagnose a failed CI test | [Docker Compose and CI](#docker-compose-and-ci) |
 | Undo a change, update a branch, or prepare a PR | [Git and GitHub](#git-and-github) |
 | Choose a boundary, contract, pattern, or retry protocol | [Architecture](#architecture-and-design) |
+| Estimate how the operation count grows with input size | [Algorithms](#algorithms-and-complexity) |
 | Add a cheat sheet or check its formatting | [Writing materials](#writing-materials) |
 
 Search the page with `Ctrl+F` / `⌘F`.
@@ -104,6 +105,8 @@ Command consequences and example limitations appear there as well.
 | Test a Flask response and rejection without a server | test_client, request context, 400, 404 | [Complete Flask check suite](../python/web/flask/testing.md#complete-check-suite) |
 | Close a Flask connection after a request | g, teardown_appcontext, resource lifecycle | [Flask connection lifecycle](../python/web/flask/configuration-and-deployment.md#connection-lifecycle) |
 | Choose how to run Flask | WSGI, development server, reverse proxy, deploy | [Flask development and production](../python/web/flask/configuration-and-deployment.md#development-and-production) |
+| Create a table from a model and edit records in the admin | Django, ORM, migrations, makemigrations, migrate, admin, test | [Django model and admin](../python/web/django/README.md) |
+| Read an API response in TypeScript and validate the JSON shape | fetch, Response.ok, unknown, type guard, tsc, strict mode | [TypeScript client for FastAPI](../typescript/README.md) |
 | Bound and validate a JSON request in Go | HTTP handler, MaxBytesReader, json.Decoder, validation | [Go handler with input boundaries](../go/http-json.md#handler-with-input-boundaries) |
 | Test a Go handler without a network server | httptest, ResponseRecorder, HTTP test | [Go HTTP/JSON test](../go/http-json.md#test-without-a-network-server) |
 
@@ -264,6 +267,12 @@ Command consequences and example limitations appear there as well.
 | Separate write and read models | CQRS, command/query, read model, projection, Event Sourcing | [CQRS separation boundaries](../architecture/patterns/distributed-systems.md#cqrs-for-separate-write-and-read-models) |
 | Retry a transient failure within limits | Retry, backoff, jitter, deadline, idempotency, idempotent retry | [Retry decision](../architecture/patterns/distributed-systems.md#retry-for-transient-failures) |
 | Change a published contract in stages | parallel change, expand/migrate/contract, backward compatibility | [Stages of contract change](../architecture/principles.md#change-a-contract-gradually) |
+
+## Algorithms and complexity
+
+| Task | Synonyms and API names | Direct link |
+| --- | --- | --- |
+| Compare one pass with enumerating all pairs | Big O, complexity, input size, linear growth, quadratic growth, O(n), O(n²) | [Big O operation counts](../algorithms/README.md#big-o) |
 
 <a id="оформление-материалов"></a>
 ## Writing materials

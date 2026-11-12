@@ -24,6 +24,7 @@ Find Git and GitHub in [Development tools](../tools/README.md).
 | [uv](tooling/uv/README.md) | Environments, dependencies, locks, and automation |
 | [FastAPI](web/fastapi/README.md) | HTTP APIs, dependencies, databases, JWT, and tests |
 | [Flask](web/flask/README.md) | Factories, blueprints, configuration, and WSGI |
+| [Django](web/django/README.md) | Model, SQLite migration, admin, and testing |
 
 Each topic states its API versions, dependencies, and conditions of use.
 General principles and patterns are in [Architecture](../architecture/README.md).

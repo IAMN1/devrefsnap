@@ -5,6 +5,7 @@ Open the guide in your language for setup and execution.
 
 | Файл / File | Инструкции / Guides |
 | --- | --- |
+| [`count_operations.py`](algorithms/big-o/count_operations.py) | [Русский](../docs/ru/algorithms/README.md#big-o) · [English](../docs/en/algorithms/README.md#big-o) |
 | [`command-pattern.py`](architecture/command-pattern.py) | [Русский](../docs/ru/architecture/patterns/code-examples.md#command-запрос-обработчик-и-локальный-повтор) · [English](../docs/en/architecture/patterns/code-examples.md#command-request-handler-and-local-replay) |
 | [`invariants.py`](architecture/invariants.py) | [Русский](../docs/ru/architecture/contracts.md#резерв-остатка) · [English](../docs/en/architecture/contracts.md#reserve-stock) |
 | [`observer-pattern.py`](architecture/observer-pattern.py) | [Русский](../docs/ru/architecture/patterns/code-examples.md#observer-подписка-отписка-и-ошибка-слушателя) · [English](../docs/en/architecture/patterns/code-examples.md#observer-subscriptions-unsubscribe-and-listener-errors) |
@@ -84,6 +85,7 @@ Open the guide in your language for setup and execution.
 | [`test_settings.py`](python/validation/pydantic/test_settings.py) | [Русский](../docs/ru/python/validation/pydantic/advanced.md#настройки-приложения) · [English](../docs/en/python/validation/pydantic/advanced.md#application-settings) |
 | [`test_types.py`](python/validation/pydantic/test_types.py) | [Русский](../docs/ru/python/validation/pydantic/models.md#атрибуты-конфигурация-и-типы) · [English](../docs/en/python/validation/pydantic/models.md#attributes-configuration-and-types) |
 | [`async_db_app.py`](python/web/fastapi/async_db_app.py) | [Русский](../docs/ru/python/web/fastapi/database.md#async-sqlalchemy-и-lifespan) · [English](../docs/en/python/web/fastapi/database.md#async-sqlalchemy-and-lifespan) |
+| [`django/manage.py`](python/web/django/manage.py) | [Русский](../docs/ru/python/web/django/README.md) · [English](../docs/en/python/web/django/README.md) |
 | [`auth_app.py`](python/web/fastapi/auth_app.py) | [Русский](../docs/ru/python/web/fastapi/authentication.md#полный-пример) · [English](../docs/en/python/web/fastapi/authentication.md#complete-example) |
 | [`db_app.py`](python/web/fastapi/db_app.py) | [Русский](../docs/ru/python/web/fastapi/database.md#синхронный-sqlalchemy) · [English](../docs/en/python/web/fastapi/database.md#synchronous-sqlalchemy) |
 | [`header_dependency.py`](python/web/fastapi/header_dependency.py) | [Русский](../docs/ru/python/web/fastapi/recipes.md#проверка-заголовка-перед-обработчиком) · [English](../docs/en/python/web/fastapi/recipes.md#check-a-header-before-the-handler) |
@@ -102,6 +104,7 @@ Open the guide in your language for setup and execution.
 | [`flask_db.py`](python/web/flask/flask_db.py) | [Русский](../docs/ru/python/web/flask/configuration-and-deployment.md#жизненный-цикл-соединения) · [English](../docs/en/python/web/flask/configuration-and-deployment.md#connection-lifecycle) |
 | [`test_flask_app.py`](python/web/flask/test_flask_app.py) | [Русский](../docs/ru/python/web/flask/testing.md#полный-набор-проверок) · [English](../docs/en/python/web/flask/testing.md#complete-check-suite) |
 | [`test_flask_db.py`](python/web/flask/test_flask_db.py) | [Русский](../docs/ru/python/web/flask/configuration-and-deployment.md#жизненный-цикл-соединения) · [English](../docs/en/python/web/flask/configuration-and-deployment.md#connection-lifecycle) |
+| [`client.mts`](typescript/http-client/client.mts) | [Русский](../docs/ru/typescript/README.md) · [English](../docs/en/typescript/README.md) |
 | [`example.sh`](systems/linux/example.sh) | [Русский](../docs/ru/systems/linux/shell-and-files.md#безопасный-практический-пример) · [English](../docs/en/systems/linux/shell-and-files.md#safe-practice-example) |
 | [`port_probe.py`](systems/linux/port_probe.py) | [Русский](../docs/ru/systems/linux/process-by-port.md#самостоятельный-учебный-пример) · [English](../docs/en/systems/linux/process-by-port.md#standalone-practice-example) |
 | [`process.sh`](systems/linux/process.sh) | [Русский](../docs/ru/systems/linux/permissions-and-processes.md#проверить-завершение-своего-дочернего-процесса) · [English](../docs/en/systems/linux/permissions-and-processes.md#check-termination-of-your-own-child-process) |

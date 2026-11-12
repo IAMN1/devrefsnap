@@ -66,6 +66,8 @@ ReDoc is available at [localhost:8000/redoc](http://localhost:8000/redoc).
 The schema is available at [localhost:8000/openapi.json](http://localhost:8000/openapi.json).
 Here, `version` denotes your API's version.
 
+Call the same route from a [TypeScript HTTP client](../../../typescript/README.md) to validate the response fields in code.
+
 <a id="откуда-берётся-параметр"></a>
 ## Parameter sources
 
