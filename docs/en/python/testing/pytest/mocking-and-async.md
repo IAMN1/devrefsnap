@@ -14,6 +14,7 @@ The example replaces the adapter in the module that calls it.
 
 The level is advanced.
 Use [demo_service.py](fixtures.md#complete-practice-example), pytest, pytest-mock, and pytest-asyncio in one environment.
+For the async test, review [the basics of `asyncio`](../../language/asyncio.md).
 [pytest reference](README.md).
 Exact package versions are listed in the [example environment](configuration.md#example-environment).
 

@@ -9,12 +9,14 @@ Links lead to a specific card, commands, or example in the main material.
 | Task | Where to look in the index |
 | --- | --- |
 | Choose a type, copy data, or group data in Python | [Types and collections](#python-types-and-collections) |
+| Run a Python coroutine or wait for several operations concurrently | [asyncio basics](#python-asyncio-basics) |
 | Create a Python project and manage dependencies and builds | [Project and environment](#python-projects-and-environments) |
 | Validate data, write tests, or configure logs | [Validation, tests, and logging](#validation-tests-and-logging) |
-| Write an HTTP API, protect a route, or test a response | [Web applications](#http-apis-and-web-applications) |
+| Send an HTTP request, write an API, or protect a route | [HTTP and web applications](#http-apis-and-web-applications) |
 | Review Go, cancel tasks, or protect shared data | [Go](#go-language-and-concurrency) |
 | Query data, run a transaction, or create a backup | [Databases and SQL](#databases-and-sql) |
 | Find a file, process, network port, or service log | [Linux and shell](#linux-and-shell) |
+| Run an app with PostgreSQL or diagnose a failed CI test | [Docker Compose and CI](#docker-compose-and-ci) |
 | Undo a change, update a branch, or prepare a PR | [Git and GitHub](#git-and-github) |
 | Choose a boundary, contract, pattern, or retry protocol | [Architecture](#architecture-and-design) |
 | Estimate how the operation count grows with input size | [Algorithms](#algorithms-and-complexity) |
@@ -41,6 +43,13 @@ Command consequences and example limitations appear there as well.
 | Convert a value and check its type | cast, conversion, `isinstance`, `type`, `None` | [Python conversions and checks](../python/language/types/README.md#conversions-and-checks) |
 | Group data and manage dictionary order | grouping, defaultdict, OrderedDict, move_to_end, ordering | [Python special-purpose dictionaries](../python/language/types/README.md#specialized-dictionaries) |
 | Understand copying and shared references | copy, deepcopy, aliasing, mutable, hashable, mutability | [Python references and hashability](../python/language/types/README.md#mutability-references-and-hashability) |
+
+## Python asyncio basics
+
+| Task | Synonyms and API names | Direct link |
+| --- | --- | --- |
+| Run a coroutine and wait for the result | asyncio, async def, await, asyncio.run, event loop | [First Python coroutine](../python/language/asyncio.md#run-a-coroutine) |
+| Wait for multiple operations concurrently | TaskGroup, task, concurrency, asynchronous I/O | [Concurrent waits in Python](../python/language/asyncio.md#wait-for-operations-concurrently) |
 
 <a id="python-проект-и-окружение"></a>
 ## Python projects and environments
@@ -81,6 +90,7 @@ Command consequences and example limitations appear there as well.
 
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
+| Send a request from the terminal, inspect the response, and extract a field | curl, jq, HTTP status, headers, body, JSON | [HTTP and JSON](../tools/http-json.md) |
 | Create a FastAPI route with path/query/body parameters and validation | REST, endpoint, request, response, 422 | [FastAPI HTTP API with validation](../python/web/fastapi/recipes.md#http-api-with-validation) |
 | Pass a dependency to a FastAPI handler | Depends, dependency injection, sub-dependency | [How FastAPI dependencies work](../python/web/fastapi/recipes.md#how-dependencies-work) |
 | Accept a form or file | upload, multipart, Form, UploadFile | [FastAPI forms and files](../python/web/fastapi/recipes.md#forms-and-file-uploads) |
@@ -109,6 +119,7 @@ Command consequences and example limitations appear there as well.
 | Review slices, maps, pointers, structs, and generics | syntax, slice, pointer, receiver, interface | [Go constructs](../go/language.md#basic-constructs) · [Complete module](../go/examples/language.md#complete-module) |
 | Wrap an error and inspect its cause | error wrapping, errors.Is, errors.As, %w | [Go valid- and invalid-input tests](../go/language.md#test-valid-and-invalid-input) |
 | Bound concurrency and cancel tasks | goroutine, worker pool, channel, context, select, cancel | [Go bounded worker pool](../go/concurrency-and-testing.md#bounded-worker-pool) |
+| Set an HTTP request timeout or cancel the request | context, WithTimeout, WithCancel, deadline, NewRequestWithContext | [Go HTTP request timeout and cancellation](../go/context.md#check-three-outcomes) |
 | Protect shared memory | mutex, sync.Mutex, race, data race, counter | [Go shared data](../go/concurrency-and-testing.md#shared-data-and-mutexes) |
 | Test concurrent code and detect races | concurrency test, go test -race, race detector | [Go tests and race detector](../go/concurrency-and-testing.md#tests-and-the-race-detector) |
 
@@ -121,6 +132,7 @@ Command consequences and example limitations appear there as well.
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
 | Select rows and join tables | SELECT, WHERE, JOIN, EXISTS, filtering, join | [SQL filtering and joins](../databases/sql/queries.md#filtering-and-joins) |
+| See which rows a JOIN keeps | INNER JOIN, LEFT JOIN, NULL, pairs, match | [Compare joins on the same tables](../databases/sql/queries.md#compare-inner-join-and-left-join) |
 | Insert, update, or delete rows | INSERT, UPDATE, DELETE, CRUD, DML | [Change data with SQL](../databases/sql/queries.md#change-data) |
 | Group data and calculate a result within a group | GROUP BY, HAVING, CTE, WITH, OVER, window, window function | [SQL aggregation, CTEs, and windows](../databases/sql/queries.md#aggregation-ctes-and-window-functions) |
 | Choose a transaction and isolation level | BEGIN, COMMIT, ROLLBACK, isolation, locking | [SQL transactions and isolation](../databases/sql/dialects-and-transactions.md#transactions-and-isolation) |
@@ -128,7 +140,7 @@ Command consequences and example limitations appear there as well.
 | Define ORM models and relationships | SQLAlchemy, Mapped, relationship, ForeignKey, one-to-many | [Shared SQLAlchemy schema](../python/databases/sqlalchemy/models-and-transactions.md#shared-schema-for-the-recipes) |
 | Change data through an ORM and roll back part of an operation | SQLAlchemy, Session, CRUD, transaction, savepoint | [SQLAlchemy transactions and savepoints](../python/databases/sqlalchemy/models-and-transactions.md#crud-transactions-and-savepoints) |
 | Write SELECT/JOIN/CTE queries from Python | SQLAlchemy, select, func, aliased, ORM query | [SQLAlchemy queries](../python/databases/sqlalchemy/queries.md#select-join-subqueries-and-ctes) |
-| Avoid excessive database queries when reading collections | SQLAlchemy, N+1, lazy loading, eager loading, SELECT counter | [N+1 card](../python/databases/sqlalchemy/relationship-loading.md#find-n1) · [Single-file example and run instructions](../python/databases/sqlalchemy/n-plus-one.md#setup-and-run) |
+| Avoid excessive database queries when reading collections | SQLAlchemy, N+1, lazy loading, eager loading, SELECT counter | [N+1 card](../python/databases/sqlalchemy/relationship-loading.md#find-n1) · [Example and SELECT count chart](../python/databases/sqlalchemy/n-plus-one.md) |
 | Choose loading for collections and scalar relationships | selectinload, joinedload, unique, relationship, result size, LIMIT | [SQLAlchemy decision table](../python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
 | Prevent unintended lazy loading | raiseload, unexpected SQL, InvalidRequestError | [SQLAlchemy error in place of a SELECT](../python/databases/sqlalchemy/relationship-loading.md#detect-unplanned-lazy-loading) |
 | Filter parents and load all their children | JOIN, filter, complete collection, selectinload | [SQLAlchemy parents and complete collections](../python/databases/sqlalchemy/relationship-loading.md#filter-parents-and-load-complete-collections) |
@@ -197,6 +209,13 @@ Command consequences and example limitations appear there as well.
 | Find the process listening on a TCP port | port in use, address already in use, ss, PID, listener, socket | [Command and output](../systems/linux/process-by-port.md#find-a-tcp-listener) · [Permissions](../systems/linux/process-by-port.md#when-the-pid-is-missing) · [Namespace](../systems/linux/process-by-port.md#when-the-process-is-in-another-namespace) |
 | Inspect a service and its logs | systemd, systemctl, journalctl, service, logs | [Linux systemd services](../systems/linux/network-and-services.md#systemd-services) |
 | Check available space and resources | disk, df, du, free, memory | [Linux disk and resources](../systems/linux/network-and-services.md#disk-and-resources) |
+
+## Docker Compose and CI
+
+| Task | Synonyms and API names | Direct link |
+| --- | --- | --- |
+| Start an app and a practice database with one command | Docker Compose, PostgreSQL, compose up, container, healthcheck | [Run the app with Compose](../tools/compose-and-github-actions.md#run-the-application-locally) |
+| Run tests in CI and find the failed check | GitHub Actions, workflow, job, logs, assert, test | [GitHub Actions runs and logs](../tools/compose-and-github-actions.md#run-the-test-in-github-actions) |
 
 <a id="git-и-github"></a>
 ## Git and GitHub

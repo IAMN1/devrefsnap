@@ -27,7 +27,7 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 - [Databases](databases/README.md) covers SQL, PostgreSQL, SQLite, and Redis.
 - [Operating systems](systems/README.md) covers Linux, the shell, and operational commands.
 - [Architecture](architecture/README.md) covers task-based selection, SOLID cards, diagrams, and package layouts.
-- [Development tools](tools/README.md) covers Git and pull requests on GitHub.
+- [Development tools](tools/README.md) covers HTTP from the terminal, Docker Compose, Git, and GitHub.
 
 <a id="каталог-материалов"></a>
 ## Material catalog
@@ -35,6 +35,7 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 | Topic | Where to look |
 | --- | --- |
 | Python types | [Types and operations](python/language/types/README.md) |
+| asyncio | [First coroutines and concurrent waits](python/language/asyncio.md) |
 | Python project design | [Decisions, working package, and delivery](python/architecture/project-design/README.md) |
 | Pydantic | [Data validation](python/validation/pydantic/README.md) |
 | SQLAlchemy | [Reference](python/databases/sqlalchemy/README.md), [simple N+1 example](python/databases/sqlalchemy/n-plus-one.md), [choose loading by data and constraints](python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
@@ -44,11 +45,13 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 | FastAPI | [Web applications and APIs](python/web/fastapi/README.md), [complete API](python/web/fastapi/http-api.md), [override a dependency in a test](python/web/fastapi/testing.md#dependency-override) |
 | Django | [Model, migration, admin, and tests](python/web/django/README.md) |
 | Flask | [WSGI applications, factories, and tests](python/web/flask/README.md) |
-| Go | [Language, concurrency, and HTTP](go/README.md), [complete module](go/examples/language.md) |
+| Go | [Language, concurrency, and HTTP](go/README.md), [HTTP request timeout and cancellation](go/context.md), [complete module](go/examples/language.md) |
 | SQL | [General SQL reference](databases/sql/README.md) |
 | PostgreSQL | [Reference](databases/relational/postgresql/README.md), [backup and restore](databases/relational/postgresql/backup-and-restore.md) |
 | SQLite | [Reference](databases/relational/sqlite/README.md), [backup and restore](databases/relational/sqlite/backup-and-restore.md) |
 | Redis | [Data structures, caching, and messaging](databases/non-relational/redis/README.md), [RDB backup](databases/non-relational/redis/backup-and-restore.md), [AOF backup and restore](databases/non-relational/redis/aof-backup-and-restore.md) |
+| curl and jq | [Send a request and inspect the HTTP response](tools/http-json.md) |
+| Docker Compose and GitHub Actions | [Run an app with PostgreSQL and test it in CI](tools/compose-and-github-actions.md) |
 | Git | [Choose commands by task](tools/git/README.md) |
 | GitHub Pull Requests | [Create, review, and merge PRs](tools/github-pull-requests/README.md) |
 | Linux | [Shell, files, processes, and services](systems/linux/README.md), [find a process by port](systems/linux/process-by-port.md) |

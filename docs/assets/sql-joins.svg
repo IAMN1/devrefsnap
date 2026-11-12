@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="290" viewBox="0 0 760 290">
+  <title>INNER JOIN and LEFT JOIN on the same tables</title>
+  <desc>Both results pair alice with orders 1 and 2 and bob with order 3. Only LEFT JOIN adds carol with a NULL order ID.</desc>
+  <rect width="760" height="290" rx="14" fill="#f3f6fa"/>
+  <path d="M372 24v242" stroke="#b5c2d0" stroke-dasharray="4 5"/>
+  <g fill="#182839" font-family="system-ui, sans-serif" font-size="18" font-weight="700">
+    <text x="24" y="53">sql_users</text>
+    <text x="192" y="53">sql_orders</text>
+    <text x="396" y="53">INNER JOIN</text>
+    <text x="572" y="53">LEFT JOIN</text>
+  </g>
+  <g fill="#fff" stroke="#b5c2d0">
+    <rect x="24" y="70" width="144" height="144" rx="7"/>
+    <rect x="192" y="70" width="156" height="144" rx="7"/>
+    <rect x="396" y="70" width="152" height="144" rx="7"/>
+    <rect x="572" y="70" width="164" height="180" rx="7"/>
+  </g>
+  <g fill="#dbe6f1">
+    <path d="M31 71h130a6 6 0 0 1 6 6v29H25V77a6 6 0 0 1 6-6z"/>
+    <path d="M199 71h142a6 6 0 0 1 6 6v29H193V77a6 6 0 0 1 6-6z"/>
+    <path d="M403 71h138a6 6 0 0 1 6 6v29H397V77a6 6 0 0 1 6-6z"/>
+    <path d="M579 71h150a6 6 0 0 1 6 6v29H573V77a6 6 0 0 1 6-6z"/>
+  </g>
+  <path d="M573 214h162v29a6 6 0 0 1-6 6H579a6 6 0 0 1-6-6z" fill="#fbe8bd"/>
+  <path d="M24 106h144m-144 36h144m-144 36h144M192 106h156m-156 36h156m-156 36h156M396 106h152m-152 36h152m-152 36h152M572 106h164m-164 36h164m-164 36h164m-164 36h164" fill="none" stroke="#b5c2d0"/>
+  <path d="M75 70v144M242 70v144M461 70v144M642 70v180" stroke="#b5c2d0"/>
+  <g fill="#182839" font-family="monospace" font-size="15">
+    <g font-weight="700">
+      <text x="38" y="94">id</text><text x="90" y="94">name</text>
+      <text x="206" y="94">id</text><text x="258" y="94">user_id</text>
+      <text x="409" y="94">name</text><text x="469" y="94">order_id</text>
+      <text x="585" y="94">name</text><text x="654" y="94">order_id</text>
+    </g>
+    <text x="38" y="130">1</text><text x="90" y="130">alice</text>
+    <text x="38" y="166">2</text><text x="90" y="166">bob</text>
+    <text x="38" y="202">3</text><text x="90" y="202">carol</text>
+    <text x="206" y="130">1</text><text x="258" y="130">1</text>
+    <text x="206" y="166">2</text><text x="258" y="166">1</text>
+    <text x="206" y="202">3</text><text x="258" y="202">2</text>
+    <text x="409" y="130">alice</text><text x="469" y="130">1</text>
+    <text x="409" y="166">alice</text><text x="469" y="166">2</text>
+    <text x="409" y="202">bob</text><text x="469" y="202">3</text>
+    <text x="585" y="130">alice</text><text x="654" y="130">1</text>
+    <text x="585" y="166">alice</text><text x="654" y="166">2</text>
+    <text x="585" y="202">bob</text><text x="654" y="202">3</text>
+    <text x="585" y="238" font-weight="700">carol</text><text x="654" y="238" font-weight="700">NULL</text>
+  </g>
+  <text x="24" y="253" fill="#344b62" font-family="monospace" font-size="14">sql_users.id = sql_orders.user_id</text>
+</svg>

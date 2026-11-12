@@ -9,12 +9,14 @@
 | Что нужно сделать | Где искать в указателе |
 | --- | --- |
 | Выбрать тип, скопировать или сгруппировать данные Python | [Типы и коллекции](#python-типы-и-коллекции) |
+| Запустить корутину Python или ждать несколько операций одновременно | [Основы asyncio](#python-основы-asyncio) |
 | Создать Python-проект, управлять зависимостями и сборкой | [Проект и окружение](#python-проект-и-окружение) |
 | Проверить данные, написать тест, настроить логи | [Валидация, тесты и логи](#валидация-тесты-и-логи) |
-| Написать HTTP API, защитить маршрут, проверить ответ | [Веб-приложения](#http-api-и-веб-приложения) |
+| Отправить HTTP-запрос, написать API или защитить маршрут | [HTTP и веб-приложения](#http-api-и-веб-приложения) |
 | Вспомнить Go, отменить задачи или защитить общие данные | [Go](#go-язык-и-конкурентность) |
 | Выбрать данные, выполнить транзакцию, сделать резервную копию | [Базы данных и SQL](#базы-данных-и-sql) |
 | Найти файл, процесс, сетевой порт или журнал службы | [Linux и оболочка](#linux-и-оболочка) |
+| Поднять приложение с PostgreSQL или разобрать отказ теста в CI | [Docker Compose и CI](#docker-compose-и-ci) |
 | Отменить изменение, обновить ветку, подготовить PR | [Git и GitHub](#git-и-github) |
 | Выбрать границу, контракт, паттерн или протокол повтора | [Архитектура](#архитектура-и-проектирование) |
 | Оценить, как растёт число операций с размером входа | [Алгоритмы](#алгоритмы-и-сложность) |
@@ -41,6 +43,14 @@
 | Преобразовать значение и проверить его тип | cast, conversion, `isinstance`, `type`, `None` | [Python: преобразования и проверка](../python/language/types/README.md#преобразования-и-проверка) |
 | Сгруппировать данные и управлять порядком словаря | grouping, defaultdict, OrderedDict, move_to_end, порядок | [Python: специальные словари](../python/language/types/README.md#словари-специального-назначения) |
 | Разобраться с копией и общей ссылкой | copy, deepcopy, aliasing, mutable, hashable, изменяемость | [Python: ссылки и хешируемость](../python/language/types/README.md#изменяемость-ссылки-и-хешируемость) |
+
+
+## Python: основы asyncio
+
+| Хочу сделать | Синонимы и имена API | Прямой переход |
+| --- | --- | --- |
+| Запустить корутину и дождаться результата | asyncio, async def, await, asyncio.run, цикл событий | [Python: первая корутина](../python/language/asyncio.md#запустить-корутину) |
+| Ждать несколько операций одновременно | TaskGroup, задача, конкурентность, асинхронный ввод-вывод | [Python: конкурентное ожидание](../python/language/asyncio.md#дождаться-операций-конкурентно) |
 
 
 ## Python: проект и окружение
@@ -81,6 +91,7 @@
 
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
+| Отправить запрос из терминала, проверить ответ и извлечь поле | curl, jq, HTTP status, статус, заголовки, тело, JSON | [HTTP и JSON](../tools/http-json.md) |
 | Создать FastAPI-маршрут с path/query/body и валидацией | REST, endpoint, request, response, 422 | [FastAPI: HTTP API с валидацией](../python/web/fastapi/recipes.md#http-api-с-валидацией) |
 | Передать зависимость в обработчик FastAPI | Depends, dependency injection, подзависимость | [FastAPI: как устроены зависимости](../python/web/fastapi/recipes.md#как-устроены-зависимости) |
 | Принять форму или файл | upload, multipart, Form, UploadFile | [FastAPI: формы и файлы](../python/web/fastapi/recipes.md#формы-и-загрузка-файлов) |
@@ -109,6 +120,7 @@
 | Вспомнить slices, maps, pointers, structs и generics | синтаксис, срез, указатель, receiver, интерфейс | [Go: конструкции](../go/language.md#основные-конструкции) · [Полный модуль](../go/examples/language.md#полный-модуль) |
 | Обернуть ошибку и проверить её причину | error wrapping, errors.Is, errors.As, %w | [Go: проверки валидного и невалидного ввода](../go/language.md#проверка-валидного-и-невалидного-ввода) |
 | Ограничить параллельную работу и отменить задачи | goroutine, worker pool, channel, context, select, cancel | [Go: ограниченный worker pool](../go/concurrency-and-testing.md#ограниченный-worker-pool) |
+| Задать тайм-аут HTTP-запроса или отменить его | context, WithTimeout, WithCancel, deadline, NewRequestWithContext | [Go: тайм-аут и отмена HTTP-запроса](../go/context.md#проверить-три-исхода) |
 | Защитить общую память | mutex, sync.Mutex, race, data race, счётчик | [Go: общие данные](../go/concurrency-and-testing.md#общие-данные-и-mutex) |
 | Проверить конкурентный код и гонки | concurrency test, go test -race, race detector | [Go: тесты и race detector](../go/concurrency-and-testing.md#тесты-и-race-detector) |
 
@@ -121,6 +133,7 @@
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
 | Выбрать строки и объединить таблицы | SELECT, WHERE, JOIN, EXISTS, фильтрация, соединение | [SQL: фильтрация и соединения](../databases/sql/queries.md#фильтрация-и-соединения) |
+| Увидеть, какие строки остаются после JOIN | INNER JOIN, LEFT JOIN, NULL, пары, совпадение | [SQL: сравнение на одних таблицах](../databases/sql/queries.md#сравнить-inner-join-и-left-join) |
 | Добавить, обновить или удалить строки | INSERT, UPDATE, DELETE, CRUD, DML | [SQL: изменение данных](../databases/sql/queries.md#изменение-данных) |
 | Сгруппировать данные и посчитать результат внутри группы | GROUP BY, HAVING, CTE, WITH, OVER, window, оконная функция | [SQL: агрегация, CTE и окна](../databases/sql/queries.md#агрегация-cte-и-окна) |
 | Выбрать транзакцию и уровень изоляции | BEGIN, COMMIT, ROLLBACK, isolation, блокировки | [SQL: транзакции и изоляция](../databases/sql/dialects-and-transactions.md#транзакции-и-изоляция) |
@@ -128,7 +141,7 @@
 | Описать ORM-модели и отношения | SQLAlchemy, Mapped, relationship, ForeignKey, one-to-many | [SQLAlchemy: согласованная схема](../python/databases/sqlalchemy/models-and-transactions.md#единая-схема-для-рецептов) |
 | Изменить данные через ORM и откатить часть операции | SQLAlchemy, Session, CRUD, transaction, savepoint | [SQLAlchemy: транзакции и savepoint](../python/databases/sqlalchemy/models-and-transactions.md#crud-транзакции-и-savepoint) |
 | Написать SELECT/JOIN/CTE через Python | SQLAlchemy, select, func, aliased, ORM query | [SQLAlchemy: запросы](../python/databases/sqlalchemy/queries.md#select-join-подзапросы-и-cte) |
-| Устранить слишком много запросов к БД при чтении коллекций | SQLAlchemy, N+1, lazy loading, eager loading, счётчик SELECT | [Карточка N+1](../python/databases/sqlalchemy/relationship-loading.md#найти-n1) · [Один файл и запуск](../python/databases/sqlalchemy/n-plus-one.md#подготовка-и-запуск) |
+| Устранить лишние запросы к БД при чтении коллекций | SQLAlchemy, N+1, lazy loading, eager loading, счётчик SELECT | [Карточка N+1](../python/databases/sqlalchemy/relationship-loading.md#найти-n1) · [Пример с графиком числа SELECT](../python/databases/sqlalchemy/n-plus-one.md) |
 | Выбрать загрузку коллекций и одиночных связей | selectinload, joinedload, unique, relationship, объём результата, LIMIT | [SQLAlchemy: таблица выбора](../python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) |
 | Запретить непредвиденную lazy-загрузку | raiseload, неожиданный SQL, InvalidRequestError | [SQLAlchemy: ошибка вместо SELECT](../python/databases/sqlalchemy/relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
 | Фильтровать родителей и получить все дочерние строки | JOIN, filter, полная коллекция, selectinload | [SQLAlchemy: родители и полные коллекции](../python/databases/sqlalchemy/relationship-loading.md#отфильтровать-родителей-и-загрузить-полные-коллекции) |
@@ -197,6 +210,14 @@
 | Найти процесс, который занял TCP-порт | порт занят, address already in use, ss, PID, listener, socket | [Команда и вывод](../systems/linux/process-by-port.md#найти-tcp-listener) · [Права](../systems/linux/process-by-port.md#если-pid-не-показан) · [Namespace](../systems/linux/process-by-port.md#если-процесс-в-другом-namespace) |
 | Проверить службу и её журналы | systemd, systemctl, journalctl, service, logs | [Linux: службы systemd](../systems/linux/network-and-services.md#службы-systemd) |
 | Проверить свободное место и ресурсы | disk, df, du, free, память | [Linux: диск и ресурсы](../systems/linux/network-and-services.md#диск-и-ресурсы) |
+
+
+## Docker Compose и CI
+
+| Хочу сделать | Синонимы и имена API | Прямой переход |
+| --- | --- | --- |
+| Запустить приложение и учебную БД одной командой | Docker Compose, PostgreSQL, compose up, контейнер, healthcheck | [Compose: локальный запуск](../tools/compose-and-github-actions.md#запустить-приложение-локально) |
+| Запустить тесты в CI и найти упавшую проверку | GitHub Actions, workflow, job, logs, журнал, assert, тест | [GitHub Actions: запуск и журнал](../tools/compose-and-github-actions.md#запустить-тест-в-github-actions) |
 
 
 ## Git и GitHub

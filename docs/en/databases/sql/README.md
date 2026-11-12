@@ -55,6 +55,7 @@ For application interfaces, usually list the required columns explicitly.
 ## Combine data and change rows
 
 Use [JOIN, EXISTS, grouping, and ordinary CTEs](queries.md) to combine tables and calculation steps.
+The [INNER JOIN and LEFT JOIN diagram](queries.md#compare-inner-join-and-left-join) compares the rows each join returns from the same tables.
 `WHERE` filters rows before grouping.
 `HAVING` filters groups.
 `COUNT(*)` counts rows.

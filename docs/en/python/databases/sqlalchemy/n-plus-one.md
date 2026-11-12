@@ -7,7 +7,7 @@ The program reads the same data with two loading strategies. It uses two synchro
 
 | Task | Approach | Where to start |
 | --- | --- | --- |
-| Explain the extra queries | Compare lazy and eager loading | [Why N+1 happens](#why-n1-happens) |
+| Explain the extra queries | Compare lazy and eager loading | [Why N+1 happens](#why-n1-happens) · [SELECT count chart](#result-and-limits) |
 | Run the example from scratch | Install SQLAlchemy and save one file | [Setup and run](#setup-and-run) · [Full program](#full-program) |
 | Compare more loading strategies | Try `joinedload`, `raiseload`, and partial collections | [Extended lab](loading-lab.md) |
 
@@ -69,6 +69,10 @@ The program starts counting after it creates and populates the tables.
 A `finally` block removes the listener even if reading fails.
 
 ## Result and limits
+
+![For two users, lazy loading issues three SELECT statements and selectinload issues two.](../../../../assets/sqlalchemy-select-count.svg)
+
+*The horizontal axis shows the loading strategy. The vertical axis shows the number of SELECT statements in this example. Each run reads one collection for two users in a fresh Session. The count excludes table creation and inserts.*
 
 The program prints the following output.
 

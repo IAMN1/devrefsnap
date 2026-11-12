@@ -11,6 +11,7 @@ The PostgreSQL and SQLite snippets share a dataset with separate setup instructi
 
 | Task | Technique | Example or details |
 | --- | --- | --- |
+| See which rows a join keeps | Compare INNER JOIN and LEFT JOIN | [Two results from the same tables](#compare-inner-join-and-left-join) |
 | Total payments while keeping every user | LEFT JOIN with a condition in ON | [Totals per user](#total-payments-while-keeping-every-user) |
 | Select rows and find missing relationships | WHERE, JOIN, NOT EXISTS | [Queries](#filtering-and-joins) |
 | Change related rows and roll back | Transaction and CRUD | [Data changes](#change-data) |
@@ -22,6 +23,34 @@ The PostgreSQL and SQLite snippets share a dataset with separate setup instructi
 | --- | --- |
 | Levels | Basic for CRUD and filters. Intermediate for JOIN and grouping. Advanced for window functions and recursion. |
 | Prerequisites | A new PostgreSQL 18 or SQLite 3.53 practice database with the names sql_users and sql_orders available |
+
+## Compare INNER JOIN and LEFT JOIN
+
+Use `INNER JOIN` when you need only user–order pairs.
+Use `LEFT JOIN` when every user needs to appear in the result.
+In both queries, the `ON` condition matches a user ID to the order's foreign key.
+
+![Both joins return alice with orders 1 and 2 and bob with order 3. LEFT JOIN adds carol with a NULL order_id.](../../../assets/sql-joins.svg)
+
+*The source tables are on the left and the two join results are on the right. The highlighted row shows the user without an order.*
+
+Set up the tables with the [practice example](query-lab.md#complete-example).
+Run both read-only SQL queries in `psql` or `sqlite3` against the same practice database.
+
+```sql
+SELECT u.name, o.id AS order_id
+FROM sql_users AS u INNER JOIN sql_orders AS o ON o.user_id = u.id
+ORDER BY u.id, o.id;
+
+SELECT u.name, o.id AS order_id
+FROM sql_users AS u LEFT JOIN sql_orders AS o ON o.user_id = u.id
+ORDER BY u.id, o.id;
+```
+
+Check that the first query returns three rows and the second returns four.
+In both results, the two rows for `alice` correspond to two orders.
+The last row of the second result contains `carol` and `NULL`.
+Your client may display `NULL` as a blank cell.
 
 <a id="полный-пример"></a>
 

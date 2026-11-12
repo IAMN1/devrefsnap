@@ -17,6 +17,7 @@ FastAPI строит HTTP API из аннотаций Python и моделей P
 | Поднять API | `uvicorn minimal:app --reload` | [Первый запуск](#первый-запуск) |
 | CRUD, path/query/body, валидация | `Path`, `Query`, `BaseModel`, `Field` | [Полный CRUD](http-api.md#http-api-с-валидацией) |
 | Ответы, ошибки, выходная модель | `response_model`, `HTTPException`, `JSONResponse` | [Модели и ответы](http-api.md#http-api-с-валидацией) |
+| Посмотреть HTTP-ответ из терминала | `curl -i`, `jq` | [HTTP и JSON](../../../tools/http-json.md) |
 | Функция, класс, подзависимость | `Annotated[T, Depends(...)]` | [Зависимости](recipes.md#как-устроены-зависимости) |
 | Форма, один или несколько файлов | `Form`, `UploadFile`, `File` | [Полное приложение](uploads.md#формы-и-загрузка-файлов) |
 | Время запроса и CORS | `@app.middleware`, `CORSMiddleware` | [Полное приложение](middleware.md#middleware-и-cors) |

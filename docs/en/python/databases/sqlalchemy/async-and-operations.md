@@ -16,7 +16,7 @@ All modifying examples use a separate practice SQLite database.
 
 **Level** — advanced.
 Use Python 3.14. Install the selected example's dependencies before running it.
-Prerequisites include transactions, async, and the distinction between schema changes and data changes.
+Prerequisites include transactions, [the basics of `asyncio`](../../language/asyncio.md), and the distinction between schema changes and data changes.
 
 - [Async session](#async-session)
 - [Events and diagnostics](#events-and-diagnostics)
