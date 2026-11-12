@@ -65,6 +65,8 @@ ReDoc доступен на [localhost:8000/redoc](http://localhost:8000/redoc).
 Схема доступна на [localhost:8000/openapi.json](http://localhost:8000/openapi.json).
 `version` здесь обозначает версию вашего API.
 
+Вызовите этот же маршрут из [HTTP-клиента на TypeScript](../../../typescript/README.md), чтобы проверить поля ответа в коде.
+
 
 ## Откуда берётся параметр
 

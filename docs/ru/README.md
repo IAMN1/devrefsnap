@@ -4,7 +4,7 @@
 
 [English](../en/README.md) · [Участие в проекте](../../CONTRIBUTING.md#русский)
 
-Справочник по Python, Go, базам данных, Linux, инструментам и архитектуре.
+Справочник по Python, Go, TypeScript, алгоритмам, базам данных, Linux, инструментам и архитектуре.
 Найдите действие через [указатель задач и синонимов](tasks/README.md) или выберите знакомый инструмент в каталоге.
 
 
@@ -20,8 +20,10 @@
 
 ## Разделы
 
-- [Python](python/README.md) — язык, проектирование, библиотеки, FastAPI и Flask.
+- [Python](python/README.md) — язык, проектирование, библиотеки, FastAPI, Flask и Django.
 - [Go](go/README.md) — язык, стандартная библиотека, конкурентность и тестирование.
+- [TypeScript](typescript/README.md) — типизация HTTP-клиента и проверка JSON.
+- [Алгоритмы](algorithms/README.md) — оценка числа операций через Big O.
 - [Базы данных](databases/README.md) — SQL, PostgreSQL, SQLite и Redis.
 - [Операционные системы](systems/README.md) — Linux, оболочка и эксплуатационные команды.
 - [Архитектура](architecture/README.md) — выбор по задаче, карточки SOLID, схемы и структуры пакетов.
@@ -40,6 +42,7 @@
 | structlog | [Структурированные логи](python/logging/structlog/README.md) |
 | uv | [Окружения и зависимости Python](python/tooling/uv/README.md) |
 | FastAPI | [Веб-приложения и API](python/web/fastapi/README.md), [полное API](python/web/fastapi/http-api.md), [подмена зависимости в тесте](python/web/fastapi/testing.md#подмена-зависимости) |
+| Django | [Модель, миграция, админка и тесты](python/web/django/README.md) |
 | Flask | [WSGI-приложения, factory и тесты](python/web/flask/README.md) |
 | Go | [Язык, конкурентность и HTTP](go/README.md), [полный модуль](go/examples/language.md) |
 | SQL | [Общий справочник SQL](databases/sql/README.md) |
@@ -52,6 +55,8 @@
 | Архитектурные принципы | [Карточки границ и компромиссов](architecture/principles.md), [проверки контрактов](architecture/contracts.md) |
 | SOLID | [Пять принципов: до / после](architecture/solid.md) |
 | Паттерны | [Выбор по задаче](architecture/patterns/README.md), [полные примеры](architecture/patterns/code-examples.md), [данные и отказы](architecture/patterns/distributed-systems.md), [проверка Outbox](architecture/patterns/outbox-example.md) |
+| TypeScript | [Типизированный клиент к FastAPI](typescript/README.md) |
+| Big O | [Линейный и квадратичный рост](algorithms/README.md#big-o) |
 
 
 ## Как пользоваться материалами

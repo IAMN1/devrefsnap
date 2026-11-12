@@ -190,8 +190,17 @@ Inspector обнаружил семь таблиц модели и `alembic_vers
 - Flask 3.1.3 / Werkzeug 3.1.9: HTTP test client и SQLite lifecycle во временном каталоге.
 
 Это результаты разных дат и объёмов; они не образуют единую матрицу совместимости.
-Django-проект, JSON-плагин pytest, PaymentCardNumber, автоматическая миграция Pydantic и benchmarks не запускались.
+В проверках 6–10 ноября не запускались Django-проект, JSON-плагин pytest, PaymentCardNumber, автоматическая миграция Pydantic и benchmarks.
 Docker build/run, Gunicorn, TLS/reverse proxy, браузерный CORS и production WSGI не проверялись.
 Иллюстрации изменения рабочей БД, реальные OAuth-провайдеры и нагрузка не выполнялись.
 Сверка API/release notes 6 и 8 ноября не означает запуск всех описанных конфигураций.
 Удобство материала с реальными читателями не измерялось.
+
+## Django — 12 ноября
+
+Выполнили [учебный проект](../../docs/ru/python/web/django/README.md) во временном каталоге на macOS arm64 с Python 3.14.7, Django 5.2.19 и SQLite 3.53.4.
+`manage.py check` и `manage.py migrate` прошли. Команда `showmigrations catalog` вывела `[X] 0001_initial`, а `makemigrations --check --dry-run` вывела `No changes detected`.
+Через локальный сервер проверили вход учебного суперпользователя, отправку формы админки с CSRF-токеном и появление `Demo Book` в списке.
+`manage.py test catalog -v 2` дал два успешных теста. Проверены перенаправление анонимного пользователя и запись книги под суперпользователем. После тестов запись из ручной проверки осталась в файловой БД.
+В отдельной копии `makemigrations catalog` и `migrate` добавили, затем удалили поле `summary` с учебным значением. SQLite сохранила книгу и её заголовок. Столбец `summary` и его значение удалены.
+Проверка HTTP выполнялась без браузера. Для выпуска использованы [руководство Django 5.2](https://docs.djangoproject.com/en/5.2/intro/tutorial02/) и [примечания к 5.2.19](https://docs.djangoproject.com/en/5.2/releases/5.2.19/).

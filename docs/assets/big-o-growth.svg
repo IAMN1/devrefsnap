@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" width="560" height="320" role="img" aria-labelledby="title desc">
+  <title id="title">Linear and quadratic operation counts</title>
+  <desc id="desc">The horizontal axis is input size n in items. The vertical axis is the number of increments T(n). The marked inputs 4, 8, and 16 yield linear counts 4, 8, and 16, and quadratic counts 16, 64, and 256.</desc>
+  <rect width="560" height="320" rx="12" fill="#fff"/>
+  <g fill="none" stroke="#d8dee9" stroke-width="1">
+    <path d="M56 52H504 M56 108H504 M56 164H504 M56 220H504"/>
+    <path d="M168 52V276 M280 52V276 M392 52V276 M504 52V276"/>
+  </g>
+  <path d="M56 36V276H520" fill="none" stroke="#384357" stroke-width="1.5"/>
+  <g font-family="system-ui, sans-serif" font-size="14" fill="#222c3d">
+    <g text-anchor="end">
+      <text x="45" y="281">0</text>
+      <text x="45" y="225">64</text>
+      <text x="45" y="169">128</text>
+      <text x="45" y="113">192</text>
+      <text x="45" y="57">256</text>
+    </g>
+    <g text-anchor="middle">
+      <text x="56" y="298">0</text>
+      <text x="168" y="298">4</text>
+      <text x="280" y="298">8</text>
+      <text x="392" y="298">12</text>
+      <text x="504" y="298">16</text>
+    </g>
+    <text x="56" y="25" text-anchor="middle">T(n)</text>
+    <text x="533" y="281">n</text>
+  </g>
+  <g stroke="#354caa" fill="#354caa">
+    <path d="M56 276 Q280 276 504 52" fill="none" stroke-width="3"/>
+    <circle cx="168" cy="262" r="3.5"/>
+    <circle cx="280" cy="220" r="3.5"/>
+    <circle cx="504" cy="52" r="3.5"/>
+  </g>
+  <g stroke="#0f6d5a" fill="#0f6d5a">
+    <path d="M56 276 L504 262" fill="none" stroke-width="3"/>
+    <circle cx="168" cy="272.5" r="3.5"/>
+    <circle cx="280" cy="269" r="3.5"/>
+    <circle cx="504" cy="262" r="3.5"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="16" font-weight="600">
+    <text x="518" y="57" fill="#354caa">n²</text>
+    <text x="518" y="263" fill="#0f6d5a">n</text>
+  </g>
+</svg>

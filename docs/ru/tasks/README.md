@@ -17,6 +17,7 @@
 | Найти файл, процесс, сетевой порт или журнал службы | [Linux и оболочка](#linux-и-оболочка) |
 | Отменить изменение, обновить ветку, подготовить PR | [Git и GitHub](#git-и-github) |
 | Выбрать границу, контракт, паттерн или протокол повтора | [Архитектура](#архитектура-и-проектирование) |
+| Оценить, как растёт число операций с размером входа | [Алгоритмы](#алгоритмы-и-сложность) |
 | Добавить шпаргалку или проверить её оформление | [Оформление материалов](#оформление-материалов) |
 
 **Поиск по странице:** используйте `Ctrl+F` / `⌘F`.
@@ -94,6 +95,8 @@
 | Проверить Flask-ответ и отказ без сервера | test_client, request context, 400, 404 | [Flask: полный набор проверок](../python/web/flask/testing.md#полный-набор-проверок) |
 | Закрывать Flask-соединение после запроса | g, teardown_appcontext, resource lifecycle | [Flask: жизненный цикл соединения](../python/web/flask/configuration-and-deployment.md#жизненный-цикл-соединения) |
 | Выбрать способ запуска Flask | WSGI, development server, reverse proxy, deploy | [Flask: разработка и production](../python/web/flask/configuration-and-deployment.md#разработка-и-production) |
+| Создать таблицу из модели и управлять записями через админку | Django, ORM, migrations, makemigrations, migrate, admin, тест | [Django: модель и админка](../python/web/django/README.md) |
+| Прочитать ответ API в TypeScript и проверить структуру JSON | fetch, Response.ok, unknown, type guard, tsc, строгий режим | [TypeScript: клиент к FastAPI](../typescript/README.md) |
 | Ограничить и проверить JSON-запрос в Go | HTTP handler, MaxBytesReader, json.Decoder, validation | [Go: handler с границами ввода](../go/http-json.md#handler-с-границами-ввода) |
 | Проверить Go-handler без сетевого сервера | httptest, ResponseRecorder, HTTP test | [Go: тест HTTP/JSON](../go/http-json.md#тест-без-сетевого-сервера) |
 
@@ -245,6 +248,13 @@
 | Разделить модели изменения и чтения | CQRS, command/query, read model, projection, Event Sourcing | [CQRS: границы разделения](../architecture/patterns/distributed-systems.md#cqrs-разделить-модели-записи-и-чтения) |
 | Ограниченно повторить временный отказ | Retry, backoff, jitter, deadline, idempotency, идемпотентность | [Retry: решение о повторе](../architecture/patterns/distributed-systems.md#retry-повторить-временный-отказ) |
 | Изменить опубликованный контракт поэтапно | parallel change, expand/migrate/contract, backward compatibility | [Принципы: этапы изменения контракта](../architecture/principles.md#менять-контракт-постепенно) |
+
+
+## Алгоритмы и сложность
+
+| Хочу сделать | Синонимы и имена API | Прямой переход |
+| --- | --- | --- |
+| Сравнить один проход и перебор пар | Big O, сложность, размер входа, линейный рост, квадратичный рост, O(n), O(n²) | [Big O: число операций](../algorithms/README.md#big-o) |
 
 
 ## Оформление материалов

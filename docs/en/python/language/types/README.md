@@ -80,6 +80,8 @@ assert sorted(unique) == ["go", "python"]
 The set contains each value once. It requires hashable elements and does not retain the input order.
 [Complete program with collection operations](recipes.md#complete-program).
 
+To estimate the work done by loops over a collection, compare [one pass and enumerating all pairs](../../../algorithms/README.md#big-o).
+
 | Type | Operations and behavior |
 | --- | --- |
 | `list` | `append`, `extend`, `pop`, and slices. Items may have different types |

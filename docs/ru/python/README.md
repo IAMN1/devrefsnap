@@ -23,6 +23,7 @@ Git и GitHub находятся в [общих инструментах](../too
 | [uv](tooling/uv/README.md) | Окружения, зависимости, lock и автоматизация |
 | [FastAPI](web/fastapi/README.md) | HTTP API, зависимости, БД, JWT и тесты |
 | [Flask](web/flask/README.md) | Factory, Blueprint, конфигурация и WSGI |
+| [Django](web/django/README.md) | Модель, миграция SQLite, админка и тестирование |
 
 Версии API, зависимости и условия применения указаны в соответствующих темах.
 Общие принципы и паттерны находятся в [архитектуре](../architecture/README.md).
