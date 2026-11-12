@@ -116,6 +116,7 @@ Even Bob's empty collection requires loading.
 Count queries through the end of relationship access, including response serialization.
 State in an earlier Session can hide additional queries.
 Query counts depend on data volume and loading structure. Two SELECTs are specific to these conditions.
+After measuring, [choose a loading strategy](#choose-a-strategy) based on collection size and the cost of a database round trip.
 The [minimal example's limitations](n-plus-one.md#result-and-limits) and [complete lab](loading-lab.md#compare-strategies-and-check-limitations) are described separately.
 
 <a id="загрузить-коллекции-через-selectinload"></a>

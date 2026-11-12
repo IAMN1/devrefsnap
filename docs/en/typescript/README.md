@@ -62,6 +62,8 @@ On success, the client prints `Привет`. For a `404` response, the client e
 
 Stop the server with `Ctrl+C` in the first terminal. The paths `$api_env` and `$client_dir` point to the temporary directories.
 
+In the [end-to-end lab](../tools/api-contract-lab.md), a client checks two FastAPI responses backed by PostgreSQL locally and in CI.
+
 ## Sources
 
 - [TypeScript Handbook on narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).

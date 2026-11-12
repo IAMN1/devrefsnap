@@ -67,6 +67,7 @@ The schema is available at [localhost:8000/openapi.json](http://localhost:8000/o
 Here, `version` denotes your API's version.
 
 Call the same route from a [TypeScript HTTP client](../../../typescript/README.md) to validate the response fields in code.
+Use the [end-to-end lab](../../../tools/api-contract-lab.md) to run FastAPI with PostgreSQL and check its responses in CI.
 
 <a id="откуда-берётся-параметр"></a>
 ## Parameter sources

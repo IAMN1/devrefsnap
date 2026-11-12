@@ -17,6 +17,7 @@
 | --- | --- |
 | [HTTP и JSON](http-json.md) | Запрос через curl, статус, заголовки, тело и выбор поля через jq |
 | [Docker Compose и GitHub Actions](compose-and-github-actions.md) | Приложение с PostgreSQL, тесты и разбор падения по журналу |
+| [Проверка контракта HTTP API](api-contract-lab.md) | FastAPI, PostgreSQL и TypeScript с одной проверкой в Compose и CI |
 | [Git](git/README.md) | Карточки рабочих задач, отмена, конфликты и проверка удалённых веток |
 | [GitHub Pull Requests](github-pull-requests/README.md) | Создание PR, ревью, проверки и способы слияния |
 

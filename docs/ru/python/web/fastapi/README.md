@@ -67,6 +67,7 @@ ReDoc доступен на [localhost:8000/redoc](http://localhost:8000/redoc).
 `version` здесь обозначает версию вашего API.
 
 Вызовите этот же маршрут из [HTTP-клиента на TypeScript](../../../typescript/README.md), чтобы проверить поля ответа в коде.
+Для запуска с PostgreSQL и проверки ответов в CI используйте [сквозной пример](../../../tools/api-contract-lab.md).
 
 
 ## Откуда берётся параметр
