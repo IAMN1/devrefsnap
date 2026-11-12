@@ -6,7 +6,7 @@
 [Find an example by task or synonym](../tasks/README.md#git-and-github) for Git, undoing changes, branches, and Pull Requests.
 
 This section contains general tools for projects in different languages.
-The materials cover version control and collaboration.
+The materials cover HTTP checks, running apps with dependencies, CI, version control, and collaboration.
 Python ecosystem tools live in the [Python section](../python/README.md).
 These include [uv](../python/tooling/uv/README.md) and [pytest](../python/testing/pytest/README.md).
 
@@ -15,6 +15,8 @@ These include [uv](../python/tooling/uv/README.md) and [pytest](../python/testin
 
 | Topic | Content |
 | --- | --- |
+| [HTTP and JSON](http-json.md) | Send a request with curl, inspect status, headers and body, and extract a field with jq |
+| [Docker Compose and GitHub Actions](compose-and-github-actions.md) | Run an app with PostgreSQL, test it, and diagnose a failure from the log |
 | [Git](git/README.md) | Task cards, undo, conflicts, and remote branch checks |
 | [GitHub Pull Requests](github-pull-requests/README.md) | PR creation, review, checks, and merge methods |
 

@@ -61,6 +61,8 @@ curl --fail-with-body -H 'Content-Type: application/json' \
   -d '{"name":"Alice"}' http://127.0.0.1:5000/api/greet
 ```
 
+Use the [`curl` and `jq` example](../../../tools/http-json.md#inspect-the-http-response) to read the response status, headers, and JSON.
+
 Automated checks are on the [next page](testing.md).
 
 <a id="другие-формы-запроса-и-ответа"></a>

@@ -63,6 +63,8 @@ Sources include [SQLAlchemy sessions and transactions](https://docs.sqlalchemy.o
 <a id="async-sqlalchemy-и-lifespan"></a>
 ## Async SQLAlchemy and lifespan
 
+If you are new to `async def` and `await`, start with [asyncio basics](../../language/asyncio.md).
+
 For the independent async example, run `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1'`.
 Save the complete independent example in `async_db_app.py`.
 

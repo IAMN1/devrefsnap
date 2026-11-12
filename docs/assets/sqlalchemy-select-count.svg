@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="292" viewBox="0 0 520 292">
+  <title>SELECT statements by SQLAlchemy loading strategy</title>
+  <desc>For two users in fresh sessions, lazy loading issues three SELECT statements and selectinload issues two.</desc>
+  <rect width="520" height="292" rx="14" fill="#f3f6fa"/>
+  <path d="M76 70h408m-408 52h408m-408 52h408" stroke="#c5d2df"/>
+  <path d="M76 56v170h408" fill="none" stroke="#4f657b" stroke-width="1.5"/>
+  <g fill="#344b62" font-family="system-ui, sans-serif" font-size="16">
+    <text x="76" y="36" font-family="monospace" font-weight="700">SELECT</text>
+    <g text-anchor="end">
+      <text x="63" y="76">3</text>
+      <text x="63" y="128">2</text>
+      <text x="63" y="180">1</text>
+      <text x="63" y="232">0</text>
+    </g>
+  </g>
+  <path d="M136 226V75a5 5 0 0 1 5-5h102a5 5 0 0 1 5 5v151z" fill="#275b8d"/>
+  <path d="M312 226v-99a5 5 0 0 1 5-5h102a5 5 0 0 1 5 5v99z" fill="#197266"/>
+  <g text-anchor="middle" font-family="monospace" font-size="17">
+    <g fill="#fff" font-weight="700">
+      <text x="192" y="96">3</text>
+      <text x="368" y="148">2</text>
+    </g>
+    <g fill="#182839">
+      <text x="192" y="254">lazy</text>
+      <text x="368" y="254">selectinload</text>
+    </g>
+  </g>
+</svg>

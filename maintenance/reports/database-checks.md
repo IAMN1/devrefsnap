@@ -4,6 +4,15 @@
 Сверка документации и выполнение на СУБД учитываются отдельно.
 Перенос записи не подтверждает новое выполнение или другие версии.
 
+## INNER JOIN и LEFT JOIN — 12 ноября
+
+В обеих версиях [карточки JOIN](../../docs/ru/databases/sql/queries.md#сравнить-inner-join-и-left-join) совпадают два SQL-запроса.
+После загрузки [учебного набора](../../examples/databases/sql/demo.sql) выполнили оба запроса на SQLite 3.53.4 в памяти и на PostgreSQL 18.6 в одноразовом контейнере без сети.
+Обе СУБД вернули `alice|1`, `alice|2`, `bob|3` для INNER JOIN.
+LEFT JOIN вернул те же строки и добавил `carol|NULL`.
+Проверили строки и порядок на [отрисованной схеме](../../docs/assets/sql-joins.svg).
+Правила сопоставления и добавления NULL сверили с [документацией PostgreSQL 18](https://www.postgresql.org/docs/18/queries-table-expressions.html#QUERIES-JOIN).
+
 ## PostgreSQL — 6 ноября
 
 Целевая ветка документации — PostgreSQL 18; сверены release notes 18.6.

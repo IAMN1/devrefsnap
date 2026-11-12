@@ -25,7 +25,7 @@
 - [Базы данных](databases/README.md) — SQL, PostgreSQL, SQLite и Redis.
 - [Операционные системы](systems/README.md) — Linux, оболочка и эксплуатационные команды.
 - [Архитектура](architecture/README.md) — выбор по задаче, карточки SOLID, схемы и структуры пакетов.
-- [Инструменты разработки](tools/README.md) — Git и работа с Pull Requests на GitHub.
+- [Инструменты разработки](tools/README.md) — HTTP из терминала, Docker Compose, Git и GitHub.
 
 
 ## Каталог материалов
@@ -33,6 +33,7 @@
 | Тема | Где искать |
 | --- | --- |
 | Типы Python | [Типы и операции](python/language/types/README.md) |
+| asyncio | [Первые корутины и конкурентное ожидание](python/language/asyncio.md) |
 | Проектирование Python-проекта | [Решения, рабочий пакет и поставка](python/architecture/project-design/README.md) |
 | Pydantic | [Валидация данных](python/validation/pydantic/README.md) |
 | SQLAlchemy | [Справочник](python/databases/sqlalchemy/README.md), [простой пример N+1](python/databases/sqlalchemy/n-plus-one.md), [выбор загрузки по данным и ограничениям](python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) |
@@ -41,11 +42,13 @@
 | uv | [Окружения и зависимости Python](python/tooling/uv/README.md) |
 | FastAPI | [Веб-приложения и API](python/web/fastapi/README.md), [полное API](python/web/fastapi/http-api.md), [подмена зависимости в тесте](python/web/fastapi/testing.md#подмена-зависимости) |
 | Flask | [WSGI-приложения, factory и тесты](python/web/flask/README.md) |
-| Go | [Язык, конкурентность и HTTP](go/README.md), [полный модуль](go/examples/language.md) |
+| Go | [Язык, конкурентность и HTTP](go/README.md), [тайм-аут и отмена HTTP-запроса](go/context.md), [полный модуль](go/examples/language.md) |
 | SQL | [Общий справочник SQL](databases/sql/README.md) |
 | PostgreSQL | [Справочник](databases/relational/postgresql/README.md), [копия и восстановление](databases/relational/postgresql/backup-and-restore.md) |
 | SQLite | [Справочник](databases/relational/sqlite/README.md), [копия и восстановление](databases/relational/sqlite/backup-and-restore.md) |
 | Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md), [RDB-копия](databases/non-relational/redis/backup-and-restore.md), [AOF-копия и восстановление](databases/non-relational/redis/aof-backup-and-restore.md) |
+| curl и jq | [Запрос и разбор HTTP-ответа](tools/http-json.md) |
+| Docker Compose и GitHub Actions | [Приложение с PostgreSQL и тесты в CI](tools/compose-and-github-actions.md) |
 | Git | [Выбор команд по рабочим задачам](tools/git/README.md) |
 | GitHub Pull Requests | [Создание, ревью и слияние PR](tools/github-pull-requests/README.md) |
 | Linux | [Оболочка, файлы, процессы и службы](systems/linux/README.md), [процесс по порту](systems/linux/process-by-port.md) |

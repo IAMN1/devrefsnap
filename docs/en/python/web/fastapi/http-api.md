@@ -40,6 +40,8 @@ curl -i -X PATCH http://127.0.0.1:8000/items/1 -H 'Content-Type: application/jso
 curl -i http://127.0.0.1:8000/items/999
 ```
 
+See how to read the status, headers, and body in the [`curl` and `jq` example](../../../tools/http-json.md#inspect-the-http-response).
+
 Creation returns `201` with `id=1`.
 The list query returns one item.
 PATCH changes the price to `30`.

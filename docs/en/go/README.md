@@ -21,6 +21,7 @@ The section contains a quick reference and independent learning examples with no
 | Struct, method, interface, generics | Value/pointer receivers, type constraints | [Object and interface](language.md#mutate-an-object-and-preserve-its-interface) |
 | Error with a cause | `%w`, `errors.Is`, `errors.As` | [Language tests](language.md#test-valid-and-invalid-input) |
 | Cancellation, channels, and bounded workers | `context`, `select`, `WaitGroup` | [Concurrency](concurrency-and-testing.md) |
+| Cancel an outgoing HTTP request or set a deadline | `context.WithCancel`, `context.WithTimeout` | [HTTP request context](context.md) |
 | Protect shared state | `sync.Mutex` | [Counter](concurrency-and-testing.md#shared-data-and-mutexes) |
 | JSON/HTTP, limits, tests | `json.Decoder`, `MaxBytesReader`, `httptest` | [HTTP and JSON](http-json.md) |
 | Formatting, tests, analysis, races | `gofmt`, `go test`, `go vet`, `-race` | [Commands](#module-commands) |
@@ -105,8 +106,9 @@ Strings, maps, and other constructs appear in the [language table](language.md#b
 
 The [worker pool](concurrency-and-testing.md) limits the number of goroutines and waits for them to finish.
 Context cancellation is cooperative. Choose a channel or mutex based on data ownership.
+The [cancellation and deadline example](context.md) sends requests to a local HTTP server.
 The [HTTP recipe](http-json.md) separates JSON syntax from data semantics.
-`httptest` calls the handler in-process. External server settings are covered [separately](http-json.md#before-serving-real-http-traffic).
+The recipe tests the handler with `httptest.NewRecorder`. External server settings are covered [separately](http-json.md#before-serving-real-http-traffic).
 
 <a id="частые-ошибки"></a>
 ## Common mistakes

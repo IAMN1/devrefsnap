@@ -56,6 +56,7 @@ SELECT name FROM sql_users WHERE name LIKE 'a%' ORDER BY id;
 ## Объединить данные и изменить строки
 
 [JOIN, EXISTS, группировки и обычные CTE](queries.md) объединяют несколько таблиц и этапов расчёта.
+На [схеме INNER JOIN и LEFT JOIN](queries.md#сравнить-inner-join-и-left-join) сравните строки результата на одних таблицах.
 `WHERE` фильтрует строки до группировки.
 `HAVING` фильтрует группы.
 `COUNT(*)` считает строки.

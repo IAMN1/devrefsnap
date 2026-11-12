@@ -3,7 +3,7 @@
 
 [English](../../en/python/README.md)
 
-[Найти пример по задаче или синониму](../tasks/README.md) — типы, окружение, валидация, тесты, логи, API и доступ к БД.
+[Найти пример по задаче или синониму](../tasks/README.md) — типы, asyncio, окружение, валидация, тесты, логи, API и доступ к БД.
 
 Раздел содержит материалы о языке Python, проектировании приложений, библиотеках и инструментах экосистемы Python.
 SQL и особенности СУБД находятся в [разделе баз данных](../databases/README.md).
@@ -15,6 +15,7 @@ Git и GitHub находятся в [общих инструментах](../too
 | Тема | Содержание |
 | --- | --- |
 | [Типы Python](language/types/README.md) | Типы, операции, копирование и хешируемость |
+| [Основы asyncio](language/asyncio.md) | Корутины, `await`, `asyncio.run` и конкурентное ожидание |
 | [Проектирование проекта](architecture/project-design/README.md) | Решения, структура, рабочий пакет и поставка |
 | [Pydantic](validation/pydantic/README.md) | Модели, валидация, сериализация и настройки |
 | [SQLAlchemy](databases/sqlalchemy/README.md) | Модели, [N+1 и загрузка](databases/sqlalchemy/relationship-loading.md), запросы, транзакции, async и миграции |

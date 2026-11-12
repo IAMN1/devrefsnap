@@ -1,7 +1,33 @@
-# Проверки архитектуры, Go, Git и Linux
+# Проверки архитектуры, Go и общих инструментов
 
 Записи сохраняют исходные даты, среды и фактические результаты.
 Перенос не означает новый запуск; сверка источников учитывалась отдельно.
+
+## HTTP и JSON — 12 ноября
+
+[Учебный файл](../../examples/tools/http-json/item.json) отдавал `python3 -m http.server 8765 --bind 127.0.0.1 --directory examples/tools/http-json` на macOS arm64 с Python 3.14.7.
+Команда `curl -i` показала HTTP/1.0 200, заголовок `Content-Type: application/json` и ожидаемое тело. Запрос с `jq -r '.name'` вывел `Book`. Отсутствующий файл вернул HTTP 404.
+Прогон выполнен по [двуязычному примеру](../../docs/ru/tools/http-json.md) в Bash 3.2.57 и Zsh 5.9 с curl 8.7.1 и jq 1.7.1 Apple. Проверка обращалась только к локальному серверу.
+
+## Docker Compose и GitHub Actions — 12 ноября
+
+В изолированном [учебном проекте](../../docs/ru/tools/compose-and-github-actions.md) проверили `docker compose config -q` и `docker compose up --build -d --wait`.
+Среда запуска — Docker Engine 29.9.3, Compose 5.7.0, Linux arm64, Python 3.14.10, Psycopg 3.3.9 и PostgreSQL 18.6.
+Оба сервиса получили статус `healthy`. Запрос к `/health` вернул HTTP 200 и `{"status": "ok", "database": "compose_lab"}`.
+Команда `docker compose exec -T app python -m unittest -v` завершилась с `OK`. С `LAB_FORCE_FAILURE=1` она вернула код 1 и `AssertionError: 'compose_lab' != 'intentional_failure'`. Повтор без переменной вернул `OK`.
+Остановка PostgreSQL дала HTTP 503 и строку `PostgreSQL is unavailable` в журнале. Повторный `up -d --wait` восстановил HTTP 200.
+Команда `down` сохранила учебный том. Команда `down --volumes` удалила его.
+
+`actionlint` 1.7.12 проверил исходный [учебный workflow](../../examples/tools/compose-and-github-actions/workflow-example.yml) и его копию по пути `.github/workflows/postgres-test.yml` во временном репозитории.
+Команду теста из workflow выполнили отдельно в новом venv на macOS arm64 с Python 3.14.7. PostgreSQL 18.6 работал в отдельном контейнере со случайным локальным портом.
+Значения переменной `LAB_FORCE_FAILURE` 0, 1 и 0 дали `OK`, ошибку с кодом 1 и `OK`.
+Ручной запуск, порт контейнера и порядок чтения журнала сверили с официальной документацией. Выполнение на GitHub-hosted runner остаётся непроверенным. [Docker Compose Quickstart](https://docs.docker.com/compose/gettingstarted/) · [Сервис PostgreSQL в GitHub Actions](https://docs.github.com/en/actions/tutorials/use-containerized-services/create-postgresql-service-containers) · [Ручной запуск](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow) · [Журналы GitHub Actions](https://docs.github.com/en/actions/how-tos/monitor-workflows/use-workflow-run-logs).
+
+## Go context — 12 ноября
+
+На Go 1.27.1 darwin/arm64 выполнили `GOTOOLCHAIN=local go run ./examples/go/context/main.go`.
+[Пример](../../docs/ru/go/context.md) подтвердил тело успешного ответа `ok`, ошибку `context.DeadlineExceeded` после тайм-аута и `context.Canceled` после явной отмены начатого запроса.
+Программа открывала только локальный порт. Требование Go 1.16 для `io.ReadAll` сверили с [примечаниями к выпуску](https://go.dev/doc/go1.16). Эту версию отдельно не запускали.
 
 ## Архитектура и Python-пакет — 6 и 8 ноября
 

@@ -17,6 +17,7 @@ Flask даёт маршрутизацию, request/response, шаблоны и �
 | Query / JSON / path | `request.args`, `request.get_json()`, `<int:item_id>` | [Приложение](application.md) |
 | Вернуть JSON | `jsonify(...)`, tuple `(response, status)` | [Приложение](application.md) |
 | Ошибка клиента | `abort(400)` и HTTPException handler | [Приложение](application.md) |
+| Посмотреть HTTP-ответ из терминала | `curl -i`, `jq` | [HTTP и JSON](../../../tools/http-json.md) |
 | Проверить без сервера | `app.test_client()` | [Тестирование](testing.md) |
 | Ресурс на контекст | `g`, `teardown_appcontext` | [База данных](configuration-and-deployment.md#жизненный-цикл-соединения) |
 | Локальная разработка | `flask --app flask_app:create_app run --debug` | [Запуск](application.md#запуск-и-проверка) |
