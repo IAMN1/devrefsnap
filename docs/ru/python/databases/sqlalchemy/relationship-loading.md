@@ -18,9 +18,9 @@
 | Нужна небольшая коллекция без отдельного SELECT | `joinedload`: строки связи в том же SELECT | [Коллекция и unique](#загрузить-коллекцию-через-joinedload) |
 | Нужен автор каждого поста | Сравнить повторение полей и число SELECT | [Одиночная связь](#загрузить-одиночную-связь) |
 | Непредвиденная загрузка должна вызвать ошибку | `raiseload`: запрет загрузки отношения при обращении к атрибуту | [Запретить lazy-загрузку](#обнаружить-незапланированную-lazy-загрузку) |
-| Фильтр по дочерней таблице; нужна полная коллекция | Явный JOIN + `selectinload` | [Отфильтровать родителей](#отфильтровать-родителей-и-загрузить-полные-коллекции) |
-| Нужна только выбранная часть коллекции | `contains_eager`: заполнить отношение строками своего JOIN | [Загрузить частичную коллекцию](#загрузить-частичную-коллекцию-из-join) |
-| Коллекция уже загружена | `populate_existing`: явно обновить состояние объектов | [Обновить загруженную коллекцию](#обновить-уже-загруженную-коллекцию) |
+| Фильтр по дочерней таблице; нужна полная коллекция | Явный JOIN + `selectinload` | [Отфильтровать родителей](filtered-relationships.md#отфильтровать-родителей-и-загрузить-полные-коллекции) |
+| Нужна только выбранная часть коллекции | `contains_eager`: заполнить отношение строками своего JOIN | [Загрузить частичную коллекцию](filtered-relationships.md#загрузить-частичную-коллекцию-из-join) |
+| Коллекция уже загружена | `populate_existing`: явно обновить состояние объектов | [Обновить загруженную коллекцию](filtered-relationships.md#обновить-уже-загруженную-коллекцию) |
 | Результат не помещается в память | Отдельно выбрать пакетную обработку | [Большие выборки](streaming.md) |
 
 | Параметр | Значение |
@@ -55,7 +55,7 @@ Eager loading заранее загружает отношение вместе 
 | Многие строки ссылаются на одни объекты с объёмными полями | Сравнить `selectinload` одиночной связи с `joinedload` | Дополнительный SELECT может сократить повторную передачу полей; выигрыш требует измерения |
 | Отношение может не понадобиться | Lazy loading | При чтении возможен SQL; для простой связи «многие к одному» identity map иногда исключает SELECT |
 | Незапланированное чтение должно вызвать ошибку | `raiseload` | Ошибка вместо lazy SELECT; SQL внутри flush этим не запрещён |
-| Нужна только выбранная часть коллекции | Фильтр и `contains_eager` | Явно отделите частичную коллекцию от полной; [карточка](#загрузить-частичную-коллекцию-из-join) |
+| Нужна только выбранная часть коллекции | Фильтр и `contains_eager` | Явно отделите частичную коллекцию от полной; [карточка](filtered-relationships.md#загрузить-частичную-коллекцию-из-join) |
 
 Для коллекции один родитель может соответствовать нескольким строкам результата SQL.
 `unique()` оставляет один ORM-объект на идентификатор в результате Python; переданные строки SQL остаются прежними.
@@ -247,79 +247,19 @@ Wildcard `"*"` действует и на отношения загруженн�
 [Проверка ошибки и отсутствия дополнительного SELECT](loading-lab.md#сравнить-стратегии-и-проверить-ограничения)
 
 
-## Отфильтровать родителей и загрузить полные коллекции
+## Фильтр и состояние коллекции
 
-**Ситуация:** нужны пользователи с постом Python, но для каждого пользователя нужны все посты.
-Фильтруйте родителей явным JOIN; коллекцию загрузите отдельно:
+<a id="отфильтровать-родителей-и-загрузить-полные-коллекции"></a>
 
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import Session, selectinload
-from demo_models import Post, User
+- [Отфильтровать родителей и загрузить полные коллекции](filtered-relationships.md#отфильтровать-родителей-и-загрузить-полные-коллекции)
 
-with Session(engine) as session:
-    users = session.scalars(
-        select(User).join(User.posts).where(Post.title == "Python")
-        .options(selectinload(User.posts)).order_by(User.id)
-    ).unique().all()
-```
+<a id="загрузить-частичную-коллекцию-из-join"></a>
 
-**Результат:** выбрана только Alice, её коллекция содержит Python и SQL.
-`unique()` убирает возможные повторения родителей после явного JOIN.
-Фильтр родителей не превращается автоматически в фильтр содержимого коллекции.
-[Сравнение полной и частичной коллекции](loading-lab.md#сравнить-стратегии-и-проверить-ограничения)
+- [Загрузить частичную коллекцию из JOIN](filtered-relationships.md#загрузить-частичную-коллекцию-из-join)
 
+<a id="обновить-уже-загруженную-коллекцию"></a>
 
-## Загрузить частичную коллекцию из JOIN
-
-**Ситуация:** в `User.posts` нужны только посты, выбранные вашим JOIN.
-Для новой Session направьте строки JOIN в отношение:
-
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import Session, contains_eager
-from demo_models import Post, User
-
-with Session(engine) as session:
-    users = session.scalars(
-        select(User).join(User.posts).where(Post.title == "Python")
-        .options(contains_eager(User.posts)).order_by(User.id)
-    ).unique().all()
-```
-
-**Результат:** выбрана Alice, её коллекция содержит только Python.
-Это намеренно частичная коллекция; отсутствие SQL в ней не означает удаления поста из БД.
-После истечения состояния последующая загрузка может снова вернуть полную коллекцию.
-Если коллекция уже загружена, применяйте [следующую карточку](#обновить-уже-загруженную-коллекцию).
-[Полная проверка](loading-lab.md#сравнить-стратегии-и-проверить-ограничения)
-
-
-## Обновить уже загруженную коллекцию
-
-**Ситуация:** Alice уже есть в Session с полной коллекцией posts.
-Новый запрос сам по себе не обязан заменить содержимое загруженного отношения.
-Фрагмент продолжает работу в этой Session без ожидающих изменений:
-
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import contains_eager
-from demo_models import Post, User
-
-stmt = (
-    select(User).join(User.posts).where(Post.title == "Python")
-    .options(contains_eager(User.posts))
-    .execution_options(populate_existing=True)
-)
-alice = session.scalars(stmt).unique().one()
-```
-
-**Результат:** загруженная коллекция Alice заменяется выбранной частью — только Python.
-Перед обновлением решите, как сохранить нужные локальные изменения.
-`populate_existing` может заменить значения в памяти; особенно учитывайте отключённый autoflush.
-`expire_all()` помечает состояние устаревшим, но не очищает identity map Session.
-Последующее чтение может выполнить SQL.
-Не передавайте одну Session одновременно нескольким потокам.
-[Проверка identity map и повторной загрузки](loading-lab.md#сравнить-стратегии-и-проверить-ограничения)
+- [Обновить уже загруженную коллекцию](filtered-relationships.md#обновить-уже-загруженную-коллекцию)
 
 <a id="проверить-выбор"></a>
 
@@ -330,6 +270,6 @@ alice = session.scalars(stmt).unique().one()
 ## Источники
 
 - [Выбор загрузки отношений](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#what-kind-of-loading-to-use), [select-in](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#select-in-loading), [joined loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#joined-eager-loading).
-- [Raiseload](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#preventing-unwanted-lazy-loads-using-raiseload), [contains_eager](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#using-contains-eager-to-load-a-custom-filtered-collection-result), [populate_existing](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#populate-existing).
+- [Raiseload](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#preventing-unwanted-lazy-loads-using-raiseload).
 - [Пакетное чтение и ограничения](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#fetching-large-result-sets-with-yield-per).
 - [Release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).

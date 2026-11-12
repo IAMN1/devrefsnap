@@ -187,7 +187,7 @@ User-defined classes have their own `__eq__` and `__hash__` rules.
 <a id="источники"></a>
 ## Sources
 
-- [Python 3.14 built-in types](https://docs.python.org/3.14/library/stdtypes.html).
+- [Python 3.14 built-in types](https://docs.python.org/3.14/builtins/stdtypes.html).
 - [collections](https://docs.python.org/3.14/library/collections.html), [Decimal](https://docs.python.org/3.14/library/decimal.html).
 - [Copying](https://docs.python.org/3.14/library/copy.html), [sys size and references](https://docs.python.org/3.14/library/sys.html).
 - [Data model and hash](https://docs.python.org/3.14/reference/datamodel.html#object.__hash__), [annotations](https://docs.python.org/3.14/library/typing.html).

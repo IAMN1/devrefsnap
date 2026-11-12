@@ -14,6 +14,7 @@
 | Проверить данные, написать тест, настроить логи | [Валидация, тесты и логи](#валидация-тесты-и-логи) |
 | Отправить HTTP-запрос, написать API или защитить маршрут | [HTTP и веб-приложения](#http-api-и-веб-приложения) |
 | Вспомнить Go, отменить задачи или защитить общие данные | [Go](#go-язык-и-конкурентность) |
+| Найти синтаксис, собрать программу или выбрать библиотеку для C, C# или C++ | [C, C# и C++](#c-family-basics) |
 | Выбрать данные, выполнить транзакцию, сделать резервную копию | [Базы данных и SQL](#базы-данных-и-sql) |
 | Найти файл, процесс, сетевой порт или журнал службы | [Linux и оболочка](#linux-и-оболочка) |
 | Поднять приложение с PostgreSQL или разобрать отказ теста в CI | [Docker Compose и CI](#docker-compose-и-ci) |
@@ -92,10 +93,10 @@
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
 | Отправить запрос из терминала, увидеть статус и заголовки, извлечь поле JSON | curl, jq, HTTP status, код ответа, тело | [HTTP и JSON](../tools/http-json.md) |
-| Создать FastAPI-маршрут с path/query/body и валидацией | REST, endpoint, request, response, 422 | [FastAPI: HTTP API с валидацией](../python/web/fastapi/recipes.md#http-api-с-валидацией) |
+| Создать FastAPI-маршрут с path/query/body и валидацией | REST, endpoint, request, response, 422 | [Карточка](../python/web/fastapi/recipes.md#http-api-с-валидацией) · [Полное HTTP API](../python/web/fastapi/http-api.md#http-api-с-валидацией) |
 | Передать зависимость в обработчик FastAPI | Depends, dependency injection, подзависимость | [FastAPI: как устроены зависимости](../python/web/fastapi/recipes.md#как-устроены-зависимости) |
-| Принять форму или файл | upload, multipart, Form, UploadFile | [FastAPI: формы и файлы](../python/web/fastapi/recipes.md#формы-и-загрузка-файлов) |
-| Настроить CORS или middleware | browser, cross-origin, заголовки, request middleware | [FastAPI: middleware и CORS](../python/web/fastapi/recipes.md#middleware-и-cors) |
+| Принять форму или файл | upload, multipart, Form, UploadFile | [Карточка](../python/web/fastapi/recipes.md#формы-и-загрузка-файлов) · [Полный пример загрузки](../python/web/fastapi/uploads.md#формы-и-загрузка-файлов) |
+| Настроить CORS или middleware | browser, cross-origin, заголовки, request middleware | [Карточка](../python/web/fastapi/recipes.md#middleware-и-cors) · [Полный пример middleware и CORS](../python/web/fastapi/middleware.md#middleware-и-cors) |
 | Проверить пароль и защитить маршрут токеном | auth, authentication, JWT, bearer, OAuth2, 401 | [FastAPI: полный пример аутентификации](../python/web/fastapi/authentication.md#полный-пример) |
 | Выдать сессию БД на запрос и закрыть ресурсы | SQLAlchemy, Session, AsyncSession, yield, lifespan | [FastAPI: sync-сессия](../python/web/fastapi/database.md#синхронный-sqlalchemy) · [Async и lifespan](../python/web/fastapi/database.md#async-sqlalchemy-и-lifespan) |
 | Проверить ответ FastAPI и неверный ввод | TestClient, httpx2, integration test, 422 | [FastAPI: карточка TestClient](../python/web/fastapi/testing.md#синхронный-testclient) · [Полные проверки](../python/web/fastapi/testing-lab.md) |
@@ -125,6 +126,41 @@
 | Проверить конкурентный код и гонки | concurrency test, go test -race, race detector | [Go: тесты и race detector](../go/concurrency-and-testing.md#тесты-и-race-detector) |
 
 
+<a id="c-family-basics"></a>
+
+<a id="основы-c-c-и-c"></a>
+
+## C, C# и C++
+
+| Хочу сделать | Синонимы и имена API | Прямой переход |
+| --- | --- | --- |
+| Собрать и запустить программу на C | C17, clang, main, printf, компоновка | [C: первый запуск](../c/README.md#первый-запуск) |
+| Передать массив в функцию C | size_t, sizeof, pointer, указатель, границы | [C: массивы и память](../c/README.md#массивы-и-память) |
+| Вспомнить синтаксис C и управление памятью | struct, enum, pointer, malloc, free, const | [C: синтаксис](../c/syntax.md) |
+| Подключить библиотеку и проверить функцию на C | CMake, vcpkg, FetchContent, CTest, Unity | [C: зависимости](../c/tooling-and-testing.md#packages) · [Тесты](../c/tooling-and-testing.md#tests) |
+| Выбрать инструменты для C и организовать код | embedded, драйвер, системное ПО, владение ресурсом | [C: паттерны](../c/practice.md#patterns) · [Области применения](../c/practice.md#application-areas) |
+| Собрать и запустить проект на C# | C#, C Sharp, .NET SDK, csproj, dotnet build, dotnet run | [C#: первый запуск](../csharp/README.md#первый-запуск) |
+| Добавить число в список или проверить аргумент C# | `List<T>`, Add, foreach, TryParse, код завершения | [C#: коллекции](../csharp/README.md#коллекции) · [Ошибки](../csharp/README.md#типичные-ошибки) |
+| Вспомнить синтаксис C# | nullable, record, generics, LINQ, async, await | [C#: синтаксис](../csharp/syntax.md) |
+| Установить NuGet-пакет или запустить тесты C# | pip, NuGet, PackageReference, dotnet restore, dotnet test | [C#: пакеты](../csharp/tooling-and-testing.md#packages) · [Тесты](../csharp/tooling-and-testing.md#tests) |
+| Выбрать фреймворк .NET и границы компонентов | ASP.NET Core, EF Core, DI, desktop, игры | [C#: паттерны](../csharp/practice.md#patterns) · [Области применения](../csharp/practice.md#application-areas) |
+| Собрать и запустить программу на C++ | C++20, clang++, main, cout, компоновка | [C++: первый запуск](../cpp/README.md#первый-запуск) |
+| Добавить элемент в вектор и проверить индекс | std::vector, push_back, size, at, out_of_range | [C++: коллекции](../cpp/README.md#коллекции) · [Ошибки](../cpp/README.md#типичные-ошибки) |
+| Вспомнить синтаксис C++ и правила времени жизни | RAII, const, ссылка, move, template, lambda | [C++: синтаксис](../cpp/syntax.md) |
+| Подключить C++-библиотеку и запустить тесты | CMake, vcpkg, Conan, CTest, GoogleTest | [C++: зависимости](../cpp/tooling-and-testing.md#packages) · [Тесты](../cpp/tooling-and-testing.md#tests) |
+| Выбрать инструменты для C++ и организовать код | RAII, Qt, Unreal Engine, embedded, низкая задержка | [C++: паттерны](../cpp/practice.md#patterns) · [Области применения](../cpp/practice.md#application-areas) |
+
+<details>
+<summary>Сравнить путь программы от исходника до запуска</summary>
+
+Схема показывает артефакты обычной консольной сборки. Стрелки подписаны командами или этапами, которые создают следующий артефакт либо запускают процесс.
+
+![C и C++ компилируют исходник в объектный файл и компонуют исполняемый файл. В .NET SDK восстанавливает зависимости и собирает DLL с IL, которую запускает среда .NET.](../../assets/language-toolchains-ru.svg)
+
+[Этапы Clang](https://releases.llvm.org/21.1.0/tools/clang/docs/CommandGuide/clang.html) · [Сборка .NET](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-build) · [Выполнение .NET](https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process)
+
+</details>
+
 ## Базы данных и SQL
 
 
@@ -144,9 +180,9 @@
 | Устранить лишние запросы к БД при чтении коллекций | SQLAlchemy, N+1, lazy loading, eager loading, счётчик SELECT | [Карточка N+1](../python/databases/sqlalchemy/relationship-loading.md#найти-n1) · [Пример с графиком числа SELECT](../python/databases/sqlalchemy/n-plus-one.md) |
 | Выбрать загрузку коллекций и одиночных связей | selectinload, joinedload, unique, relationship, объём результата, LIMIT | [SQLAlchemy: таблица выбора](../python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) |
 | Запретить непредвиденную lazy-загрузку | raiseload, неожиданный SQL, InvalidRequestError | [SQLAlchemy: ошибка вместо SELECT](../python/databases/sqlalchemy/relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
-| Фильтровать родителей и получить все дочерние строки | JOIN, filter, полная коллекция, selectinload | [SQLAlchemy: родители и полные коллекции](../python/databases/sqlalchemy/relationship-loading.md#отфильтровать-родителей-и-загрузить-полные-коллекции) |
-| Заполнить отношение результатом своего JOIN | contains_eager, filtered collection, частичная коллекция | [SQLAlchemy: частичная коллекция](../python/databases/sqlalchemy/relationship-loading.md#загрузить-частичную-коллекцию-из-join) |
-| Заменить уже загруженное отношение | populate_existing, expire_all, identity map | [SQLAlchemy: обновить коллекцию](../python/databases/sqlalchemy/relationship-loading.md#обновить-уже-загруженную-коллекцию) |
+| Фильтровать родителей и получить все дочерние строки | JOIN, filter, полная коллекция, selectinload | [SQLAlchemy: родители и полные коллекции](../python/databases/sqlalchemy/filtered-relationships.md#отфильтровать-родителей-и-загрузить-полные-коллекции) |
+| Заполнить отношение результатом своего JOIN | contains_eager, filtered collection, частичная коллекция | [SQLAlchemy: частичная коллекция](../python/databases/sqlalchemy/filtered-relationships.md#загрузить-частичную-коллекцию-из-join) |
+| Заменить уже загруженное отношение | populate_existing, expire_all, identity map | [SQLAlchemy: обновить коллекцию](../python/databases/sqlalchemy/filtered-relationships.md#обновить-уже-загруженную-коллекцию) |
 | Обработать большую ORM-выборку по частям | yield_per, partitions, streaming, память | [SQLAlchemy: пакетная обработка](../python/databases/sqlalchemy/streaming.md) |
 | Использовать async-сессию ORM | AsyncSession, AsyncAttrs, awaitable_attrs, asyncio | [SQLAlchemy: асинхронная сессия](../python/databases/sqlalchemy/async-and-operations.md#асинхронная-сессия) |
 | Изменить схему через миграцию | Alembic, revision, upgrade, downgrade, migration | [SQLAlchemy: отдельный проект Alembic](../python/databases/sqlalchemy/async-and-operations.md#alembic-отдельный-учебный-проект) |

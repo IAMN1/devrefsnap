@@ -10,7 +10,7 @@
 | [SQL и СУБД](database-checks.md) | JOIN, PostgreSQL, SQLite, Redis и исправление TTL-карточки |
 | [RDB Redis](2026-11-07-redis-rdb-backup.md) | Снимок, восстановление данных и TTL, очистка при ошибке |
 | [AOF Redis](2026-11-08-redis-aof-backup.md) | Manifest/BASE/INCR, остановка источника и проверки неполной копии |
-| [Архитектура, Go и общие инструменты](general-checks.md) | Контракты, Outbox, Go, HTTP и JSON, Compose и Actions, Git и Linux |
+| [Архитектура, языки и общие инструменты](general-checks.md) | Контракты, Outbox, Go, C, C#, C++, HTTP и JSON, Compose и Actions, Git и Linux |
 | [Решения по структуре](navigation-review.md) | Русский и английский справочники, основания разделения материалов и архив STE |
 | [CI и права GitHub](2026-11-10-safe-ci.md) | Причины ограничений, выполненные проверки и отсутствие защиты main |
 | [Прослеживаемость истории](2026-11-10-simplification-publication.md) | Карта SHA, резервная копия и доказательства публикации |

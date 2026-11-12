@@ -4,24 +4,27 @@
 
 [Русский](../ru/README.md) · [Contributing](../../CONTRIBUTING.md#english)
 
-A reference for Python, Go, TypeScript, algorithms, databases, Linux, development tools, and architecture.
+A reference for Python, Go, C, C#, C++, TypeScript, algorithms, databases, Linux, development tools, and architecture.
 Find an action through the [task and synonym index](tasks/README.md), or choose a familiar tool in the catalog.
 
 <a id="быстрый-вход"></a>
 ## Quick start
 
-| Situation | How to look | Example |
+| What you need | How to start | Example |
 | --- | --- | --- |
-| You remember the task but forgot the technique's name | Find an action or synonym | [Task index](tasks/README.md) |
-| You chose a tool and want to review syntax | Open the topic's quick lookup | [Material catalog](#material-catalog) |
-| You need to choose between approaches | Compare conditions and limitations in the card | [Loading related data](python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
-| You need a first standalone run | Follow the card to a complete example | [Python package with tests](python/architecture/project-design/example.md) |
+| Run your first example | Open a page with dependencies, a command, and expected output | [Python numbers and collections](python/language/types/recipes.md) · [First C program](c/README.md#first-run) |
+| Solve a work task | Find the action, command, or symptom in the [task index](tasks/README.md) | [Extract a JSON field](tools/http-json.md#extract-a-json-field) |
+| Look up familiar syntax | Choose a topic in the [catalog](#material-catalog) and open the relevant card | [C# collections](csharp/syntax.md#collections) |
+| Choose an approach or diagnose a failure | Compare the conditions, results, and limits | [Choose a way to load related data](python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
 
 <a id="разделы"></a>
 ## Sections
 
 - [Python](python/README.md) covers the language, design, libraries, FastAPI, Flask, and Django.
 - [Go](go/README.md) covers the language, standard library, concurrency, and testing.
+- [C](c/README.md) covers C17 syntax, memory, builds and tests, design patterns, and application areas.
+- [C#](csharp/README.md) covers C# 14 and .NET 10, NuGet, testing, and framework selection.
+- [C++](cpp/README.md) covers C++20, the standard library, resource management, dependencies, and testing.
 - [TypeScript](typescript/README.md) covers typing an HTTP client and validating JSON.
 - [Algorithms](algorithms/README.md) covers estimating operation counts with Big O.
 - [Databases](databases/README.md) covers SQL, PostgreSQL, SQLite, and Redis.
@@ -46,6 +49,9 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 | Django | [Model, migration, admin, and tests](python/web/django/README.md) |
 | Flask | [WSGI applications, factories, and tests](python/web/flask/README.md) |
 | Go | [Language, concurrency, and HTTP](go/README.md), [HTTP request timeout and cancellation](go/context.md), [complete module](go/examples/language.md) |
+| C | [First run](c/README.md), [syntax](c/syntax.md), [builds, libraries, and testing](c/tooling-and-testing.md), [practices and application areas](c/practice.md) |
+| C# | [First run](csharp/README.md), [syntax](csharp/syntax.md), [NuGet and testing](csharp/tooling-and-testing.md), [practices and application areas](csharp/practice.md) |
+| C++ | [First run](cpp/README.md), [syntax](cpp/syntax.md), [builds, libraries, and testing](cpp/tooling-and-testing.md), [practices and application areas](cpp/practice.md) |
 | SQL | [General SQL reference](databases/sql/README.md) |
 | PostgreSQL | [Reference](databases/relational/postgresql/README.md), [backup and restore](databases/relational/postgresql/backup-and-restore.md) |
 | SQLite | [Reference](databases/relational/sqlite/README.md), [backup and restore](databases/relational/sqlite/backup-and-restore.md) |

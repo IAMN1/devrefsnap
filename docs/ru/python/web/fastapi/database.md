@@ -58,7 +58,7 @@ FastAPI выполняет эти обработчики в пуле поток�
 Синхронный `create_all` в lifespan допустим здесь для крошечной учебной базы.
 В приложении применяйте миграции отдельным шагом.
 
-Источники: [SQLAlchemy: Session и транзакции](https://docs.sqlalchemy.org/en/21/orm/session_basics.html), [FastAPI: зависимости с yield](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/), [Pydantic: чтение атрибутов объектов](https://docs.pydantic.dev/latest/concepts/models/#arbitrary-class-instances).
+Источники: [SQLAlchemy: Session и транзакции](https://docs.sqlalchemy.org/en/21/orm/session_basics.html), [FastAPI: зависимости с yield](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/), [Pydantic: чтение атрибутов объектов](https://pydantic.dev/docs/validation/latest/concepts/models/#arbitrary-class-instances).
 
 
 ## Async SQLAlchemy и lifespan
@@ -74,6 +74,19 @@ FastAPI выполняет эти обработчики в пуле поток�
 POST `/notes` с JSON `{"text":"Прочитать документацию"}` даёт `201`.
 GET `/notes` возвращает список заметок.
 Файл `fastapi-async.db` создаётся в папке запуска.
+
+Схема показывает, как в примере связаны жизненный цикл приложения, сессия одного запроса и транзакция записи.
+
+```mermaid
+flowchart TB
+    Startup["lifespan готовит таблицы"] -->|"При поступлении запроса"| Request
+    subgraph Request["Один запрос POST /notes"]
+        direction TB
+        Open["get_session открывает AsyncSession"] -->|"yield session"| Write["Обработчик выполняет запись в session.begin()"]
+        Write -->|"При выходе из get_session"| Close["Закрывается AsyncSession"]
+    end
+    Request -->|"При остановке приложения"| Shutdown["lifespan вызывает engine.dispose()"]
+```
 
 До `yield` lifespan открывает или готовит ресурс.
 После `yield` lifespan закрывает ресурс.

@@ -24,7 +24,7 @@ The examples retain the main constructs introduced in 2.0.
 | Choose collection loading by size and constraints | `selectinload` or `joinedload` | [Decision table](relationship-loading.md#choose-a-strategy) · [Select-in](relationship-loading.md#load-collections-with-selectinload) · [Joined and unique](relationship-loading.md#load-a-collection-with-joinedload) |
 | Load the author of each post | Compare repeated fields and SELECT counts | [Scalar relationship](relationship-loading.md#load-a-scalar-relationship) |
 | Prevent unexpected lazy SELECTs | `raiseload` | [Card and limitations](relationship-loading.md#detect-unplanned-lazy-loading) |
-| Load part of a relationship with a custom JOIN | `contains_eager`, `populate_existing` | [Partial collection](relationship-loading.md#load-a-partial-collection-from-a-join) |
+| Load part of a relationship with a custom JOIN | `contains_eager`, `populate_existing` | [Partial collection](filtered-relationships.md#load-a-partial-collection-from-a-join) |
 | Process a large result set | `yield_per`, `partitions` | [Batches and limitations](streaming.md) |
 | Async sessions and attributes | `AsyncSession`, `AsyncAttrs`, `awaitable_attrs` | [Async](async-and-operations.md#async-session) |
 | UPSERT / FOR UPDATE / partial index | PostgreSQL dialect | [PostgreSQL compilation](queries.md#postgresql-compilation-without-a-connection) |

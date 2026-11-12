@@ -12,7 +12,8 @@ Django связывает модели Python с базой данных и пр
 
 ## Подготовка
 
-Для [учебного проекта](../../../../../examples/python/web/django/manage.py) используйте Python 3.14 и Django 5.2.19 из ветки 5.2 LTS. SQLite доступна через модуль Python `sqlite3`.
+Учебный проект находится в `examples/python/web/django`. Команды проекта выполняет [`manage.py`](../../../../../examples/python/web/django/manage.py).
+Для запуска нужны Python 3.14 и Django 5.2.19 из ветки 5.2 LTS. Версия Django задана в [`requirements.txt`](../../../../../examples/python/web/django/requirements.txt). SQLite доступна через модуль Python `sqlite3`.
 
 В терминале macOS или Linux перейдите из корня репозитория в каталог примера. Создайте виртуальное окружение. Активируйте окружение перед установкой зависимостей.
 

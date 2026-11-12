@@ -126,8 +126,8 @@ flowchart LR
 ## Источники
 
 - [PyPA: pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/), [src layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/).
-- [Cockburn: Ports & Adapters](https://alistair.cockburn.us/hexagonal-architecture/), [Fowler: Monolith First](https://martinfowler.com/bliki/MonolithFirst.html).
-- [Pydantic Settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
+- [Cockburn: Ports & Adapters](https://alistair.cockburn.us/hexagonal-architecture), [Fowler: Monolith First](https://martinfowler.com/bliki/MonolithFirst.html).
+- [Pydantic Settings](https://pydantic.dev/docs/validation/latest/concepts/pydantic_settings/).
 
 <a id="что-стало-с-разделами-исходной-методички"></a>
 

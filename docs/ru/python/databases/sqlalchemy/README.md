@@ -24,7 +24,7 @@ SQLAlchemy объединяет SQL-конструктор Core и ORM с сес
 | Выбрать загрузку коллекции по объёму и ограничениям | `selectinload` или `joinedload` | [Таблица решений](relationship-loading.md#выбрать-стратегию) · [Select-in](relationship-loading.md#загрузить-коллекции-через-selectinload) · [Joined и unique](relationship-loading.md#загрузить-коллекцию-через-joinedload) |
 | Загрузить автора каждого поста | Сравнить повторение полей и число SELECT | [Одиночная связь](relationship-loading.md#загрузить-одиночную-связь) |
 | Запретить неожиданный lazy SELECT | `raiseload` | [Карточка и ограничения](relationship-loading.md#обнаружить-незапланированную-lazy-загрузку) |
-| Загрузить часть отношения своим JOIN | `contains_eager`, `populate_existing` | [Частичная коллекция](relationship-loading.md#загрузить-частичную-коллекцию-из-join) |
+| Загрузить часть отношения своим JOIN | `contains_eager`, `populate_existing` | [Частичная коллекция](filtered-relationships.md#загрузить-частичную-коллекцию-из-join) |
 | Обработать большую выборку | `yield_per`, `partitions` | [Пакеты и ограничения](streaming.md) |
 | Async-сессия и атрибуты | `AsyncSession`, `AsyncAttrs`, `awaitable_attrs` | [Async](async-and-operations.md#асинхронная-сессия) |
 | UPSERT / FOR UPDATE / частичный индекс | Диалект PostgreSQL | [Компиляция PostgreSQL](queries.md#postgresql-компиляция-без-подключения) |

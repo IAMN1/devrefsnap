@@ -134,7 +134,7 @@ This behavior does not eliminate races on shared objects.
 ## Complete module
 
 [Open go.mod, model.go, and cmd/demo/main.go](examples/language.md#complete-module).
-Save the files in a separate directory. Use the paths after `go/` in the example comments.
+Save the files in a separate directory. Use the paths after `go/` in the file link labels.
 Run `go run ./cmd/demo`.
 Expect `Alice Doe (30)` and `true`.
 

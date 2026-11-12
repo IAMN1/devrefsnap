@@ -39,15 +39,15 @@ Static configuration is usually simpler.
 These test module snippets require `import pytest` and `import sys`.
 
 ```python
-@pytest.mark.skip(reason="нужен отдельный сервис")
+@pytest.mark.skip(reason="requires a separate service")
 def test_external_service():
-    raise AssertionError("этот тест намеренно пропущен")
+    raise AssertionError("this test is intentionally skipped")
 
-@pytest.mark.skipif(sys.platform == "win32", reason="проверяется Unix-поведение")
+@pytest.mark.skipif(sys.platform == "win32", reason="checks Unix behavior")
 def test_unix_path():
     assert sys.platform != "win32"
 
-@pytest.mark.xfail(strict=True, reason="воспроизводится issue #123")
+@pytest.mark.xfail(strict=True, reason="reproduces issue #123")
 def test_known_regression():
     assert 2 + 2 == 5
 ```

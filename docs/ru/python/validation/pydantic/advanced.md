@@ -113,4 +113,4 @@
 Это поясняющий фрагмент для `demo_types.py`.
 Не используйте фрагмент как входной путь.
 
-Источники: [свои типы](https://docs.pydantic.dev/latest/concepts/types/), [TypeAdapter](https://docs.pydantic.dev/latest/concepts/type_adapter/), [generic и create_model](https://docs.pydantic.dev/latest/concepts/models/), [migration guide и bump-pydantic](https://docs.pydantic.dev/latest/migration/), [performance](https://docs.pydantic.dev/latest/concepts/performance/).
+Источники: [свои типы](https://pydantic.dev/docs/validation/latest/concepts/types/), [TypeAdapter](https://pydantic.dev/docs/validation/latest/concepts/type_adapter/), [generic и create_model](https://pydantic.dev/docs/validation/latest/concepts/models/), [migration guide и bump-pydantic](https://pydantic.dev/docs/validation/latest/get-started/migration/), [performance](https://pydantic.dev/docs/validation/latest/concepts/performance/).

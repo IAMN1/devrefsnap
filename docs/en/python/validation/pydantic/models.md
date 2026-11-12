@@ -66,4 +66,4 @@ This pattern checks syntax. Verify the existence of a number separately.
 After installing `pydantic-extra-types`, import `PaymentCardNumber` from `pydantic_extra_types.payment` in new examples.
 Keep payment data out of logs when validating its type.
 
-See [validators](https://docs.pydantic.dev/latest/concepts/validators/), [serializers](https://docs.pydantic.dev/latest/concepts/serialization/), [ConfigDict](https://docs.pydantic.dev/latest/api/config/), [standard types](https://docs.pydantic.dev/latest/api/standard_library_types/), and [PaymentCardNumber](https://docs.pydantic.dev/latest/api/pydantic_extra_types_payment/).
+See [validators](https://pydantic.dev/docs/validation/latest/concepts/validators/), [serializers](https://pydantic.dev/docs/validation/latest/concepts/serialization/), [ConfigDict](https://pydantic.dev/docs/validation/latest/api/pydantic/config/), [standard types](https://pydantic.dev/docs/validation/latest/api/pydantic/standard_library_types/), and [PaymentCardNumber](https://pydantic.dev/docs/validation/latest/api/pydantic-extra-types/pydantic_extra_types_payment/).

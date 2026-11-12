@@ -70,6 +70,6 @@ To estimate running time, count operations with constant cost in the chosen mode
 
 ## Sources
 
-- [Big O in the NIST dictionary](https://www.nist.gov/dads/HTML/bigOnotation.html) · [Θ in the NIST dictionary](https://www.nist.gov/dads/HTML/theta.html)
-- [Binary search in the NIST dictionary](https://www.nist.gov/dads/HTML/binarySearch.html) · [Merge sort in the NIST dictionary](https://www.nist.gov/dads/HTML/mergesort.html)
-- [`range` in the Python 3.14 documentation](https://docs.python.org/3.14/library/stdtypes.html#ranges)
+- [Big O in the NIST dictionary](https://xlinux.nist.gov/dads/HTML/bigOnotation.html) · [Θ in the NIST dictionary](https://xlinux.nist.gov/dads/HTML/theta.html)
+- [Binary search in the NIST dictionary](https://xlinux.nist.gov/dads/HTML/binarySearch.html) · [Merge sort in the NIST dictionary](https://xlinux.nist.gov/dads/HTML/mergesort.html)
+- [`range` in the Python 3.14 documentation](https://docs.python.org/3.14/builtins/stdtypes.html#ranges)

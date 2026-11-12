@@ -14,6 +14,7 @@ Links lead to a specific card, commands, or example in the main material.
 | Validate data, write tests, or configure logs | [Validation, tests, and logging](#validation-tests-and-logging) |
 | Send an HTTP request, write an API, or protect a route | [HTTP and web applications](#http-apis-and-web-applications) |
 | Review Go, cancel tasks, or protect shared data | [Go](#go-language-and-concurrency) |
+| Look up syntax, build a program, or choose a library for C, C#, or C++ | [C, C#, and C++](#c-family-basics) |
 | Query data, run a transaction, or create a backup | [Databases and SQL](#databases-and-sql) |
 | Find a file, process, network port, or service log | [Linux and shell](#linux-and-shell) |
 | Run an app with PostgreSQL or diagnose a failed CI test | [Docker Compose and CI](#docker-compose-and-ci) |
@@ -91,10 +92,10 @@ Command consequences and example limitations appear there as well.
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
 | Send a request from the terminal, inspect status and headers, and extract a JSON field | curl, jq, HTTP status code, body | [HTTP and JSON](../tools/http-json.md) |
-| Create a FastAPI route with path/query/body parameters and validation | REST, endpoint, request, response, 422 | [FastAPI HTTP API with validation](../python/web/fastapi/recipes.md#http-api-with-validation) |
+| Create a FastAPI route with path/query/body parameters and validation | REST, endpoint, request, response, 422 | [Quick card](../python/web/fastapi/recipes.md#http-api-with-validation) · [Complete HTTP API](../python/web/fastapi/http-api.md#http-api-with-validation) |
 | Pass a dependency to a FastAPI handler | Depends, dependency injection, sub-dependency | [How FastAPI dependencies work](../python/web/fastapi/recipes.md#how-dependencies-work) |
-| Accept a form or file | upload, multipart, Form, UploadFile | [FastAPI forms and files](../python/web/fastapi/recipes.md#forms-and-file-uploads) |
-| Configure CORS or middleware | browser, cross-origin, headers, request middleware | [FastAPI middleware and CORS](../python/web/fastapi/recipes.md#middleware-and-cors) |
+| Accept a form or file | upload, multipart, Form, UploadFile | [Quick card](../python/web/fastapi/recipes.md#forms-and-file-uploads) · [Complete upload example](../python/web/fastapi/uploads.md#forms-and-file-uploads) |
+| Configure CORS or middleware | browser, cross-origin, headers, request middleware | [Quick card](../python/web/fastapi/recipes.md#middleware-and-cors) · [Complete middleware and CORS example](../python/web/fastapi/middleware.md#middleware-and-cors) |
 | Verify a password and protect a route with a token | auth, authentication, JWT, bearer, OAuth2, 401 | [Complete FastAPI authentication example](../python/web/fastapi/authentication.md#complete-example) |
 | Provide a database session per request and close resources | SQLAlchemy, Session, AsyncSession, yield, lifespan | [Synchronous FastAPI session](../python/web/fastapi/database.md#synchronous-sqlalchemy) · [Async and lifespan](../python/web/fastapi/database.md#async-sqlalchemy-and-lifespan) |
 | Test a FastAPI response and invalid input | TestClient, httpx2, integration test, 422 | [FastAPI TestClient card](../python/web/fastapi/testing.md#synchronous-testclient) · [Complete checks](../python/web/fastapi/testing-lab.md) |
@@ -123,6 +124,41 @@ Command consequences and example limitations appear there as well.
 | Protect shared memory | mutex, sync.Mutex, race, data race, counter | [Go shared data](../go/concurrency-and-testing.md#shared-data-and-mutexes) |
 | Test concurrent code and detect races | concurrency test, go test -race, race detector | [Go tests and race detector](../go/concurrency-and-testing.md#tests-and-the-race-detector) |
 
+<a id="c-family-basics"></a>
+
+<a id="c-c-and-c-basics"></a>
+
+## C, C#, and C++
+
+| Task | Synonyms and API names | Direct link |
+| --- | --- | --- |
+| Build and run a C program | C17, clang, main, printf, linking | [C first run](../c/README.md#first-run) |
+| Pass an array to a C function | size_t, sizeof, pointer, bounds | [C arrays and memory](../c/README.md#arrays-and-memory) |
+| Look up C syntax and memory management | struct, enum, pointer, malloc, free, const | [C syntax](../c/syntax.md) |
+| Add a library and test a function in C | CMake, vcpkg, FetchContent, CTest, Unity | [C dependencies](../c/tooling-and-testing.md#packages) · [Tests](../c/tooling-and-testing.md#tests) |
+| Choose tools for C and organize the code | embedded, driver, systems software, resource ownership | [C patterns](../c/practice.md#patterns) · [Application areas](../c/practice.md#application-areas) |
+| Build and run a C# project | C#, C Sharp, .NET SDK, csproj, dotnet build, dotnet run | [C# first run](../csharp/README.md#first-run) |
+| Add a number to a list or validate a C# argument | `List<T>`, Add, foreach, TryParse, exit code | [C# collections](../csharp/README.md#collections) · [Common mistakes](../csharp/README.md#common-mistakes) |
+| Look up C# syntax | nullable, record, generics, LINQ, async, await | [C# syntax](../csharp/syntax.md) |
+| Install a NuGet package or run C# tests | pip, NuGet, PackageReference, dotnet restore, dotnet test | [C# packages](../csharp/tooling-and-testing.md#packages) · [Tests](../csharp/tooling-and-testing.md#tests) |
+| Choose a .NET framework and define component boundaries | ASP.NET Core, EF Core, DI, desktop, games | [C# patterns](../csharp/practice.md#patterns) · [Application areas](../csharp/practice.md#application-areas) |
+| Build and run a C++ program | C++20, clang++, main, cout, linking | [C++ first run](../cpp/README.md#first-run) |
+| Add an element to a vector and check the index | std::vector, push_back, size, at, out_of_range | [C++ collections](../cpp/README.md#collections) · [Common mistakes](../cpp/README.md#common-mistakes) |
+| Look up C++ syntax and lifetime rules | RAII, const, reference, move, template, lambda | [C++ syntax](../cpp/syntax.md) |
+| Add a C++ library and run tests | CMake, vcpkg, Conan, CTest, GoogleTest | [C++ dependencies](../cpp/tooling-and-testing.md#packages) · [Tests](../cpp/tooling-and-testing.md#tests) |
+| Choose tools for C++ and organize the code | RAII, Qt, Unreal Engine, embedded, low latency | [C++ patterns](../cpp/practice.md#patterns) · [Application areas](../cpp/practice.md#application-areas) |
+
+<details>
+<summary>Compare the path from source code to a running program</summary>
+
+The diagram shows the artifacts in a typical console build. Arrow labels identify the command or stage that creates the next artifact or starts the process.
+
+![C and C++ compile source to an object file and link an executable. In .NET, the SDK restores dependencies and builds a DLL with IL, which runs on the .NET runtime.](../../assets/language-toolchains-en.svg)
+
+[Clang stages](https://releases.llvm.org/21.1.0/tools/clang/docs/CommandGuide/clang.html) · [.NET builds](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-build) · [.NET execution](https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process)
+
+</details>
+
 <a id="базы-данных-и-sql"></a>
 ## Databases and SQL
 
@@ -143,9 +179,9 @@ Command consequences and example limitations appear there as well.
 | Avoid excessive database queries when reading collections | SQLAlchemy, N+1, lazy loading, eager loading, SELECT counter | [N+1 card](../python/databases/sqlalchemy/relationship-loading.md#find-n1) · [Example and SELECT count chart](../python/databases/sqlalchemy/n-plus-one.md) |
 | Choose loading for collections and scalar relationships | selectinload, joinedload, unique, relationship, result size, LIMIT | [SQLAlchemy decision table](../python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
 | Prevent unintended lazy loading | raiseload, unexpected SQL, InvalidRequestError | [SQLAlchemy error in place of a SELECT](../python/databases/sqlalchemy/relationship-loading.md#detect-unplanned-lazy-loading) |
-| Filter parents and load all their children | JOIN, filter, complete collection, selectinload | [SQLAlchemy parents and complete collections](../python/databases/sqlalchemy/relationship-loading.md#filter-parents-and-load-complete-collections) |
-| Populate a relationship from your own JOIN result | contains_eager, filtered collection, partial collection | [SQLAlchemy partial collection](../python/databases/sqlalchemy/relationship-loading.md#load-a-partial-collection-from-a-join) |
-| Replace an already-loaded relationship | populate_existing, expire_all, identity map | [Refresh a SQLAlchemy collection](../python/databases/sqlalchemy/relationship-loading.md#refresh-an-already-loaded-collection) |
+| Filter parents and load all their children | JOIN, filter, complete collection, selectinload | [SQLAlchemy parents and complete collections](../python/databases/sqlalchemy/filtered-relationships.md#filter-parents-and-load-complete-collections) |
+| Populate a relationship from your own JOIN result | contains_eager, filtered collection, partial collection | [SQLAlchemy partial collection](../python/databases/sqlalchemy/filtered-relationships.md#load-a-partial-collection-from-a-join) |
+| Replace an already-loaded relationship | populate_existing, expire_all, identity map | [Refresh a SQLAlchemy collection](../python/databases/sqlalchemy/filtered-relationships.md#refresh-an-already-loaded-collection) |
 | Process a large ORM result in batches | yield_per, partitions, streaming, memory | [SQLAlchemy batch processing](../python/databases/sqlalchemy/streaming.md) |
 | Use an async ORM session | AsyncSession, AsyncAttrs, awaitable_attrs, asyncio | [SQLAlchemy async session](../python/databases/sqlalchemy/async-and-operations.md#async-session) |
 | Change a schema through a migration | Alembic, revision, upgrade, downgrade, migration | [Standalone Alembic project](../python/databases/sqlalchemy/async-and-operations.md#alembic-in-a-separate-practice-project) |

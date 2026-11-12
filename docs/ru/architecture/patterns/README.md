@@ -74,5 +74,5 @@
 ## Источники
 
 - [GoF: Design Patterns, страница издателя](https://www.informit.com/store/design-patterns-elements-of-reusable-object-oriented-9780201633610).
-- [Cockburn: Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/).
+- [Cockburn: Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture).
 - [Microsoft: каталог архитектурных паттернов](https://learn.microsoft.com/en-us/azure/architecture/patterns/).

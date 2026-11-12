@@ -170,5 +170,5 @@ For an internal local function, changing all calls together can be simpler.
 ## Sources
 
 - [Robert C. Martin, SRP](https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html) covers reasons for change.
-- [Alistair Cockburn, Ports & Adapters](https://alistair.cockburn.us/hexagonal-architecture/) covers application isolation.
+- [Alistair Cockburn, Ports & Adapters](https://alistair.cockburn.us/hexagonal-architecture) covers application isolation.
 - [Martin Fowler, Yagni](https://martinfowler.com/bliki/Yagni.html), [Danilo Sato, Parallel Change](https://martinfowler.com/bliki/ParallelChange.html).

@@ -58,7 +58,7 @@ FastAPI executes these handlers in a thread pool.
 Synchronous `create_all` in lifespan is acceptable here for a tiny practice database.
 In an application, run migrations as a separate step.
 
-Sources include [SQLAlchemy sessions and transactions](https://docs.sqlalchemy.org/en/21/orm/session_basics.html), [FastAPI dependencies with yield](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/), and [Pydantic reading object attributes](https://docs.pydantic.dev/latest/concepts/models/#arbitrary-class-instances).
+Sources include [SQLAlchemy sessions and transactions](https://docs.sqlalchemy.org/en/21/orm/session_basics.html), [FastAPI dependencies with yield](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/), and [Pydantic reading object attributes](https://pydantic.dev/docs/validation/latest/concepts/models/#arbitrary-class-instances).
 
 <a id="async-sqlalchemy-и-lifespan"></a>
 ## Async SQLAlchemy and lifespan
@@ -74,6 +74,19 @@ Run `uvicorn async_db_app:app --reload`.
 POST `/notes` with JSON `{"text":"Прочитать документацию"}` returns `201`.
 GET `/notes` returns a note list.
 `fastapi-async.db` is created in the launch directory.
+
+The diagram shows how the example relates the application lifespan, one request's session, and its write transaction.
+
+```mermaid
+flowchart TB
+    Startup["lifespan prepares the tables"] -->|"When a request arrives"| Request
+    subgraph Request["One POST /notes request"]
+        direction TB
+        Open["get_session opens an AsyncSession"] -->|"yield session"| Write["The handler writes within session.begin()"]
+        Write -->|"When get_session exits"| Close["The AsyncSession closes"]
+    end
+    Request -->|"When the application shuts down"| Shutdown["lifespan calls engine.dispose()"]
+```
 
 Before `yield`, lifespan opens or prepares the resource.
 After `yield`, lifespan closes the resource.

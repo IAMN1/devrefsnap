@@ -3,7 +3,7 @@
 
 [Русский](../../ru/tools/README.md)
 
-[Find an example by task or synonym](../tasks/README.md#git-and-github) for Git, undoing changes, branches, and Pull Requests.
+Find an example by task or synonym under [HTTP and JSON](../tasks/README.md#http-apis-and-web-applications), [Docker Compose and CI](../tasks/README.md#docker-compose-and-ci), or [Git and GitHub](../tasks/README.md#git-and-github).
 
 This section contains general tools for projects in different languages.
 The materials cover HTTP checks, running apps with dependencies, CI, version control, and collaboration.

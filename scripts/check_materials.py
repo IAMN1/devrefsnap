@@ -13,7 +13,11 @@ from urllib.parse import unquote, urlsplit
 
 from markdown_it import MarkdownIt
 
-LANGUAGES = frozenset("python py bash sh shell console text plaintext sql psql json yaml yml toml ini dockerfile go mermaid markdown md diff html css javascript js typescript ts xml http nginx makefile env powershell".split())
+LANGUAGES = frozenset(
+    "python py bash sh shell console text plaintext sql psql json yaml yml toml ini "
+    "dockerfile go mermaid markdown md diff html css javascript js typescript ts "
+    "xml http nginx makefile env powershell c cpp csharp cmake".split()
+)
 IGNORED_DIRS = frozenset({".git", ".venv", "__pycache__"})
 MAX_FILE_BYTES = 1024 * 1024
 MAX_TOTAL_BYTES = 20 * 1024 * 1024

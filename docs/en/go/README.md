@@ -16,10 +16,10 @@ The section contains a quick reference and independent learning examples with no
 
 | Task | Technique | Details |
 | --- | --- | --- |
-| Create a module and run a program | `go.mod`, `go run ./cmd/demo` | [Language and module](language.md) |
+| Create a module and run a program | `go.mod`, `go run ./cmd/demo` | [Complete example setup](examples/language.md#setup) |
 | Variables, loops, slices/maps/pointers | Standard syntax | [Syntax](language.md#basic-constructs) |
 | Struct, method, interface, generics | Value/pointer receivers, type constraints | [Object and interface](language.md#mutate-an-object-and-preserve-its-interface) |
-| Error with a cause | `%w`, `errors.Is`, `errors.As` | [Language tests](language.md#test-valid-and-invalid-input) |
+| Error with a cause | `%w`, `errors.Is`, `errors.As` | [Reference card](language.md#validate-input-and-inspect-an-errors-cause) · [Input tests](examples/language.md#test-valid-and-invalid-input) |
 | Cancellation, channels, and bounded workers | `context`, `select`, `WaitGroup` | [Concurrency](concurrency-and-testing.md) |
 | Cancel an outgoing HTTP request or set a deadline | `context.WithCancel`, `context.WithTimeout` | [HTTP request context](context.md) |
 | Protect shared state | `sync.Mutex` | [Counter](concurrency-and-testing.md#shared-data-and-mutexes) |

@@ -40,15 +40,15 @@ This complete shell example creates temporary files and leaves system service se
 ```bash
 umask 077
 redis_demo_dir="$(mktemp -d)"
-printf 'Сокет учебного процесса: %s/redis.sock\n' "$redis_demo_dir"
+printf 'Practice Redis socket: %s/redis.sock\n' "$redis_demo_dir"
 redis-server --port 0 --unixsocket "$redis_demo_dir/redis.sock" --unixsocketperm 700 \
   --save "" --appendonly no --dir "$redis_demo_dir"
 ```
 
 Wait for the process to become ready.
 In another terminal, set REDIS_URL using the **printed** path.
-Use the form `unix:///полный/путь/redis.sock?db=0` and substitute the actual path.
-Check PING, for example with `redis-cli -s /полный/путь/redis.sock PING` using that path.
+Use the form `unix:///absolute/path/redis.sock?db=0` and substitute the actual path.
+Check PING, for example with `redis-cli -s /absolute/path/redis.sock PING` using that path.
 The expected reply is PONG.
 After finishing, stop this foreground process with Ctrl-C.
 Persistence is disabled, so its data disappear on shutdown.

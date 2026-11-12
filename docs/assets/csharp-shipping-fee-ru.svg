@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="340" viewBox="0 0 900 340" role="img" aria-labelledby="title desc">
+  <title id="title">Порог бесплатной доставки</title>
+  <desc id="desc">Для суммы заказа от 0 до 4999 центов стоимость доставки равна 500 центам. При сумме от 5000 центов стоимость равна 0. Пустая точка исключает значение 500 при сумме 5000, а закрашенная точка включает значение 0.</desc>
+  <rect width="900" height="340" rx="12" fill="#fff"/>
+  <g font-family="system-ui, sans-serif" fill="#222c3d">
+    <text x="28" y="42" font-size="28" font-weight="700">Порог бесплатной доставки</text>
+    <text x="28" y="78" font-size="17">Стоимость доставки, центы</text>
+    <path d="M90 118H825 M580 118V247" stroke="#bac9c6" stroke-width="1.5" stroke-dasharray="6 6" fill="none"/>
+    <path d="M90 99V247H849" stroke="#384357" stroke-width="1.5" fill="none"/>
+    <path d="M90 118H580 M580 247H825" stroke="#0f6d5a" stroke-width="4" fill="none"/>
+    <circle cx="580" cy="118" r="6.5" fill="#fff" stroke="#0f6d5a" stroke-width="3"/>
+    <circle cx="580" cy="247" r="6.5" fill="#0f6d5a"/>
+    <text x="596" y="224" font-size="17" font-weight="600" fill="#0f6d5a">Порог включён</text>
+    <g font-size="16" text-anchor="end">
+      <text x="75" y="124">500</text>
+      <text x="75" y="252">0</text>
+    </g>
+    <g font-size="16" text-anchor="middle">
+      <text x="90" y="274">0</text>
+      <text x="580" y="274">5 000</text>
+      <text x="825" y="274">7 500</text>
+    </g>
+    <text x="849" y="312" font-size="17" text-anchor="end">Сумма заказа, центы</text>
+  </g>
+</svg>

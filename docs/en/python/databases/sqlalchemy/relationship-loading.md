@@ -18,9 +18,9 @@ For an introduction, open the [standalone synchronous N+1 example](n-plus-one.md
 | A small collection is needed without a separate SELECT | `joinedload` includes related rows in the same SELECT | [Collection and unique](#load-a-collection-with-joinedload) |
 | The author of each post is needed | Compare repeated fields and SELECT counts | [Scalar relationship](#load-a-scalar-relationship) |
 | Unexpected loading must raise an error | `raiseload` prevents relationship loading on attribute access | [Prevent lazy loading](#detect-unplanned-lazy-loading) |
-| Filter by a child table and retrieve the complete collection | Explicit JOIN + `selectinload` | [Filter parents](#filter-parents-and-load-complete-collections) |
-| Only a selected part of the collection is needed | `contains_eager` populates the relationship from a custom JOIN | [Load a partial collection](#load-a-partial-collection-from-a-join) |
-| The collection is already loaded | `populate_existing` explicitly refreshes object state | [Refresh a loaded collection](#refresh-an-already-loaded-collection) |
+| Filter by a child table and retrieve the complete collection | Explicit JOIN + `selectinload` | [Filter parents](filtered-relationships.md#filter-parents-and-load-complete-collections) |
+| Only a selected part of the collection is needed | `contains_eager` populates the relationship from a custom JOIN | [Load a partial collection](filtered-relationships.md#load-a-partial-collection-from-a-join) |
+| The collection is already loaded | `populate_existing` explicitly refreshes object state | [Refresh a loaded collection](filtered-relationships.md#refresh-an-already-loaded-collection) |
 | The result does not fit in memory | Choose batch processing separately | [Large result sets](streaming.md) |
 
 | Parameter | Value |
@@ -55,7 +55,7 @@ Both `selectinload` and `joinedload` perform eager loading.
 | Many rows reference the same objects with large fields | Compare scalar-relationship `selectinload` with `joinedload` | An additional SELECT may reduce repeated field transfer. Measure any improvement |
 | The relationship may be unused | Lazy loading | Reading may execute SQL. For a simple many-to-one relationship, the identity map sometimes avoids a SELECT |
 | Unplanned access must raise an error | `raiseload` | Raises on lazy access. SQL required during flush can still execute |
-| Only a selected part of a collection is needed | Filter and `contains_eager` | Make the collection's partial nature explicit. See the [card](#load-a-partial-collection-from-a-join) |
+| Only a selected part of a collection is needed | Filter and `contains_eager` | Make the collection's partial nature explicit. See the [card](filtered-relationships.md#load-a-partial-collection-from-a-join) |
 
 For a collection, one parent can correspond to several SQL result rows.
 `unique()` retains one ORM object per identity in the Python result. The transferred SQL rows remain the same.
@@ -237,7 +237,7 @@ with Session(engine) as session:
         select(User).options(selectinload(User.posts), raiseload("*")).order_by(User.id)
     ).all()
     sizes = [len(user.posts) for user in users]
-    # users[0].profile не загружен: обращение вызовет InvalidRequestError.
+    # Accessing the unloaded users[0].profile raises InvalidRequestError.
 ```
 
 **Result** — posts are available. Accessing an unloaded profile raises an error without issuing a SELECT.
@@ -246,81 +246,22 @@ The `"*"` wildcard also applies to relationships of loaded child objects.
 An internal flush can perform required loads while bypassing `raiseload`.
 [Check the error and verify that no SELECT runs](loading-lab.md#compare-strategies-and-check-limitations)
 
+## Filtering and collection state
+
 <a id="отфильтровать-родителей-и-загрузить-полные-коллекции"></a>
-## Filter parents and load complete collections
+<a id="filter-parents-and-load-complete-collections"></a>
 
-**Situation** — select users with a Python post, while including all posts for each selected user.
-Filter parents with an explicit JOIN.
-Load the collection separately.
-
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import Session, selectinload
-from demo_models import Post, User
-
-with Session(engine) as session:
-    users = session.scalars(
-        select(User).join(User.posts).where(Post.title == "Python")
-        .options(selectinload(User.posts)).order_by(User.id)
-    ).unique().all()
-```
-
-**Result** — only Alice is selected, and her collection contains Python and SQL.
-`unique()` removes potential duplicate parents after the explicit JOIN.
-Filtering parents does not automatically filter collection contents.
-[Complete and partial collection comparison](loading-lab.md#compare-strategies-and-check-limitations)
+- [Filter parents and load complete collections](filtered-relationships.md#filter-parents-and-load-complete-collections)
 
 <a id="загрузить-частичную-коллекцию-из-join"></a>
-## Load a partial collection from a JOIN
+<a id="load-a-partial-collection-from-a-join"></a>
 
-**Situation** — `User.posts` should contain only posts selected by your JOIN.
-In a fresh Session, route the JOIN rows into the relationship.
-
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import Session, contains_eager
-from demo_models import Post, User
-
-with Session(engine) as session:
-    users = session.scalars(
-        select(User).join(User.posts).where(Post.title == "Python")
-        .options(contains_eager(User.posts)).order_by(User.id)
-    ).unique().all()
-```
-
-**Result** — Alice is selected, and her collection contains only Python.
-The collection is intentionally partial. The absence of SQL from it does not imply that the post was deleted from the database.
-After the state expires, a subsequent load can return the complete collection again.
-If the collection is already loaded, use the [next card](#refresh-an-already-loaded-collection).
-[Complete check](loading-lab.md#compare-strategies-and-check-limitations)
+- [Load a partial collection from a JOIN](filtered-relationships.md#load-a-partial-collection-from-a-join)
 
 <a id="обновить-уже-загруженную-коллекцию"></a>
-## Refresh an already loaded collection
+<a id="refresh-an-already-loaded-collection"></a>
 
-**Situation** — Alice is already in the Session with the complete posts collection.
-A new query alone can leave an already loaded relationship unchanged.
-The snippet continues in this Session with no pending changes.
-
-```python
-from sqlalchemy import select
-from sqlalchemy.orm import contains_eager
-from demo_models import Post, User
-
-stmt = (
-    select(User).join(User.posts).where(Post.title == "Python")
-    .options(contains_eager(User.posts))
-    .execution_options(populate_existing=True)
-)
-alice = session.scalars(stmt).unique().one()
-```
-
-**Result** — Alice's loaded collection is replaced with the selected subset, containing only Python.
-Before refreshing, decide how to preserve any required local changes.
-`populate_existing` can replace values in memory. Pay particular attention when autoflush is disabled.
-`expire_all()` marks state as expired while retaining the Session's identity map.
-Subsequent access can execute SQL.
-Avoid sharing a Session concurrently between threads.
-[Identity map and reloading check](loading-lab.md#compare-strategies-and-check-limitations)
+- [Refresh an already loaded collection](filtered-relationships.md#refresh-an-already-loaded-collection)
 
 <a id="проверить-выбор"></a>
 
@@ -331,6 +272,6 @@ The practice SELECT count does not measure application speed improvements.
 ## Sources
 
 - [Choosing relationship loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#what-kind-of-loading-to-use), [select-in](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#select-in-loading), [joined loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#joined-eager-loading).
-- [Raiseload](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#preventing-unwanted-lazy-loads-using-raiseload), [contains_eager](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#using-contains-eager-to-load-a-custom-filtered-collection-result), [populate_existing](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#populate-existing).
+- [Raiseload](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#preventing-unwanted-lazy-loads-using-raiseload).
 - [Batch reading and limitations](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#fetching-large-result-sets-with-yield-per).
 - [Release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).

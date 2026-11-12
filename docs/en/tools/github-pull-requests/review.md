@@ -35,20 +35,20 @@ GitHub does not require a fixed limit of 400 lines.
 Adapt the description template to the specific repository's template.
 
 ```markdown
-## Задача и результат
-Что происходило раньше, при каком условии и что теперь меняется.
+## Problem and result
+Describe the previous behavior, when it occurred, and what changes.
 
-## Изменения
-- Существенные изменения и причина выбранного решения.
+## Changes
+- Summarize the changes and why you chose this approach.
 
-## Проверка
-- Что выполнено и какой получен результат.
-- Что не проверялось и почему это существенно.
+## Verification
+- Record what you ran and the outcome.
+- Note any material limits of the checks.
 
-## Риски и совместимость
-Миграции, несовместимость, ограничения; при необходимости план отката.
+## Risks and compatibility
+Describe migrations, compatibility limits, and rollback steps where applicable.
 
-## Связанные задачи
+## Related issues
 Closes #123
 ```
 

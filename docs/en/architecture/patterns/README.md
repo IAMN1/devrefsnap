@@ -74,5 +74,5 @@ Networking, recovery after process termination, load, and concurrency require se
 ## Sources
 
 - [GoF Design Patterns publisher page](https://www.informit.com/store/design-patterns-elements-of-reusable-object-oriented-9780201633610).
-- [Cockburn, Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/).
+- [Cockburn, Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture).
 - [Microsoft architecture pattern catalog](https://learn.microsoft.com/en-us/azure/architecture/patterns/).

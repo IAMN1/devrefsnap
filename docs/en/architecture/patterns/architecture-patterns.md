@@ -296,6 +296,6 @@ It checks repeated publication after a simulated relay failure.
 <a id="источники"></a>
 ## Sources
 
-- Code organization — [Cockburn](https://alistair.cockburn.us/hexagonal-architecture/), [Bogard](https://www.jimmybogard.com/vertical-slice-architecture/), [Microsoft layers / tiers](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/n-tier).
+- Code organization — [Cockburn](https://alistair.cockburn.us/hexagonal-architecture), [Bogard](https://www.jimmybogard.com/vertical-slice-architecture/), [Microsoft layers / tiers](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/n-tier).
 - Releases and boundaries — [Fowler / Lewis, Microservices](https://martinfowler.com/articles/microservices.html), [Fowler, Monolith First](https://martinfowler.com/bliki/MonolithFirst.html).
 - Data and failure sources are collected on the [detailed page](distributed-systems.md#sources).

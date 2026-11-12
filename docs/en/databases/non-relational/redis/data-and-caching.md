@@ -43,9 +43,9 @@ The first command prepares a value that expires after 60 seconds.
 client.set(cache, '{"name":"Ada"}', ex=60)
 updated = client.set(cache, '{"name":"Ada Lovelace"}', xx=True, keepttl=True)
 if updated is None:
-    print("Ключ отсутствует; обновление пропущено")
+    print("Key missing. Skipped update.")
 else:
-    print("Значение обновлено")
+    print("Value updated.")
 ```
 
 If the key exists with a TTL at the time of the update, Redis changes the value and keeps the original expiration time.

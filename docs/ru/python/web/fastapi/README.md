@@ -16,7 +16,8 @@ FastAPI строит HTTP API из аннотаций Python и моделей P
 | --- | --- | --- |
 | Поднять API | `uvicorn minimal:app --reload` | [Первый запуск](#первый-запуск) |
 | CRUD, path/query/body, валидация | `Path`, `Query`, `BaseModel`, `Field` | [Полный CRUD](http-api.md#http-api-с-валидацией) |
-| Ответы, ошибки, выходная модель | `response_model`, `HTTPException`, `JSONResponse` | [Модели и ответы](http-api.md#http-api-с-валидацией) |
+| Вернуть нужный статус или сообщение об ошибке | `HTTPException`, `JSONResponse` | [Модели и ответы](http-api.md#http-api-с-валидацией) |
+| Исключить пароль из ответа | `response_model=UserOut` | [Карточка и тест](#отдать-публичную-модель-без-пароля) |
 | Посмотреть HTTP-ответ из терминала | `curl -i`, `jq` | [HTTP и JSON](../../../tools/http-json.md) |
 | Функция, класс, подзависимость | `Annotated[T, Depends(...)]` | [Зависимости](recipes.md#как-устроены-зависимости) |
 | Форма, один или несколько файлов | `Form`, `UploadFile`, `File` | [Полное приложение](uploads.md#формы-и-загрузка-файлов) |
@@ -25,7 +26,7 @@ FastAPI строит HTTP API из аннотаций Python и моделей P
 | Проверить API синхронно/асинхронно | `TestClient`, `ASGITransport` | [Тестирование](testing.md) |
 | Проверить обработчик без вызова реальной зависимости | `app.dependency_overrides` | [Карточка выбора](testing.md#подмена-зависимости) · [Самостоятельная программа](dependency-overrides.md#минимальный-самостоятельный-пример) |
 | Восстановить зависимости после теста или ошибки | `try` / `finally` | [Полные проверки восстановления](dependency-overrides.md#полный-файл-тестов) |
-| Проверить пароль и JWT | `pwdlib`, `PyJWT`, `OAuth2PasswordBearer` | [Аутентификация](authentication.md) |
+| Проверить пароль и JWT | `pwdlib`, `PyJWT`, `OAuth2PasswordBearer` | [Аутентификация](authentication.md) · [Тесты доступа и отказа](testing-lab.md#аутентификация) |
 | Workers, контейнер, OpenAPI | Uvicorn, Docker, `app.openapi()` | [Запуск и деплой](deployment.md) |
 
 | Параметр | Значение |
@@ -103,7 +104,7 @@ ReDoc доступен на [localhost:8000/redoc](http://localhost:8000/redoc).
 Задавайте пользовательские правила через `field_validator`/`model_validator`.
 Для выхода объявляйте отдельную модель без пароля.
 Указывайте выходную модель в `response_model`.
-[Согласованный CRUD и модели](recipes.md#http-api-с-валидацией).
+[Согласованный CRUD и модели](http-api.md#http-api-с-валидацией).
 
 <a id="средний-уровень"></a>
 
@@ -112,7 +113,7 @@ ReDoc доступен на [localhost:8000/redoc](http://localhost:8000/redoc).
 
 **Ситуация:** вход `/user-preview` принимает пароль, но HTTP-ответ не должен содержать пароль.
 **Изменение:** задайте отдельную модель `UserOut` через `response_model`.
-Фрагмент [полного HTTP-приложения](recipes.md#http-api-с-валидацией), где обе модели уже определены:
+Фрагмент обработчика `preview_user`. Полное приложение определяет модели `UserIn` и `UserOut`.
 
 ```python
 @app.post("/user-preview", response_model=UserOut)
@@ -122,7 +123,7 @@ async def preview_user(user: UserIn):
 
 **Результат:** запрос с `username`, `email`, `password` возвращает публичные поля без `password`.
 Готовый `Response` обходит обычную фильтрацию модели ответа.
-[Полное приложение](recipes.md#http-api-с-валидацией) · [Проверка отсутствия пароля](testing.md#синхронный-testclient).
+Запуск описан в [полном HTTP-примере](http-api.md#http-api-с-валидацией). Тест `test_output_does_not_expose_password` находится в [`test_main.py`](../../../../../examples/python/web/fastapi/test_main.py).
 
 
 | Задача | Что помнить |
@@ -156,7 +157,7 @@ def get_session() -> Generator[Session, None, None]:
 **Результат:** выход из зависимости закрывает сессию; обработчик получает сессию через `Depends(get_session)`.
 Контекст Session сам не делает commit.
 В полном примере обработчик явно фиксирует или откатывает транзакцию.
-[Sync/async-приложения](database.md) · [Проверки БД и lifespan](testing.md#сессии-бд-и-lifespan).
+[Sync/async-приложения](database.md) · [Проверки БД и lifespan](testing-lab.md#сессии-бд-и-lifespan).
 
 
 - **Жизненный цикл и БД:** создавайте общие ресурсы в `lifespan`. Закрывайте общие ресурсы в `lifespan`. Выдавайте сессию на запрос через `yield`. Используйте синхронный SQLAlchemy в `def`-обработчиках. `async def` требует неблокирующего клиента. [Синхронный и async варианты](database.md).
@@ -182,5 +183,5 @@ def get_session() -> Generator[Session, None, None]:
 - [FastAPI: release notes 0.162.0](https://fastapi.tiangolo.com/release-notes/#01620-2026-10-23).
 - [Параметры query](https://fastapi.tiangolo.com/tutorial/query-params-str-validations/), [модели ответа](https://fastapi.tiangolo.com/tutorial/response-model/).
 - [Когда использовать async/def](https://fastapi.tiangolo.com/async/), [lifespan](https://fastapi.tiangolo.com/advanced/events/).
-- [Миграция Pydantic v2](https://docs.pydantic.dev/latest/migration/).
+- [Миграция Pydantic v2](https://pydantic.dev/docs/validation/latest/get-started/migration/).
 - [FastAPI: async-тесты](https://fastapi.tiangolo.com/advanced/async-tests/).

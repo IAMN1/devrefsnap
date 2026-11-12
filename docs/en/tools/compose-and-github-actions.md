@@ -95,6 +95,21 @@ Commit the files. Push the commit to the **practice repository's** default branc
 
 A workflow is a file that defines a run. `workflow_dispatch` enables manual runs with the `fail_test` input. The `integration` job runs on an Ubuntu 24.04 machine hosted by GitHub. GitHub starts PostgreSQL as a service container and assigns an available port on the runner. The `Run database test` step connects via `127.0.0.1` and uses that port. The job runs the test directly on the GitHub runner. Your local test ran inside the `app` container.
 
+The diagram compares where the test runs and which address it uses to connect to PostgreSQL.
+
+```mermaid
+flowchart LR
+    subgraph Local["Local run · Compose network"]
+        direction TB
+        LocalTest["Test in the app container"] -->|"postgres:5432"| LocalDB["PostgreSQL container"]
+    end
+    subgraph CI["GitHub Actions · integration job"]
+        direction TB
+        RunnerTest["Test on the GitHub runner"] -->|"127.0.0.1 and assigned port"| ServiceDB["PostgreSQL service container"]
+    end
+    Local ~~~ CI
+```
+
 `contents: read` lets the job read the repository files. Both `uses` steps pin official actions to full commit SHAs. The example requires no repository secrets.
 
 1. On GitHub, open **Actions → PostgreSQL integration test → Run workflow**.

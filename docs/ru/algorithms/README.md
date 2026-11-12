@@ -70,6 +70,6 @@ n linear quadratic
 
 ## Источники
 
-- [Big O в словаре NIST](https://www.nist.gov/dads/HTML/bigOnotation.html) · [Θ в словаре NIST](https://www.nist.gov/dads/HTML/theta.html)
-- [Двоичный поиск в словаре NIST](https://www.nist.gov/dads/HTML/binarySearch.html) · [Сортировка слиянием в словаре NIST](https://www.nist.gov/dads/HTML/mergesort.html)
-- [`range` в документации Python 3.14](https://docs.python.org/3.14/library/stdtypes.html#ranges)
+- [Big O в словаре NIST](https://xlinux.nist.gov/dads/HTML/bigOnotation.html) · [Θ в словаре NIST](https://xlinux.nist.gov/dads/HTML/theta.html)
+- [Двоичный поиск в словаре NIST](https://xlinux.nist.gov/dads/HTML/binarySearch.html) · [Сортировка слиянием в словаре NIST](https://xlinux.nist.gov/dads/HTML/mergesort.html)
+- [`range` в документации Python 3.14](https://docs.python.org/3.14/builtins/stdtypes.html#ranges)
