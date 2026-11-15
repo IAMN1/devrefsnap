@@ -61,12 +61,13 @@ base_sha=$(git rev-parse origin/main)
 
 ## Проверить внешний PR
 
-1. Прочитайте diff до разрешения внешнего workflow-запуска.
+1. Откройте **Files changed** и прочитайте diff до разрешения запуска.
 2. Проверьте `.github/`, `scripts/`, `AGENTS.md`, `templates/` и CODEOWNERS.
 3. Проверьте новые адреса, пакеты, скачивание скриптов, передачу данных и условия разрушительных команд.
-4. Дождитесь `materials-static` и `checker-tests` на последней версии PR.
-5. Если `main` изменилась, обновите PR и повторите проверки перед слиянием.
-6. Сопоставьте проверенный SHA с коммитом, который собираетесь слить.
+4. Если изменения готовы к запуску, откройте **Awaiting approval** и нажмите **Approve workflows to run**.
+5. Дождитесь `materials-static` и `checker-tests` на последней версии PR.
+6. Если `main` изменилась, обновите ветку PR и дождитесь новых проверок.
+7. Сопоставьте проверенный SHA с коммитом, который собираетесь слить.
 
 Actions использует `pull_request` и `push` в `main`, одноразовый GitHub-hosted runner и токен `contents: read`.
 Workflow не сохраняет Git credentials, не использует секреты, кэши, артефакты или рабочие базы данных.
@@ -76,14 +77,14 @@ Runner имеет сетевой доступ для checkout, установк�
 Не добавляйте к этому процессу секреты или привилегированную обработку артефактов.
 Не запускайте изменённые скрипты внешнего PR на рабочем компьютере до ревью.
 
-Файл CODEOWNERS обозначает владельца критических файлов.
-На приватном репозитории с текущим тарифом GitHub не обеспечивает обязательные PR, проверки и одобрения CODEOWNERS.
-Защита от force push и удаления `main` также не включена.
-Сейчас право записи имеет только `IAMN1`; контроль слияния выполняет владелец вручную.
-Не выдавайте внешнему участнику write-доступ ради открытия PR.
-При изменении тарифа или состава сопровождающих настройте защиту отдельным изменением.
-Не требуйте одобрения собственного PR единственным сопровождающим.
+Для `main` действует [Protect main](https://github.com/IAMN1/devrefsnap/rules/27309604).
+GitHub требует PR и обе проверки Actions на актуальной базе.
+Правило запрещает force push и удаление ветки. Список обхода пуст.
 
-[Ограничения GitHub](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches) · [Безопасность Actions](https://docs.github.com/en/actions/reference/security/secure-use) · [Настройки Actions](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository)
+В CODEOWNERS указаны критические файлы для ручного ревью владельцем.
+Число обязательных одобрений равно нулю, поэтому единственный сопровождающий может слить свой PR после CI.
+Внешний участник отправляет PR из форка. Запуск его workflow требует разрешения сопровождающего.
+
+[Правила GitHub](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets) · [Безопасность Actions](https://docs.github.com/en/actions/reference/security/secure-use) · [Одобрить запуск из форка](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/approve-runs-from-forks)
 
 [Сопровождение](../maintenance/README.md) · [Каталог материалов](../README.md)
