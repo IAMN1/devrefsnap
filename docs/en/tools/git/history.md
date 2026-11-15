@@ -41,6 +41,17 @@ The staged diff for the file becomes empty.
 The working tree stays intact.
 A newly added file becomes untracked and appears in `git status --short`.
 
+<details>
+<summary>Show step by step</summary>
+
+![An animation of git restore --staged copying the HEAD version of note.txt to the index](../../../assets/git-restore-staged.gif)
+
+In this example, `note.txt` starts as `changed` in HEAD, `staged` in the index, and `unstaged` in the working tree. The command copies `changed` from HEAD to the index. Afterward, `git diff --staged` is empty, and `git diff` shows the change from `changed` to `unstaged`.
+
+[Open the GIF to replay it](../../../assets/git-restore-staged.gif?raw=true)
+
+</details>
+
 The command does not stop tracking a file already in HEAD.
 HEAD is absent before the first commit. For a newly added file, use `git rm --cached -- app.py`.
 

@@ -95,6 +95,17 @@ flowchart LR
     Sequential ~~~ Concurrent
 ```
 
+<details>
+<summary>Show both waits on a timeline</summary>
+
+![Sequential waits for A and B fill two adjacent 0.2-second intervals. TaskGroup overlaps both intervals.](../../../assets/asyncio-waits.gif)
+
+Zero on the shared timeline marks the start of each run. With two successive `await` calls, B starts after A finishes. With `TaskGroup`, both 0.2-second sleeps overlap. The script gets the same results in about 0.4 and 0.2 seconds, respectively.
+
+[Open the GIF to replay it](../../../assets/asyncio-waits.gif?raw=true)
+
+</details>
+
 ## Run the comparison
 
 Open the [complete `demo.py` file](../../../../examples/python/language/asyncio/demo.py). Run the command from the repository root.

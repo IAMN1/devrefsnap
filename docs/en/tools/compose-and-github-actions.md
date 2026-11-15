@@ -8,8 +8,9 @@ Run a sample Python application with PostgreSQL on your computer. Then run the i
 | --- | --- | --- |
 | Check the application's response | `docker compose up` and a request to `/health` | [Terminal on your computer](#run-the-application-locally) |
 | Check the PostgreSQL query | `python -m unittest -v` | [Application container](#run-the-test-locally) |
+| Start an existing workflow manually | `workflow_dispatch` and **Run workflow** | [Manual run](#run-an-existing-workflow-manually) |
 | Reproduce a test failure in CI | `Run workflow` with the `fail_test` input | [Run it on GitHub](#run-the-test-in-github-actions) |
-| Find the cause of a failure in an existing run | Open the failed step | [GitHub Actions log](#find-the-cause-in-the-log) |
+| Find the cause of a failure in an existing run | Open the failed step or use `gh run view --log-failed` | [GitHub Actions log](#find-the-cause-in-the-log) |
 
 ## Preparation
 
@@ -80,6 +81,12 @@ docker compose exec -e LAB_FORCE_FAILURE=1 app python -m unittest -v
 
 Expect `FAILED (failures=1)` and exit code `1`. Run the first command again to get `OK`.
 
+## Run an existing workflow manually
+
+The workflow file on the default branch must include `workflow_dispatch` under `on`. You need write access to the repository.
+
+In **Actions**, select the workflow and click **Run workflow**. Select the branch, set any inputs, and click **Run workflow** again. A new run appears in the list. [GitHub Docs](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow).
+
 ## Run the test in GitHub Actions
 
 Create an empty practice repository next to your local copy of `devrefsnap`. In your terminal, copy the example files from the root of the **practice repository**. Move the sample workflow to the directory GitHub uses for workflow files.
@@ -122,7 +129,17 @@ If the **Run workflow** button is missing, check the file path on the default br
 
 ## Find the cause in the log
 
-If you already have a practice run, open **Actions → PostgreSQL integration test**. Select the failed run. Open the **integration** job, then the **Run database test** step.
+In **Actions**, select the workflow and open the failed run. Select the failed job. Open its first failed step and read the error message.
+
+To see logs from failed steps in the terminal, sign in to GitHub CLI with an account that can access the run. Run the command from the repository's local checkout. Replace `RUN_ID` with the number after `/actions/runs/` in the run URL.
+
+```bash
+gh run view RUN_ID --log-failed
+```
+
+[GitHub CLI reference](https://cli.github.com/manual/gh_run_view).
+
+In the practice workflow **PostgreSQL integration test**, open the **integration** job and its **Run database test** step.
 
 For the practice failure, find `test_reports_current_database` and the `self.assertEqual` line from `test_app.py`. Compare the actual and expected database names. This excerpt shows the relevant message.
 

@@ -10,12 +10,13 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 <a id="быстрый-вход"></a>
 ## Quick start
 
-| What you need | How to start | Example |
-| --- | --- | --- |
-| Run your first example | Open a page with dependencies, a command, and expected output | [Python numbers and collections](python/language/types/recipes.md) · [First C program](c/README.md#first-run) |
-| Solve a work task | Find the action, command, or symptom in the [task index](tasks/README.md) | [Extract a JSON field](tools/http-json.md#extract-a-json-field) |
-| Look up familiar syntax | Choose a topic in the [catalog](#material-catalog) and open the relevant card | [C# collections](csharp/syntax.md#collections) |
-| Choose an approach or diagnose a failure | Compare the conditions, results, and limits | [Choose a way to load related data](python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
+| Task | Example |
+| --- | --- |
+| Inspect an HTTP status and extract a JSON field | [HTTP and JSON in the terminal](tools/http-json.md) |
+| Find why a CI test failed | [Read the GitHub Actions log](tools/compose-and-github-actions.md#find-the-cause-in-the-log) |
+| Choose how to load related data | [SQLAlchemy strategy table](python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
+| Run your first program | [Python numbers and collections](python/language/types/recipes.md) · [First C program](c/README.md#first-run) |
+| Look up familiar syntax | [C# collections](csharp/syntax.md#collections) |
 
 <a id="разделы"></a>
 ## Sections

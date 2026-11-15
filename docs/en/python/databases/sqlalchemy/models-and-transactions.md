@@ -66,6 +66,17 @@ Valid changes in the outer transaction should persist.
 The example catches the exception outside the nested context.
 An unhandled exception would also exit the outer context.
 
+<details>
+<summary>Show the savepoint rollback step by step</summary>
+
+![The duplicate insert fails inside the savepoint. The outer transaction still commits Bob and Carol.](../../../../assets/sqlalchemy-savepoint.gif)
+
+Alice is already committed. The test adds Bob in the outer transaction. `begin_nested()` flushes Bob's insert before establishing the savepoint. The duplicate email raises `IntegrityError` inside the savepoint. The nested context rolls back to the savepoint, and the test catches the error outside that context. The outer transaction then adds Carol and commits. The final query returns `["alice", "bob", "carol"]`.
+
+[Open the GIF to replay it](../../../../assets/sqlalchemy-savepoint.gif?raw=true)
+
+</details>
+
 In FastAPI, a dependency with `yield` provides a session.
 The complete [sync/async HTTP recipe](../../web/fastapi/database.md) is in the FastAPI section.
 Choose the transaction boundary in one place.

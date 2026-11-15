@@ -148,6 +148,17 @@ The previous `verify_client` entry is restored along with an unrelated entry.
 A request after the block receives `403` from the previous override, or the original `422` if there were no previous overrides.
 This request verifies the behavior of the restored dependency in addition to the dictionary contents.
 
+<details>
+<summary>Show override restoration step by step</summary>
+
+![GET /checked returns 403 with the previous override, 200 inside with, and 403 again after finally restores both entries.](../../../../assets/fastapi-override-restoration.gif)
+
+The example starts with two previous overrides. Before `with`, `GET /checked` returns `403`. Inside the block, `replacement` lets the request return `200`. The test then raises `AssertionError`. The `finally` block clears the dictionary and restores the saved entries. The next request returns `403` again. The restored dictionary also maps `other_dependency` to `previous_other`.
+
+[Open the GIF to replay it](../../../../assets/fastapi-override-restoration.gif?raw=true)
+
+</details>
+
 `None` is suitable here because the route decorator uses the dependency only as a check.
 For a dependency that returns a user or database session to the handler, choose an appropriate return value.
 The [function-selection explanation](#choose-a-replacement-function) describes the dictionary key, sub-dependencies, and override scope.

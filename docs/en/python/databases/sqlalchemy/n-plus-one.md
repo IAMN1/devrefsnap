@@ -7,7 +7,7 @@ The program reads the same data with two loading strategies. It uses two synchro
 
 | Task | Approach | Where to start |
 | --- | --- | --- |
-| Explain the extra queries | Compare lazy and eager loading | [Why N+1 happens](#why-n1-happens) · [SELECT count chart](#result-and-limits) |
+| Explain the extra queries | Compare lazy and eager loading | [Why N+1 happens](#why-n1-happens) · [Walk through the queries](#n-plus-one-steps) |
 | Run the example from scratch | Install SQLAlchemy and save one file | [Setup and run](#setup-and-run) · [Full program](#full-program) |
 | Compare more loading strategies | Try `joinedload`, `raiseload`, and partial collections | [Extended lab](loading-lab.md) |
 
@@ -18,7 +18,7 @@ The program uses synthetic data in an in-memory SQLite database. The data disapp
 ## Why N+1 happens
 
 The first `SELECT` reads the users. Reading an unloaded `user.posts` then runs another `SELECT` for each user.
-For N users, that produces N+1 queries. An empty collection still requires a query.
+For N users, that produces N+1 queries. When Bob's collection is unloaded, querying his posts returns zero rows and tells the ORM that the collection is empty.
 
 An ORM maps table rows to Python objects. `User` represents a user, and `Post` represents a post.
 `relationship` defines `User.posts` as the collection of posts for one user. `ForeignKey` identifies the column that links the tables.
@@ -39,6 +39,21 @@ Each comparison starts with a new `Session` so previously loaded posts cannot hi
 For two users, `selectinload` reduces the number of `SELECT` statements from three to two and returns the same posts.
 Larger selections can require several batches of keys. Composite primary keys require database support for tuple `IN`.
 See the [strategy table](relationship-loading.md#choose-a-strategy) for other options.
+
+<a name="n-plus-one-steps"></a>
+
+<details>
+<summary>Show the SELECT statements step by step</summary>
+
+![Lazy loading queries Alice's and Bob's posts separately. Select-in loading reads both users' posts in one SELECT.](../../../../assets/sqlalchemy-n-plus-one.gif)
+
+Each run starts by reading Alice and Bob in a fresh Session. With lazy loading, the second SELECT finds Alice's two posts. The third SELECT asks for Bob's posts and returns zero rows. With `selectinload`, the second SELECT uses `user_id IN (1, 2)` to fetch posts for both users. SQLAlchemy builds the same collections for Alice and Bob. Reading the loaded collections adds no SELECT.
+
+Both runs return Alice's `["Python", "SQL"]` and Bob's `[]`. The counters cover these reads in the practice example.
+
+[Open the GIF to replay it](../../../../assets/sqlalchemy-n-plus-one.gif?raw=true)
+
+</details>
 
 ## Setup and run
 

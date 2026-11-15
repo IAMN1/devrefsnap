@@ -23,7 +23,9 @@ Leave the server running. If port `8765` is in use, choose a free port and repla
 
 ## Inspect the HTTP response
 
-Send a GET request from the second terminal. The `-i` option adds the response status and headers to the output. The `--noproxy 127.0.0.1` option connects directly to the local server.
+Use `curl -i URL` to see the status line, headers, and body of a GET response. Use `curl -I URL` to send a HEAD request, whose response has no body.
+
+For the practice example, [start the local server](#start-the-practice-server), then run this command in the second terminal. The `--noproxy 127.0.0.1` option connects directly to the local server.
 
 ```bash
 curl --noproxy 127.0.0.1 -i http://127.0.0.1:8765/item.json
@@ -44,7 +46,9 @@ If the server returns `404`, check the `/item.json` path in the URL and the dire
 
 ## Extract a JSON field
 
-Repeat the request without `-i` to pass only the response body to `jq`. The `-sS` options hide the progress meter and keep `curl` error messages visible.
+Use `jq -r '.name'` with a successful response whose JSON body contains a `name` field. Pass only the body to `jq`.
+
+For the practice example, [start the local server](#start-the-practice-server) and [check the response status and type](#inspect-the-http-response). Remove `-i` from the request. The `-sS` flags hide the progress meter and keep `curl` error messages visible.
 
 ```bash
 curl --noproxy 127.0.0.1 -sS http://127.0.0.1:8765/item.json | jq -r '.name'

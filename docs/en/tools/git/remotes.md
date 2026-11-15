@@ -44,6 +44,19 @@ Choose one operation after inspecting history.
 | Both sides have commits and existing commits must be preserved | `git merge origin/main` | Creates a merge commit when histories diverge. A conflict is possible |
 | Rewriting your branch is permitted | `git rebase origin/main` | Recreates commits. A conflict is possible |
 
+<details>
+<summary>Show how merge and rebase change history</summary>
+
+The arrows run from parent to child. The branches share commit `A`. Commit `B` is the tip of `origin/main`, and `C` is the tip of the feature branch.
+
+![From the same divergence, merge creates a commit with two parents, and rebase creates a new feature commit on top of origin/main.](../../../assets/git-merge-rebase.gif)
+
+Merge adds `M` with parents `C` and `B`. Rebase gives the feature branch a new commit `C′` with parent `B` and a different SHA. In the practice scenario, resolving the conflict the same way gives `note.txt` the same text in both cases.
+
+[Open the GIF to replay it](../../../assets/git-merge-rebase.gif?raw=true) · [Run the conflict scenario](history.md#test-merge-and-rebase-conflicts)
+
+</details>
+
 To update the current branch from its configured upstream, use `git pull --ff-only`.
 Check the upstream with `git branch -vv`.
 `pull` performs fetch itself. `--ff-only` refuses on divergence.
