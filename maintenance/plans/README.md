@@ -12,9 +12,7 @@
 Подборка для начинающих включает [HTTP и JSON](../../docs/ru/tools/http-json.md), [Compose и CI](../../docs/ru/tools/compose-and-github-actions.md), [основы asyncio](../../docs/ru/python/language/asyncio.md), [Go context](../../docs/ru/go/context.md), [сравнение JOIN](../../docs/ru/databases/sql/queries.md#сравнить-inner-join-и-left-join) и [график N+1](../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#результат-и-ограничения).
 Учебный workflow проверен на GitHub с отказом и успешным повтором. Сквозная проверка FastAPI, PostgreSQL и TypeScript прошла локально и в CI. [Результаты](../reports/general-checks.md#проверка-на-github).
 
-## Перед публичной публикацией
-
-- [Напомнить о защите main](public-release.md).
+DevRefSnap открыт для читателей. GitHub защищает `main` и запрашивает разрешение на запуск workflow из внешних форков. [Результат публикации](public-release.md).
 
 ## Проверить удобство с читателями
 
