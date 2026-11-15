@@ -43,7 +43,7 @@ The example provides no exactly-once guarantee.
 The first publication adds `event-42` to the list that stands in for the broker. The simulated crash leaves the outbox row at `sent = 0`. The next attempt publishes the same ID and then sets `sent = 1`.
 To deduplicate a consumer's local effect, record the processed `event_id` and apply the effect in the same transaction.
 
-[Replay the GIF](../../../assets/transactional-outbox-retry.gif?raw=true)
+[Replay the GIF](../../../assets/transactional-outbox-retry.gif)
 
 </details>
 

@@ -53,7 +53,7 @@ The arrows run from parent to child. The branches share commit `A`. Commit `B` i
 
 Merge adds `M` with parents `C` and `B`. Rebase gives the feature branch a new commit `C′` with parent `B` and a different SHA. In the practice scenario, resolving the conflict the same way gives `note.txt` the same text in both cases.
 
-[Open the GIF to replay it](../../../assets/git-merge-rebase.gif?raw=true) · [Run the conflict scenario](history.md#test-merge-and-rebase-conflicts)
+[Open the GIF to replay it](../../../assets/git-merge-rebase.gif) · [Run the conflict scenario](history.md#test-merge-and-rebase-conflicts)
 
 </details>
 

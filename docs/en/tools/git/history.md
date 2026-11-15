@@ -48,7 +48,7 @@ A newly added file becomes untracked and appears in `git status --short`.
 
 In this example, `note.txt` starts as `changed` in HEAD, `staged` in the index, and `unstaged` in the working tree. The command copies `changed` from HEAD to the index. Afterward, `git diff --staged` is empty, and `git diff` shows the change from `changed` to `unstaged`.
 
-[Open the GIF to replay it](../../../assets/git-restore-staged.gif?raw=true)
+[Open the GIF to replay it](../../../assets/git-restore-staged.gif)
 
 </details>
 

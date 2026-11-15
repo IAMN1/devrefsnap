@@ -155,7 +155,7 @@ This request verifies the behavior of the restored dependency in addition to the
 
 The example starts with two previous overrides. Before `with`, `GET /checked` returns `403`. Inside the block, `replacement` lets the request return `200`. The test then raises `AssertionError`. The `finally` block clears the dictionary and restores the saved entries. The next request returns `403` again. The restored dictionary also maps `other_dependency` to `previous_other`.
 
-[Open the GIF to replay it](../../../../assets/fastapi-override-restoration.gif?raw=true)
+[Open the GIF to replay it](../../../../assets/fastapi-override-restoration.gif)
 
 </details>
 

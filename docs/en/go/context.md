@@ -61,7 +61,7 @@ case errors.Is(err, context.Canceled):
 
 The `/cancel` handler closes `cancelStarted` after it receives the request. The client goroutine then calls `cancelRequest()`. The client recognizes `context.Canceled` with `errors.Is`. The handler returns after `r.Context().Done()` closes. The order of these two outcomes can vary.
 
-[Open the GIF to replay it](../../assets/go-request-cancellation.gif?raw=true)
+[Open the GIF to replay it](../../assets/go-request-cancellation.gif)
 
 </details>
 

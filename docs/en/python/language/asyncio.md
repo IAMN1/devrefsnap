@@ -102,7 +102,7 @@ flowchart LR
 
 Zero on the shared timeline marks the start of each run. With two successive `await` calls, B starts after A finishes. With `TaskGroup`, both 0.2-second sleeps overlap. The script gets the same results in about 0.4 and 0.2 seconds, respectively.
 
-[Open the GIF to replay it](../../../assets/asyncio-waits.gif?raw=true)
+[Open the GIF to replay it](../../../assets/asyncio-waits.gif)
 
 </details>
 

@@ -61,7 +61,7 @@ case errors.Is(err, context.Canceled):
 
 После получения запроса обработчик `/cancel` закрывает канал `cancelStarted`. Клиентская goroutine получает сигнал и вызывает `cancelRequest()`. Клиент распознаёт `context.Canceled` через `errors.Is`. Обработчик завершает работу после закрытия канала `r.Context().Done()`. Порядок этих двух исходов может различаться.
 
-[Открыть GIF для повторного просмотра](../../assets/go-request-cancellation.gif?raw=true)
+[Открыть GIF для повторного просмотра](../../assets/go-request-cancellation.gif)
 
 </details>
 

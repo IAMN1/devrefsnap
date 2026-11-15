@@ -40,7 +40,7 @@ The finally block removes the keys.
 
 The connection held by `WATCH` reads `counter = 0`. A separate connection from the pool increments it to `1`. The first connection queues `SET counter 10` under `MULTI`, using its earlier read. Redis returns null at `EXEC` and skips the queued write. redis-py reports `WatchError`. The value stays at `1`.
 
-[Replay the GIF](../../../../assets/redis-watch-conflict.gif?raw=true)
+[Replay the GIF](../../../../assets/redis-watch-conflict.gif)
 
 </details>
 
@@ -67,7 +67,7 @@ The examples cover successful handling without external side effects or handler 
 
 `XADD` writes the entry to the stream. When `XREADGROUP` delivers it to `worker-1`, the `workers` group has one pending entry. After processing, `XACK` clears the group's pending record. The entry remains in the stream and can still be read with `XRANGE`.
 
-[Replay the GIF](../../../../assets/redis-streams-ack.gif?raw=true)
+[Replay the GIF](../../../../assets/redis-streams-ack.gif)
 
 </details>
 

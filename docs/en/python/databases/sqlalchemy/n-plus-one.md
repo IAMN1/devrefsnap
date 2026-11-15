@@ -51,7 +51,7 @@ Each run starts by reading Alice and Bob in a fresh Session. With lazy loading, 
 
 Both runs return Alice's `["Python", "SQL"]` and Bob's `[]`. The counters cover these reads in the practice example.
 
-[Open the GIF to replay it](../../../../assets/sqlalchemy-n-plus-one.gif?raw=true)
+[Open the GIF to replay it](../../../../assets/sqlalchemy-n-plus-one.gif)
 
 </details>
 

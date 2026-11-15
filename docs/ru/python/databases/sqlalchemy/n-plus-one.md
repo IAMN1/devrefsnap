@@ -65,7 +65,7 @@ stmt = select(User).options(selectinload(User.posts)).order_by(User.id)
 
 Оба прогона возвращают `["Python", "SQL"]` для Alice и `[]` для Bob. Счётчики относятся к этим чтениям в учебном примере.
 
-[Открыть GIF для повторного просмотра](../../../../assets/sqlalchemy-n-plus-one.gif?raw=true)
+[Открыть GIF для повторного просмотра](../../../../assets/sqlalchemy-n-plus-one.gif)
 
 </details>
 

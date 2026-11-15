@@ -48,7 +48,7 @@ git diff -- app.py
 
 До команды файл `note.txt` содержит `changed` в HEAD, `staged` в индексе и `unstaged` в рабочем дереве. Команда копирует `changed` из HEAD в индекс. После команды вывод `git diff --staged` пуст. Команда `git diff` показывает замену `changed` на `unstaged`.
 
-[Открыть GIF для повторного просмотра](../../../assets/git-restore-staged.gif?raw=true)
+[Открыть GIF для повторного просмотра](../../../assets/git-restore-staged.gif)
 
 </details>
 

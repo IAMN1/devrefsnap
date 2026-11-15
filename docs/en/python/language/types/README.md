@@ -160,7 +160,7 @@ Resources such as connections require their own copying strategy.
 
 `original` and `shallow` are separate outer lists that both reference the same inner list. After `original[0].append(2)`, both contain `[[1, 2]]`. The independent inner list in `deep` still gives `[[1]]`.
 
-[Open the GIF to replay it](../../../../assets/python-list-copy.gif?raw=true)
+[Open the GIF to replay it](../../../../assets/python-list-copy.gif)
 
 </details>
 

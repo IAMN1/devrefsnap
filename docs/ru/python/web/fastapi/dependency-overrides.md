@@ -155,7 +155,7 @@ Starlette использует HTTPX2 для `TestClient`.
 
 В начале примера есть две прежние подмены. До блока `with` запрос `GET /checked` возвращает `403`. Внутри блока с подменой `replacement` запрос возвращает `200`. Затем тест вызывает `AssertionError`. Блок `finally` очищает словарь и восстанавливает сохранённые записи. Следующий запрос снова возвращает `403`. В восстановленном словаре `other_dependency` соответствует `previous_other`.
 
-[Открыть GIF для повторного просмотра](../../../../assets/fastapi-override-restoration.gif?raw=true)
+[Открыть GIF для повторного просмотра](../../../../assets/fastapi-override-restoration.gif)
 
 </details>
 

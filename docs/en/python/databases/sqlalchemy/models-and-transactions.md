@@ -73,7 +73,7 @@ An unhandled exception would also exit the outer context.
 
 Alice is already committed. The test adds Bob in the outer transaction. `begin_nested()` flushes Bob's insert before establishing the savepoint. The duplicate email raises `IntegrityError` inside the savepoint. The nested context rolls back to the savepoint, and the test catches the error outside that context. The outer transaction then adds Carol and commits. The final query returns `["alice", "bob", "carol"]`.
 
-[Open the GIF to replay it](../../../../assets/sqlalchemy-savepoint.gif?raw=true)
+[Open the GIF to replay it](../../../../assets/sqlalchemy-savepoint.gif)
 
 </details>
 
