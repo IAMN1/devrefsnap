@@ -15,6 +15,10 @@
 
 ### Подготовить изменение
 
+Если у вас нет доступа на запись, создайте форк. Внесите изменения в ветку форка и откройте PR в `main` DevRefSnap.
+
+Отправляйте материалы, которые вы вправе опубликовать по [лицензиям проекта](LICENSE.md). Укажите источник и лицензию стороннего материала.
+
 1. Откройте ссылку на другой язык в начале страницы. У парной страницы тот же путь после `docs/ru/` или `docs/en/`. Например, сопоставьте [русскую страницу о N+1](docs/ru/python/databases/sqlalchemy/n-plus-one.md) и [английскую страницу о N+1](docs/en/python/databases/sqlalchemy/n-plus-one.md).
 2. Проверьте, относится ли правка к обеим версиям. Если парной странице нужна правка, внесите её или укажите в PR, какую часть ещё нужно обновить.
 3. Правьте полный пример в [общем каталоге примеров](examples/README.md). Обе страницы должны ссылаться на один файл, например [n_plus_one.py](examples/python/databases/sqlalchemy/n_plus_one.py). Сверьте команды запуска и ожидаемый результат в обеих версиях.
@@ -39,6 +43,10 @@ Open the [GitHub issue form chooser](https://github.com/IAMN1/devrefsnap/issues/
 - **Propose a topic.** Describe the reader's task and the result they should achieve. Link to the closest page in the [catalog](docs/en/README.md#material-catalog), if one exists.
 
 ### Prepare the change
+
+If you do not have write access, fork the repository. Make changes on a branch in your fork and open a PR against DevRefSnap's `main`.
+
+Submit material you can share under the [project licenses](LICENSE.md). Cite the source and license of any third-party material.
 
 1. Follow the language link near the top of the page. The matching page has the same path after `docs/en/` or `docs/ru/`. For example, compare the [English N+1 page](docs/en/python/databases/sqlalchemy/n-plus-one.md) and the [Russian N+1 page](docs/ru/python/databases/sqlalchemy/n-plus-one.md).
 2. Check whether the change applies to both editions. If the matching page needs an update, make the update or describe what still needs work in the PR.
