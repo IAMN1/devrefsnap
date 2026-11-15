@@ -107,6 +107,7 @@ The relay can be retried.
 Eventual delivery requires relay and broker availability.
 It requires retries and sufficient pending retention.
 A failure after broker acceptance but before marking `sent` permits a duplicate.
+[See how the same event ID is published twice](outbox-example.md#outbox-retry-steps).
 
 - [ ] Check pending age.
 - [ ] Check broker acknowledgments.

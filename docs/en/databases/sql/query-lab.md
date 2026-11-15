@@ -12,8 +12,8 @@ Use a new PostgreSQL 18 or SQLite 3.53 practice database with the names `sql_use
 ## Complete example
 
 Save the SQL as `demo.sql`.
-For PostgreSQL, choose a separate practice database.
-Run `psql -X --set=ON_ERROR_STOP=1 --dbname=имя_учебной_бд --file=demo.sql`.
+For PostgreSQL, replace `PRACTICE_DB` with the name of a separate practice database.
+Run `psql -X --set=ON_ERROR_STOP=1 --dbname=PRACTICE_DB --file=demo.sql`.
 For SQLite, choose a new file named sql-demo.db in a separate practice directory.
 Run `sqlite3 -bail -cmd 'PRAGMA foreign_keys=ON' sql-demo.db < demo.sql`.
 Run these commands in your shell.

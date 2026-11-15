@@ -54,6 +54,17 @@ case errors.Is(err, context.Canceled):
 
 `errors.Is` identifies the cause inside a wrapped error. Handle other errors separately.
 
+<details>
+<summary>Show cancellation step by step</summary>
+
+![The handler signals that it received GET /cancel. The client cancels the request, then the client and handler each observe cancellation.](../../assets/go-request-cancellation.gif)
+
+The `/cancel` handler closes `cancelStarted` after it receives the request. The client goroutine then calls `cancelRequest()`. The client recognizes `context.Canceled` with `errors.Is`. The handler returns after `r.Context().Done()` closes. The order of these two outcomes can vary.
+
+[Open the GIF to replay it](../../assets/go-request-cancellation.gif)
+
+</details>
+
 ## Check three outcomes
 
 Open the [complete `main.go` file](../../../examples/go/context/main.go). Run the command from the repository root.

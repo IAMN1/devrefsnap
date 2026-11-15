@@ -16,8 +16,8 @@ Install the client in a separate temporary or practice environment with `python 
 First set up an [isolated Redis instance](operations.md#practice-instance).
 Check its address.
 Set REDIS_URL.
-For a private Unix socket, use `export REDIS_URL='unix:///путь/redis.sock?db=0'` with your own path.
-For a dedicated TCP instance, use `redis://127.0.0.1:порт/0` with the appropriate port.
+For a private Unix socket, use `export REDIS_URL='unix:///path/to/redis.sock?db=0'` with your own socket path.
+For a dedicated TCP instance, replace `PORT` in `redis://127.0.0.1:PORT/0` with the actual port.
 Use the practice instance for the examples.
 
 <a id="полный-пример-структуры-и-ttl"></a>

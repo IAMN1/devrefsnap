@@ -61,10 +61,21 @@ INSERT/UPDATE/DELETE меняют только временную базу пр�
 [`sqlalchemy/test_models.py`](../../../../../examples/python/databases/sqlalchemy/test_models.py)
 
 Запустите `python -m pytest -q test_models.py`.
-Savepoint должен пережить ошибку дублирующего email.
+Savepoint позволяет продолжить внешнюю транзакцию после ошибки дублирующего email.
 Корректные изменения внешней транзакции должны сохраниться.
 Пример обрабатывает исключение снаружи вложенного контекста.
 Необработанное исключение вышло бы и из внешнего контекста.
+
+<details>
+<summary>Показать откат к savepoint по шагам</summary>
+
+![Дублирующая запись вызывает ошибку внутри savepoint. Внешняя транзакция сохраняет Bob и Carol.](../../../../assets/sqlalchemy-savepoint.gif)
+
+Запись Alice уже зафиксирована. Тест добавляет Bob во внешней транзакции. Вызов `begin_nested()` отправляет INSERT для Bob до создания savepoint. Дублирующий email вызывает `IntegrityError` внутри savepoint. Вложенный контекст откатывается к savepoint, а тест обрабатывает ошибку снаружи этого контекста. Затем внешняя транзакция добавляет Carol и фиксирует изменения. Итоговый запрос возвращает `["alice", "bob", "carol"]`.
+
+[Открыть GIF для повторного просмотра](../../../../assets/sqlalchemy-savepoint.gif)
+
+</details>
 
 В FastAPI зависимость с `yield` выдаёт сессию.
 Полный [sync/async HTTP-рецепт](../../web/fastapi/database.md) находится в теме FastAPI.

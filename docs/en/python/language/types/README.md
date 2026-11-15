@@ -153,6 +153,17 @@ The shallow copy shares the nested list. The deep copy retains its previous cont
 Resources such as connections require their own copying strategy.
 [Complete checks of references and hashability](recipes.md#complete-program).
 
+<details>
+<summary>Show how the copies change</summary>
+
+![The original and shallow copy share one inner list. The deep copy has its own inner list.](../../../../assets/python-list-copy.gif)
+
+`original` and `shallow` are separate outer lists that both reference the same inner list. After `original[0].append(2)`, both contain `[[1, 2]]`. The independent inner list in `deep` still gives `[[1]]`.
+
+[Open the GIF to replay it](../../../../assets/python-list-copy.gif)
+
+</details>
+
 The diagram shows which objects the variables reference.
 
 ```mermaid

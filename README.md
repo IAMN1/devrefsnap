@@ -2,37 +2,39 @@
 
 # DevRefSnap
 
-Шпаргалки по задачам и исполняемые примеры по языкам, базам данных, Linux, Git и архитектуре.
+**[English](docs/en/README.md) · [Русский](docs/ru/README.md)**
 
 Task-based cheat sheets and runnable examples for languages, databases, Linux, Git, and architecture.
 
-**[Указатель задач](docs/ru/tasks/README.md) · [Task index](docs/en/tasks/README.md)**
-
-| Попробуйте / Try an example | Русский | English |
-| --- | --- | --- |
-| HTTP и JSON | [Извлечь поле JSON](docs/ru/tools/http-json.md#извлечь-поле-json) | [Extract a JSON field](docs/en/tools/http-json.md#extract-a-json-field) |
-| GitHub Actions | [Найти причину падения теста](docs/ru/tools/compose-and-github-actions.md#найти-причину-падения-в-журнале) | [Find why a test failed](docs/en/tools/compose-and-github-actions.md#find-the-cause-in-the-log) |
-| SQLAlchemy | [Выбрать способ загрузки связей](docs/ru/python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) | [Choose a relationship loading strategy](docs/en/python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
-
 <a id="разделы"></a><a id="каталог-материалов"></a>
 
-[Каталог материалов](docs/ru/README.md#каталог-материалов) · [Topic catalog](docs/en/README.md#material-catalog)
+[Task index](docs/en/tasks/README.md) · [Topic catalog](docs/en/README.md#material-catalog) · [Задачи на русском](docs/ru/tasks/README.md)
 
-<a id="быстрый-вход"></a><a id="как-пользоваться-материалами"></a>
+<a id="быстрый-вход"></a>
 
-[С чего начать](docs/ru/README.md#быстрый-вход) · [Where to start](docs/en/README.md#quick-start) · [Как пользоваться материалами](docs/ru/README.md#как-пользоваться-материалами) · [Use the materials](docs/en/README.md#use-the-materials)
+## Try an example
 
-## Где находятся файлы / Repository layout
+- [Inspect an HTTP response and read a JSON field](docs/en/tools/http-json.md)
+- [Find why a GitHub Actions test failed](docs/en/tools/compose-and-github-actions.md#find-the-cause-in-the-log)
+- [Choose a SQLAlchemy relationship loading strategy](docs/en/python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy)
 
-- [`docs/ru`](docs/ru/README.md) · [`docs/en`](docs/en/README.md) — шпаргалки и инструкции / reference pages and guides.
-- [`examples`](examples/README.md) — общие файлы для запуска / shared runnable examples.
+<a id="как-пользоваться-материалами"></a>
 
-[Участие в проекте / Contributing](CONTRIBUTING.md) · [Правила для авторов](AGENTS.md) · [Сопровождение](maintenance/README.md) · [Проверки](scripts/README.md)
+[How to use the reference](docs/en/README.md#use-the-materials)
 
-## Лицензии / Licenses
+<a name="где-находятся-файлы--repository-layout"></a>
 
-Код проекта, включая фрагменты в Markdown, распространяется по [MIT](LICENSES/MIT.txt). Текст и иллюстрации проекта распространяются по [CC BY 4.0](LICENSES/CC-BY-4.0.txt).
+## Repository layout
+
+- [`docs/en`](docs/en/README.md) and [`docs/ru`](docs/ru/README.md) contain the two language editions.
+- [`examples`](examples/README.md) contains the shared runnable examples.
+
+[Contributing](CONTRIBUTING.md#english) · [Author guidelines (Russian)](AGENTS.md) · [Maintenance (Russian)](maintenance/README.md) · [Static checks (Russian)](scripts/README.md)
+
+<a name="лицензии--licenses"></a>
+
+## Licenses
 
 Project code, including snippets in Markdown, is licensed under [MIT](LICENSES/MIT.txt). Project text and illustrations are licensed under [CC BY 4.0](LICENSES/CC-BY-4.0.txt).
 
-[Область действия и указание авторства / Scope and attribution](LICENSE.md)
+[Scope and attribution](LICENSE.md)

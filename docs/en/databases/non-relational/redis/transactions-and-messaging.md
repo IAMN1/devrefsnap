@@ -66,6 +66,7 @@ In MULTI/EXEC, successful commands remain applied after another command fails at
 The [complete program](transactions-lab.md#complete-example-of-a-conflict-and-command-error) checks this behavior and a WATCH conflict separately.
 
 After WatchError, the application usually rereads the data and retries with a limit.
+[See what happens when a separate connection changes the watched key](transactions-lab.md#redis-watch-steps).
 In Redis Cluster, multi-key transactions require compatible hash slots.
 A single transaction cannot span arbitrary shards.
 
@@ -89,6 +90,7 @@ assert client.xpending(stream, "workers")["pending"] == 0
 XACK removes the entry from the group's pending list after processing.
 The snippet assumes it receives an entry. A real handler must also handle an empty result.
 After acknowledgment, the message body remains in the stream.
+[Follow the stream entry and pending count through XACK](transactions-lab.md#redis-streams-ack-steps).
 Acknowledgment and external side effects are separate operations.
 The [complete program](transactions-lab.md#complete-stream-and-pubsub-example) creates the stream and checks Pub/Sub delivery separately.
 

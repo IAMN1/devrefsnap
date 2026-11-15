@@ -33,6 +33,18 @@ For an introduction, open the [standalone synchronous N+1 example](n-plus-one.md
 <a id="выбрать-стратегию"></a>
 ## Choose a strategy
 
+| Required data and constraints | Starting point | Cost and reason to reconsider |
+| --- | --- | --- |
+| All collections for a list of parents, with varying or large collection sizes | `selectinload` | Additional SELECTs for batches of keys. Parent fields are not repeated for each child |
+| A small, bounded set of parents and children, with a separate SELECT undesirable | Compare `joinedload` with `selectinload` | The JOIN repeats parent fields for each child. A collection requires `unique()` |
+| One related object per row, with acceptable repetition of its fields | Usually `joinedload` | This relationship adds no rows, but related-object fields are repeated |
+| Many rows reference the same objects with large fields | Compare scalar-relationship `selectinload` with `joinedload` | An additional SELECT may reduce repeated field transfer. Measure any improvement |
+| The relationship may be unused | Lazy loading | Reading may execute SQL. For a simple many-to-one relationship, the identity map sometimes avoids a SELECT |
+| Unplanned access must raise an error | `raiseload` | Raises on lazy access. SQL required during flush can still execute |
+| Only a selected part of a collection is needed | Filter and `contains_eager` | Make the collection's partial nature explicit. See the [card](filtered-relationships.md#load-a-partial-collection-from-a-join) |
+
+To compare the SELECT counts on the same data, [walk through the queries](n-plus-one.md#n-plus-one-steps) or [run the standalone N+1 example](n-plus-one.md#setup-and-run).
+
 First, identify the parents and relationships you need.
 The ORM maps table rows to Python objects.
 A parent here is an object from the original query, such as a user in `select(User)`.
@@ -46,16 +58,6 @@ The identity map within a Session associates a row identifier with an already lo
 Lazy loading loads a relationship when an unloaded attribute is accessed.
 Eager loading loads a relationship ahead of time through the original query or additional SELECTs.
 Both `selectinload` and `joinedload` perform eager loading.
-
-| Required data and constraints | Starting point | Cost and reason to reconsider |
-| --- | --- | --- |
-| All collections for a list of parents, with varying or large collection sizes | `selectinload` | Additional SELECTs for batches of keys. Parent fields are not repeated for each child |
-| A small, bounded set of parents and children, with a separate SELECT undesirable | Compare `joinedload` with `selectinload` | The JOIN repeats parent fields for each child. A collection requires `unique()` |
-| One related object per row, with acceptable repetition of its fields | Usually `joinedload` | This relationship adds no rows, but related-object fields are repeated |
-| Many rows reference the same objects with large fields | Compare scalar-relationship `selectinload` with `joinedload` | An additional SELECT may reduce repeated field transfer. Measure any improvement |
-| The relationship may be unused | Lazy loading | Reading may execute SQL. For a simple many-to-one relationship, the identity map sometimes avoids a SELECT |
-| Unplanned access must raise an error | `raiseload` | Raises on lazy access. SQL required during flush can still execute |
-| Only a selected part of a collection is needed | Filter and `contains_eager` | Make the collection's partial nature explicit. See the [card](filtered-relationships.md#load-a-partial-collection-from-a-join) |
 
 For a collection, one parent can correspond to several SQL result rows.
 `unique()` retains one ORM object per identity in the Python result. The transferred SQL rows remain the same.

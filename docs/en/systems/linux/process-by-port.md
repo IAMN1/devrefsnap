@@ -24,20 +24,16 @@ macOS does not provide `ss` as a standard utility. Run this recipe inside Linux.
 <a id="найти-tcp-listener"></a>
 ## Find a TCP listener
 
-To identify the process accepting connections on TCP port 8000, first distinguish these terms.
-A port is a network endpoint number, such as `8000`. TCP and UDP have separate port sets.
-TCP transfers data over a connection. UDP sends individual messages without establishing that kind of connection.
-A socket is an operating system object for network communication. A process can hold several sockets.
-A TCP listener is a socket in `LISTEN` state, ready to accept connections.
-A PID is the numeric process identifier in the visible process space.
-
-Use this command fragment on your Linux system.
+On Linux with `ss` from iproute2, run this command in the application's network namespace. Replace `8000` with the required TCP port.
 
 ```bash
 ss -lntp 'sport = :8000'
 ```
 
-Replace `8000` with the required port.
+- If a `LISTEN` row contains `pid=`, read the process ID from that field.
+- If the row has no PID, [check permissions and process visibility](#when-the-pid-is-missing).
+- If there are no data rows, check the protocol, port, socket state, and [network namespace](#when-the-process-is-in-another-namespace).
+
 `-l` selects listening sockets, and `-n` preserves numeric addresses and ports.
 `-t` selects TCP, while `-p` adds process details when they are available.
 The `sport` filter specifies the socket's local port. For a listener, select that port rather than a remote client's port.
@@ -50,6 +46,12 @@ The following output is an illustration.
 State  Recv-Q Send-Q Local Address:Port Peer Address:Port Process
 LISTEN 0      8      127.0.0.1:8000    0.0.0.0:*        users:(("python3",pid=4312,fd=3))
 ```
+
+A port is a network endpoint number, such as `8000`. TCP and UDP have separate port sets.
+TCP transfers data over a connection. UDP sends individual messages without establishing that kind of connection.
+A socket is an operating system object for network communication. A process can hold several sockets.
+A TCP listener is a socket in `LISTEN` state, ready to accept connections.
+A PID is the numeric process identifier in the visible process space.
 
 The PID, process name, queues, descriptor, and alignment depend on your system.
 `pid=4312` identifies the process. `fd=3` is that process's open socket descriptor number.

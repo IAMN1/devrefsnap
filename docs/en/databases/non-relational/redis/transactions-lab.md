@@ -32,6 +32,18 @@ The WATCH conflict leaves the value at `1`.
 The INCR error leaves the successful SET from the same EXEC in effect.
 The finally block removes the keys.
 
+<a id="redis-watch-steps"></a>
+<details>
+<summary>Show the WATCH conflict step by step</summary>
+
+![Connection A watches counter and reads 0. Connection B increments it to 1. EXEC aborts A's queued SET, so counter stays at 1.](../../../../assets/redis-watch-conflict.gif)
+
+The connection held by `WATCH` reads `counter = 0`. A separate connection from the pool increments it to `1`. The first connection queues `SET counter 10` under `MULTI`, using its earlier read. Redis returns null at `EXEC` and skips the queued write. redis-py reports `WatchError`. The value stays at `1`.
+
+[Replay the GIF](../../../../assets/redis-watch-conflict.gif)
+
+</details>
+
 <a id="полный-пример-stream-и-pubsub"></a>
 ## Complete stream and Pub/Sub example
 
@@ -46,6 +58,18 @@ The output is `OK: stream delivery/pending/ACK and bounded Pub/Sub notification`
 After XACK, the pending count is zero and the stream entry still exists.
 The Pub/Sub example checks one notification to an already connected subscriber.
 The examples cover successful handling without external side effects or handler failure.
+
+<a id="redis-streams-ack-steps"></a>
+<details>
+<summary>Show what changes after XACK</summary>
+
+![The stream keeps the same entry while the pending count goes from 0 to 1 at XREADGROUP and back to 0 at XACK.](../../../../assets/redis-streams-ack.gif)
+
+`XADD` writes the entry to the stream. When `XREADGROUP` delivers it to `worker-1`, the `workers` group has one pending entry. After processing, `XACK` clears the group's pending record. The entry remains in the stream and can still be read with `XRANGE`.
+
+[Replay the GIF](../../../../assets/redis-streams-ack.gif)
+
+</details>
 
 <a id="источники"></a>
 ## Sources

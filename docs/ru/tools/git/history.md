@@ -41,6 +41,17 @@ git diff -- app.py
 Рабочее дерево не меняется.
 Новый добавленный файл становится неотслеживаемым и показывается через `git status --short`.
 
+<details>
+<summary>Показать по шагам</summary>
+
+![Анимация копирования версии note.txt из HEAD в индекс командой git restore --staged](../../../assets/git-restore-staged.gif)
+
+До команды файл `note.txt` содержит `changed` в HEAD, `staged` в индексе и `unstaged` в рабочем дереве. Команда копирует `changed` из HEAD в индекс. После команды вывод `git diff --staged` пуст. Команда `git diff` показывает замену `changed` на `unstaged`.
+
+[Открыть GIF для повторного просмотра](../../../assets/git-restore-staged.gif)
+
+</details>
+
 **Ограничения:** команда не прекращает отслеживание файла, который уже есть в HEAD.
 До первого коммита HEAD отсутствует; для нового добавленного файла используйте `git rm --cached -- app.py`.
 

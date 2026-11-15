@@ -92,7 +92,8 @@
 
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
-| Отправить запрос из терминала, увидеть статус и заголовки, извлечь поле JSON | curl, jq, HTTP status, код ответа, тело | [HTTP и JSON](../tools/http-json.md) |
+| Посмотреть статус и заголовки HTTP-ответа | `curl -i`, `curl -I`, GET, HEAD, код ответа, Content-Type | [Посмотреть HTTP-ответ](../tools/http-json.md#посмотреть-http-ответ) |
+| Вывести поле из JSON-ответа | `jq -r`, curl, тело ответа, name | [Извлечь поле JSON](../tools/http-json.md#извлечь-поле-json) |
 | Создать FastAPI-маршрут с path/query/body и валидацией | REST, endpoint, request, response, 422 | [Карточка](../python/web/fastapi/recipes.md#http-api-с-валидацией) · [Полное HTTP API](../python/web/fastapi/http-api.md#http-api-с-валидацией) |
 | Передать зависимость в обработчик FastAPI | Depends, dependency injection, подзависимость | [FastAPI: как устроены зависимости](../python/web/fastapi/recipes.md#как-устроены-зависимости) |
 | Принять форму или файл | upload, multipart, Form, UploadFile | [Карточка](../python/web/fastapi/recipes.md#формы-и-загрузка-файлов) · [Полный пример загрузки](../python/web/fastapi/uploads.md#формы-и-загрузка-файлов) |
@@ -142,7 +143,7 @@
 | Собрать и запустить проект на C# | C#, C Sharp, .NET SDK, csproj, dotnet build, dotnet run | [C#: первый запуск](../csharp/README.md#первый-запуск) |
 | Добавить число в список или проверить аргумент C# | `List<T>`, Add, foreach, TryParse, код завершения | [C#: коллекции](../csharp/README.md#коллекции) · [Ошибки](../csharp/README.md#типичные-ошибки) |
 | Вспомнить синтаксис C# | nullable, record, generics, LINQ, async, await | [C#: синтаксис](../csharp/syntax.md) |
-| Установить NuGet-пакет или запустить тесты C# | pip, NuGet, PackageReference, dotnet restore, dotnet test | [C#: пакеты](../csharp/tooling-and-testing.md#packages) · [Тесты](../csharp/tooling-and-testing.md#tests) |
+| Установить NuGet-пакет или запустить тесты C# | NuGet, PackageReference, dotnet restore, dotnet test | [C#: пакеты](../csharp/tooling-and-testing.md#packages) · [Тесты](../csharp/tooling-and-testing.md#tests) |
 | Выбрать фреймворк .NET и границы компонентов | ASP.NET Core, EF Core, DI, desktop, игры | [C#: паттерны](../csharp/practice.md#patterns) · [Области применения](../csharp/practice.md#application-areas) |
 | Собрать и запустить программу на C++ | C++20, clang++, main, cout, компоновка | [C++: первый запуск](../cpp/README.md#первый-запуск) |
 | Добавить элемент в вектор и проверить индекс | std::vector, push_back, size, at, out_of_range | [C++: коллекции](../cpp/README.md#коллекции) · [Ошибки](../cpp/README.md#типичные-ошибки) |
@@ -243,7 +244,7 @@
 | Проверить права и владельца файла | permission, owner, chmod, umask, id | [Linux: права](../systems/linux/permissions-and-processes.md#прочитать-права) |
 | Найти процесс и корректно завершить свой дочерний процесс | ps, PID, kill, SIGTERM, wait, сигнал | [Процессы и сигналы](../systems/linux/permissions-and-processes.md#процессы-и-сигналы) · [Учебная проверка завершения](../systems/linux/permissions-and-processes.md#проверить-завершение-своего-дочернего-процесса) |
 | Узнать IP и маршрут | network, ip route, интерфейс, адрес | [Linux: сеть](../systems/linux/network-and-services.md#сеть-сначала-чтение-состояния) |
-| Найти процесс, который занял TCP-порт | порт занят, address already in use, ss, PID, listener, socket | [Команда и вывод](../systems/linux/process-by-port.md#найти-tcp-listener) · [Права](../systems/linux/process-by-port.md#если-pid-не-показан) · [Namespace](../systems/linux/process-by-port.md#если-процесс-в-другом-namespace) |
+| Найти процесс, который занял TCP-порт | порт занят, address already in use, EADDRINUSE, `ss -lntp`, PID, listener, socket | [Команда и вывод](../systems/linux/process-by-port.md#найти-tcp-listener) · [Права](../systems/linux/process-by-port.md#если-pid-не-показан) · [Namespace](../systems/linux/process-by-port.md#если-процесс-в-другом-namespace) |
 | Проверить службу и её журналы | systemd, systemctl, journalctl, service, logs | [Linux: службы systemd](../systems/linux/network-and-services.md#службы-systemd) |
 | Проверить свободное место и ресурсы | disk, df, du, free, память | [Linux: диск и ресурсы](../systems/linux/network-and-services.md#диск-и-ресурсы) |
 
@@ -253,8 +254,9 @@
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
 | Запустить приложение и учебную БД одной командой | Docker Compose, PostgreSQL, compose up, контейнер, healthcheck | [Compose: локальный запуск](../tools/compose-and-github-actions.md#запустить-приложение-локально) |
-| Запустить тесты в CI | GitHub Actions, workflow, job, Run workflow | [GitHub Actions: ручной запуск](../tools/compose-and-github-actions.md#запустить-тест-в-github-actions) |
-| Найти упавшую проверку в журнале CI | GitHub Actions, logs, журнал, assert, тест | [GitHub Actions: причина падения](../tools/compose-and-github-actions.md#найти-причину-падения-в-журнале) |
+| Запустить готовый workflow вручную | GitHub Actions, `workflow_dispatch`, Run workflow | [Запустить workflow вручную](../tools/compose-and-github-actions.md#запустить-готовый-workflow-вручную) |
+| Воспроизвести отказ теста в CI | GitHub Actions, PostgreSQL, задание integration, `fail_test` | [Запустить учебный workflow](../tools/compose-and-github-actions.md#запустить-тест-в-github-actions) |
+| Найти упавшую проверку в журнале CI | GitHub Actions, logs, журнал, assert, тест, `gh run view`, `--log-failed` | [GitHub Actions: причина падения](../tools/compose-and-github-actions.md#найти-причину-падения-в-журнале) |
 | Проверить статус и структуру ответа API одним тестом локально и в CI | API contract, FastAPI, PostgreSQL, TypeScript, Docker Compose, GitHub Actions | [Сквозная проверка контракта](../tools/api-contract-lab.md) |
 
 
@@ -265,7 +267,7 @@
 | Посмотреть изменения и подготовить локальный коммит | status, diff, staged, add, commit, log | [Git: карточка коммита](../tools/git/workflow.md#посмотреть-изменения-и-подготовить-коммит) |
 | Создать ветку и проверить весь рабочий процесс | switch, branch, merge, учебный репозиторий | [Git: полный сценарий](../tools/git/workflow.md#проверяемый-рабочий-процесс) |
 | Временно отложить незавершённую работу | stash, stash pop, WIP, shelve | [Git: отложить работу](../tools/git/workflow.md#временно-отложить-работу) |
-| Убрать файл из индекса с сохранением правок | unstage, restore staged, отменить add, индекс | [Git: снять подготовку](../tools/git/history.md#убрать-файл-из-индекса) |
+| Убрать файл из индекса с сохранением правок | unstage, `git restore --staged`, отменить git add, индекс | [Git: снять подготовку](../tools/git/history.md#убрать-файл-из-индекса) |
 | Отменить незакоммиченные изменения файла | discard, restore, working tree, удалить правки | [Git: выбрать источник restore](../tools/git/history.md#отменить-незакоммиченные-изменения) |
 | Отменить локальный коммит с сохранением изменений | undo, откат, reset soft, reset mixed, HEAD~1 | [Git: вернуть правки в индекс или рабочее дерево](../tools/git/history.md#отменить-коммит-с-сохранением-изменений) |
 | Отменить опубликованное изменение | revert, обратный коммит, общая история | [Git: отмена без переписывания](../tools/git/history.md#отменить-опубликованное-изменение) |

@@ -34,6 +34,19 @@ After the simulated failure, the event for order 42 was published twice.
 This is an expected Outbox boundary.
 The example provides no exactly-once guarantee.
 
+<a id="outbox-retry-steps"></a>
+<details>
+<summary>Show the duplicate publication step by step</summary>
+
+![A simulated crash leaves sent at 0 after event-42 appears in the published list. The retry adds the same ID and sets sent to 1.](../../../assets/transactional-outbox-retry.gif)
+
+The first publication adds `event-42` to the list that stands in for the broker. The simulated crash leaves the outbox row at `sent = 0`. The next attempt publishes the same ID and then sets `sent = 1`.
+To deduplicate a consumer's local effect, record the processed `event_id` and apply the effect in the same transaction.
+
+[Replay the GIF](../../../assets/transactional-outbox-retry.gif)
+
+</details>
+
 See the [Outbox call diagram](distributed-systems.md#transactional-outbox-for-saving-an-order-and-publication-intent).
 
 A production relay needs worker locking or leases.

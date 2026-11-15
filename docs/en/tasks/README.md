@@ -91,7 +91,8 @@ Command consequences and example limitations appear there as well.
 
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
-| Send a request from the terminal, inspect status and headers, and extract a JSON field | curl, jq, HTTP status code, body | [HTTP and JSON](../tools/http-json.md) |
+| Inspect the status and headers of an HTTP response | `curl -i`, `curl -I`, GET, HEAD, HTTP status code, Content-Type | [Inspect the HTTP response](../tools/http-json.md#inspect-the-http-response) |
+| Print a field from a JSON response | `jq -r`, curl, JSON body, name | [Extract a JSON field](../tools/http-json.md#extract-a-json-field) |
 | Create a FastAPI route with path/query/body parameters and validation | REST, endpoint, request, response, 422 | [Quick card](../python/web/fastapi/recipes.md#http-api-with-validation) · [Complete HTTP API](../python/web/fastapi/http-api.md#http-api-with-validation) |
 | Pass a dependency to a FastAPI handler | Depends, dependency injection, sub-dependency | [How FastAPI dependencies work](../python/web/fastapi/recipes.md#how-dependencies-work) |
 | Accept a form or file | upload, multipart, Form, UploadFile | [Quick card](../python/web/fastapi/recipes.md#forms-and-file-uploads) · [Complete upload example](../python/web/fastapi/uploads.md#forms-and-file-uploads) |
@@ -140,7 +141,7 @@ Command consequences and example limitations appear there as well.
 | Build and run a C# project | C#, C Sharp, .NET SDK, csproj, dotnet build, dotnet run | [C# first run](../csharp/README.md#first-run) |
 | Add a number to a list or validate a C# argument | `List<T>`, Add, foreach, TryParse, exit code | [C# collections](../csharp/README.md#collections) · [Common mistakes](../csharp/README.md#common-mistakes) |
 | Look up C# syntax | nullable, record, generics, LINQ, async, await | [C# syntax](../csharp/syntax.md) |
-| Install a NuGet package or run C# tests | pip, NuGet, PackageReference, dotnet restore, dotnet test | [C# packages](../csharp/tooling-and-testing.md#packages) · [Tests](../csharp/tooling-and-testing.md#tests) |
+| Install a NuGet package or run C# tests | NuGet, PackageReference, dotnet restore, dotnet test | [C# packages](../csharp/tooling-and-testing.md#packages) · [Tests](../csharp/tooling-and-testing.md#tests) |
 | Choose a .NET framework and define component boundaries | ASP.NET Core, EF Core, DI, desktop, games | [C# patterns](../csharp/practice.md#patterns) · [Application areas](../csharp/practice.md#application-areas) |
 | Build and run a C++ program | C++20, clang++, main, cout, linking | [C++ first run](../cpp/README.md#first-run) |
 | Add an element to a vector and check the index | std::vector, push_back, size, at, out_of_range | [C++ collections](../cpp/README.md#collections) · [Common mistakes](../cpp/README.md#common-mistakes) |
@@ -242,7 +243,7 @@ The diagram shows the artifacts in a typical console build. Arrow labels identif
 | Check a file's permissions and owner | permission, owner, chmod, umask, id | [Linux permissions](../systems/linux/permissions-and-processes.md#read-permissions) |
 | Find a process and terminate your own child process cleanly | ps, PID, kill, SIGTERM, wait, signal | [Processes and signals](../systems/linux/permissions-and-processes.md#processes-and-signals) · [Practice checking termination](../systems/linux/permissions-and-processes.md#check-termination-of-your-own-child-process) |
 | Identify an IP address and route | network, ip route, interface, address | [Linux networking](../systems/linux/network-and-services.md#inspect-the-network-state-first) |
-| Find the process listening on a TCP port | port in use, address already in use, ss, PID, listener, socket | [Command and output](../systems/linux/process-by-port.md#find-a-tcp-listener) · [Permissions](../systems/linux/process-by-port.md#when-the-pid-is-missing) · [Namespace](../systems/linux/process-by-port.md#when-the-process-is-in-another-namespace) |
+| Find the process listening on a TCP port | port in use, address already in use, EADDRINUSE, `ss -lntp`, PID, listener, socket | [Command and output](../systems/linux/process-by-port.md#find-a-tcp-listener) · [Permissions](../systems/linux/process-by-port.md#when-the-pid-is-missing) · [Namespace](../systems/linux/process-by-port.md#when-the-process-is-in-another-namespace) |
 | Inspect a service and its logs | systemd, systemctl, journalctl, service, logs | [Linux systemd services](../systems/linux/network-and-services.md#systemd-services) |
 | Check available space and resources | disk, df, du, free, memory | [Linux disk and resources](../systems/linux/network-and-services.md#disk-and-resources) |
 
@@ -251,8 +252,9 @@ The diagram shows the artifacts in a typical console build. Arrow labels identif
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
 | Start an app and a practice database with one command | Docker Compose, PostgreSQL, compose up, container, healthcheck | [Run the app with Compose](../tools/compose-and-github-actions.md#run-the-application-locally) |
-| Run tests in CI | GitHub Actions, workflow, job, Run workflow | [Run GitHub Actions manually](../tools/compose-and-github-actions.md#run-the-test-in-github-actions) |
-| Find a failed check in a CI log | GitHub Actions, logs, assert, test | [Diagnose the failure in GitHub Actions](../tools/compose-and-github-actions.md#find-the-cause-in-the-log) |
+| Run an existing workflow manually | GitHub Actions, `workflow_dispatch`, Run workflow | [Start a manual run](../tools/compose-and-github-actions.md#run-an-existing-workflow-manually) |
+| Reproduce a test failure in CI | GitHub Actions, PostgreSQL, integration job, `fail_test` | [Run the practice workflow](../tools/compose-and-github-actions.md#run-the-test-in-github-actions) |
+| Find a failed check in a CI log | GitHub Actions, logs, assert, test, `gh run view`, `--log-failed` | [Diagnose the failure in GitHub Actions](../tools/compose-and-github-actions.md#find-the-cause-in-the-log) |
 | Check an API response status and shape with the same test locally and in CI | API contract, FastAPI, PostgreSQL, TypeScript, Docker Compose, GitHub Actions | [End-to-end contract check](../tools/api-contract-lab.md) |
 
 <a id="git-и-github"></a>
@@ -263,7 +265,7 @@ The diagram shows the artifacts in a typical console build. Arrow labels identif
 | Inspect changes and prepare a local commit | status, diff, staged, add, commit, log | [Git commit card](../tools/git/workflow.md#inspect-changes-and-prepare-a-commit) |
 | Create a branch and test the full workflow | switch, branch, merge, learning repository | [Complete Git workflow](../tools/git/workflow.md#verifiable-workflow) |
 | Temporarily set unfinished work aside | stash, stash pop, WIP, shelve | [Set work aside in Git](../tools/git/workflow.md#temporarily-set-work-aside) |
-| Remove a file from the index while keeping edits | unstage, restore staged, undo add, index | [Unstage with Git](../tools/git/history.md#unstage-a-file) |
+| Remove a file from the index while keeping edits | unstage, `git restore --staged`, undo git add, index | [Unstage with Git](../tools/git/history.md#unstage-a-file) |
 | Undo uncommitted file changes | discard, restore, working tree, discard edits | [Choose a source for Git restore](../tools/git/history.md#discard-uncommitted-changes) |
 | Undo a local commit while preserving changes | undo, rollback, reset soft, reset mixed, HEAD~1 | [Return edits to the index or working tree](../tools/git/history.md#undo-a-commit-while-preserving-changes) |
 | Undo a published change | revert, reversing commit, shared history | [Undo without rewriting Git history](../tools/git/history.md#undo-a-published-change) |
