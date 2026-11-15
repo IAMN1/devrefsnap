@@ -82,10 +82,11 @@ docker compose exec -e LAB_FORCE_FAILURE=1 app python -m unittest -v
 
 ## Запустить тест в GitHub Actions
 
-Создайте пустой учебный репозиторий рядом с локальной копией `Python_cheat_sheet`. В терминале из корня **учебного репозитория** скопируйте файлы примера. Переместите образец workflow в каталог, в котором GitHub ищет конфигурацию.
+Создайте пустой учебный репозиторий рядом с локальной копией `devrefsnap`. В терминале из корня **учебного репозитория** скопируйте файлы примера. Переместите образец workflow в каталог, в котором GitHub ищет конфигурацию.
+Если каталог локальной копии называется иначе, замените путь `../devrefsnap` в команде.
 
 ```bash
-cp -R ../Python_cheat_sheet/examples/tools/compose-and-github-actions/. .
+cp -R ../devrefsnap/examples/tools/compose-and-github-actions/. .
 mkdir -p .github/workflows
 mv workflow-example.yml .github/workflows/postgres-test.yml
 git status --short

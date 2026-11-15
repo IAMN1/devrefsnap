@@ -34,7 +34,7 @@
   "pr": {
     "base_sha": "d1771a93e097b5c9edbd8a9fc0c98dab4b9ff390",
     "head_sha": "382833f4b6b231d39ecaafa54ec1c6f1e7af0a2a",
-    "html_url": "https://github.com/IAMN1/Python_cheat_sheet/pull/3",
+    "html_url": "https://github.com/IAMN1/devrefsnap/pull/3",
     "merge_commit_sha": "240ff7f76ede0b74f92d76004995c68230c821c6",
     "merged": true,
     "number": 3,
@@ -45,7 +45,7 @@
     "conclusion": "success",
     "event": "pull_request",
     "head_sha": "382833f4b6b231d39ecaafa54ec1c6f1e7af0a2a",
-    "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786599608",
+    "html_url": "https://github.com/IAMN1/devrefsnap/actions/runs/42786599608",
     "id": 42786599608,
     "status": "completed"
   },
@@ -53,20 +53,20 @@
     "conclusion": "success",
     "event": "push",
     "head_sha": "240ff7f76ede0b74f92d76004995c68230c821c6",
-    "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786777448",
+    "html_url": "https://github.com/IAMN1/devrefsnap/actions/runs/42786777448",
     "id": 42786777448,
     "status": "completed"
   },
   "post_merge_jobs": [
     {
       "conclusion": "success",
-      "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786777448/job/129729878150",
+      "html_url": "https://github.com/IAMN1/devrefsnap/actions/runs/42786777448/job/129729878150",
       "name": "materials-static",
       "status": "completed"
     },
     {
       "conclusion": "success",
-      "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786777448/job/129729878652",
+      "html_url": "https://github.com/IAMN1/devrefsnap/actions/runs/42786777448/job/129729878652",
       "name": "checker-tests",
       "status": "completed"
     }

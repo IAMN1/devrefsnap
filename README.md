@@ -1,6 +1,6 @@
 <a id="шпаргалки-по-разработке"></a>
 
-# Шпаргалки по разработке / Developer cheat sheets
+# DevRefSnap
 
 [Русский](docs/ru/README.md) · [English](docs/en/README.md)
 

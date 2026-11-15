@@ -65,7 +65,7 @@
     "conclusion": "success",
     "event": "pull_request",
     "head_sha": "b7b1eab6932a3508be528f04016e21967e04527d",
-    "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42781301048",
+    "html_url": "https://github.com/IAMN1/devrefsnap/actions/runs/42781301048",
     "id": 42781301048,
     "run_attempt": 1,
     "status": "completed"
@@ -74,7 +74,7 @@
     "conclusion": "success",
     "event": "push",
     "head_sha": "9e1ab9ed67f47b305cb7ed7f545742ed1e38b630",
-    "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42781461498",
+    "html_url": "https://github.com/IAMN1/devrefsnap/actions/runs/42781461498",
     "id": 42781461498,
     "run_attempt": 1,
     "status": "completed"
@@ -82,13 +82,13 @@
   "main_run_jobs": [
     {
       "conclusion": "success",
-      "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42781461498/job/129712247798",
+      "html_url": "https://github.com/IAMN1/devrefsnap/actions/runs/42781461498/job/129712247798",
       "name": "materials-static",
       "status": "completed"
     },
     {
       "conclusion": "success",
-      "html_url": "https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42781461498/job/129712248238",
+      "html_url": "https://github.com/IAMN1/devrefsnap/actions/runs/42781461498/job/129712248238",
       "name": "checker-tests",
       "status": "completed"
     }

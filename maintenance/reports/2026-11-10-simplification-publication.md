@@ -6,8 +6,7 @@
 Независимое ревью повторно подтвердило все 47 пар.
 Последующее исправление типа одного служебного merge и SHA его потомка записано отдельно в той же карте.
 
-Исходные refs и 11 старых криптографических подписей сохранены в проверенном локальном bundle:
-`/Users/maiz/.codex/backups/Python_cheat_sheet/2026-11-10-before-history-reword.bundle`.
+Исходные refs и 11 старых криптографических подписей сохранены в проверенном локальном bundle `2026-11-10-before-history-reword.bundle`.
 Резервная копия не публикуется; новые объекты не подписаны прежними ключами.
 Старые SHA в исторических результатах и архивных PR относятся к прежним наблюдениям.
 Они не означают присутствие старых сообщений в актуальной истории.
@@ -15,12 +14,12 @@
 
 ## Доказательства публикации
 
-Переходный [run 42785006374](https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42785006374) отказал на вычислении сигналов diff.
+Переходный [run 42785006374](https://github.com/IAMN1/devrefsnap/actions/runs/42785006374) отказал на вычислении сигналов diff.
 GitHub передал прежний `before` SHA `5afa5a8`, которого не было в новом клоне.
 Проверка материалов и тесты прошли; права и проверки ради отсутствующего объекта не ослаблялись.
 
-[PR №3](https://github.com/IAMN1/Python_cheat_sheet/pull/3) прошёл [CI точного head](https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786599608).
-После merge `240ff7f76ede0b74f92d76004995c68230c821c6` прошёл [push-run](https://github.com/IAMN1/Python_cheat_sheet/actions/runs/42786777448).
+[PR №3](https://github.com/IAMN1/devrefsnap/pull/3) прошёл [CI точного head](https://github.com/IAMN1/devrefsnap/actions/runs/42786599608).
+После merge `240ff7f76ede0b74f92d76004995c68230c821c6` прошёл [push-run](https://github.com/IAMN1/devrefsnap/actions/runs/42786777448).
 В обоих запусках успешны `materials-static` и `checker-tests`.
 [Снимок API](2026-11-10-publication-github.json) сохраняет точные head/base, run/job URL и настройки merge.
 Снимок также подтверждает включение tips трёх удалённых завершённых веток в main.
