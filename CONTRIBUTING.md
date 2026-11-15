@@ -8,7 +8,7 @@
 
 ### Сообщить об ошибке или предложить тему
 
-Откройте [список форм GitHub](https://github.com/IAMN1/Python_cheat_sheet/issues/new/choose).
+Откройте [список форм GitHub](https://github.com/IAMN1/devrefsnap/issues/new/choose).
 
 - **Исправить или обновить материал.** Дайте ссылку на страницу и раздел. Опишите проблему и ожидаемый результат. Для ошибки в примере укажите версии, шаги и фактический вывод. Для обновления API приложите официальную документацию или примечания к выпуску нужной версии.
 - **Предложить тему.** Опишите задачу читателя и результат, который он должен получить. Укажите ближайшую страницу из [каталога](docs/ru/README.md#каталог-материалов), если такая страница есть.
@@ -33,7 +33,7 @@ Write the title and body of an issue or pull request (PR) in either Russian or E
 
 ### Report a problem or propose a topic
 
-Open the [GitHub issue form chooser](https://github.com/IAMN1/Python_cheat_sheet/issues/new/choose).
+Open the [GitHub issue form chooser](https://github.com/IAMN1/devrefsnap/issues/new/choose).
 
 - **Fix or update material.** Link to the page and section. Describe the problem and the expected result. For a broken example, include versions, steps, and actual output. For an API update, link to the official documentation or release notes for the relevant version.
 - **Propose a topic.** Describe the reader's task and the result they should achieve. Link to the closest page in the [catalog](docs/en/README.md#material-catalog), if one exists.

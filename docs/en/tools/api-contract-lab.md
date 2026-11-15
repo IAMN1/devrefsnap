@@ -80,10 +80,11 @@ docker compose down --volumes
 
 ## Repeat the check in GitHub Actions
 
-Use a separate practice repository with Actions enabled and write access. If its local copy is next to `Python_cheat_sheet`, run these commands from the **practice repository root**.
+Use a separate practice repository with Actions enabled and write access. If its local copy is next to `devrefsnap`, run these commands from the **practice repository root**.
+If your local checkout has a different directory name, replace `../devrefsnap` in the command.
 
 ```bash
-cp -R ../Python_cheat_sheet/examples/tools/api-contract-lab .
+cp -R ../devrefsnap/examples/tools/api-contract-lab .
 mkdir -p .github/workflows
 cp api-contract-lab/workflow-example.yml .github/workflows/api-contract.yml
 git status --short

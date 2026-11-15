@@ -80,10 +80,11 @@ docker compose down --volumes
 
 ## Повторить проверку в GitHub Actions
 
-Используйте отдельный учебный репозиторий с включёнными Actions и правом записи. Если его локальная копия лежит рядом с `Python_cheat_sheet`, выполните команды из корня **учебного репозитория**.
+Используйте отдельный учебный репозиторий с включёнными Actions и правом записи. Если его локальная копия лежит рядом с `devrefsnap`, выполните команды из корня **учебного репозитория**.
+Если каталог локальной копии называется иначе, замените путь `../devrefsnap` в команде.
 
 ```bash
-cp -R ../Python_cheat_sheet/examples/tools/api-contract-lab .
+cp -R ../devrefsnap/examples/tools/api-contract-lab .
 mkdir -p .github/workflows
 cp api-contract-lab/workflow-example.yml .github/workflows/api-contract.yml
 git status --short

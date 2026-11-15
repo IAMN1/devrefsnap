@@ -48,7 +48,7 @@ Backup/restore SQLite отделён от миграции схемы.
 PyYAML 6.0.3 разобрал обе формы без повторных ключей. Сверили типы полей, уникальные `id`, флаги `required` и расположение шаблона PR. [Схема форм GitHub](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema) · [Шаблон PR](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/creating-a-pull-request-template-for-your-repository).
 
 2026-11-12. Проверили интерфейс приватного репозитория на `main` с коммитом `d0b5b1a`.
-В [списке шаблонов Issue](https://github.com/IAMN1/Python_cheat_sheet/issues/new/choose) открылись обе формы. GitHub показал поля страницы и исправления в первой форме и поля задачи и ожидаемого результата во второй. Эти поля отмечены звёздочками.
+В [списке шаблонов Issue](https://github.com/IAMN1/devrefsnap/issues/new/choose) открылись обе формы. GitHub показал поля страницы и исправления в первой форме и поля задачи и ожидаемого результата во второй. Эти поля отмечены звёздочками.
 На экране **Open a pull request** для сравнения с временной веткой поле описания автоматически заполнилось тремя разделами из [шаблона PR](../../.github/pull_request_template.md) и комментариями-подсказками.
 Проверка завершилась на экранах заполнения форм. Временная ветка удалена.
 

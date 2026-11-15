@@ -82,10 +82,11 @@ Expect `FAILED (failures=1)` and exit code `1`. Run the first command again to g
 
 ## Run the test in GitHub Actions
 
-Create an empty practice repository next to your local copy of `Python_cheat_sheet`. In your terminal, copy the example files from the root of the **practice repository**. Move the sample workflow to the directory GitHub uses for workflow files.
+Create an empty practice repository next to your local copy of `devrefsnap`. In your terminal, copy the example files from the root of the **practice repository**. Move the sample workflow to the directory GitHub uses for workflow files.
+If your local checkout has a different directory name, replace `../devrefsnap` in the command.
 
 ```bash
-cp -R ../Python_cheat_sheet/examples/tools/compose-and-github-actions/. .
+cp -R ../devrefsnap/examples/tools/compose-and-github-actions/. .
 mkdir -p .github/workflows
 mv workflow-example.yml .github/workflows/postgres-test.yml
 git status --short
