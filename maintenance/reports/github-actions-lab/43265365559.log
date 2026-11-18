@@ -1,0 +1,388 @@
+﻿2026-11-12T17:03:41.0690667Z Current runner version: '2.338.2'
+2026-11-12T17:03:41.0740764Z ##[group]Runner Image Provisioner
+2026-11-12T17:03:41.0741627Z Hosted Compute Agent
+2026-11-12T17:03:41.0742314Z Version: 20261103.629
+2026-11-12T17:03:41.0742957Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-12T17:03:41.0764353Z Build Date: 2026-11-03T17:26:59Z
+2026-11-12T17:03:41.0765074Z Worker ID: {052e3648-548f-47b0-997f-f1454afdb999}
+2026-11-12T17:03:41.0765917Z Region: us-east-1
+2026-11-12T17:03:41.0766467Z Cloud: AWS
+2026-11-12T17:03:41.0767031Z ##[endgroup]
+2026-11-12T17:03:41.0768856Z ##[group]Operating System
+2026-11-12T17:03:41.0769456Z Ubuntu
+2026-11-12T17:03:41.0770013Z 24.04.5
+2026-11-12T17:03:41.0770528Z LTS
+2026-11-12T17:03:41.0771052Z ##[endgroup]
+2026-11-12T17:03:41.0771575Z ##[group]Runner Image
+2026-11-12T17:03:41.0772156Z Image: ubuntu-24.04
+2026-11-12T17:03:41.0772793Z Version: 20261111.127.1
+2026-11-12T17:03:41.0774334Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.127/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-12T17:03:41.0776043Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.127
+2026-11-12T17:03:41.0777056Z ##[endgroup]
+2026-11-12T17:03:41.0778189Z ##[group]GITHUB_TOKEN Permissions
+2026-11-12T17:03:41.0780499Z Contents: read
+2026-11-12T17:03:41.0781083Z Metadata: read
+2026-11-12T17:03:41.0781677Z ##[endgroup]
+2026-11-12T17:03:41.0785795Z Secret source: Actions
+2026-11-12T17:03:41.0786795Z Cache mode: write
+2026-11-12T17:03:41.0787488Z Prepare workflow directory
+2026-11-12T17:03:41.1670027Z Prepare all required actions
+2026-11-12T17:03:41.1786724Z Getting action download info
+2026-11-12T17:03:41.3571043Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-11-12T17:03:43.7853046Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-11-12T17:03:44.0324328Z Complete job name: integration
+2026-11-12T17:03:44.0790825Z ##[group]Checking docker version
+2026-11-12T17:03:44.0801246Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-11-12T17:03:46.3518039Z '1.48'
+2026-11-12T17:03:46.3530995Z Docker daemon API version: '1.48'
+2026-11-12T17:03:46.3531541Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-11-12T17:03:46.3675351Z '1.48'
+2026-11-12T17:03:46.3677741Z Docker client API version: '1.48'
+2026-11-12T17:03:46.3682400Z ##[endgroup]
+2026-11-12T17:03:46.3684649Z ##[group]Clean up resources from previous jobs
+2026-11-12T17:03:46.3688591Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=880637"
+2026-11-12T17:03:46.3817063Z ##[command]/usr/bin/docker network prune --force --filter "label=880637"
+2026-11-12T17:03:46.3925767Z ##[endgroup]
+2026-11-12T17:03:46.3926120Z ##[group]Create local container network
+2026-11-12T17:03:46.3932931Z ##[command]/usr/bin/docker network create --label 880637 github_network_ed999502e9b3496eb9d05e7e2f5a9771
+2026-11-12T17:03:46.4399954Z 76c8c12b1dacce8080371564f412a28db4aa3b294c84b49fcf90c3a5a68c3699
+2026-11-12T17:03:46.4412508Z ##[endgroup]
+2026-11-12T17:03:46.4435057Z ##[group]Starting postgres service container
+2026-11-12T17:03:46.4451835Z ##[command]/usr/bin/docker pull postgres:18.6
+2026-11-12T17:03:46.6936925Z 18.6: Pulling from library/postgres
+2026-11-12T17:03:46.7816795Z 37fb86c2a767: Pulling fs layer
+2026-11-12T17:03:46.7818097Z e9dd37612d7b: Pulling fs layer
+2026-11-12T17:03:46.7818664Z 369949eb0229: Pulling fs layer
+2026-11-12T17:03:46.7835132Z 7e0f86eb8508: Pulling fs layer
+2026-11-12T17:03:46.7835608Z da434b32d480: Pulling fs layer
+2026-11-12T17:03:46.7836453Z bcc75ab4e010: Pulling fs layer
+2026-11-12T17:03:46.7837364Z a28de24f57c0: Pulling fs layer
+2026-11-12T17:03:46.7838054Z 6d141360b363: Pulling fs layer
+2026-11-12T17:03:46.7838668Z fcd0e9514062: Pulling fs layer
+2026-11-12T17:03:46.7839365Z cbe0afc9eb7b: Pulling fs layer
+2026-11-12T17:03:46.7839777Z fc6c21aca07c: Pulling fs layer
+2026-11-12T17:03:46.7840548Z 2a59118cca0e: Pulling fs layer
+2026-11-12T17:03:46.7840884Z eac25292b613: Pulling fs layer
+2026-11-12T17:03:46.7841343Z 6d141360b363: Waiting
+2026-11-12T17:03:46.7841685Z fcd0e9514062: Waiting
+2026-11-12T17:03:46.7841985Z cbe0afc9eb7b: Waiting
+2026-11-12T17:03:46.7842282Z fc6c21aca07c: Waiting
+2026-11-12T17:03:46.7842559Z 2a59118cca0e: Waiting
+2026-11-12T17:03:46.7842893Z eac25292b613: Waiting
+2026-11-12T17:03:46.7843468Z 7e0f86eb8508: Waiting
+2026-11-12T17:03:46.7844177Z da434b32d480: Waiting
+2026-11-12T17:03:46.7844501Z bcc75ab4e010: Waiting
+2026-11-12T17:03:46.7844782Z a28de24f57c0: Waiting
+2026-11-12T17:03:46.8271085Z e9dd37612d7b: Verifying Checksum
+2026-11-12T17:03:46.8272599Z e9dd37612d7b: Download complete
+2026-11-12T17:03:46.8676051Z 369949eb0229: Verifying Checksum
+2026-11-12T17:03:46.8678520Z 369949eb0229: Download complete
+2026-11-12T17:03:46.8801077Z 7e0f86eb8508: Verifying Checksum
+2026-11-12T17:03:46.8809219Z 7e0f86eb8508: Download complete
+2026-11-12T17:03:46.9297375Z bcc75ab4e010: Verifying Checksum
+2026-11-12T17:03:46.9308567Z bcc75ab4e010: Download complete
+2026-11-12T17:03:46.9684771Z a28de24f57c0: Download complete
+2026-11-12T17:03:46.9718018Z da434b32d480: Verifying Checksum
+2026-11-12T17:03:46.9721284Z da434b32d480: Download complete
+2026-11-12T17:03:47.0140162Z 6d141360b363: Verifying Checksum
+2026-11-12T17:03:47.0141530Z 6d141360b363: Download complete
+2026-11-12T17:03:47.0667057Z cbe0afc9eb7b: Verifying Checksum
+2026-11-12T17:03:47.0668672Z cbe0afc9eb7b: Download complete
+2026-11-12T17:03:47.1024135Z 37fb86c2a767: Verifying Checksum
+2026-11-12T17:03:47.1028517Z 37fb86c2a767: Download complete
+2026-11-12T17:03:47.1102906Z fc6c21aca07c: Verifying Checksum
+2026-11-12T17:03:47.1104325Z fc6c21aca07c: Download complete
+2026-11-12T17:03:47.1452220Z 2a59118cca0e: Verifying Checksum
+2026-11-12T17:03:47.1453326Z 2a59118cca0e: Download complete
+2026-11-12T17:03:47.1608749Z eac25292b613: Verifying Checksum
+2026-11-12T17:03:47.1610744Z eac25292b613: Download complete
+2026-11-12T17:03:47.8357315Z 37fb86c2a767: Pull complete
+2026-11-12T17:03:47.8847760Z e9dd37612d7b: Pull complete
+2026-11-12T17:03:48.0031309Z 369949eb0229: Pull complete
+2026-11-12T17:03:48.0259426Z 7e0f86eb8508: Pull complete
+2026-11-12T17:03:48.1522154Z fcd0e9514062: Verifying Checksum
+2026-11-12T17:03:48.1522922Z fcd0e9514062: Download complete
+2026-11-12T17:03:48.2435397Z da434b32d480: Pull complete
+2026-11-12T17:03:48.3135556Z bcc75ab4e010: Pull complete
+2026-11-12T17:03:48.3174425Z a28de24f57c0: Pull complete
+2026-11-12T17:03:48.3244517Z 6d141360b363: Pull complete
+2026-11-12T17:03:50.0008114Z fcd0e9514062: Pull complete
+2026-11-12T17:03:50.0058813Z cbe0afc9eb7b: Pull complete
+2026-11-12T17:03:50.0096496Z fc6c21aca07c: Pull complete
+2026-11-12T17:03:50.0144151Z 2a59118cca0e: Pull complete
+2026-11-12T17:03:50.0193067Z eac25292b613: Pull complete
+2026-11-12T17:03:50.0219549Z Digest: sha256:e3d24f6906d0760bf4da0dae872415391ededefad23fd471c47dc53b0ddf3c42
+2026-11-12T17:03:50.0225063Z Status: Downloaded newer image for postgres:18.6
+2026-11-12T17:03:50.0232459Z docker.io/library/postgres:18.6
+2026-11-12T17:03:50.0282627Z ##[command]/usr/bin/docker create --name 4b29afc59cd74d7f9931a94e830579fa_postgres186_269aff --label 880637 --network github_network_ed999502e9b3496eb9d05e7e2f5a9771 --network-alias postgres -p 5432/tcp --health-cmd "pg_isready -h 127.0.0.1 -U lab -d compose_lab" --health-interval 3s --health-timeout 2s --health-retries 10 -e "POSTGRES_DB=compose_lab" -e "POSTGRES_USER=lab" -e "POSTGRES_PASSWORD=lab-only-password" -e GITHUB_ACTIONS=true -e CI=true postgres:18.6
+2026-11-12T17:03:53.3692007Z fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:03:53.3714964Z ##[command]/usr/bin/docker start fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:03:54.2928463Z fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:03:54.2948378Z ##[command]/usr/bin/docker ps --all --filter id=fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-11-12T17:03:54.3096096Z fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509 Up Less than a second (health: starting)
+2026-11-12T17:03:54.3128630Z ##[command]/usr/bin/docker port fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:03:54.3288162Z 5432/tcp -> 0.0.0.0:32768
+2026-11-12T17:03:54.3290662Z 5432/tcp -> [::]:32768
+2026-11-12T17:03:54.3328601Z ##[endgroup]
+2026-11-12T17:03:54.3338862Z ##[group]Waiting for all services to be ready
+2026-11-12T17:03:54.3355516Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:03:54.3527758Z starting
+2026-11-12T17:03:54.3540408Z postgres service is starting, waiting 2 seconds before checking again.
+2026-11-12T17:03:56.3547254Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:03:56.3664546Z starting
+2026-11-12T17:03:56.3674071Z postgres service is starting, waiting 4 seconds before checking again.
+2026-11-12T17:04:00.6803895Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:04:00.6936701Z healthy
+2026-11-12T17:04:00.6949730Z postgres service is healthy.
+2026-11-12T17:04:00.6950377Z ##[endgroup]
+2026-11-12T17:04:00.7177811Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-11-12T17:04:00.7178348Z with:
+2026-11-12T17:04:00.7178587Z   persist-credentials: false
+2026-11-12T17:04:00.7178921Z   repository: IAMN1/python-cheat-sheet-actions-lab-20261112
+2026-11-12T17:04:00.7180825Z   token: ***
+2026-11-12T17:04:00.7181051Z   ssh-strict: true
+2026-11-12T17:04:00.7181306Z   ssh-user: git
+2026-11-12T17:04:00.7181549Z   clean: true
+2026-11-12T17:04:00.7181816Z   sparse-checkout-cone-mode: true
+2026-11-12T17:04:00.7182090Z   fetch-depth: 1
+2026-11-12T17:04:00.7182293Z   fetch-tags: false
+2026-11-12T17:04:00.7182536Z   show-progress: true
+2026-11-12T17:04:00.7182755Z   lfs: false
+2026-11-12T17:04:00.7182962Z   submodules: false
+2026-11-12T17:04:00.7183485Z   set-safe-directory: true
+2026-11-12T17:04:00.7183774Z   allow-unsafe-pr-checkout: false
+2026-11-12T17:04:00.7184237Z ##[endgroup]
+2026-11-12T17:04:02.9595183Z Syncing repository: IAMN1/python-cheat-sheet-actions-lab-20261112
+2026-11-12T17:04:02.9596665Z ##[group]Getting Git version info
+2026-11-12T17:04:02.9597175Z Working directory is '/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112'
+2026-11-12T17:04:02.9606082Z [command]/usr/bin/git version
+2026-11-12T17:04:03.1495598Z git version 2.56.1
+2026-11-12T17:04:03.1518336Z ##[endgroup]
+2026-11-12T17:04:03.1531379Z Temporarily overriding HOME='/home/runner/work/_temp/89c2cf13-0f36-4daf-a39d-d49e70c73349' before making global git config changes
+2026-11-12T17:04:03.1532581Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T17:04:03.1537570Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112
+2026-11-12T17:04:03.1953539Z Deleting the contents of '/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112'
+2026-11-12T17:04:03.1956793Z ##[group]Determining repository object format
+2026-11-12T17:04:03.1958102Z ##[endgroup]
+2026-11-12T17:04:03.1958815Z ##[group]Initializing the repository
+2026-11-12T17:04:03.1962782Z [command]/usr/bin/git init /home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112
+2026-11-12T17:04:03.2902889Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-12T17:04:03.2906402Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-12T17:04:03.2907547Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-12T17:04:03.2908307Z hint: call:
+2026-11-12T17:04:03.2909336Z hint:
+2026-11-12T17:04:03.2909865Z hint: 	git config --global init.defaultBranch <name>
+2026-11-12T17:04:03.2910491Z hint:
+2026-11-12T17:04:03.2910989Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-12T17:04:03.2911659Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-12T17:04:03.2928533Z hint:
+2026-11-12T17:04:03.2929097Z hint: 	git branch -m <name>
+2026-11-12T17:04:03.2954094Z hint:
+2026-11-12T17:04:03.2964241Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-12T17:04:03.2965415Z Initialized empty Git repository in /home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112/.git/
+2026-11-12T17:04:03.2968909Z [command]/usr/bin/git remote add origin https://github.com/IAMN1/python-cheat-sheet-actions-lab-20261112
+2026-11-12T17:04:03.3002677Z ##[endgroup]
+2026-11-12T17:04:03.3003711Z ##[group]Disabling automatic garbage collection
+2026-11-12T17:04:03.3006018Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-12T17:04:03.3056841Z ##[endgroup]
+2026-11-12T17:04:03.3057577Z ##[group]Setting up auth
+2026-11-12T17:04:03.3058060Z Removing SSH command configuration
+2026-11-12T17:04:03.3064837Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T17:04:03.3101855Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T17:04:03.6210336Z Removing HTTP extra header
+2026-11-12T17:04:03.6211581Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T17:04:03.6240257Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T17:04:03.6384396Z Removing includeIf entries pointing to credentials config files
+2026-11-12T17:04:03.6388386Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T17:04:03.6421448Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T17:04:03.6572455Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-12T17:04:03.6602792Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112/.git.path /home/runner/work/_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config
+2026-11-12T17:04:03.6639608Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config
+2026-11-12T17:04:03.6665866Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config
+2026-11-12T17:04:03.6697817Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config
+2026-11-12T17:04:03.6721996Z ##[endgroup]
+2026-11-12T17:04:03.6722672Z ##[group]Fetching the repository
+2026-11-12T17:04:03.6727404Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f72cc81a5cfaf79cb341b05146600356e681115c:refs/remotes/origin/main
+2026-11-12T17:04:04.0686037Z From https://github.com/IAMN1/python-cheat-sheet-actions-lab-20261112
+2026-11-12T17:04:04.0687584Z  * [new ref]         f72cc81a5cfaf79cb341b05146600356e681115c -> origin/main
+2026-11-12T17:04:04.0700997Z [command]/usr/bin/git branch --list --remote origin/main
+2026-11-12T17:04:04.0731987Z   origin/main
+2026-11-12T17:04:04.0738790Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-11-12T17:04:04.0758693Z f72cc81a5cfaf79cb341b05146600356e681115c
+2026-11-12T17:04:04.0771916Z ##[endgroup]
+2026-11-12T17:04:04.0772597Z ##[group]Determining the checkout info
+2026-11-12T17:04:04.0773588Z ##[endgroup]
+2026-11-12T17:04:04.0773993Z [command]/usr/bin/git sparse-checkout disable
+2026-11-12T17:04:04.0821217Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-12T17:04:04.0844743Z ##[group]Checking out the ref
+2026-11-12T17:04:04.0847614Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-12T17:04:04.0911697Z Switched to a new branch 'main'
+2026-11-12T17:04:04.0918473Z branch 'main' set up to track 'origin/main'.
+2026-11-12T17:04:04.0922447Z ##[endgroup]
+2026-11-12T17:04:04.0999926Z [command]/usr/bin/git log -1 --format=%H
+2026-11-12T17:04:04.1013349Z f72cc81a5cfaf79cb341b05146600356e681115c
+2026-11-12T17:04:04.1026339Z ##[group]Removing auth
+2026-11-12T17:04:04.1026947Z Removing SSH command configuration
+2026-11-12T17:04:04.1027638Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T17:04:04.1050114Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T17:04:04.1201999Z Removing HTTP extra header
+2026-11-12T17:04:04.1202539Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T17:04:04.1232327Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T17:04:04.1387031Z Removing includeIf entries pointing to credentials config files
+2026-11-12T17:04:04.1387748Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T17:04:04.1412718Z includeif.gitdir:/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112/.git.path
+2026-11-12T17:04:04.1414297Z includeif.gitdir:/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112/.git/worktrees/*.path
+2026-11-12T17:04:04.1423825Z includeif.gitdir:/github/workspace/.git.path
+2026-11-12T17:04:04.1424333Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-12T17:04:04.1433803Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112/.git.path
+2026-11-12T17:04:04.1445448Z /home/runner/work/_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config
+2026-11-12T17:04:04.1464744Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-08ce3704\-853d\-413e\-878c\-33aee8770d21\.config
+2026-11-12T17:04:04.1487220Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112/.git/worktrees/*.path
+2026-11-12T17:04:04.1510668Z /home/runner/work/_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config
+2026-11-12T17:04:04.1543603Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-08ce3704\-853d\-413e\-878c\-33aee8770d21\.config
+2026-11-12T17:04:04.1552628Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-11-12T17:04:04.1576041Z /github/runner_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config
+2026-11-12T17:04:04.1603033Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-08ce3704\-853d\-413e\-878c\-33aee8770d21\.config
+2026-11-12T17:04:04.1614842Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-12T17:04:04.1631775Z /github/runner_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config
+2026-11-12T17:04:04.1636813Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-08ce3704\-853d\-413e\-878c\-33aee8770d21\.config
+2026-11-12T17:04:04.1662085Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T17:04:04.1812739Z Removing credentials config '/home/runner/work/_temp/git-credentials-08ce3704-853d-413e-878c-33aee8770d21.config'
+2026-11-12T17:04:04.1815234Z ##[endgroup]
+2026-11-12T17:04:04.2007201Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+2026-11-12T17:04:04.2007562Z with:
+2026-11-12T17:04:04.2007791Z   python-version: 3.14
+2026-11-12T17:04:04.2008030Z   check-latest: false
+2026-11-12T17:04:04.2009838Z   token: ***
+2026-11-12T17:04:04.2010067Z   update-environment: true
+2026-11-12T17:04:04.2010345Z   allow-prereleases: false
+2026-11-12T17:04:04.2010604Z   freethreaded: false
+2026-11-12T17:04:04.2010825Z ##[endgroup]
+2026-11-12T17:04:04.3023453Z ##[group]Installed versions
+2026-11-12T17:04:04.4772190Z Successfully set up CPython (3.14.10)
+2026-11-12T17:04:04.4773538Z ##[endgroup]
+2026-11-12T17:04:04.4901603Z ##[group]Run python -m pip install -r requirements.txt
+2026-11-12T17:04:04.4902210Z [36;1mpython -m pip install -r requirements.txt[0m
+2026-11-12T17:04:04.8392122Z shell: /usr/bin/bash -e {0}
+2026-11-12T17:04:04.8392493Z env:
+2026-11-12T17:04:04.8392840Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+2026-11-12T17:04:04.8393465Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+2026-11-12T17:04:04.8393859Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+2026-11-12T17:04:04.8394226Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+2026-11-12T17:04:04.8394594Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+2026-11-12T17:04:04.8394981Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+2026-11-12T17:04:04.8395350Z ##[endgroup]
+2026-11-12T17:04:09.9363501Z Collecting psycopg==3.3.9 (from psycopg[binary]==3.3.9->-r requirements.txt (line 1))
+2026-11-12T17:04:09.9913738Z   Downloading psycopg-3.3.9-py3-none-any.whl.metadata (4.4 kB)
+2026-11-12T17:04:10.1269756Z Collecting psycopg-binary==3.3.9 (from psycopg[binary]==3.3.9->-r requirements.txt (line 1))
+2026-11-12T17:04:10.1364612Z   Downloading psycopg_binary-3.3.9-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+2026-11-12T17:04:10.1477735Z Downloading psycopg-3.3.9-py3-none-any.whl (219 kB)
+2026-11-12T17:04:10.1828881Z Downloading psycopg_binary-3.3.9-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (3.9 MB)
+2026-11-12T17:04:10.4016548Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.9/3.9 MB 23.7 MB/s  0:00:00
+2026-11-12T17:04:10.7722248Z Installing collected packages: psycopg-binary, psycopg
+2026-11-12T17:04:10.9753789Z 
+2026-11-12T17:04:10.9760606Z Successfully installed psycopg-3.3.9 psycopg-binary-3.3.9
+2026-11-12T17:04:11.0443730Z ##[group]Run python -m unittest -v
+2026-11-12T17:04:11.0444071Z [36;1mpython -m unittest -v[0m
+2026-11-12T17:04:11.0469704Z shell: /usr/bin/bash -e {0}
+2026-11-12T17:04:11.0469977Z env:
+2026-11-12T17:04:11.0470251Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.10/x64
+2026-11-12T17:04:11.0470657Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib/pkgconfig
+2026-11-12T17:04:11.0471146Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+2026-11-12T17:04:11.0471511Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+2026-11-12T17:04:11.0471856Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.10/x64
+2026-11-12T17:04:11.0472215Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.10/x64/lib
+2026-11-12T17:04:11.0472550Z   PGHOST: 127.0.0.1
+2026-11-12T17:04:11.0472761Z   PGPORT: 32768
+2026-11-12T17:04:11.0473419Z   PGDATABASE: compose_lab
+2026-11-12T17:04:11.0473686Z   PGUSER: lab
+2026-11-12T17:04:11.0473914Z   PGPASSWORD: lab-only-password
+2026-11-12T17:04:11.0474278Z   LAB_FORCE_FAILURE: 0
+2026-11-12T17:04:11.0474504Z ##[endgroup]
+2026-11-12T17:04:11.6665374Z test_reports_current_database (test_app.DatabaseStatusTest.test_reports_current_database) ... ok
+2026-11-12T17:04:11.6683667Z 
+2026-11-12T17:04:11.6684117Z ----------------------------------------------------------------------
+2026-11-12T17:04:11.6684486Z Ran 1 test in 0.007s
+2026-11-12T17:04:11.6684823Z 
+2026-11-12T17:04:11.6684907Z OK
+2026-11-12T17:04:11.7057601Z Post job cleanup.
+2026-11-12T17:04:11.8158822Z Post job cleanup.
+2026-11-12T17:04:11.8982107Z [command]/usr/bin/git version
+2026-11-12T17:04:11.9044509Z git version 2.56.1
+2026-11-12T17:04:11.9089870Z Temporarily overriding HOME='/home/runner/work/_temp/d2b2e521-ff37-47cd-b99f-506516a86363' before making global git config changes
+2026-11-12T17:04:11.9098519Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T17:04:11.9099889Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/python-cheat-sheet-actions-lab-20261112/python-cheat-sheet-actions-lab-20261112
+2026-11-12T17:04:11.9174602Z Removing SSH command configuration
+2026-11-12T17:04:11.9175427Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T17:04:11.9230019Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T17:04:11.9495034Z Removing HTTP extra header
+2026-11-12T17:04:11.9496061Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T17:04:11.9553985Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T17:04:11.9856597Z Removing includeIf entries pointing to credentials config files
+2026-11-12T17:04:11.9874724Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T17:04:11.9890627Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T17:04:12.0171860Z Print service container logs: 4b29afc59cd74d7f9931a94e830579fa_postgres186_269aff
+2026-11-12T17:04:12.0175533Z ##[command]/usr/bin/docker logs --details fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:04:12.0290184Z  initdb: warning: enabling "trust" authentication for local connections
+2026-11-12T17:04:12.0290985Z  The files belonging to this database system will be owned by user "postgres".
+2026-11-12T17:04:12.0291846Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-11-12T17:04:12.0292926Z  2026-11-12 17:03:55.012 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-11-12T17:04:12.0298032Z  2026-11-12 17:03:55.012 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-11-12T17:04:12.0298765Z  2026-11-12 17:03:55.012 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-11-12T17:04:12.0299404Z  2026-11-12 17:03:55.013 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-11-12T17:04:12.0300334Z  2026-11-12 17:03:55.018 UTC [76] LOG:  database system was shut down at 2026-11-12 17:03:54 UTC
+2026-11-12T17:04:12.0301002Z  2026-11-12 17:03:55.020 UTC [1] LOG:  database system is ready to accept connections
+2026-11-12T17:04:12.0301974Z  This user must also own the server process.
+2026-11-12T17:04:12.0302348Z  
+2026-11-12T17:04:12.0302734Z  The database cluster will be initialized with locale "en_US.utf8".
+2026-11-12T17:04:12.0303451Z  The default database encoding has accordingly been set to "UTF8".
+2026-11-12T17:04:12.0303956Z  The default text search configuration will be set to "english".
+2026-11-12T17:04:12.0304363Z  
+2026-11-12T17:04:12.0304642Z  Data page checksums are enabled.
+2026-11-12T17:04:12.0304956Z  
+2026-11-12T17:04:12.0305282Z  fixing permissions on existing directory /var/lib/postgresql/18/docker ... ok
+2026-11-12T17:04:12.0305665Z  creating subdirectories ... ok
+2026-11-12T17:04:12.0305996Z  selecting dynamic shared memory implementation ... posix
+2026-11-12T17:04:12.0306325Z  selecting default "max_connections" ... 100
+2026-11-12T17:04:12.0306627Z  selecting default "shared_buffers" ... 128MB
+2026-11-12T17:04:12.0306953Z  selecting default time zone ... Etc/UTC
+2026-11-12T17:04:12.0307230Z  creating configuration files ... ok
+2026-11-12T17:04:12.0307516Z  running bootstrap script ... ok
+2026-11-12T17:04:12.0307805Z  performing post-bootstrap initialization ... ok
+2026-11-12T17:04:12.0308181Z  syncing data to disk ... ok
+2026-11-12T17:04:12.0308444Z  
+2026-11-12T17:04:12.0308674Z  
+2026-11-12T17:04:12.0308928Z  Success. You can now start the database server using:
+2026-11-12T17:04:12.0309216Z  
+2026-11-12T17:04:12.0309483Z      pg_ctl -D /var/lib/postgresql/18/docker -l logfile start
+2026-11-12T17:04:12.0309792Z  
+2026-11-12T17:04:12.0310300Z  waiting for server to start....2026-11-12 17:03:54.737 UTC [54] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-11-12T17:04:12.0311020Z  2026-11-12 17:03:54.738 UTC [54] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-11-12T17:04:12.0311477Z  2026-11-12 17:03:54.740 UTC [60] LOG:  database system was shut down at 2026-11-12 17:03:54 UTC
+2026-11-12T17:04:12.0311908Z  2026-11-12 17:03:54.742 UTC [54] LOG:  database system is ready to accept connections
+2026-11-12T17:04:12.0312251Z   done
+2026-11-12T17:04:12.0312495Z  server started
+2026-11-12T17:04:12.0312730Z  CREATE DATABASE
+2026-11-12T17:04:12.0312944Z  
+2026-11-12T17:04:12.0313308Z  
+2026-11-12T17:04:12.0313682Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2026-11-12T17:04:12.0314020Z  
+2026-11-12T17:04:12.0314408Z  waiting for server to shut down...2026-11-12 17:03:54.896 UTC [54] LOG:  received fast shutdown request
+2026-11-12T17:04:12.0315045Z  .2026-11-12 17:03:54.896 UTC [54] LOG:  aborting any active transactions
+2026-11-12T17:04:12.0315598Z  2026-11-12 17:03:54.898 UTC [54] LOG:  background worker "logical replication launcher" (PID 63) exited with exit code 1
+2026-11-12T17:04:12.0316043Z  2026-11-12 17:03:54.899 UTC [58] LOG:  shutting down
+2026-11-12T17:04:12.0316523Z  2026-11-12 17:03:54.899 UTC [58] LOG:  checkpoint starting: shutdown immediate
+2026-11-12T17:04:12.0317396Z  2026-11-12 17:03:54.911 UTC [58] LOG:  checkpoint complete: wrote 943 buffers (5.8%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.011 s, sync=0.001 s, total=0.013 s; sync files=303, longest=0.001 s, average=0.001 s; distance=4352 kB, estimate=4352 kB; lsn=0/1BA1BE0, redo lsn=0/1BA1BE0
+2026-11-12T17:04:12.0318223Z  2026-11-12 17:03:54.917 UTC [54] LOG:  database system is shut down
+2026-11-12T17:04:12.0318546Z   done
+2026-11-12T17:04:12.0318756Z  server stopped
+2026-11-12T17:04:12.0318996Z  
+2026-11-12T17:04:12.0319248Z  PostgreSQL init process complete; ready for start up.
+2026-11-12T17:04:12.0319534Z  
+2026-11-12T17:04:12.0323834Z Stop and remove container: 4b29afc59cd74d7f9931a94e830579fa_postgres186_269aff
+2026-11-12T17:04:12.0327590Z ##[command]/usr/bin/docker rm --force fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:04:12.1497731Z fef573481c22b2655636bc2e03fe5812e748b262f9031839560317aec0cf6509
+2026-11-12T17:04:12.1508346Z Remove container network: github_network_ed999502e9b3496eb9d05e7e2f5a9771
+2026-11-12T17:04:12.1512229Z ##[command]/usr/bin/docker network rm github_network_ed999502e9b3496eb9d05e7e2f5a9771
+2026-11-12T17:04:12.2265856Z github_network_ed999502e9b3496eb9d05e7e2f5a9771
+2026-11-12T17:04:12.2327132Z Cleaning up orphan processes

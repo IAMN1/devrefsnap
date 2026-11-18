@@ -1,0 +1,363 @@
+{
+  "source_repository": "IAMN1/python-cheat-sheet-actions-lab-20261112",
+  "exported_on": "2026-11-18",
+  "runs": [
+    {
+      "run_id": 43265099266,
+      "workflow_name": "PostgreSQL integration test",
+      "workflow_path": ".github/workflows/postgres-test.yml",
+      "event": "workflow_dispatch",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "f72cc81a5cfaf79cb341b05146600356e681115c",
+      "created_at": "2026-11-12T17:02:06Z",
+      "updated_at": "2026-11-12T17:02:40Z",
+      "archive_file": "43265099266.zip",
+      "archive_size_bytes": 8656,
+      "archive_sha256": "7fe6a2715b682d73ca5205dc6762105f2714c3c49fb67201525fd6720cf4b492",
+      "archive_members": [
+        {
+          "path": "0_integration.txt",
+          "size_bytes": 34766,
+          "sha256": "6338515caa178cc0ff1aaaba84bebd5dcbf3a0c754b94524122fb6c2926dd6d6"
+        },
+        {
+          "path": "integration/system.txt",
+          "size_bytes": 610,
+          "sha256": "3008a4cab63b7f53035171239dbd39f134a0a8d825c63210f1315901b6dec5a8"
+        }
+      ],
+      "readable_log_file": "43265099266.log",
+      "readable_log_source_member": "0_integration.txt",
+      "readable_log_sha256": "6338515caa178cc0ff1aaaba84bebd5dcbf3a0c754b94524122fb6c2926dd6d6",
+      "jobs": [
+        {
+          "id": 131346458453,
+          "name": "integration",
+          "status": "completed",
+          "conclusion": "failure",
+          "started_at": "2026-11-12T17:02:14Z",
+          "completed_at": "2026-11-12T17:02:39Z",
+          "runner_name": "GitHub Actions 1000000660",
+          "runner_group_name": "GitHub Actions",
+          "labels": [
+            "ubuntu-24.04"
+          ],
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-12T17:02:15Z",
+              "completed_at": "2026-11-12T17:02:15Z"
+            },
+            {
+              "name": "Initialize containers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-12T17:02:15Z",
+              "completed_at": "2026-11-12T17:02:32Z"
+            },
+            {
+              "name": "Check out the code",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-12T17:02:32Z",
+              "completed_at": "2026-11-12T17:02:33Z"
+            },
+            {
+              "name": "Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-12T17:02:33Z",
+              "completed_at": "2026-11-12T17:02:33Z"
+            },
+            {
+              "name": "Install dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-12T17:02:33Z",
+              "completed_at": "2026-11-12T17:02:36Z"
+            },
+            {
+              "name": "Run database test",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 6,
+              "started_at": "2026-11-12T17:02:36Z",
+              "completed_at": "2026-11-12T17:02:37Z"
+            },
+            {
+              "name": "Post Set up Python",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 10,
+              "started_at": "2026-11-12T17:02:37Z",
+              "completed_at": "2026-11-12T17:02:37Z"
+            },
+            {
+              "name": "Post Check out the code",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-11-12T17:02:37Z",
+              "completed_at": "2026-11-12T17:02:37Z"
+            },
+            {
+              "name": "Stop containers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-11-12T17:02:37Z",
+              "completed_at": "2026-11-12T17:02:37Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-11-12T17:02:37Z",
+              "completed_at": "2026-11-12T17:02:37Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 43265365559,
+      "workflow_name": "PostgreSQL integration test",
+      "workflow_path": ".github/workflows/postgres-test.yml",
+      "event": "workflow_dispatch",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "f72cc81a5cfaf79cb341b05146600356e681115c",
+      "created_at": "2026-11-12T17:03:36Z",
+      "updated_at": "2026-11-12T17:04:14Z",
+      "archive_file": "43265365559.zip",
+      "archive_size_bytes": 8348,
+      "archive_sha256": "467f8241226673721ec2746e8f6e3235e5627a1d2cc4fe76a421053e5dab4bec",
+      "archive_members": [
+        {
+          "path": "0_integration.txt",
+          "size_bytes": 33462,
+          "sha256": "e0abe95aa0b464f8e7bd7ec564cab40837842526b94851def3a10f05a5866cde"
+        },
+        {
+          "path": "integration/system.txt",
+          "size_bytes": 610,
+          "sha256": "5e5ab354270bbfa9528d4ee74fc23a4e4e28e0f1c7eb0827832394c66a6a5002"
+        }
+      ],
+      "readable_log_file": "43265365559.log",
+      "readable_log_source_member": "0_integration.txt",
+      "readable_log_sha256": "e0abe95aa0b464f8e7bd7ec564cab40837842526b94851def3a10f05a5866cde",
+      "jobs": [
+        {
+          "id": 131347377206,
+          "name": "integration",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-12T17:03:40Z",
+          "completed_at": "2026-11-12T17:04:13Z",
+          "runner_name": "GitHub Actions 1000000661",
+          "runner_group_name": "GitHub Actions",
+          "labels": [
+            "ubuntu-24.04"
+          ],
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-12T17:03:41Z",
+              "completed_at": "2026-11-12T17:03:44Z"
+            },
+            {
+              "name": "Initialize containers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-12T17:03:44Z",
+              "completed_at": "2026-11-12T17:04:00Z"
+            },
+            {
+              "name": "Check out the code",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-12T17:04:00Z",
+              "completed_at": "2026-11-12T17:04:04Z"
+            },
+            {
+              "name": "Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-12T17:04:04Z",
+              "completed_at": "2026-11-12T17:04:04Z"
+            },
+            {
+              "name": "Install dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-12T17:04:04Z",
+              "completed_at": "2026-11-12T17:04:11Z"
+            },
+            {
+              "name": "Run database test",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-12T17:04:11Z",
+              "completed_at": "2026-11-12T17:04:11Z"
+            },
+            {
+              "name": "Post Set up Python",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10,
+              "started_at": "2026-11-12T17:04:11Z",
+              "completed_at": "2026-11-12T17:04:11Z"
+            },
+            {
+              "name": "Post Check out the code",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-11-12T17:04:11Z",
+              "completed_at": "2026-11-12T17:04:12Z"
+            },
+            {
+              "name": "Stop containers",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-11-12T17:04:12Z",
+              "completed_at": "2026-11-12T17:04:12Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13,
+              "started_at": "2026-11-12T17:04:12Z",
+              "completed_at": "2026-11-12T17:04:12Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 43265665681,
+      "workflow_name": "API contract lab",
+      "workflow_path": ".github/workflows/api-contract.yml",
+      "event": "workflow_dispatch",
+      "run_attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "a1eb3e8a6d6e02e7ab04cf93a4941a3f798c3646",
+      "created_at": "2026-11-12T17:05:16Z",
+      "updated_at": "2026-11-12T17:05:58Z",
+      "archive_file": "43265665681.zip",
+      "archive_size_bytes": 11606,
+      "archive_sha256": "d54dd903942fb2a560c59b81a90ce547adec95a61171b92a06f3324e8110a1fb",
+      "archive_members": [
+        {
+          "path": "0_contract.txt",
+          "size_bytes": 52804,
+          "sha256": "8d26cbfb52c0daed3041a1313e9c9429e3e6f8251c2af5b8df25afac0ca43004"
+        },
+        {
+          "path": "contract/system.txt",
+          "size_bytes": 606,
+          "sha256": "3949bbe8716fe2e452378a75405af583360dc25d3f2d7d8ea494b3bd7d5ae6d2"
+        }
+      ],
+      "readable_log_file": "43265665681.log",
+      "readable_log_source_member": "0_contract.txt",
+      "readable_log_sha256": "8d26cbfb52c0daed3041a1313e9c9429e3e6f8251c2af5b8df25afac0ca43004",
+      "jobs": [
+        {
+          "id": 131348430247,
+          "name": "contract",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-12T17:05:20Z",
+          "completed_at": "2026-11-12T17:05:57Z",
+          "runner_name": "GitHub Actions 1000000662",
+          "runner_group_name": "GitHub Actions",
+          "labels": [
+            "ubuntu-24.04"
+          ],
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-12T17:05:21Z",
+              "completed_at": "2026-11-12T17:05:21Z"
+            },
+            {
+              "name": "Check out the code",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-12T17:05:21Z",
+              "completed_at": "2026-11-12T17:05:23Z"
+            },
+            {
+              "name": "Check the API contract",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-12T17:05:23Z",
+              "completed_at": "2026-11-12T17:05:54Z"
+            },
+            {
+              "name": "Show service logs",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 4,
+              "started_at": "2026-11-12T17:05:54Z",
+              "completed_at": "2026-11-12T17:05:54Z"
+            },
+            {
+              "name": "Remove the lab containers and database volume",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-12T17:05:54Z",
+              "completed_at": "2026-11-12T17:05:55Z"
+            },
+            {
+              "name": "Post Check out the code",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10,
+              "started_at": "2026-11-12T17:05:55Z",
+              "completed_at": "2026-11-12T17:05:56Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-11-12T17:05:56Z",
+              "completed_at": "2026-11-12T17:05:56Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
