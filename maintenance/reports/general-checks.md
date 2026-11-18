@@ -25,12 +25,12 @@
 
 ### Проверка на GitHub
 
-Полные журналы трёх запусков сохранены в [архиве DevRefSnap](github-actions-lab/README.md) 18 ноября 2026 года перед удалением учебного репозитория. Исходные даты проверок сохранены.
+Полные журналы трёх запусков выгрузили 18 ноября 2026 года перед удалением учебного репозитория. [Архив сохранён в истории Git](https://github.com/IAMN1/devrefsnap/tree/2b164491a2c880fc69484d78c73c6ad777d8f2dd/maintenance/reports/github-actions-lab). Исходные даты проверок сохранены.
 
 В приватном учебном репозитории установили исходный workflow по пути `.github/workflows/postgres-test.yml`. Оба запуска выполнены на коммите `f72cc81` с Ubuntu 24.04, Python 3.14.10 и сервисом PostgreSQL 18.6.
 
-- `gh workflow run postgres-test.yml --ref main -f fail_test=true` дал отказ в шаге `Run database test`. Журнал содержит `test_reports_current_database`, `AssertionError: 'compose_lab' != 'intentional_failure'` и код 1. [Отказ](github-actions-lab/43265099266.log)
-- Новый запуск с `-f fail_test=false` прошёл. В том же шаге видны `test_reports_current_database … ok` и `OK`. [Успешный повтор](github-actions-lab/43265365559.log)
+- `gh workflow run postgres-test.yml --ref main -f fail_test=true` дал отказ в шаге `Run database test`. Журнал содержит `test_reports_current_database`, `AssertionError: 'compose_lab' != 'intentional_failure'` и код 1. [Отказ](https://github.com/IAMN1/devrefsnap/blob/2b164491a2c880fc69484d78c73c6ad777d8f2dd/maintenance/reports/github-actions-lab/43265099266.log)
+- Новый запуск с `-f fail_test=false` прошёл. В том же шаге видны `test_reports_current_database … ok` и `OK`. [Успешный повтор](https://github.com/IAMN1/devrefsnap/blob/2b164491a2c880fc69484d78c73c6ad777d8f2dd/maintenance/reports/github-actions-lab/43265365559.log)
 
 ## Контракт FastAPI и TypeScript — 12 ноября
 
@@ -40,7 +40,7 @@
 
 Локальный прогон на пустом томе вывел обе строки `OK GET` и завершился с кодом 0. После `down --volumes` проверили отсутствие контейнеров, сетей и томов тестовых проектов.
 
-На GitHub запустили образец `.github/workflows/api-contract.yml` с коммита `a1eb3e8` приватного учебного репозитория. Файлы и workflow побайтово совпадают с примером справочника. Команда на Ubuntu 24.04 вывела `OK GET /books/1 -> 200 The Hobbit` и `OK GET /books/999 -> 404 Book not found`. Шаг очистки удалил сеть и том `books-data`. [Запуск сквозной проверки](github-actions-lab/43265665681.log)
+На GitHub запустили образец `.github/workflows/api-contract.yml` с коммита `a1eb3e8` приватного учебного репозитория. Файлы и workflow побайтово совпадают с примером справочника. Команда на Ubuntu 24.04 вывела `OK GET /books/1 -> 200 The Hobbit` и `OK GET /books/999 -> 404 Book not found`. Шаг очистки удалил сеть и том `books-data`. [Запуск сквозной проверки](https://github.com/IAMN1/devrefsnap/blob/2b164491a2c880fc69484d78c73c6ad777d8f2dd/maintenance/reports/github-actions-lab/43265665681.log)
 Ветки диагностики и очистки сквозного workflow после отказа на GitHub отдельно не запускались. Два отказа контракта воспроизвели локально.
 
 ## Go context — 12 ноября
@@ -199,3 +199,19 @@ GitHub-рецепты проверены по документации и `gh 2.
 
 На Python 3.14.7 запустили [пример подсчёта операций](../../docs/ru/algorithms/README.md#big-o). Для `n = 4, 8, 16` он вывел линейные числа 4, 8, 16 и квадратичные 16, 64, 256.
 Счётчики дополнительно проверили на `range`, списках и повторяющихся значениях для размеров от 0 до 32. Точки на общей диаграмме сверены с выводом. Пример считает итерации тела цикла. [Определение Big O в NIST](https://www.nist.gov/dads/HTML/bigOnotation.html).
+
+## Повторные проверки — 15 ноября 2026
+
+Результаты перенесены из аудита публичного справочника с исходной датой. Перенос не означает новый запуск.
+
+| Сценарий | Среда и фактический результат |
+| --- | --- |
+| [HTTP и JSON](../../docs/ru/tools/http-json.md) | Python 3.14.7, jq 1.7.1. Локальный сервер на свободном порту `127.0.0.1` вернул HTTP 200. `curl -i` показал заголовки и тело, `curl -I` — заголовки без тела. `jq -r '.name'` вывел `Book` |
+| [Первый C++20-пример](../../docs/en/cpp/README.md#first-run) | Apple Clang 21 собрал пример с результатом `Count: 2` |
+| [Учебная история Git](../../docs/ru/tools/git/history.md) | Git 2.55.0: сценарий завершился с `history OK`. Отдельная проба merge/rebase подтвердила двух родителей merge и новый SHA коммита после rebase на локальной ветке |
+| [Go context](../../examples/go/context/main.go) | Go 1.27.1 выполнил три исхода локальных HTTP-запросов. Проверены успешный ответ, тайм-аут и отмена; в сценарии отмены наблюдали результат клиента и завершение обработчика |
+| [Outbox](../../examples/architecture/outbox.py) | Python 3.14: имитация сбоя после первой публикации оставила `sent = 0`. Повтор дал две публикации одного события с тем же идентификатором; публикацию заменял список |
+
+Локальная справка GitHub CLI подтвердила `gh run view RUN_ID --log-failed`; реальный журнал Actions в этом проходе не запрашивали. Нового сквозного прогона CI, PostgreSQL или контейнерных пространств имён в рамках аудита не было. Для Outbox имитировали сбой в учебном коде; реальные процессные сбои и брокер не проверялись.
+
+[Проверки Python](python-checks.md#проверки-примеров-для-gif--15-ноября-2026) · [Проверки БД](database-checks.md#проверки-иллюстраций--15-ноября-2026) · [Навигация и просмотр GIF](navigation-review.md#публичный-вход-и-gif--15-ноября-2026).

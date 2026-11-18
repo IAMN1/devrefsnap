@@ -11,7 +11,6 @@
 | [RDB Redis](2026-11-07-redis-rdb-backup.md) | Снимок, восстановление данных и TTL, очистка при ошибке |
 | [AOF Redis](2026-11-08-redis-aof-backup.md) | Manifest/BASE/INCR, остановка источника и проверки неполной копии |
 | [Архитектура, языки и общие инструменты](general-checks.md) | Контракты, Outbox, Go, C, C#, C++, HTTP и JSON, Compose и Actions, Git и Linux |
-| [Архив GitHub Actions](github-actions-lab/README.md) | Полные журналы трёх учебных запусков от 12 ноября, исходные ZIP и контрольные суммы |
 | [Решения по структуре](navigation-review.md) | Русский и английский справочники, основания разделения материалов и архив STE |
 | [CI и права GitHub](2026-11-10-safe-ci.md) | Ограничения CI, аудит перед публикацией и защита main |
 | [Прослеживаемость истории](2026-11-10-simplification-publication.md) | Карта SHA, резервная копия и доказательства публикации |
