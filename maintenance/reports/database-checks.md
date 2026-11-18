@@ -13,6 +13,14 @@ LEFT JOIN вернул те же строки и добавил `carol|NULL`.
 Проверили строки и порядок на [отрисованной схеме](../../docs/assets/sql-joins.svg).
 Правила сопоставления и добавления NULL сверили с [документацией PostgreSQL 18](https://www.postgresql.org/docs/18/queries-table-expressions.html#QUERIES-JOIN).
 
+## Проверки иллюстраций — 15 ноября 2026
+
+При аудите повторили INNER JOIN и LEFT JOIN на SQLite 3.53.4 в памяти. Получены три строки INNER JOIN и четвёртая строка `carol` с `NULL` в LEFT JOIN. PostgreSQL в этом проходе JOIN не запускали; прежний прогон обеих СУБД описан выше.
+
+В локальном Redis 7.4.11 с redis-py 8.1.0 выполнили примеры [WATCH](../../examples/databases/non-relational/redis/transactions.py) и [Streams](../../examples/databases/non-relational/redis/messaging.py). Изменение watched-ключа вторым соединением прервало транзакцию. `XACK` снял запись с pending, а дополнительный `XRANGE` подтвердил сохранение тела записи с тем же id.
+
+Запись сохраняет отдельный прогон этих сценариев на Redis 7.4.11. Прежние результаты Redis 8.2 приведены в разделе [Redis](#redis--6-ноября). Проверок persistence, failover или аварийной повторной доставки 15 ноября не было. [Условия просмотра GIF](navigation-review.md#публичный-вход-и-gif--15-ноября-2026).
+
 ## PostgreSQL — 6 ноября
 
 Целевая ветка документации — PostgreSQL 18; сверены release notes 18.6.
