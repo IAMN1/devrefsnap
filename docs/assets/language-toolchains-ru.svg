@@ -1,53 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="558" viewBox="0 0 960 558" role="img" aria-labelledby="title desc">
-  <title id="title">От исходника до запуска</title>
-  <desc id="desc">C и C++ компилируют исходник в объектный файл, компонуют исполняемый файл и запускают его. SDK .NET восстанавливает зависимости проекта C#, собирает DLL с IL и запускает программу в CLR.</desc>
-  <rect width="960" height="558" rx="14" fill="#fff"/>
-  <g font-family="system-ui, sans-serif" fill="#222c3d">
-  <text x="24" y="47" font-size="34" font-weight="700">От исходника до запуска</text>
-  <text x="24" y="78" font-size="19" fill="#39465b">Типовая сборка консольной программы</text>
-  <g transform="translate(24 110)">
-    <rect width="448" height="424" rx="14" fill="#eff3fe"/>
-    <text x="22" y="34" font-size="24" font-weight="700" fill="#354caa">C / C++</text>
-    <rect x="20" y="52" width="408" height="64" rx="8" fill="#fff" stroke="#aab9ea"/>
-    <text x="40" y="78" font-size="20" font-weight="600">Исходный код</text>
-    <text x="40" y="101" font-size="17" fill="#39465b">.c или .cpp</text>
-    <path d="M41 117v24m-5-6 5 6 5-6" fill="none" stroke="#354caa" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <text x="56" y="136" font-size="15" font-weight="600" fill="#354caa">Компиляция</text>
-    <rect x="20" y="146" width="408" height="64" rx="8" fill="#fff" stroke="#aab9ea"/>
-    <text x="40" y="172" font-size="20" font-weight="600">Объектный файл</text>
-    <text x="40" y="195" font-size="17" fill="#39465b">.o или .obj</text>
-    <path d="M41 211v24m-5-6 5 6 5-6" fill="none" stroke="#354caa" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <text x="56" y="230" font-size="15" font-weight="600" fill="#354caa">Компоновка</text>
-    <rect x="20" y="240" width="408" height="64" rx="8" fill="#fff" stroke="#aab9ea"/>
-    <text x="40" y="266" font-size="20" font-weight="600">Исполняемый файл</text>
-    <text x="40" y="289" font-size="17" fill="#39465b">Код для целевой платформы</text>
-    <path d="M41 305v24m-5-6 5 6 5-6" fill="none" stroke="#354caa" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <text x="56" y="324" font-size="15" font-weight="600" fill="#354caa">Запуск</text>
-    <rect x="20" y="334" width="408" height="64" rx="8" fill="#fff" stroke="#aab9ea"/>
-    <text x="40" y="360" font-size="20" font-weight="600">Процесс</text>
-    <text x="40" y="383" font-size="17" fill="#39465b">Код выполняется в ОС</text>
-  </g>
-  <g transform="translate(488 110)">
-    <rect width="448" height="424" rx="14" fill="#edf8f4"/>
-    <text x="22" y="34" font-size="24" font-weight="700" fill="#0f6d5a">C# / .NET</text>
-    <rect x="20" y="52" width="408" height="64" rx="8" fill="#fff" stroke="#a5c9bd"/>
-    <text x="40" y="78" font-size="20" font-weight="600">Проект</text>
-    <text x="40" y="101" font-size="17" fill="#39465b">.cs и .csproj</text>
-    <path d="M41 117v24m-5-6 5 6 5-6" fill="none" stroke="#0f6d5a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <text x="56" y="136" font-size="15" font-weight="600" fill="#0f6d5a">dotnet restore</text>
-    <rect x="20" y="146" width="408" height="64" rx="8" fill="#fff" stroke="#a5c9bd"/>
-    <text x="40" y="172" font-size="20" font-weight="600">Зависимости проекта</text>
-    <text x="40" y="195" font-size="17" fill="#39465b">Целевая платформа и пакеты</text>
-    <path d="M41 211v24m-5-6 5 6 5-6" fill="none" stroke="#0f6d5a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <text x="56" y="230" font-size="15" font-weight="600" fill="#0f6d5a">dotnet build</text>
-    <rect x="20" y="240" width="408" height="64" rx="8" fill="#fff" stroke="#a5c9bd"/>
-    <text x="40" y="266" font-size="20" font-weight="600">Сборка .NET</text>
-    <text x="40" y="289" font-size="17" fill="#39465b">.dll с IL и метаданными</text>
-    <path d="M41 305v24m-5-6 5 6 5-6" fill="none" stroke="#0f6d5a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-    <text x="56" y="324" font-size="15" font-weight="600" fill="#0f6d5a">dotnet run</text>
-    <rect x="20" y="334" width="408" height="64" rx="8" fill="#fff" stroke="#a5c9bd"/>
-    <text x="40" y="360" font-size="20" font-weight="600">Процесс .NET</text>
-    <text x="40" y="383" font-size="17" fill="#39465b">CLR выполняет программу</text>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="449" viewBox="0 0 320 449" role="img" aria-labelledby="title desc">
+  <title id="title">От исходного кода до запуска</title>
+  <desc id="desc">C и C++ компилируют исходник и компонуют исполняемый файл. dotnet build создаёт файлы приложения .NET. dotnet basics.dll запускает готовую сборку.</desc>
+  <g font-family="system-ui, sans-serif" font-size="18" fill="#18273a">
+    <rect x="1" y="1" width="318" height="242" rx="12" fill="#eff3fe" stroke="#aab9ea"/>
+    <text x="16" y="29" font-size="20" font-weight="700" fill="#354caa">C / C++</text>
+    <g font-weight="600">
+      <text x="46" y="60">Исходник .c или .cpp</text>
+      <text x="46" y="113">Объектный файл .o или .obj</text>
+      <text x="46" y="166">Исполняемый файл</text>
+      <text x="46" y="219">Процесс ОС</text>
+    </g>
+    <path d="M24 68v30m-5-6 5 6 5-6 M24 121v30m-5-6 5 6 5-6 M24 174v30m-5-6 5 6 5-6"
+          fill="none" stroke="#354caa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#354caa">
+      <text x="46" y="86">Компиляция</text>
+      <text x="46" y="139">Компоновка</text>
+      <text x="46" y="192">Запуск файла</text>
+    </g>
+    <g transform="translate(0 258)">
+      <rect x="1" y="1" width="318" height="189" rx="12" fill="#edf8f4" stroke="#a5c9bd"/>
+      <text x="16" y="29" font-size="20" font-weight="700" fill="#0f6d5a">C# / .NET</text>
+      <g font-weight="600">
+        <text x="46" y="60">Program.cs + basics.csproj</text>
+        <text x="46" y="113">DLL и файлы приложения</text>
+        <text x="46" y="166">Процесс .NET</text>
+      </g>
+      <path d="M24 68v30m-5-6 5 6 5-6 M24 121v30m-5-6 5 6 5-6"
+            fill="none" stroke="#0f6d5a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <g fill="#0f6d5a" font-family="ui-monospace, monospace">
+        <text x="46" y="86">dotnet build</text>
+        <text x="46" y="139">dotnet basics.dll</text>
+      </g>
+    </g>
   </g>
 </svg>

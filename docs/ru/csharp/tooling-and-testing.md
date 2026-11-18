@@ -112,15 +112,21 @@ tool_dir=$(mktemp -d) && (
 | [`Shipping.csproj`](../../../examples/csharp/shipping/Shipping/Shipping.csproj) и [`ShippingFee.cs`](../../../examples/csharp/shipping/Shipping/ShippingFee.cs) | Библиотека с расчётом стоимости доставки для `net10.0` |
 | [`Shipping.Tests.csproj`](../../../examples/csharp/shipping/Shipping.Tests/Shipping.Tests.csproj) и [`ShippingFeeTests.cs`](../../../examples/csharp/shipping/Shipping.Tests/ShippingFeeTests.cs) | Тестовый проект и тесты с синтетическими данными |
 
-Тестовый проект подключает библиотеку через `ProjectReference`. Пакет xUnit v3 версии `3.2.2` предоставляет тестовые атрибуты и проверки. Пакет `Microsoft.NET.Test.Sdk` версии `18.0.1` обеспечивает интеграцию с VSTest. Пакет `xunit.runner.visualstudio` версии `3.1.5` служит адаптером xUnit. Пример использует VSTest, платформу тестирования .NET SDK 10 по умолчанию. Для Microsoft.Testing.Platform нужна совместимая конфигурация тестового проекта и другой набор параметров запуска.
+При сборке `ProjectReference` в `Shipping.Tests.csproj` подключает `Shipping.csproj`. Пакет xUnit v3 версии `3.2.2` предоставляет тестовые атрибуты и проверки. Пакет `Microsoft.NET.Test.Sdk` версии `18.0.1` обеспечивает интеграцию с VSTest. Пакет `xunit.runner.visualstudio` версии `3.1.5` служит адаптером xUnit. Пример использует VSTest, платформу тестирования .NET SDK 10 по умолчанию. Для Microsoft.Testing.Platform нужна совместимая конфигурация тестового проекта и другой набор параметров запуска.
 
-Схема показывает, как CLI обнаруживает тесты и как тесты вызывают библиотеку.
+Схема показывает один случай после сборки. VSTest находит тест через адаптер xUnit. Тест вызывает `ShippingFee.Calculate(4_999)` и проверяет, что метод вернул `500`.
 
 ```mermaid
-flowchart LR
-    CLI["dotnet test"] -->|"запускает"| Runner["VSTest"]
-    Runner -->|"обнаруживает через адаптер xUnit"| Tests["Shipping.Tests"]
-    Tests -->|"вызывает Calculate через ProjectReference"| Library["Shipping"]
+---
+config:
+  htmlLabels: false
+  flowchart: { rankSpacing: 24, padding: 8, wrappingWidth: 220 }
+---
+flowchart TB
+    accTitle: Запуск теста стоимости доставки
+    accDescr: VSTest находит тест через адаптер xUnit. Тест вызывает ShippingFee.Calculate с суммой 4 999 центов и проверяет результат 500.
+    CLI["dotnet test --no-build"] -->|"через VSTest"| Test["Тест xUnit"]
+    Test -->|"вызывает с 4 999"| Method["Calculate возвращает 500"]
 ```
 
 Из корня репозитория восстановите зависимости. Затем соберите и запустите тесты. Для восстановления нужен доступ к NuGet или заполненный кеш пакетов. Используйте один временный каталог артефактов для всех трёх шагов.
@@ -170,7 +176,15 @@ dotnet test "$test_project" --artifacts-path "$test_artifacts" --no-build \
   --filter 'FullyQualifiedName~Calculate_RejectsNegativeTotal'
 ```
 
-Ожидайте один успешный случай. Если платформа не нашла тесты, проверьте путь к тестовому проекту, тестовый SDK, адаптер и выбранную платформу тестирования. См. [выбор границы теста](practice.md#test-at-the-right-boundary).
+Ожидайте один успешный случай.
+
+Если VSTest не нашёл нужный тест, после сборки выведите список тестов без фильтра. Используйте те же переменные оболочки.
+
+```bash
+dotnet test "$test_project" --artifacts-path "$test_artifacts" --no-build --list-tests
+```
+
+Если нужного теста нет в списке, проверьте путь к проекту, тестовый SDK, адаптер и платформу тестирования. Если тест есть в списке, проверьте фильтр запуска. Если в `Calculate_ReturnsExpectedFee` метод вернул `500` для суммы `5_000`, проверьте условие порога в `ShippingFee.Calculate`. [Параметры VSTest](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test-vstest#options) · [Выбор границы теста](practice.md#test-at-the-right-boundary).
 
 ## Источники
 

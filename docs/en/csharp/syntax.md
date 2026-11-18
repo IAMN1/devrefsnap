@@ -113,9 +113,34 @@ Use `{ get; set; }` for a writable property and `{ get; init; }` for one set dur
 | --- | --- | --- |
 | Keep a fixed number of elements | `T[]` | Size is fixed at creation. Indexing starts at 0. |
 | Append or access by index | `List<T>` | Use indices from 0 through `Count - 1` |
-| Look up by key | `Dictionary<TKey, TValue>`, `TryGetValue` | `TryGetValue` reports missing keys |
-| Track membership or remove duplicates | `HashSet<T>` | Equality determines whether two elements are duplicates |
+| Read a value by key | `scores.TryGetValue("Ada", out int score)` | [Check whether the key exists](#try-get-value) |
+| Track membership or remove duplicates | `names.Contains("Ada")`, `names.Add("Ada")` | For a `HashSet<string> names`, `Add` returns `false` if the name is already present. The set’s equality comparer determines which names match. |
 | Filter, project, or aggregate | LINQ `Where`, `Select`, `Count` | Some operators defer execution until enumeration |
+
+<a id="try-get-value"></a>
+
+### Look up a score in a dictionary
+
+Standalone excerpt for `Program.cs`. Ada has a recorded score of `0`.
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+var scores = new Dictionary<string, int> { ["Ada"] = 0 };
+if (scores.TryGetValue("Ada", out int score))
+{
+    Console.WriteLine(score);
+}
+else
+{
+    Console.WriteLine("Missing key");
+}
+```
+
+The program prints `0`. Change `"Ada"` to `"Max"` only in the call. The program now prints `Missing key`. The method returns `true` when it finds the key. For a missing key it returns `false` and sets `score` to the default value for `int`, which is `0`.
+
+### Filter and sort scores
 
 Excerpt for `Program.cs`. Take a sorted snapshot of the matching scores.
 
@@ -150,12 +175,12 @@ The caller receives the text by awaiting the task. `await` lets the calling thre
 
 | Task | API | Choice |
 | --- | --- | --- |
-| Read files and join path components | `System.IO.File`, `Stream`, `Path.Combine` | Stream data when reading the full file would consume too much memory |
-| Encode and decode JSON | `System.Text.Json.JsonSerializer` | Decide how to handle names, missing values, and invalid input at the boundary |
-| Call an HTTP service | `System.Net.Http.HttpClient` | Reuse the client or configure [`IHttpClientFactory`](practice.md#patterns) |
-| Represent an instant with an offset | `DateTimeOffset`, `TimeSpan` | Keep a time zone identifier separately when you need its rules |
+| Read files and join path components | `var path = Path.Combine("data", "scores.json");` · `using var stream = File.OpenRead(path);` | Import `System.IO`. The file must exist. Stream large files. |
+| Encode and decode JSON | `JsonSerializer.Serialize(new[] { 2, 5 })`, `JsonSerializer.Deserialize<int[]>("[2,5]")` | Import `System.Text.Json`. For external data, decide how to handle property names, missing values, and invalid input. |
+| Get text over HTTP | `string body = await client.GetStringAsync(uri, token);` | Pass the request URI and a `CancellationToken`. Reuse a long-lived `HttpClient` or configure [`IHttpClientFactory`](practice.md#patterns). |
+| Get an instant one hour from now | `DateTimeOffset.UtcNow + TimeSpan.FromHours(1)` | The result has a UTC offset of zero. Keep a time zone identifier separately when you need its rules. |
 | Transform a sequence in memory | `System.Linq.Enumerable` | Materialize once when you need a stable snapshot |
-| Cancel I/O and coordinate tasks | `CancellationToken`, `Task.WhenAll` | Limit concurrency when requests compete for a bounded resource |
+| Cancel I/O or wait for tasks | Pass a `CancellationToken` to the operation. For an array `Task[] tasks`, use `await Task.WhenAll(tasks)`. | Import `System.Threading.Tasks` for `Task`. Limit the number of operations you start separately. |
 
 ## Common mistakes
 
@@ -169,6 +194,7 @@ The caller receives the text by awaiting the task. `await` lets the calling thre
 
 ## Sources
 
+- [Look up a key with Dictionary.TryGetValue in .NET 10](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.trygetvalue?view=net-10.0).
 - [C# language reference](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/) and [C# 14 release notes](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-14).
 - [Parameters and arguments](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters), [records](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record), and [nullable reference types](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/null-safety/nullable-reference-types).
 - [Collections](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/collections), [LINQ execution](https://learn.microsoft.com/en-us/dotnet/csharp/linq/get-started/introduction-to-linq-queries), and [async scenarios](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-scenarios).

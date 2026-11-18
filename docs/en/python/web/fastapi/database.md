@@ -75,24 +75,32 @@ POST `/notes` with JSON `{"text":"Прочитать документацию"}`
 GET `/notes` returns a note list.
 `fastapi-async.db` is created in the launch directory.
 
-The diagram shows how the example relates the application lifespan, one request's session, and its write transaction.
+**Application lifespan**
+
+1. Before `yield`, `lifespan` creates the tables.
+2. While the application runs, POST and GET use separate sessions. After a `201` response, the next GET reads the saved note.
+3. At application shutdown, `lifespan` calls `engine.dispose()`.
+
+The diagram shows the transaction for one `POST /notes`. `get_session` gives the handler a session. Inside `session.begin()`, the handler adds the row and calls `flush()`.
 
 ```mermaid
+---
+config:
+  htmlLabels: false
+  flowchart: { nodeSpacing: 18, rankSpacing: 24, padding: 8, wrappingWidth: 200 }
+---
 flowchart TB
-    Startup["lifespan prepares the tables"] -->|"When a request arrives"| Request
-    subgraph Request["One POST /notes request"]
-        direction TB
-        Open["get_session opens an AsyncSession"] -->|"yield session"| Write["The handler writes within session.begin()"]
-        Write -->|"When get_session exits"| Close["The AsyncSession closes"]
-    end
-    Request -->|"When the application shuts down"| Shutdown["lifespan calls engine.dispose()"]
+    accTitle: POST /notes transaction
+    accDescr: get_session gives the handler a session. A successful exit from session.begin commits the row before the 201 response. An exception inside the block rolls back the transaction. After the 201 response, the dependency closes the session.
+    Write["session.begin()"] -->|"successful exit"| Commit["COMMIT"]
+    Write -->|"exception"| Rollback["ROLLBACK"]
+    Commit -->|"after HTTP 201"| Close["Close session"]
+    Rollback -->|"dependency exits"| Close
 ```
 
-Before `yield`, lifespan opens or prepares the resource.
-After `yield`, lifespan closes the resource.
-Here, lifespan replaces the earlier `@app.on_event("startup")` and `shutdown` handlers.
-On successful exit, `session.begin()` commits changes.
-On an exception, `session.begin()` rolls changes back.
+The transaction commits or rolls back when `session.begin()` exits. `flush()` sends changes to the database within the transaction.
+The `get_session` context closes the session when the dependency ends. On the successful path in this example, that happens after the response is sent. [Dependency scope with `yield`](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/#early-exit-and-scope).
+`lifespan` replaces the earlier `@app.on_event("startup")` and `shutdown` handlers.
 Keep each concurrent task's `AsyncSession` separate.
 The driver and URL must match the async engine.
 Wrapping a regular synchronous driver in `async def` does not make the driver nonblocking.

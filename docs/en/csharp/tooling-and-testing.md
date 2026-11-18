@@ -114,13 +114,19 @@ The complete example charges 500 cents on orders below 5,000 cents. Orders at or
 
 The test project uses `ProjectReference` to compile against the library. xUnit v3 `3.2.2` supplies the test attributes and assertions. `Microsoft.NET.Test.Sdk` `18.0.1` provides VSTest integration. `xunit.runner.visualstudio` `3.1.5` is the xUnit adapter. The example uses the default VSTest mode of the .NET 10 SDK. A repository configured to use Microsoft.Testing.Platform needs a compatible test project configuration and different runner options.
 
-The diagram shows how the CLI discovers tests and how those tests call the library.
+The diagram shows one case after the build. VSTest discovers the test through the xUnit adapter. The test calls `ShippingFee.Calculate(4_999)` and checks that it returns `500`.
 
 ```mermaid
-flowchart LR
-    CLI["dotnet test"] -->|"starts"| Runner["VSTest"]
-    Runner -->|"discovers via xUnit adapter"| Tests["Shipping.Tests"]
-    Tests -->|"calls Calculate via ProjectReference"| Library["Shipping"]
+---
+config:
+  htmlLabels: false
+  flowchart: { rankSpacing: 24, padding: 8, wrappingWidth: 220 }
+---
+flowchart TB
+    accTitle: Run a shipping fee test
+    accDescr: VSTest discovers the test through the xUnit adapter. The test calls ShippingFee.Calculate with 4,999 cents and checks the result of 500.
+    CLI["dotnet test --no-build"] -->|"via VSTest"| Test["xUnit test"]
+    Test -->|"calls with 4,999"| Method["Calculate returns 500"]
 ```
 
 From the repository root, restore, build, and run the tests. NuGet access or a populated package cache is needed for restore. Use the same temporary artifact path for all three steps.
@@ -170,7 +176,15 @@ dotnet test "$test_project" --artifacts-path "$test_artifacts" --no-build \
   --filter 'FullyQualifiedName~Calculate_RejectsNegativeTotal'
 ```
 
-Expect one passing case. If no tests are discovered, check the test project path, test SDK, adapter, and selected test platform. Use [the practice guide](practice.md#test-at-the-right-boundary) to choose the next test level.
+Expect one passing case.
+
+If VSTest did not discover the test, list all discovered tests after the build. Reuse the same shell variables.
+
+```bash
+dotnet test "$test_project" --artifacts-path "$test_artifacts" --no-build --list-tests
+```
+
+If the test is missing from the list, check the project path, test SDK, adapter, and test platform. If the test is listed, check the run filter. If `Calculate_ReturnsExpectedFee` gets `500` for `5_000`, check the threshold in `ShippingFee.Calculate`. [VSTest options](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test-vstest#options) · [Choose a test boundary](practice.md#test-at-the-right-boundary).
 
 ## Sources
 

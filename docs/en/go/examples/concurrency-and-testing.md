@@ -31,23 +31,7 @@ The task is to process a string list with a bounded number of workers and preser
 The producer closes the channel.
 The caller receives the result only after all workers finish.
 
-```mermaid
-flowchart LR
-    A[Caller and context] -->|pass input and context| P[Job producer]
-    P -->|send jobs| C[jobs channel]
-    C -->|receive job| W1[Worker 1]
-    C -->|receive job| W2[Worker 2]
-    W1 -->|write own index| R[Separate result indices]
-    W2 -->|write own index| R
-    P -->|close jobs and wait| G[WaitGroup.Wait]
-    W1 -->|Done on completion| G
-    W2 -->|Done on completion| G
-    G -->|all workers finished| O[Result or context error]
-    R -->|read after Wait| O
-    A -. cancellation .-> P
-    A -. cancellation .-> W1
-    A -. cancellation .-> W2
-```
+[See how the sender closes `jobs`, waits, and returns](../concurrency-and-testing.md#bounded-worker-pool).
 
 Complete `worker.go` follows.
 

@@ -12,10 +12,10 @@
 
 | Задача | Пример |
 | --- | --- |
+| Запустить первую программу | [Цена трёх билетов на Python](python/language/first-program.md) · [Первая программа на C](c/README.md#первый-запуск) |
 | Посмотреть статус HTTP и извлечь поле из JSON | [HTTP и JSON в терминале](tools/http-json.md) |
 | Найти причину падения теста в CI | [Разбор журнала GitHub Actions](tools/compose-and-github-actions.md#найти-причину-падения-в-журнале) |
 | Выбрать загрузку связанных данных | [Таблица стратегий SQLAlchemy](python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) |
-| Запустить первую программу | [Числа и коллекции Python](python/language/types/recipes.md) · [Первая программа на C](c/README.md#первый-запуск) |
 | Вспомнить синтаксис знакомого языка | [Коллекции C#](csharp/syntax.md#collections) |
 
 

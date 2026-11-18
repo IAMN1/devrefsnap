@@ -104,7 +104,7 @@ Include the header before using its API. Check the success condition for each op
 | Convert text to an integer | `<stdlib.h>` · `strtol` | Clear `errno` from `<errno.h>` first. Check for missing digits, trailing characters, `ERANGE`, and the application range. The [port parser](../../../examples/c/port-parser/port.c) validates the string before converting it. |
 | Allocate and release memory | `<stdlib.h>` · `malloc`, `realloc`, `free` | Check the size and pointer. Assign an owner that calls `free`. |
 | Compare strings or copy bytes | `<string.h>` · `strcmp`, `memcpy`, `memmove` | `strcmp` returns 0 for equal strings. Use `memmove` for overlapping regions. |
-| Test a character class | `<ctype.h>` · `isspace`, `tolower` | Pass `EOF` or a value representable as `unsigned char`. For an ordinary `char ch`, pass `(unsigned char)ch`. |
+| Test for whitespace or convert a letter to lowercase | `<ctype.h>` · `isspace((unsigned char)ch)`, `tolower((unsigned char)ch)` | These calls use a `char ch`. For whitespace, `isspace` returns a nonzero value. When reading with `getchar()`, keep the result in an `int` to distinguish a byte from `EOF`. |
 | Check an internal invariant | `<assert.h>` · `assert` | The check disappears under `NDEBUG`. Validate user input with a regular condition. |
 | Perform a calculation | `<math.h>` · `sqrt`, `isfinite` | Check the domain. Some Unix toolchains require `-lm` when linking. |
 

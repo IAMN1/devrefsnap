@@ -14,6 +14,7 @@ Find Git and GitHub in [Development tools](../tools/README.md).
 
 | Topic | Contents |
 | --- | --- |
+| [Your first Python program](language/first-program.md) | Calculate the cost of tickets and change the quantity |
 | [Python types](language/types/README.md) | Types, operations, copying, and hashability |
 | [asyncio basics](language/asyncio.md) | Coroutines, `await`, `asyncio.run`, and concurrent waits |
 | [Project design](architecture/project-design/README.md) | Decisions, structure, a working package, and delivery |

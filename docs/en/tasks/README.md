@@ -8,7 +8,7 @@ Links lead to a specific card, commands, or example in the main material.
 
 | Task | Where to look in the index |
 | --- | --- |
-| Choose a type, copy data, or group data in Python | [Types and collections](#python-types-and-collections) |
+| Start with Python, choose a type, copy data, or group data | [First Python program](../python/language/first-program.md) · [Types and collections](#python-types-and-collections) |
 | Run a Python coroutine or wait for several operations concurrently | [asyncio basics](#python-asyncio-basics) |
 | Create a Python project and manage dependencies and builds | [Project and environment](#python-projects-and-environments) |
 | Validate data, write tests, or configure logs | [Validation, tests, and logging](#validation-tests-and-logging) |
@@ -140,6 +140,7 @@ Command consequences and example limitations appear there as well.
 | Choose tools for C and organize the code | embedded, driver, systems software, resource ownership | [C patterns](../c/practice.md#patterns) · [Application areas](../c/practice.md#application-areas) |
 | Build and run a C# project | C#, C Sharp, .NET SDK, csproj, dotnet build, dotnet run | [C# first run](../csharp/README.md#first-run) |
 | Add a number to a list or validate a C# argument | `List<T>`, Add, foreach, TryParse, exit code | [C# collections](../csharp/README.md#collections) · [Common mistakes](../csharp/README.md#common-mistakes) |
+| Look up a value in a C# dictionary and check whether the key exists | Dictionary, TryGetValue, out | [Look up a key](../csharp/syntax.md#try-get-value) |
 | Look up C# syntax | nullable, record, generics, LINQ, async, await | [C# syntax](../csharp/syntax.md) |
 | Install a NuGet package or run C# tests | NuGet, PackageReference, dotnet restore, dotnet test | [C# packages](../csharp/tooling-and-testing.md#packages) · [Tests](../csharp/tooling-and-testing.md#tests) |
 | Choose a .NET framework and define component boundaries | ASP.NET Core, EF Core, DI, desktop, games | [C# patterns](../csharp/practice.md#patterns) · [Application areas](../csharp/practice.md#application-areas) |
@@ -154,9 +155,13 @@ Command consequences and example limitations appear there as well.
 
 The diagram shows the artifacts in a typical console build. Arrow labels identify the command or stage that creates the next artifact or starts the process.
 
-![C and C++ compile source to an object file and link an executable. In .NET, the SDK restores dependencies and builds a DLL with IL, which runs on the .NET runtime.](../../assets/language-toolchains-en.svg)
+![C and C++ compile source to an object file and link an executable. dotnet build builds the .NET application, and dotnet basics.dll runs the built assembly.](../../assets/language-toolchains-en.svg)
 
-[Clang stages](https://releases.llvm.org/21.1.0/tools/clang/docs/CommandGuide/clang.html) · [.NET builds](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-build) · [.NET execution](https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process)
+C and C++ compile the source to an object file and link an executable.
+In .NET, `dotnet build` builds the project and restores dependencies by default. Run `dotnet basics.dll` from the directory that contains the DLL. Running the application requires a compatible .NET runtime and the other application files.
+In the [C# exercise](../csharp/README.md#first-run), `dotnet run --project … --no-build` uses the previous build output from the same artifacts directory.
+
+[Clang stages](https://releases.llvm.org/21.1.0/tools/clang/docs/CommandGuide/clang.html) · [.NET builds](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-build) · [Run a project or DLL](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-run#description)
 
 </details>
 

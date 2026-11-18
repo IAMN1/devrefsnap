@@ -14,6 +14,7 @@ Task-based cheat sheets and runnable examples for languages, databases, Linux, G
 
 ## Try an example
 
+- [Run your first Python program](docs/en/python/language/first-program.md) · [Первая программа на Python](docs/ru/python/language/first-program.md)
 - [Inspect an HTTP response and read a JSON field](docs/en/tools/http-json.md)
 - [Find why a GitHub Actions test failed](docs/en/tools/compose-and-github-actions.md#find-the-cause-in-the-log)
 - [Choose a SQLAlchemy relationship loading strategy](docs/en/python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy)
