@@ -25,10 +25,12 @@
 
 ### Проверка на GitHub
 
+Полные журналы трёх запусков сохранены в [архиве DevRefSnap](github-actions-lab/README.md) 18 ноября 2026 года перед удалением учебного репозитория. Исходные даты проверок сохранены.
+
 В приватном учебном репозитории установили исходный workflow по пути `.github/workflows/postgres-test.yml`. Оба запуска выполнены на коммите `f72cc81` с Ubuntu 24.04, Python 3.14.10 и сервисом PostgreSQL 18.6.
 
-- `gh workflow run postgres-test.yml --ref main -f fail_test=true` дал отказ в шаге `Run database test`. Журнал содержит `test_reports_current_database`, `AssertionError: 'compose_lab' != 'intentional_failure'` и код 1. [Отказ](https://github.com/IAMN1/python-cheat-sheet-actions-lab-20261112/actions/runs/43265099266)
-- Новый запуск с `-f fail_test=false` прошёл. В том же шаге видны `test_reports_current_database … ok` и `OK`. [Успешный повтор](https://github.com/IAMN1/python-cheat-sheet-actions-lab-20261112/actions/runs/43265365559)
+- `gh workflow run postgres-test.yml --ref main -f fail_test=true` дал отказ в шаге `Run database test`. Журнал содержит `test_reports_current_database`, `AssertionError: 'compose_lab' != 'intentional_failure'` и код 1. [Отказ](github-actions-lab/43265099266.log)
+- Новый запуск с `-f fail_test=false` прошёл. В том же шаге видны `test_reports_current_database … ok` и `OK`. [Успешный повтор](github-actions-lab/43265365559.log)
 
 ## Контракт FastAPI и TypeScript — 12 ноября
 
@@ -38,7 +40,7 @@
 
 Локальный прогон на пустом томе вывел обе строки `OK GET` и завершился с кодом 0. После `down --volumes` проверили отсутствие контейнеров, сетей и томов тестовых проектов.
 
-На GitHub запустили образец `.github/workflows/api-contract.yml` с коммита `a1eb3e8` приватного учебного репозитория. Файлы и workflow побайтово совпадают с примером справочника. Команда на Ubuntu 24.04 вывела `OK GET /books/1 -> 200 The Hobbit` и `OK GET /books/999 -> 404 Book not found`. Шаг очистки удалил сеть и том `books-data`. [Запуск сквозной проверки](https://github.com/IAMN1/python-cheat-sheet-actions-lab-20261112/actions/runs/43265665681)
+На GitHub запустили образец `.github/workflows/api-contract.yml` с коммита `a1eb3e8` приватного учебного репозитория. Файлы и workflow побайтово совпадают с примером справочника. Команда на Ubuntu 24.04 вывела `OK GET /books/1 -> 200 The Hobbit` и `OK GET /books/999 -> 404 Book not found`. Шаг очистки удалил сеть и том `books-data`. [Запуск сквозной проверки](github-actions-lab/43265665681.log)
 Ветки диагностики и очистки сквозного workflow после отказа на GitHub отдельно не запускались. Два отказа контракта воспроизвели локально.
 
 ## Go context — 12 ноября
