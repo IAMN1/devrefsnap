@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="312" height="386" viewBox="0 0 312 386" role="img" aria-labelledby="title desc">
+  <title id="title">Завершение работы пула горутин</title>
+  <desc id="desc">После цикла отправитель закрывает jobs, ждёт завершения горутин и проверяет ctx.Err(). При успехе функция возвращает result, nil. При отмене она возвращает nil и ошибку контекста.</desc>
+  <rect width="312" height="386" rx="8" fill="#fff"/>
+  <g font-family="system-ui, sans-serif" font-size="20" fill="#18273a">
+    <rect x="4" y="3" width="304" height="41" rx="7" fill="#eaf1fd" stroke="#8497aa"/>
+    <text x="156" y="31" text-anchor="middle" font-weight="600">Цикл отправки завершён</text>
+    <path d="M31 46V77m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="49" y="68" text-anchor="start">отправитель закрывает</text>
+    <rect x="4" y="80" width="304" height="41" rx="7" fill="#eaf1fd" stroke="#8497aa"/>
+    <text x="156" y="108" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="600">close(jobs)</text>
+    <path d="M31 123V154m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="49" y="145" text-anchor="start">ждёт завершения горутин</text>
+    <rect x="4" y="157" width="304" height="41" rx="7" fill="#eaf1fd" stroke="#8497aa"/>
+    <text x="156" y="185" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="600">group.Wait()</text>
+    <path d="M31 200V231m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="49" y="222" text-anchor="start">проверяет контекст</text>
+    <rect x="4" y="234" width="304" height="41" rx="7" fill="#eaf1fd" stroke="#8497aa"/>
+    <text x="156" y="262" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="600">ctx.Err()</text>
+    <path d="M156 276v9 M78 293v-8h156v8" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="78" y="315" text-anchor="middle">nil</text>
+    <text x="234" y="315" text-anchor="middle">ошибка</text>
+    <path d="M78 322V332m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M234 322V332m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="4" y="341" width="148" height="39" rx="7" fill="#e4f4ee" stroke="#8497aa"/>
+    <text x="78" y="368" text-anchor="middle" font-family="ui-monospace, monospace">result, nil</text>
+    <rect x="160" y="341" width="148" height="39" rx="7" fill="#fff0df" stroke="#8497aa"/>
+    <text x="234" y="368" text-anchor="middle" font-family="ui-monospace, monospace">nil, err</text>
+  </g>
+</svg>

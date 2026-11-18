@@ -83,20 +83,7 @@ GET `/notes` возвращает список заметок.
 
 Схема показывает транзакцию одного `POST /notes`. `get_session` передаёт сессию обработчику. Внутри `session.begin()` обработчик добавляет запись и вызывает `flush()`.
 
-```mermaid
----
-config:
-  htmlLabels: false
-  flowchart: { nodeSpacing: 18, rankSpacing: 24, padding: 8, wrappingWidth: 200 }
----
-flowchart TB
-    accTitle: Транзакция POST /notes
-    accDescr: get_session передаёт сессию обработчику. При успешном выходе из session.begin запись фиксируется до ответа 201. Исключение внутри блока вызывает откат. После ответа 201 зависимость закрывает сессию.
-    Write["session.begin()"] -->|"успешный выход"| Commit["COMMIT"]
-    Write -->|"исключение"| Rollback["ROLLBACK"]
-    Commit -->|"после HTTP 201"| Close["Закрыть сессию"]
-    Rollback -->|"выход из зависимости"| Close
-```
+![При выходе из session.begin() изменения фиксируются при успехе и откатываются при исключении. При успехе сессия закрывается после ответа 201, при ошибке — при выходе из зависимости.](../../../../assets/fastapi-note-transaction-ru.svg)
 
 При выходе из `session.begin()` запись фиксируется или откатывается. `flush()` передаёт изменения базе в пределах транзакции.
 Контекст `get_session` закрывает сессию при завершении зависимости. На успешном пути здесь это происходит после отправки ответа. [Область зависимости с `yield`](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/#early-exit-and-scope).

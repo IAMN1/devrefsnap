@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="312" height="302" viewBox="0 0 312 302" role="img" aria-labelledby="title desc">
+  <title id="title">Transaction for POST /notes</title>
+  <desc id="desc">Exiting session.begin() commits on success or rolls back on an exception. On success the session closes after the 201 response. On failure it closes as the dependency exits.</desc>
+  <rect width="312" height="302" rx="8" fill="#fff"/>
+  <g font-family="system-ui, sans-serif" font-size="20" fill="#18273a">
+    <rect x="4" y="3" width="304" height="41" rx="7" fill="#eaf1fd" stroke="#8497aa"/>
+    <text x="156" y="31" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="600">session.begin()</text>
+    <path d="M156 45v9 M78 62v-8h156v8" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="78" y="84" text-anchor="middle">success</text>
+    <text x="234" y="84" text-anchor="middle">exception</text>
+    <path d="M78 91V101m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M234 91V101m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="4" y="104" width="148" height="39" rx="7" fill="#e4f4ee" stroke="#8497aa"/>
+    <text x="78" y="131" text-anchor="middle" font-family="ui-monospace, monospace">COMMIT</text>
+    <rect x="160" y="104" width="148" height="39" rx="7" fill="#fff0df" stroke="#8497aa"/>
+    <text x="234" y="131" text-anchor="middle" font-family="ui-monospace, monospace">ROLLBACK</text>
+    <path d="M78 144v9 M234 144v9" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="78" y="175" text-anchor="middle">after sending</text>
+    <text x="78" y="199" text-anchor="middle">HTTP 201</text>
+    <text x="234" y="175" text-anchor="middle">as dependency</text>
+    <text x="234" y="199" text-anchor="middle">exits</text>
+    <path d="M78 208v12h156v-12" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M156 220V237m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="4" y="240" width="304" height="58" rx="7" fill="#eaf1fd" stroke="#8497aa"/>
+    <text x="156" y="263" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="600">get_session</text>
+    <text x="156" y="286" text-anchor="middle">closes the session</text>
+  </g>
+</svg>

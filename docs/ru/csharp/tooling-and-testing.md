@@ -116,18 +116,7 @@ tool_dir=$(mktemp -d) && (
 
 Схема показывает один случай после сборки. VSTest находит тест через адаптер xUnit. Тест вызывает `ShippingFee.Calculate(4_999)` и проверяет, что метод вернул `500`.
 
-```mermaid
----
-config:
-  htmlLabels: false
-  flowchart: { rankSpacing: 24, padding: 8, wrappingWidth: 220 }
----
-flowchart TB
-    accTitle: Запуск теста стоимости доставки
-    accDescr: VSTest находит тест через адаптер xUnit. Тест вызывает ShippingFee.Calculate с суммой 4 999 центов и проверяет результат 500.
-    CLI["dotnet test --no-build"] -->|"через VSTest"| Test["Тест xUnit"]
-    Test -->|"вызывает с 4 999"| Method["Calculate возвращает 500"]
-```
+![VSTest находит тест xUnit. Тест вызывает ShippingFee.Calculate для суммы 4 999 центов и проверяет, что метод возвращает 500 центов.](../../assets/csharp-xunit-test-ru.svg)
 
 Из корня репозитория восстановите зависимости. Затем соберите и запустите тесты. Для восстановления нужен доступ к NuGet или заполненный кеш пакетов. Используйте один временный каталог артефактов для всех трёх шагов.
 

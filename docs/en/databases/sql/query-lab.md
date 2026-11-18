@@ -32,28 +32,13 @@ The [query examples](queries.md) use these tables in the same database.
 
 The diagram shows the keys and the relationship between the practice tables.
 
-```mermaid
-erDiagram
-    accTitle: Users and orders
-    accDescr: An order has its own primary key id. Every order references one user through user_id. A user can have zero or more orders.
-    sql_users ||..o{ sql_orders : "places"
-    sql_users {
-        integer id PK
-        string name UK
-    }
-    sql_orders {
-        integer id PK
-        integer user_id FK
-        integer amount_cents
-        string status
-    }
-```
+![Each order references one user through user_id. A user may have zero or more orders. The order has its own primary key, id.](../../../assets/sql-users-orders-en.svg)
 
-- `||` means exactly one user for each order. `NOT NULL` and the `user_id` foreign key enforce this.
-- `o{` means zero or more orders for each user.
-- The dashed line `..` means a non-identifying relationship. An order has its own primary key, `sql_orders.id`.
+- The two bars at `sql_users` mean that each order has exactly one user. `NOT NULL` and the `user_id` foreign key enforce this.
+- The circle and crow’s foot at `sql_orders` mean that a user may have zero or more orders.
+- The dashed line marks a non-identifying relationship. An order has its own primary key, `sql_orders.id`. The labels `PK`, `FK` and `UK` mark a primary key, a foreign key and a uniqueness constraint, respectively.
 
-[Mermaid notation](https://mermaid.js.org/syntax/entityRelationshipDiagram.html#relationship-syntax).
+[ER relationship notation](https://mermaid.js.org/syntax/entityRelationshipDiagram.html#relationship-syntax).
 
 <a id="источники"></a>
 ## Sources

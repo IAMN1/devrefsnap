@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="312" height="342" viewBox="0 0 312 342" role="img" aria-labelledby="title desc">
+  <title id="title">Users and orders</title>
+  <desc id="desc">Each order references one user through user_id. A user may have zero or more orders. The order has its own primary key, id.</desc>
+  <rect width="312" height="342" rx="8" fill="#fff"/>
+  <g font-family="system-ui, sans-serif" font-size="20" fill="#18273a">
+    <rect x="4" y="3" width="304" height="96" rx="7" fill="#fff" stroke="#8497aa"/>
+    <path d="M5 10q0-6 6-6h290q6 0 6 6v26H5z" fill="#eaf1fd"/>
+    <text x="14" y="27" text-anchor="start" font-family="ui-monospace, monospace" font-weight="600">sql_users</text>
+    <path d="M5 37h302" stroke="#bdc9d5"/>
+    <text x="14" y="59" text-anchor="start" font-family="ui-monospace, monospace">id</text>
+    <text x="165" y="59" text-anchor="start">integer</text>
+    <text x="303" y="59" text-anchor="end" font-weight="600" fill="#24523d">PK</text>
+    <path d="M5 68h302" stroke="#bdc9d5"/>
+    <text x="14" y="90" text-anchor="start" font-family="ui-monospace, monospace">name</text>
+    <text x="165" y="90" text-anchor="start">varchar(80)</text>
+    <text x="303" y="90" text-anchor="end" font-weight="600" fill="#24523d">UK</text>
+    <path d="M32 100v24 M22 108h20 M22 115h20" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M32 124v30" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="4 5"/>
+    <circle cx="32" cy="159" r="6" fill="#fff" stroke="#405770" stroke-width="2"/>
+    <path d="M32 165v14 M20 179l12-12 12 12" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="53" y="126" text-anchor="start">Exactly one user</text>
+    <text x="53" y="162" text-anchor="start">Zero or more orders</text>
+    <rect x="4" y="180" width="304" height="158" rx="7" fill="#fff" stroke="#8497aa"/>
+    <path d="M5 187q0-6 6-6h290q6 0 6 6v26H5z" fill="#eaf1fd"/>
+    <text x="14" y="204" text-anchor="start" font-family="ui-monospace, monospace" font-weight="600">sql_orders</text>
+    <path d="M5 214h302" stroke="#bdc9d5"/>
+    <text x="14" y="236" text-anchor="start" font-family="ui-monospace, monospace">id</text>
+    <text x="165" y="236" text-anchor="start">integer</text>
+    <text x="303" y="236" text-anchor="end" font-weight="600" fill="#24523d">PK</text>
+    <path d="M5 245h302" stroke="#bdc9d5"/>
+    <text x="14" y="267" text-anchor="start" font-family="ui-monospace, monospace">user_id</text>
+    <text x="165" y="267" text-anchor="start">integer</text>
+    <text x="303" y="267" text-anchor="end" font-weight="600" fill="#24523d">FK</text>
+    <path d="M5 276h302" stroke="#bdc9d5"/>
+    <text x="14" y="298" text-anchor="start" font-family="ui-monospace, monospace">amount_cents</text>
+    <text x="165" y="298" text-anchor="start">integer</text>
+    <path d="M5 307h302" stroke="#bdc9d5"/>
+    <text x="14" y="329" text-anchor="start" font-family="ui-monospace, monospace">status</text>
+    <text x="165" y="329" text-anchor="start">varchar(20)</text>
+  </g>
+</svg>

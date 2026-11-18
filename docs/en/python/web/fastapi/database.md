@@ -83,20 +83,7 @@ GET `/notes` returns a note list.
 
 The diagram shows the transaction for one `POST /notes`. `get_session` gives the handler a session. Inside `session.begin()`, the handler adds the row and calls `flush()`.
 
-```mermaid
----
-config:
-  htmlLabels: false
-  flowchart: { nodeSpacing: 18, rankSpacing: 24, padding: 8, wrappingWidth: 200 }
----
-flowchart TB
-    accTitle: POST /notes transaction
-    accDescr: get_session gives the handler a session. A successful exit from session.begin commits the row before the 201 response. An exception inside the block rolls back the transaction. After the 201 response, the dependency closes the session.
-    Write["session.begin()"] -->|"successful exit"| Commit["COMMIT"]
-    Write -->|"exception"| Rollback["ROLLBACK"]
-    Commit -->|"after HTTP 201"| Close["Close session"]
-    Rollback -->|"dependency exits"| Close
-```
+![Exiting session.begin() commits on success or rolls back on an exception. On success the session closes after the 201 response. On failure it closes as the dependency exits.](../../../../assets/fastapi-note-transaction-en.svg)
 
 The transaction commits or rolls back when `session.begin()` exits. `flush()` sends changes to the database within the transaction.
 The `get_session` context closes the session when the dependency ends. On the successful path in this example, that happens after the response is sent. [Dependency scope with `yield`](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/#early-exit-and-scope).
