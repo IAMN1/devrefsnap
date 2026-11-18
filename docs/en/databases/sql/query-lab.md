@@ -30,11 +30,13 @@ The example stores amounts as whole cents in a fictional currency to avoid REAL 
 The example supplies IDs explicitly because key generation varies across database engines.
 The [query examples](queries.md) use these tables in the same database.
 
-The diagram shows the practice tables and the foreign key.
+The diagram shows the keys and the relationship between the practice tables.
 
 ```mermaid
 erDiagram
-    sql_users ||--o{ sql_orders : "has orders"
+    accTitle: Users and orders
+    accDescr: An order has its own primary key id. Every order references one user through user_id. A user can have zero or more orders.
+    sql_users ||..o{ sql_orders : "places"
     sql_users {
         integer id PK
         string name UK
@@ -47,8 +49,11 @@ erDiagram
     }
 ```
 
-The foreign key links each order to a user.
-A user can have zero orders.
+- `||` means exactly one user for each order. `NOT NULL` and the `user_id` foreign key enforce this.
+- `o{` means zero or more orders for each user.
+- The dashed line `..` means a non-identifying relationship. An order has its own primary key, `sql_orders.id`.
+
+[Mermaid notation](https://mermaid.js.org/syntax/entityRelationshipDiagram.html#relationship-syntax).
 
 <a id="источники"></a>
 ## Sources

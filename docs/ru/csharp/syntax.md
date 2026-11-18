@@ -121,9 +121,34 @@ public sealed record Product(string Name, decimal Price);
 | --- | --- | --- |
 | Хранить фиксированное число элементов | `T[]` | Длина задаётся при создании. Индексы начинаются с 0. |
 | Добавить элемент или обратиться по индексу | `List<T>` | Используйте индексы от 0 до `Count - 1` |
-| Найти значение по ключу | `Dictionary<TKey, TValue>`, `TryGetValue` | `TryGetValue` сообщает об отсутствии ключа |
-| Проверить наличие или убрать дубли | `HashSet<T>` | Равенство определяет, какие элементы считаются дублями |
+| Прочитать значение по ключу | `scores.TryGetValue("Ada", out int score)` | [Проверить наличие ключа](#try-get-value) |
+| Проверить наличие или убрать дубли | `names.Contains("Ada")`, `names.Add("Ada")` | Для `HashSet<string> names` метод `Add` возвращает `false`, если такое имя уже есть. Совпадение определяет правило равенства множества. |
 | Отфильтровать, преобразовать или агрегировать | LINQ `Where`, `Select`, `Count` | Часть операторов выполняется при обходе запроса |
+
+<a id="try-get-value"></a>
+
+### Получить оценку из словаря
+
+Самостоятельный фрагмент для `Program.cs`. У Ады записана оценка `0`.
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+var scores = new Dictionary<string, int> { ["Ada"] = 0 };
+if (scores.TryGetValue("Ada", out int score))
+{
+    Console.WriteLine(score);
+}
+else
+{
+    Console.WriteLine("Missing key");
+}
+```
+
+Программа выводит `0`. Замените `"Ada"` на `"Max"` только в строке вызова. Теперь программа выведет `Missing key`. Метод возвращает `true`, если нашёл ключ. Для отсутствующего ключа метод возвращает `false` и записывает в `score` значение по умолчанию для `int`, то есть `0`.
+
+### Отобрать оценки и отсортировать результат
 
 Фрагмент для `Program.cs`. Сохраните подходящие оценки в отсортированный массив.
 
@@ -162,12 +187,12 @@ static async Task<string> ReadTextAsync(string path, CancellationToken cancellat
 
 | Задача | API | Выбор |
 | --- | --- | --- |
-| Прочитать файл и соединить части пути | `System.IO.File`, `Stream`, `Path.Combine` | Читайте потоком, если весь файл займёт слишком много памяти |
-| Записать и прочитать JSON | `System.Text.Json.JsonSerializer` | Определите обработку имён, отсутствующих значений и ошибок на границе приложения |
-| Вызвать HTTP-сервис | `System.Net.Http.HttpClient` | Переиспользуйте клиент или настройте [`IHttpClientFactory`](practice.md#patterns) |
-| Представить момент времени со смещением | `DateTimeOffset`, `TimeSpan` | Храните идентификатор часового пояса отдельно, если нужны его правила |
+| Прочитать файл и соединить части пути | `var path = Path.Combine("data", "scores.json");` · `using var stream = File.OpenRead(path);` | Импортируйте `System.IO`. Файл должен существовать. Читайте его потоком, если он велик. |
+| Записать и прочитать JSON | `JsonSerializer.Serialize(new[] { 2, 5 })`, `JsonSerializer.Deserialize<int[]>("[2,5]")` | Импортируйте `System.Text.Json`. Для внешних данных задайте правила для имён полей, отсутствующих значений и ошибок. |
+| Получить текст по HTTP | `string body = await client.GetStringAsync(uri, token);` | Передайте адрес и `CancellationToken`. Используйте долгоживущий `HttpClient` или настройте [`IHttpClientFactory`](practice.md#patterns). |
+| Получить момент времени через час | `DateTimeOffset.UtcNow + TimeSpan.FromHours(1)` | Результат имеет смещение UTC. Храните идентификатор часового пояса отдельно, если нужны его правила. |
 | Преобразовать последовательность в памяти | `System.Linq.Enumerable` | Сохраните результат один раз, если нужен снимок данных |
-| Отменить ввод-вывод или дождаться задач | `CancellationToken`, `Task.WhenAll` | Ограничьте число параллельных операций с общим ограниченным ресурсом |
+| Отменить ввод-вывод или дождаться задач | Передайте `CancellationToken` операции. Для массива `Task[] tasks` вызовите `await Task.WhenAll(tasks)`. | Импортируйте `System.Threading.Tasks` для `Task`. Ограничьте число запущенных операций отдельно. |
 
 <a id="common-mistakes"></a>
 
@@ -183,6 +208,7 @@ static async Task<string> ReadTextAsync(string path, CancellationToken cancellat
 
 ## Источники
 
+- [Поиск ключа через Dictionary.TryGetValue в .NET 10](https://learn.microsoft.com/ru-ru/dotnet/api/system.collections.generic.dictionary-2.trygetvalue?view=net-10.0).
 - [Справочник языка C#](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/) и [изменения C# 14](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-14).
 - [Параметры и аргументы](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters), [записи](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record) и [ссылочные типы с поддержкой `null`](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/null-safety/nullable-reference-types).
 - [Коллекции](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/collections), [выполнение запросов LINQ](https://learn.microsoft.com/en-us/dotnet/csharp/linq/get-started/introduction-to-linq-queries) и [асинхронные сценарии](https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/async-scenarios).

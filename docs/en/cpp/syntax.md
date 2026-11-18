@@ -136,7 +136,7 @@ auto passing_scores = scores | std::views::filter(passes);
 | Store a sequence | `<vector>` `std::vector`, `<array>` `std::array` | A `vector` can resize. An `array` encodes its size in its type. |
 | Look up values by key | `<map>` `std::map`, `<unordered_map>` `std::unordered_map` | A `map` keeps keys ordered. An `unordered_map` uses hashing. |
 | Own or read text | `<string>` `std::string`, `<string_view>` `std::string_view` | A `string` owns its contents. A `string_view` refers to existing storage. |
-| Sort and select elements | `<algorithm>` `std::ranges::sort`, `std::ranges::find` | Sorting mutates the sequence. A search can return the end of the range. |
+| Sort or find elements | `<algorithm>` · `std::ranges::sort(scores)`, `std::ranges::find(scores, 60)` | For the vector `scores` above, sorting changes the order of the elements. If the value is missing, the search returns `scores.end()`. |
 | Represent an optional value or one of several types | `<optional>` `std::optional`, `<variant>` `std::variant` | Check for a value or check the active type. |
 | Work with paths, files, and time | `<filesystem>` `std::filesystem::path`, `<fstream>` `std::ifstream`, `<chrono>` `std::chrono::steady_clock` | Check I/O errors. Use a monotonic clock to measure elapsed time. |
 | Run work in a thread and protect data | `<thread>` `std::jthread`, `<mutex>` `std::scoped_lock` | Define who owns the data and how every access is synchronized. |

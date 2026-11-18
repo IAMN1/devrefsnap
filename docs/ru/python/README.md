@@ -14,6 +14,7 @@ Git и GitHub находятся в [общих инструментах](../too
 
 | Тема | Содержание |
 | --- | --- |
+| [Первая программа на Python](language/first-program.md) | Посчитайте стоимость билетов и измените количество |
 | [Типы Python](language/types/README.md) | Типы, операции, копирование и хешируемость |
 | [Основы asyncio](language/asyncio.md) | Корутины, `await`, `asyncio.run` и конкурентное ожидание |
 | [Проектирование проекта](architecture/project-design/README.md) | Решения, структура, рабочий пакет и поставка |

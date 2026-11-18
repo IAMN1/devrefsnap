@@ -136,7 +136,7 @@ auto passing_scores = scores | std::views::filter(passes);
 | Хранить последовательность | `<vector>` `std::vector`, `<array>` `std::array` | `vector` меняет размер. Размер `array` задан в типе. |
 | Искать по ключу | `<map>` `std::map`, `<unordered_map>` `std::unordered_map` | `map` хранит порядок ключей. `unordered_map` использует хеширование. |
 | Хранить или читать текст | `<string>` `std::string`, `<string_view>` `std::string_view` | `string` владеет содержимым. `string_view` использует существующую память. |
-| Сортировать и отбирать элементы | `<algorithm>` `std::ranges::sort`, `std::ranges::find` | Сортировка меняет последовательность. Поиск может вернуть конец диапазона. |
+| Сортировать или искать элементы | `<algorithm>` · `std::ranges::sort(scores)`, `std::ranges::find(scores, 60)` | Для вектора `scores` сортировка меняет порядок элементов. Если значения нет, поиск возвращает `scores.end()`. |
 | Представить необязательное значение или один из типов | `<optional>` `std::optional`, `<variant>` `std::variant` | Проверяйте наличие значения или активный тип. |
 | Работать с путями, файлами и временем | `<filesystem>` `std::filesystem::path`, `<fstream>` `std::ifstream`, `<chrono>` `std::chrono::steady_clock` | Проверяйте ошибки ввода-вывода. Измеряйте интервалы монотонными часами. |
 | Выполнять работу в потоке и защищать данные | `<thread>` `std::jthread`, `<mutex>` `std::scoped_lock` | Определите владельца данных и единый способ синхронизации доступа. |

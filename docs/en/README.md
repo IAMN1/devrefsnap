@@ -12,10 +12,10 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 
 | Task | Example |
 | --- | --- |
+| Run your first program | [Price three tickets in Python](python/language/first-program.md) · [First C program](c/README.md#first-run) |
 | Inspect an HTTP status and extract a JSON field | [HTTP and JSON in the terminal](tools/http-json.md) |
 | Find why a CI test failed | [Read the GitHub Actions log](tools/compose-and-github-actions.md#find-the-cause-in-the-log) |
 | Choose how to load related data | [SQLAlchemy strategy table](python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
-| Run your first program | [Python numbers and collections](python/language/types/recipes.md) · [First C program](c/README.md#first-run) |
 | Look up familiar syntax | [C# collections](csharp/syntax.md#collections) |
 
 <a id="разделы"></a>

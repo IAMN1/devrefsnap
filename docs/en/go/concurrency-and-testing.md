@@ -34,30 +34,38 @@ result, err := cheatsheet.Uppercase(context.Background(), input, 2)
 fmt.Println(result, err) // [GO PYTHON RUST] <nil>
 ```
 
-Two goroutines process jobs and write separate indices of a preallocated slice.
-Reading starts after `Wait`.
-The producer closes the channel after sending the jobs.
+Two goroutines write results at the indices of the input list.
+If `python` finishes before `go`, `PYTHON` still goes into `result[1]`.
 Keep the input slice unchanged during processing.
 For short strings, goroutine overhead can outweigh concurrency benefits. The example does not measure speedup.
 
-The diagram shows job delivery and the condition for returning a result.
+The diagram shows the shutdown order.
+The sender closes `jobs` after sending every job or selecting the `ctx.Done()` case.
+Each worker calls `Done()` when it exits. After `Wait()`, the function checks the context error.
+If `ctx.Err()` returns an error, the function returns `nil` and that error. Otherwise, it returns the result.
 
 ```mermaid
-flowchart LR
-    P[Producer] -->|send index and string| C[jobs channel]
-    C -->|receive job| W[Two workers]
-    W -->|write a separate index| R[Result slice]
-    P -->|close channel after sending| G[WaitGroup.Wait]
-    W -->|signal Done| G
-    G -->|allow reading after completion| R
+---
+config:
+  htmlLabels: false
+  flowchart: { nodeSpacing: 18, rankSpacing: 24, padding: 8, wrappingWidth: 220 }
+---
+flowchart TB
+    accTitle: Worker pool shutdown
+    accDescr: The sender closes jobs after sending or leaving the send loop on cancellation. It waits for the workers to exit, then checks the context error.
+    Send["Sender writes to jobs"] -->|"send loop ends"| Close["close(jobs)"]
+    Close -->|"then wait"| Wait["group.Wait()"]
+    Wait -->|"workers exited"| Check{"ctx.Err()"}
+    Check -->|"nil"| Result["result, nil"]
+    Check -->|"error"| Error["nil, err"]
 ```
 
-[Complete worker.go and cancellation diagram](examples/concurrency-and-testing.md#bounded-worker-pool)
+[Complete example with `worker.go`](examples/concurrency-and-testing.md#bounded-worker-pool)
 
 <a id="отменить-обработку"></a>
 ## Cancel processing
 
-The caller stops the task. The function must return the cancellation cause.
+The caller cancels the task. The function returns the context error.
 Pass `context` as the first argument. Provide a way out of blocking `select` statements in the sender and workers.
 
 **Independent example snippet inside `main`, importing `context`, `errors`, `fmt`, and `example.com/cheatsheet`**

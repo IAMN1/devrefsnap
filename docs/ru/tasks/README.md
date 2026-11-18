@@ -8,7 +8,7 @@
 
 | Что нужно сделать | Где искать в указателе |
 | --- | --- |
-| Выбрать тип, скопировать или сгруппировать данные Python | [Типы и коллекции](#python-типы-и-коллекции) |
+| Начать с Python, выбрать тип, скопировать или сгруппировать данные | [Первая программа на Python](../python/language/first-program.md) · [Типы и коллекции](#python-типы-и-коллекции) |
 | Запустить корутину Python или ждать несколько операций одновременно | [Основы asyncio](#python-основы-asyncio) |
 | Создать Python-проект, управлять зависимостями и сборкой | [Проект и окружение](#python-проект-и-окружение) |
 | Проверить данные, написать тест, настроить логи | [Валидация, тесты и логи](#валидация-тесты-и-логи) |
@@ -142,6 +142,7 @@
 | Выбрать инструменты для C и организовать код | embedded, драйвер, системное ПО, владение ресурсом | [C: паттерны](../c/practice.md#patterns) · [Области применения](../c/practice.md#application-areas) |
 | Собрать и запустить проект на C# | C#, C Sharp, .NET SDK, csproj, dotnet build, dotnet run | [C#: первый запуск](../csharp/README.md#первый-запуск) |
 | Добавить число в список или проверить аргумент C# | `List<T>`, Add, foreach, TryParse, код завершения | [C#: коллекции](../csharp/README.md#коллекции) · [Ошибки](../csharp/README.md#типичные-ошибки) |
+| Найти значение в словаре C# и проверить наличие ключа | Dictionary, TryGetValue, out | [Поиск по ключу](../csharp/syntax.md#try-get-value) |
 | Вспомнить синтаксис C# | nullable, record, generics, LINQ, async, await | [C#: синтаксис](../csharp/syntax.md) |
 | Установить NuGet-пакет или запустить тесты C# | NuGet, PackageReference, dotnet restore, dotnet test | [C#: пакеты](../csharp/tooling-and-testing.md#packages) · [Тесты](../csharp/tooling-and-testing.md#tests) |
 | Выбрать фреймворк .NET и границы компонентов | ASP.NET Core, EF Core, DI, desktop, игры | [C#: паттерны](../csharp/practice.md#patterns) · [Области применения](../csharp/practice.md#application-areas) |
@@ -156,9 +157,13 @@
 
 Схема показывает артефакты обычной консольной сборки. Стрелки подписаны командами или этапами, которые создают следующий артефакт либо запускают процесс.
 
-![C и C++ компилируют исходник в объектный файл и компонуют исполняемый файл. В .NET SDK восстанавливает зависимости и собирает DLL с IL, которую запускает среда .NET.](../../assets/language-toolchains-ru.svg)
+![C и C++ компилируют исходник в объектный файл и компонуют исполняемый файл. dotnet build собирает приложение .NET, а dotnet basics.dll запускает готовую сборку.](../../assets/language-toolchains-ru.svg)
 
-[Этапы Clang](https://releases.llvm.org/21.1.0/tools/clang/docs/CommandGuide/clang.html) · [Сборка .NET](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-build) · [Выполнение .NET](https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process)
+В C и C++ компиляция создаёт объектный файл, а компоновка создаёт исполняемый файл.
+В .NET команда `dotnet build` собирает проект и по умолчанию восстанавливает зависимости. Для запуска готовой сборки выполните `dotnet basics.dll` из каталога, где лежит DLL. Для запуска нужны совместимая среда .NET и остальные файлы приложения.
+В [практикуме C#](../csharp/README.md#первый-запуск) команда `dotnet run --project … --no-build` использует результаты предыдущей сборки из того же каталога артефактов.
+
+[Этапы Clang](https://releases.llvm.org/21.1.0/tools/clang/docs/CommandGuide/clang.html) · [Сборка .NET](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-build) · [Запуск проекта или DLL](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-run#description)
 
 </details>
 

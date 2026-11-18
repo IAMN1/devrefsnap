@@ -84,18 +84,19 @@ To estimate the work done by loops over a collection, compare [one pass and enum
 
 | Type | Operations and behavior |
 | --- | --- |
-| `list` | `append`, `extend`, `pop`, and slices. Items may have different types |
+| `list` | `languages.append("rust")` adds one item. `languages.extend(["c", "go"])` adds two. Items may have different types. |
+| List removal and slicing | `languages.pop()` removes and returns the last item of a nonempty list. `languages[:2]` copies the first two items. |
 | `tuple` | `(5,)` has one item. Tuple immutability does not freeze a nested list |
 | `range` | `range(1, 6, 2)` yields `1, 3, 5`. The upper bound is excluded |
-| `str` | Unicode text with `lower`, `upper`, `replace`, `split`, and `join` |
-| `bytes`, `bytearray` | Indexing gives an integer. Convert text with `encode` and `decode` |
-| `dict` | Keeps insertion order. `keys`, `values`, and `items` return views |
+| `str` | For Unicode text, use `"Go".lower()`, `"Go".upper()`, or `"Go".replace("G", "g")`. The call `"go,python".split(",")` produces a list and `",".join(["go", "python"])` builds a string. |
+| `bytes`, `bytearray` | `"Go".encode("utf-8")` returns `b"Go"`. The call `b"Go".decode("utf-8")` returns a string. Indexing bytes yields an integer. |
+| `dict` | For `counts = {"go": 2}`, the calls `counts.keys()`, `counts.values()`, and `counts.items()` return views of keys, values, and pairs in insertion order. |
 | `set` | `a \| b`, `a & b`, `a - b`, `a ^ b`. Iteration order is unspecified |
 | `frozenset` | An immutable set of hashable elements that can be a dictionary key |
 
 `{}` creates a dictionary. Use `set()` for an empty set.
-When an element is missing, `remove` raises `KeyError`, while `discard` accepts its absence.
-`dict.get` does not raise `KeyError`. Distinguish the default from a stored `None`.
+In the example above, `unique.discard("rust")` leaves the set unchanged. The call `unique.remove("rust")` raises `KeyError` because the element is missing.
+For the dictionary in the table, `counts.get("rust", 0)` returns `0`. If the key exists with the value `None`, the call returns `None`.
 
 <a id="средний-уровень"></a>
 
@@ -126,7 +127,7 @@ Check the type separately if the limit needs validation.
 ## Specialized dictionaries
 
 - `defaultdict(list)` creates a list on `mapping[key]` access. `.get()` does not call the factory.
-- `OrderedDict` supports reordering with `move_to_end` and removal by order. An ordinary `dict` already preserves insertion order.
+- With `ordered = OrderedDict(a=1, b=2)` from the `collections` module, call `ordered.move_to_end("a")`. The keys are now in the order `b`, `a`. Then `ordered.popitem(last=False)` removes and returns the first pair, `("b", 2)`. An ordinary `dict` preserves insertion order.
 - Order does not affect ordinary dictionary equality. Equality between two `OrderedDict` objects takes order into account.
 - `dict.items()` views reflect subsequent changes. Use `list(mapping.items())` for a snapshot.
 

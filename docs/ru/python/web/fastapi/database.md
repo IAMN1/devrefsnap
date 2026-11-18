@@ -75,24 +75,32 @@ POST `/notes` с JSON `{"text":"Прочитать документацию"}` �
 GET `/notes` возвращает список заметок.
 Файл `fastapi-async.db` создаётся в папке запуска.
 
-Схема показывает, как в примере связаны жизненный цикл приложения, сессия одного запроса и транзакция записи.
+**Жизненный цикл приложения**
+
+1. До `yield` функция `lifespan` создаёт таблицы.
+2. Пока приложение работает, POST и GET получают отдельные сессии. После ответа `201` следующий GET читает сохранённую заметку.
+3. При остановке приложения `lifespan` вызывает `engine.dispose()`.
+
+Схема показывает транзакцию одного `POST /notes`. `get_session` передаёт сессию обработчику. Внутри `session.begin()` обработчик добавляет запись и вызывает `flush()`.
 
 ```mermaid
+---
+config:
+  htmlLabels: false
+  flowchart: { nodeSpacing: 18, rankSpacing: 24, padding: 8, wrappingWidth: 200 }
+---
 flowchart TB
-    Startup["lifespan готовит таблицы"] -->|"При поступлении запроса"| Request
-    subgraph Request["Один запрос POST /notes"]
-        direction TB
-        Open["get_session открывает AsyncSession"] -->|"yield session"| Write["Обработчик выполняет запись в session.begin()"]
-        Write -->|"При выходе из get_session"| Close["Закрывается AsyncSession"]
-    end
-    Request -->|"При остановке приложения"| Shutdown["lifespan вызывает engine.dispose()"]
+    accTitle: Транзакция POST /notes
+    accDescr: get_session передаёт сессию обработчику. При успешном выходе из session.begin запись фиксируется до ответа 201. Исключение внутри блока вызывает откат. После ответа 201 зависимость закрывает сессию.
+    Write["session.begin()"] -->|"успешный выход"| Commit["COMMIT"]
+    Write -->|"исключение"| Rollback["ROLLBACK"]
+    Commit -->|"после HTTP 201"| Close["Закрыть сессию"]
+    Rollback -->|"выход из зависимости"| Close
 ```
 
-До `yield` lifespan открывает или готовит ресурс.
-После `yield` lifespan закрывает ресурс.
-Здесь lifespan заменяет прежние `@app.on_event("startup")` / `shutdown`.
-При успешном выходе `session.begin()` фиксирует изменения.
-При исключении `session.begin()` откатывает изменения.
+При выходе из `session.begin()` запись фиксируется или откатывается. `flush()` передаёт изменения базе в пределах транзакции.
+Контекст `get_session` закрывает сессию при завершении зависимости. На успешном пути здесь это происходит после отправки ответа. [Область зависимости с `yield`](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/#early-exit-and-scope).
+`lifespan` заменяет прежние обработчики `@app.on_event("startup")` и `shutdown`.
 Не разделяйте один `AsyncSession` между одновременно работающими задачами.
 Драйвер и URL должны соответствовать async-движку.
 `async def` вокруг обычного синхронного драйвера не делает драйвер неблокирующим.
