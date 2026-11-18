@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="312" height="308" viewBox="0 0 312 308" role="img" aria-labelledby="title desc">
+  <title id="title">Run a shipping fee test</title>
+  <desc id="desc">VSTest finds the xUnit test. The test calls ShippingFee.Calculate with 4,999 cents and checks that the method returns 500 cents.</desc>
+  <rect width="312" height="308" rx="8" fill="#fff"/>
+  <g font-family="system-ui, sans-serif" font-size="20" fill="#18273a">
+    <rect x="4" y="3" width="304" height="41" rx="7" fill="#eaf1fd" stroke="#8497aa"/>
+    <text x="156" y="31" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="600">dotnet test --no-build</text>
+    <path d="M31 46V103m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="49" y="66" text-anchor="start">VSTest finds the test</text>
+    <text x="49" y="91" text-anchor="start">via the xUnit adapter</text>
+    <rect x="4" y="106" width="304" height="41" rx="7" fill="#eaf1fd" stroke="#8497aa"/>
+    <text x="156" y="134" text-anchor="middle" font-weight="600">xUnit test</text>
+    <path d="M31 149V182m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="49" y="172" text-anchor="start">calls with 4,999 cents</text>
+    <rect x="4" y="185" width="304" height="41" rx="7" fill="#eaf1fd" stroke="#8497aa"/>
+    <text x="156" y="213" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="600">ShippingFee.Calculate</text>
+    <path d="M31 228V260m-5-6 5 6 5-6" fill="none" stroke="#405770" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="49" y="250" text-anchor="start">returns to the test</text>
+    <rect x="4" y="263" width="304" height="41" rx="7" fill="#e4f4ee" stroke="#8497aa"/>
+    <text x="156" y="291" text-anchor="middle" font-weight="600">500 cents</text>
+  </g>
+</svg>

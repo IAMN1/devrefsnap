@@ -116,18 +116,7 @@ The test project uses `ProjectReference` to compile against the library. xUnit v
 
 The diagram shows one case after the build. VSTest discovers the test through the xUnit adapter. The test calls `ShippingFee.Calculate(4_999)` and checks that it returns `500`.
 
-```mermaid
----
-config:
-  htmlLabels: false
-  flowchart: { rankSpacing: 24, padding: 8, wrappingWidth: 220 }
----
-flowchart TB
-    accTitle: Run a shipping fee test
-    accDescr: VSTest discovers the test through the xUnit adapter. The test calls ShippingFee.Calculate with 4,999 cents and checks the result of 500.
-    CLI["dotnet test --no-build"] -->|"via VSTest"| Test["xUnit test"]
-    Test -->|"calls with 4,999"| Method["Calculate returns 500"]
-```
+![VSTest finds the xUnit test. The test calls ShippingFee.Calculate with 4,999 cents and checks that the method returns 500 cents.](../../assets/csharp-xunit-test-en.svg)
 
 From the repository root, restore, build, and run the tests. NuGet access or a populated package cache is needed for restore. Use the same temporary artifact path for all three steps.
 

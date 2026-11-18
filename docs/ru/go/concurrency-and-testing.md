@@ -44,21 +44,7 @@ fmt.Println(result, err) // [GO PYTHON RUST] <nil>
 Каждый worker вызывает `Done()` при выходе. После `Wait()` функция проверяет ошибку контекста.
 Если `ctx.Err()` вернул ошибку, функция возвращает `nil` и ошибку. Иначе функция возвращает результат.
 
-```mermaid
----
-config:
-  htmlLabels: false
-  flowchart: { nodeSpacing: 18, rankSpacing: 24, padding: 8, wrappingWidth: 220 }
----
-flowchart TB
-    accTitle: Завершение работы worker pool
-    accDescr: Отправитель закрывает jobs после отправки или при выходе из цикла по отмене. Затем он ждёт завершения работников и проверяет ошибку контекста.
-    Send["Отправитель пишет в jobs"] -->|"цикл отправки завершён"| Close["close(jobs)"]
-    Close -->|"затем ждать"| Wait["group.Wait()"]
-    Wait -->|"workers завершились"| Check{"ctx.Err()"}
-    Check -->|"nil"| Result["result, nil"]
-    Check -->|"есть ошибка"| Error["nil, err"]
-```
+![После цикла отправитель закрывает jobs, ждёт завершения горутин и проверяет ctx.Err(). При успехе функция возвращает result, nil. При отмене она возвращает nil и ошибку контекста.](../../assets/go-worker-shutdown-ru.svg)
 
 [Полный пример с `worker.go`](examples/concurrency-and-testing.md#ограниченный-worker-pool)
 

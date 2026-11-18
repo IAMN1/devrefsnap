@@ -44,21 +44,7 @@ The sender closes `jobs` after sending every job or selecting the `ctx.Done()` c
 Each worker calls `Done()` when it exits. After `Wait()`, the function checks the context error.
 If `ctx.Err()` returns an error, the function returns `nil` and that error. Otherwise, it returns the result.
 
-```mermaid
----
-config:
-  htmlLabels: false
-  flowchart: { nodeSpacing: 18, rankSpacing: 24, padding: 8, wrappingWidth: 220 }
----
-flowchart TB
-    accTitle: Worker pool shutdown
-    accDescr: The sender closes jobs after sending or leaving the send loop on cancellation. It waits for the workers to exit, then checks the context error.
-    Send["Sender writes to jobs"] -->|"send loop ends"| Close["close(jobs)"]
-    Close -->|"then wait"| Wait["group.Wait()"]
-    Wait -->|"workers exited"| Check{"ctx.Err()"}
-    Check -->|"nil"| Result["result, nil"]
-    Check -->|"error"| Error["nil, err"]
-```
+![After the send loop ends, the sender closes jobs, waits for the workers and checks ctx.Err(). Success returns result, nil. Cancellation returns nil and the context error.](../../assets/go-worker-shutdown-en.svg)
 
 [Complete example with `worker.go`](examples/concurrency-and-testing.md#bounded-worker-pool)
 
