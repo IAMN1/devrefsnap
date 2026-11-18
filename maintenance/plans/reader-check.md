@@ -25,10 +25,10 @@
 | Задание | Результат поиска и объяснения |
 | --- | --- |
 | HTTP | Читатель показывает код `200` и `Content-Type: application/json`, затем получает `Book` из тела. Он объясняет, почему обработчик JSON получает только тело. |
-| CI | Читатель находит `integration → Run database test`, тест `test_reports_current_database` и сравнение `compose_lab` с `intentional_failure`. Он выбирает новый запуск с выключенным параметром. |
+| CI | Читатель находит блок `Run python -m unittest -v` задания `integration`, тест `test_reports_current_database` и сравнение `compose_lab` с `intentional_failure`. Он выбирает новый запуск с выключенным параметром. |
 | N+1 | Читатель выбирает `selectinload` для полных коллекций переменного размера и учитывает дополнительные пакетные SELECT. Для малых коллекций он сравнивает стоимость `joinedload` и учитывает повторение полей родителя и `unique()`. |
 
-Откройте [полный журнал запуска с отказом](../reports/github-actions-lab/43265099266.log). Найдите шаг `Run database test`. Архив сохраняет текст журнала; навигацию по интерфейсу GitHub Actions этот режим не проверяет. Для проверки по фрагменту используйте строки ниже.
+Откройте [полный журнал запуска с отказом](../reports/github-actions-lab/43265099266.log). Найдите блок `Run python -m unittest -v`. Блок соответствует шагу `Run database test` в [манифесте](../reports/github-actions-lab/manifest.json). Архив сохраняет текст журнала; навигацию по интерфейсу GitHub Actions этот режим не проверяет. Для проверки по фрагменту используйте строки ниже.
 
 ```text
 FAIL: test_reports_current_database (test_app.DatabaseStatusTest.test_reports_current_database)
