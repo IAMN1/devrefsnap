@@ -7,6 +7,7 @@
 | Задача | Приём | Пример |
 | --- | --- | --- |
 | Запустить первую программу | .NET SDK, `dotnet build`, `dotnet run` | [Первый запуск](#первый-запуск) |
+| Запустить первый HTTP-сервис на .NET | ASP.NET Core Minimal API, Kestrel | [Расчёт доставки через HTTP](first-http-service.md) · [Интеграционный тест](first-http-service.md#test-service) |
 | Разобрать ввод, описать данные или выполнить асинхронный ввод-вывод | Типы, сопоставление с образцом, LINQ, `async` / `await` | [Синтаксис и стандартная библиотека](syntax.md) |
 | Создать проект или добавить зависимость | `dotnet new`, NuGet, `PackageReference` | [Проекты и пакеты](tooling-and-testing.md#packages) |
 | Проверить бизнес-правило | xUnit v3 и `dotnet test` | [Исполняемый пример с тестами](tooling-and-testing.md#tests) |

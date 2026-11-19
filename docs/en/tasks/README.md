@@ -8,7 +8,7 @@ Links lead to a specific card, commands, or example in the main material.
 
 | Task | Where to look in the index |
 | --- | --- |
-| Start with Python, choose a type, copy data, or group data | [First Python program](../python/language/first-program.md) · [Types and collections](#python-types-and-collections) |
+| Start with Python, read a file, or choose a data type | [First Python program](../python/language/first-program.md) · [Files, types, and collections](#python-files-types-and-collections) |
 | Run a Python coroutine or wait for several operations concurrently | [asyncio basics](#python-asyncio-basics) |
 | Create a Python project and manage dependencies and builds | [Project and environment](#python-projects-and-environments) |
 | Validate data, write tests, or configure logs | [Validation, tests, and logging](#validation-tests-and-logging) |
@@ -34,10 +34,12 @@ Command consequences and example limitations appear there as well.
 [Catalog by technology](../README.md#material-catalog)
 
 <a id="python-типы-и-коллекции"></a>
-## Python types and collections
+<a id="python-types-and-collections"></a>
+## Python files, types, and collections
 
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
+| Read a large file one line at a time | Python, line by line, large text file, without loading the whole file | [Read lines in Python](../python/language/read-lines.md) |
 | Choose a number type, a string, or exact monetary arithmetic | numeric, string, `int`, `float`, `Decimal` | [Python numbers, strings, and logic](../python/language/types/README.md#numbers-strings-and-logic) |
 | Round a monetary amount and test type operations | Decimal, quantize, ROUND_HALF_UP, rounding, currency | [Complete Python operations and copying example](../python/language/types/recipes.md#check-operations-copies-and-type-boundaries) |
 | Choose a list, dictionary, or set | collection, array, map, unique, `list`, `dict`, `set` | [Python collections](../python/language/types/README.md#collections) |
@@ -140,7 +142,9 @@ Command consequences and example limitations appear there as well.
 | Choose tools for C and organize the code | embedded, driver, systems software, resource ownership | [C patterns](../c/practice.md#patterns) · [Application areas](../c/practice.md#application-areas) |
 | Build and run a C# project | C#, C Sharp, .NET SDK, csproj, dotnet build, dotnet run | [C# first run](../csharp/README.md#first-run) |
 | Add a number to a list or validate a C# argument | `List<T>`, Add, foreach, TryParse, exit code | [C# collections](../csharp/README.md#collections) · [Common mistakes](../csharp/README.md#common-mistakes) |
-| Look up a value in a C# dictionary and check whether the key exists | Dictionary, TryGetValue, out | [Look up a key](../csharp/syntax.md#try-get-value) |
+| Look up a value in a C# dictionary and tell a stored zero from a missing key | key is missing, key exists, value is 0, `Dictionary`, `TryGetValue`, `out` | [Check the key and read its value](../csharp/syntax.md#try-get-value) |
+| Read a file with cancellation in C# | cancel a read, async file read, CancellationToken | [Read a file asynchronously](../csharp/syntax.md#async-io-and-cleanup) |
+| Run a first .NET web service and test a bad request | C#, HTTP endpoint, 400 response, ASP.NET Core, integration test | [First request](../csharp/first-http-service.md#run-service) · [HTTP test](../csharp/first-http-service.md#test-service) |
 | Look up C# syntax | nullable, record, generics, LINQ, async, await | [C# syntax](../csharp/syntax.md) |
 | Install a NuGet package or run C# tests | NuGet, PackageReference, dotnet restore, dotnet test | [C# packages](../csharp/tooling-and-testing.md#packages) · [Tests](../csharp/tooling-and-testing.md#tests) |
 | Choose a .NET framework and define component boundaries | ASP.NET Core, EF Core, DI, desktop, games | [C# patterns](../csharp/practice.md#patterns) · [Application areas](../csharp/practice.md#application-areas) |
@@ -176,6 +180,7 @@ In the [C# exercise](../csharp/README.md#first-run), `dotnet run --project … -
 | Select rows and join tables | SELECT, WHERE, JOIN, EXISTS, filtering, join | [SQL filtering and joins](../databases/sql/queries.md#filtering-and-joins) |
 | See which rows a JOIN keeps | INNER JOIN, LEFT JOIN, NULL, pairs, match | [Compare joins on the same tables](../databases/sql/queries.md#compare-inner-join-and-left-join) |
 | Insert, update, or delete rows | INSERT, UPDATE, DELETE, CRUD, DML | [Change data with SQL](../databases/sql/queries.md#change-data) |
+| Find email addresses that appear more than once | find duplicates, duplicate email, repeated values | [Duplicate email addresses](../databases/sql/queries.md#duplicate-emails) |
 | Group data and calculate a result within a group | GROUP BY, HAVING, CTE, WITH, OVER, window, window function | [SQL aggregation, CTEs, and windows](../databases/sql/queries.md#aggregation-ctes-and-window-functions) |
 | Choose a transaction and isolation level | BEGIN, COMMIT, ROLLBACK, isolation, locking | [SQL transactions and isolation](../databases/sql/dialects-and-transactions.md#transactions-and-isolation) |
 | Account for differences between PostgreSQL and SQLite | dialect, placeholder, UPSERT, types | [SQL dialect differences](../databases/sql/dialects-and-transactions.md#dialect-differences) |
@@ -270,7 +275,7 @@ In the [C# exercise](../csharp/README.md#first-run), `dotnet run --project … -
 | Inspect changes and prepare a local commit | status, diff, staged, add, commit, log | [Git commit card](../tools/git/workflow.md#inspect-changes-and-prepare-a-commit) |
 | Create a branch and test the full workflow | switch, branch, merge, learning repository | [Complete Git workflow](../tools/git/workflow.md#verifiable-workflow) |
 | Temporarily set unfinished work aside | stash, stash pop, WIP, shelve | [Set work aside in Git](../tools/git/workflow.md#temporarily-set-work-aside) |
-| Remove a file from the index while keeping edits | unstage, `git restore --staged`, undo git add, index | [Unstage with Git](../tools/git/history.md#unstage-a-file) |
+| Leave a file out of the next commit and keep my changes | remove a file from the index, keep edits, unstage, undo git add, `git restore --staged` | [Unstage a file](../tools/git/history.md#unstage-a-file) |
 | Undo uncommitted file changes | discard, restore, working tree, discard edits | [Choose a source for Git restore](../tools/git/history.md#discard-uncommitted-changes) |
 | Undo a local commit while preserving changes | undo, rollback, reset soft, reset mixed, HEAD~1 | [Return edits to the index or working tree](../tools/git/history.md#undo-a-commit-while-preserving-changes) |
 | Undo a published change | revert, reversing commit, shared history | [Undo without rewriting Git history](../tools/git/history.md#undo-a-published-change) |

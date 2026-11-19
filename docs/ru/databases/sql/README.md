@@ -19,6 +19,7 @@ SQL — язык запросов к реляционным данным.
 | Подготовить данные и сделать первый JOIN | CREATE / INSERT / SELECT | [Карточка](queries.md#полный-пример) · [Полный пример](query-lab.md#полный-пример) |
 | Фильтровать и сортировать | WHERE / ORDER BY / IS NULL | [Выборка](queries.md#фильтрация-и-соединения) |
 | Изменить строки | INSERT / UPDATE / DELETE | [CRUD](queries.md#изменение-данных) |
+| Найти адреса почты, которые встречаются несколько раз | GROUP BY / HAVING | [Повторяющиеся адреса почты](queries.md#duplicate-emails) |
 | Посчитать итоги | GROUP BY / HAVING / CTE / OVER | [Аналитика](queries.md#агрегация-cte-и-окна) |
 | Перенести запрос между СУБД | Ограничение строк, identity, DDL, RETURNING | [Диалекты](dialects-and-transactions.md#различия-диалектов) |
 | Защитить изменения | Транзакция / savepoint / ограничения | [Транзакции](dialects-and-transactions.md#транзакции-и-изоляция) |

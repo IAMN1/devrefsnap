@@ -175,6 +175,8 @@ dotnet test "$test_project" --artifacts-path "$test_artifacts" --no-build --list
 
 If the test is missing from the list, check the project path, test SDK, adapter, and test platform. If the test is listed, check the run filter. If `Calculate_ReturnsExpectedFee` gets `500` for `5_000`, check the threshold in `ShippingFee.Calculate`. [VSTest options](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test-vstest#options) · [Choose a test boundary](practice.md#test-at-the-right-boundary).
 
+[Test the same rule through HTTP](first-http-service.md#test-service).
+
 ## Sources
 
 - [SDK project templates](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new-sdk-templates) and [ASP.NET Core framework references](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/target-aspnetcore?view=aspnetcore-10.0).

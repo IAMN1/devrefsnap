@@ -38,6 +38,7 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 
 | Topic | Where to look |
 | --- | --- |
+| Read a large file one line at a time | [Read lines in Python](python/language/read-lines.md) |
 | Python types | [Types and operations](python/language/types/README.md) |
 | asyncio | [First coroutines and concurrent waits](python/language/asyncio.md) |
 | Python project design | [Decisions, working package, and delivery](python/architecture/project-design/README.md) |
@@ -51,9 +52,9 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 | Flask | [WSGI applications, factories, and tests](python/web/flask/README.md) |
 | Go | [Language, concurrency, and HTTP](go/README.md), [HTTP request timeout and cancellation](go/context.md), [complete module](go/examples/language.md) |
 | C | [First run](c/README.md), [syntax](c/syntax.md), [builds, libraries, and testing](c/tooling-and-testing.md), [practices and application areas](c/practice.md) |
-| C# | [First run](csharp/README.md), [syntax](csharp/syntax.md), [NuGet and testing](csharp/tooling-and-testing.md), [practices and application areas](csharp/practice.md) |
+| C# | [First run](csharp/README.md), [syntax](csharp/syntax.md), [NuGet and testing](csharp/tooling-and-testing.md), [practices and application areas](csharp/practice.md) · [first HTTP service](csharp/first-http-service.md) |
 | C++ | [First run](cpp/README.md), [syntax](cpp/syntax.md), [builds, libraries, and testing](cpp/tooling-and-testing.md), [practices and application areas](cpp/practice.md) |
-| SQL | [General SQL reference](databases/sql/README.md) |
+| SQL | [General SQL reference](databases/sql/README.md) · [duplicate email addresses](databases/sql/queries.md#duplicate-emails) |
 | PostgreSQL | [Reference](databases/relational/postgresql/README.md), [backup and restore](databases/relational/postgresql/backup-and-restore.md) |
 | SQLite | [Reference](databases/relational/sqlite/README.md), [backup and restore](databases/relational/sqlite/backup-and-restore.md) |
 | Redis | [Data structures, caching, and messaging](databases/non-relational/redis/README.md), [RDB backup](databases/non-relational/redis/backup-and-restore.md), [AOF backup and restore](databases/non-relational/redis/aof-backup-and-restore.md) |

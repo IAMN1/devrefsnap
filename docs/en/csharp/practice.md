@@ -7,6 +7,7 @@ Choose a stack for the application you want to build. Use the patterns below whe
 | Task | Technique | Example |
 | --- | --- | --- |
 | Pick a stack and a first exercise | Match the platform and libraries to the app | [Application areas](#application-areas) |
+| Run your first HTTP service in .NET | ASP.NET Core Minimal API | [Shipping quotes over HTTP](first-http-service.md) |
 | Replace a rule or external dependency | Composition, constructor injection, scoped services | [Patterns and practices](#patterns) |
 | Choose a test boundary | Unit, integration, or end-to-end test | [Test at the right boundary](#test-at-the-right-boundary) |
 | Keep a query small | EF Core projection and bounded results | [Query only the data you need](#query-data) |
@@ -104,7 +105,7 @@ In ASP.NET Core, a request has its own DI scope. A typical EF Core `DbContext` i
 | Question | Test level | Example |
 | --- | --- | --- |
 | Does the rule return the right fee? | Unit | [Shipping fee test lab](tooling-and-testing.md#tests) |
-| Does the endpoint translate input and errors into the right HTTP response? | Integration | `WebApplicationFactory<TEntryPoint>` from `Microsoft.AspNetCore.Mvc.Testing` with the ASP.NET Core test host |
+| Does the endpoint translate input and errors into the right HTTP response? | Integration | [Test the 200 and 400 responses](first-http-service.md#test-service) with `WebApplicationFactory<Program>` |
 | Does the query work with the intended schema and SQL dialect? | Integration with a real service | Apply migrations in an isolated database and assert the query result |
 | Can a user complete checkout through the deployed app? | End to end | Exercise the deployed flow with a synthetic order |
 

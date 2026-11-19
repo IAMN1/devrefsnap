@@ -4,7 +4,7 @@
 [Русский](../../../ru/databases/sql/queries.md)
 
 Use this page to select and change rows and calculate results across related tables.
-The PostgreSQL and SQLite snippets share a dataset with separate setup instructions.
+The order examples use a shared PostgreSQL or SQLite dataset. The duplicate email example supplies its data in the query itself.
 
 <a id="быстрый-поиск"></a>
 ## Quick reference
@@ -15,6 +15,7 @@ The PostgreSQL and SQLite snippets share a dataset with separate setup instructi
 | Total payments while keeping every user | LEFT JOIN with a condition in ON | [Totals per user](#total-payments-while-keeping-every-user) |
 | Select rows and find missing relationships | WHERE, JOIN, NOT EXISTS | [Queries](#filtering-and-joins) |
 | Change related rows and roll back | Transaction and CRUD | [Data changes](#change-data) |
+| Find email addresses that appear more than once | GROUP BY / HAVING | [Duplicate email addresses](#duplicate-emails) |
 | Calculate totals and rank each row | GROUP BY, CTEs, window functions | [Analytics](#aggregation-ctes-and-window-functions) |
 
 [SQL](README.md)
@@ -22,7 +23,7 @@ The PostgreSQL and SQLite snippets share a dataset with separate setup instructi
 | Item | Details |
 | --- | --- |
 | Levels | Basic for CRUD and filters. Intermediate for JOIN and grouping. Advanced for window functions and recursion. |
-| Prerequisites | A new PostgreSQL 18 or SQLite 3.53 practice database with the names sql_users and sql_orders available |
+| For the order examples | A new PostgreSQL 18 or SQLite 3.53 practice database with the names sql_users and sql_orders available |
 
 ## Compare INNER JOIN and LEFT JOIN
 
@@ -155,6 +156,31 @@ The SELECT inside the transaction returns `600 | paid`.
 After rollback, each table still contains three rows.
 See [dialects](dialects-and-transactions.md#dialect-differences) for returning changed rows with `RETURNING` or `OUTPUT` and using UPDATE with a join.
 ON DELETE CASCADE takes effect when the foreign key declares that action and the engine enforces foreign key checks.
+
+<a id="duplicate-emails"></a>
+
+## Find duplicate email addresses
+
+Run this standalone query in PostgreSQL 18 or SQLite 3.53. The `VALUES` clause supplies three rows, so you can try it without setting up tables.
+
+```sql
+WITH contacts(email) AS (
+    VALUES ('ada@example.org'), ('bob@example.org'), ('ada@example.org')
+)
+SELECT email, COUNT(*) AS occurrences
+FROM contacts
+GROUP BY email
+HAVING COUNT(*) > 1
+ORDER BY email;
+```
+
+Expected result
+
+| email | occurrences |
+| --- | ---: |
+| ada@example.org | 2 |
+
+`GROUP BY email` groups rows with the same address. `HAVING COUNT(*) > 1` keeps addresses that occur more than once. For your own table, remove the `WITH` clause and use the table name in `FROM`. To exclude rows where the address is `NULL`, add `WHERE email IS NOT NULL` before `GROUP BY`.
 
 <a id="агрегация-cte-и-окна"></a>
 ## Aggregation, CTEs, and window functions

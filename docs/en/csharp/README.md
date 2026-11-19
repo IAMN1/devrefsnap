@@ -7,6 +7,7 @@ Build your first C# program or look up a language feature, package command, or t
 | Task | Technique | Example |
 | --- | --- | --- |
 | Run your first program | .NET SDK, `dotnet build`, `dotnet run` | [First run](#first-run) |
+| Run your first HTTP service in .NET | ASP.NET Core Minimal API, Kestrel | [Shipping quotes over HTTP](first-http-service.md) · [Integration test](first-http-service.md#test-service) |
 | Parse input, model data, or handle async I/O | Types, pattern matching, LINQ, `async` / `await` | [Syntax and standard library](syntax.md) |
 | Create a project or add a dependency | `dotnet new`, NuGet, `PackageReference` | [Projects and packages](tooling-and-testing.md#packages) |
 | Test a business rule | xUnit v3 and `dotnet test` | [Runnable test lab](tooling-and-testing.md#tests) |
