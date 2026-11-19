@@ -8,6 +8,7 @@ Choose a stack for the application you want to build. Use the patterns below whe
 | --- | --- | --- |
 | Pick a stack and a first exercise | Match the platform and libraries to the app | [Application areas](#application-areas) |
 | Run your first HTTP service in .NET | ASP.NET Core Minimal API | [Shipping quotes over HTTP](first-http-service.md) |
+| Save an order and read it after restarting a .NET service | EF Core, SQLite | [Orders in SQLite](persist-orders.md) |
 | Replace a rule or external dependency | Composition, constructor injection, scoped services | [Patterns and practices](#patterns) |
 | Choose a test boundary | Unit, integration, or end-to-end test | [Test at the right boundary](#test-at-the-right-boundary) |
 | Keep a query small | EF Core projection and bounded results | [Query only the data you need](#query-data) |

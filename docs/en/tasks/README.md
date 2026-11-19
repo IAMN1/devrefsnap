@@ -145,6 +145,7 @@ Command consequences and example limitations appear there as well.
 | Look up a value in a C# dictionary and tell a stored zero from a missing key | key is missing, key exists, value is 0, `Dictionary`, `TryGetValue`, `out` | [Check the key and read its value](../csharp/syntax.md#try-get-value) |
 | Read a file with cancellation in C# | cancel a read, async file read, CancellationToken | [Read a file asynchronously](../csharp/syntax.md#async-io-and-cleanup) |
 | Run a first .NET web service and test a bad request | C#, HTTP endpoint, 400 response, ASP.NET Core, integration test | [First request](../csharp/first-http-service.md#run-service) · [HTTP test](../csharp/first-http-service.md#test-service) |
+| Save an order and read it after restarting a .NET service | keep data after restart, find by ID, persist an order, C#, EF Core, SQLite | [Orders in SQLite](../csharp/persist-orders.md#create-order) · [Read after restart](../csharp/persist-orders.md#restart) |
 | Look up C# syntax | nullable, record, generics, LINQ, async, await | [C# syntax](../csharp/syntax.md) |
 | Install a NuGet package or run C# tests | NuGet, PackageReference, dotnet restore, dotnet test | [C# packages](../csharp/tooling-and-testing.md#packages) · [Tests](../csharp/tooling-and-testing.md#tests) |
 | Choose a .NET framework and define component boundaries | ASP.NET Core, EF Core, DI, desktop, games | [C# patterns](../csharp/practice.md#patterns) · [Application areas](../csharp/practice.md#application-areas) |

@@ -75,4 +75,6 @@ dotnet test examples/csharp/shipping/Shipping.Api.Tests/Shipping.Api.Tests.cspro
 
 [Модульные тесты](tooling-and-testing.md#tests) вызывают функцию расчёта напрямую. Интеграционные тесты дополнительно проходят через маршрутизацию, привязку параметра и запись HTTP-ответа. Запуск с `curl` отдельно проверяет, что Kestrel слушает указанный порт.
 
+Следующий урок — [сохранить заказ в SQLite и найти его после перезапуска сервиса](persist-orders.md).
+
 [Minimal API в ASP.NET Core 10](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/apis?view=aspnetcore-10.0) · [Интеграционные тесты ASP.NET Core 10](https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0)
