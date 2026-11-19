@@ -38,6 +38,7 @@
 
 | Тема | Где искать |
 | --- | --- |
+| Прочитать большой файл по одной строке | [Построчное чтение в Python](python/language/read-lines.md) |
 | Типы Python | [Типы и операции](python/language/types/README.md) |
 | asyncio | [Первые корутины и конкурентное ожидание](python/language/asyncio.md) |
 | Проектирование Python-проекта | [Решения, рабочий пакет и поставка](python/architecture/project-design/README.md) |
@@ -51,9 +52,9 @@
 | Flask | [WSGI-приложения, factory и тесты](python/web/flask/README.md) |
 | Go | [Язык, конкурентность и HTTP](go/README.md), [тайм-аут и отмена HTTP-запроса](go/context.md), [полный модуль](go/examples/language.md) |
 | C | [Первый запуск](c/README.md), [синтаксис](c/syntax.md), [сборка, библиотеки и тесты](c/tooling-and-testing.md), [практики и области применения](c/practice.md) |
-| C# | [Первый запуск](csharp/README.md), [синтаксис](csharp/syntax.md), [NuGet и тесты](csharp/tooling-and-testing.md), [практики и области применения](csharp/practice.md) |
+| C# | [Первый запуск](csharp/README.md), [синтаксис](csharp/syntax.md), [NuGet и тесты](csharp/tooling-and-testing.md), [практики и области применения](csharp/practice.md) · [первый HTTP-сервис](csharp/first-http-service.md) |
 | C++ | [Первый запуск](cpp/README.md), [синтаксис](cpp/syntax.md), [сборка, библиотеки и тесты](cpp/tooling-and-testing.md), [практики и области применения](cpp/practice.md) |
-| SQL | [Общий справочник SQL](databases/sql/README.md) |
+| SQL | [Общий справочник SQL](databases/sql/README.md) · [повторяющиеся адреса почты](databases/sql/queries.md#duplicate-emails) |
 | PostgreSQL | [Справочник](databases/relational/postgresql/README.md), [копия и восстановление](databases/relational/postgresql/backup-and-restore.md) |
 | SQLite | [Справочник](databases/relational/sqlite/README.md), [копия и восстановление](databases/relational/sqlite/backup-and-restore.md) |
 | Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md), [RDB-копия](databases/non-relational/redis/backup-and-restore.md), [AOF-копия и восстановление](databases/non-relational/redis/aof-backup-and-restore.md) |

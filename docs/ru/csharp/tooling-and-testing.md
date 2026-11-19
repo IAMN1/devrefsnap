@@ -175,6 +175,8 @@ dotnet test "$test_project" --artifacts-path "$test_artifacts" --no-build --list
 
 Если нужного теста нет в списке, проверьте путь к проекту, тестовый SDK, адаптер и платформу тестирования. Если тест есть в списке, проверьте фильтр запуска. Если в `Calculate_ReturnsExpectedFee` метод вернул `500` для суммы `5_000`, проверьте условие порога в `ShippingFee.Calculate`. [Параметры VSTest](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test-vstest#options) · [Выбор границы теста](practice.md#test-at-the-right-boundary).
 
+[Проверить то же правило через HTTP](first-http-service.md#test-service).
+
 ## Источники
 
 - [Шаблоны SDK](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new-sdk-templates) и [ссылки на общую платформу ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/target-aspnetcore?view=aspnetcore-10.0).

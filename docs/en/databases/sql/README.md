@@ -19,6 +19,7 @@ Check the syntax and guarantees for the specific database engine you use.
 | Prepare data and run your first JOIN | CREATE / INSERT / SELECT | [Quick example](queries.md#полный-пример) · [Complete example](query-lab.md#complete-example) |
 | Filter and sort rows | WHERE / ORDER BY / IS NULL | [Queries](queries.md#filtering-and-joins) |
 | Change rows | INSERT / UPDATE / DELETE | [CRUD](queries.md#change-data) |
+| Find email addresses that appear more than once | GROUP BY / HAVING | [Duplicate email addresses](queries.md#duplicate-emails) |
 | Calculate totals | GROUP BY / HAVING / CTE / OVER | [Analytics](queries.md#aggregation-ctes-and-window-functions) |
 | Port a query between database engines | Row limits, identity, DDL, RETURNING | [Dialects](dialects-and-transactions.md#dialect-differences) |
 | Protect changes | Transactions, savepoints, and constraints | [Transactions](dialects-and-transactions.md#transactions-and-isolation) |

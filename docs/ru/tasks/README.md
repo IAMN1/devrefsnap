@@ -8,7 +8,7 @@
 
 | Что нужно сделать | Где искать в указателе |
 | --- | --- |
-| Начать с Python, выбрать тип, скопировать или сгруппировать данные | [Первая программа на Python](../python/language/first-program.md) · [Типы и коллекции](#python-типы-и-коллекции) |
+| Начать с Python, прочитать файл или выбрать тип данных | [Первая программа на Python](../python/language/first-program.md) · [Файлы, типы и коллекции](#python-файлы-типы-и-коллекции) |
 | Запустить корутину Python или ждать несколько операций одновременно | [Основы asyncio](#python-основы-asyncio) |
 | Создать Python-проект, управлять зависимостями и сборкой | [Проект и окружение](#python-проект-и-окружение) |
 | Проверить данные, написать тест, настроить логи | [Валидация, тесты и логи](#валидация-тесты-и-логи) |
@@ -34,10 +34,12 @@
 [Каталог по технологиям](../README.md#каталог-материалов)
 
 
-## Python: типы и коллекции
+<a id="python-типы-и-коллекции"></a>
+## Python: файлы, типы и коллекции
 
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
+| Прочитать большой файл по одной строке | Python, построчно, большой текстовый файл, без загрузки целиком | [Построчное чтение в Python](../python/language/read-lines.md) |
 | Выбрать число, строку или точную денежную арифметику | numeric, string, `int`, `float`, `Decimal` | [Python: числа, строки и логика](../python/language/types/README.md#числа-строки-и-логика) |
 | Округлить денежную сумму и проверить операции типов | Decimal, quantize, ROUND_HALF_UP, rounding, округление | [Python: полный пример операций и копий](../python/language/types/recipes.md#проверить-операции-копии-и-границы-типов) |
 | Выбрать список, словарь или множество | collection, array, map, unique, `list`, `dict`, `set` | [Python: коллекции](../python/language/types/README.md#коллекции) |
@@ -142,7 +144,9 @@
 | Выбрать инструменты для C и организовать код | embedded, драйвер, системное ПО, владение ресурсом | [C: паттерны](../c/practice.md#patterns) · [Области применения](../c/practice.md#application-areas) |
 | Собрать и запустить проект на C# | C#, C Sharp, .NET SDK, csproj, dotnet build, dotnet run | [C#: первый запуск](../csharp/README.md#первый-запуск) |
 | Добавить число в список или проверить аргумент C# | `List<T>`, Add, foreach, TryParse, код завершения | [C#: коллекции](../csharp/README.md#коллекции) · [Ошибки](../csharp/README.md#типичные-ошибки) |
-| Найти значение в словаре C# и проверить наличие ключа | Dictionary, TryGetValue, out | [Поиск по ключу](../csharp/syntax.md#try-get-value) |
+| Найти значение в словаре C# и отличить сохранённый ноль от отсутствующего ключа | словарь, нет ключа, значение равно 0, `Dictionary`, `TryGetValue`, `out` | [Проверить ключ и прочитать значение](../csharp/syntax.md#try-get-value) |
+| Прочитать файл с отменой в C# | отменить чтение, асинхронное чтение, CancellationToken | [Метод чтения файла](../csharp/syntax.md#async-io-and-cleanup) |
+| Запустить первый HTTP-сервис на .NET и проверить ошибку запроса | C#, веб-сервис, эндпоинт, статус 400, ASP.NET Core, интеграционный тест | [Первый запрос](../csharp/first-http-service.md#run-service) · [HTTP-тест](../csharp/first-http-service.md#test-service) |
 | Вспомнить синтаксис C# | nullable, record, generics, LINQ, async, await | [C#: синтаксис](../csharp/syntax.md) |
 | Установить NuGet-пакет или запустить тесты C# | NuGet, PackageReference, dotnet restore, dotnet test | [C#: пакеты](../csharp/tooling-and-testing.md#packages) · [Тесты](../csharp/tooling-and-testing.md#tests) |
 | Выбрать фреймворк .NET и границы компонентов | ASP.NET Core, EF Core, DI, desktop, игры | [C#: паттерны](../csharp/practice.md#patterns) · [Области применения](../csharp/practice.md#application-areas) |
@@ -177,6 +181,7 @@
 | Выбрать строки и объединить таблицы | SELECT, WHERE, JOIN, EXISTS, фильтрация, соединение | [SQL: фильтрация и соединения](../databases/sql/queries.md#фильтрация-и-соединения) |
 | Увидеть, какие строки остаются после JOIN | INNER JOIN, LEFT JOIN, NULL, пары, совпадение | [SQL: сравнение на одних таблицах](../databases/sql/queries.md#сравнить-inner-join-и-left-join) |
 | Добавить, обновить или удалить строки | INSERT, UPDATE, DELETE, CRUD, DML | [SQL: изменение данных](../databases/sql/queries.md#изменение-данных) |
+| Найти адреса почты, которые встречаются несколько раз | найти дубликаты, повторяющиеся значения, повторы, email | [Повторяющиеся адреса почты](../databases/sql/queries.md#duplicate-emails) |
 | Сгруппировать данные и посчитать результат внутри группы | GROUP BY, HAVING, CTE, WITH, OVER, window, оконная функция | [SQL: агрегация, CTE и окна](../databases/sql/queries.md#агрегация-cte-и-окна) |
 | Выбрать транзакцию и уровень изоляции | BEGIN, COMMIT, ROLLBACK, isolation, блокировки | [SQL: транзакции и изоляция](../databases/sql/dialects-and-transactions.md#транзакции-и-изоляция) |
 | Учесть различия PostgreSQL и SQLite | dialect, placeholder, UPSERT, типы, диалект | [SQL: различия диалектов](../databases/sql/dialects-and-transactions.md#различия-диалектов) |
@@ -272,7 +277,7 @@
 | Посмотреть изменения и подготовить локальный коммит | status, diff, staged, add, commit, log | [Git: карточка коммита](../tools/git/workflow.md#посмотреть-изменения-и-подготовить-коммит) |
 | Создать ветку и проверить весь рабочий процесс | switch, branch, merge, учебный репозиторий | [Git: полный сценарий](../tools/git/workflow.md#проверяемый-рабочий-процесс) |
 | Временно отложить незавершённую работу | stash, stash pop, WIP, shelve | [Git: отложить работу](../tools/git/workflow.md#временно-отложить-работу) |
-| Убрать файл из индекса с сохранением правок | unstage, `git restore --staged`, отменить git add, индекс | [Git: снять подготовку](../tools/git/history.md#убрать-файл-из-индекса) |
+| Убрать файл из следующего коммита и сохранить правки | убрать файл из индекса, снять подготовку, отменить git add, unstage, `git restore --staged` | [Снять подготовку файла](../tools/git/history.md#убрать-файл-из-индекса) |
 | Отменить незакоммиченные изменения файла | discard, restore, working tree, удалить правки | [Git: выбрать источник restore](../tools/git/history.md#отменить-незакоммиченные-изменения) |
 | Отменить локальный коммит с сохранением изменений | undo, откат, reset soft, reset mixed, HEAD~1 | [Git: вернуть правки в индекс или рабочее дерево](../tools/git/history.md#отменить-коммит-с-сохранением-изменений) |
 | Отменить опубликованное изменение | revert, обратный коммит, общая история | [Git: отмена без переписывания](../tools/git/history.md#отменить-опубликованное-изменение) |
