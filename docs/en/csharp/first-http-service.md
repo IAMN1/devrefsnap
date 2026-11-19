@@ -75,4 +75,6 @@ Expect three passing test cases. The [HTTP tests](../../../examples/csharp/shipp
 
 The [unit tests](tooling-and-testing.md#tests) call the shipping calculation directly. The integration tests also cover routing, parameter binding, and the HTTP response. The separate `curl` check confirms that Kestrel listens on the chosen port.
 
+Next, [save an order in SQLite and read it after restarting the service](persist-orders.md).
+
 [Minimal APIs in ASP.NET Core 10](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/apis?view=aspnetcore-10.0) · [ASP.NET Core 10 integration tests](https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0)

@@ -147,6 +147,7 @@
 | Найти значение в словаре C# и отличить сохранённый ноль от отсутствующего ключа | словарь, нет ключа, значение равно 0, `Dictionary`, `TryGetValue`, `out` | [Проверить ключ и прочитать значение](../csharp/syntax.md#try-get-value) |
 | Прочитать файл с отменой в C# | отменить чтение, асинхронное чтение, CancellationToken | [Метод чтения файла](../csharp/syntax.md#async-io-and-cleanup) |
 | Запустить первый HTTP-сервис на .NET и проверить ошибку запроса | C#, веб-сервис, эндпоинт, статус 400, ASP.NET Core, интеграционный тест | [Первый запрос](../csharp/first-http-service.md#run-service) · [HTTP-тест](../csharp/first-http-service.md#test-service) |
+| Сохранить заказ и получить его после перезапуска .NET-сервиса | сохранить в файл БД, прочитать по номеру, данные после перезапуска, C#, EF Core, SQLite | [Заказы в SQLite](../csharp/persist-orders.md#create-order) · [Прочитать после перезапуска](../csharp/persist-orders.md#restart) |
 | Вспомнить синтаксис C# | nullable, record, generics, LINQ, async, await | [C#: синтаксис](../csharp/syntax.md) |
 | Установить NuGet-пакет или запустить тесты C# | NuGet, PackageReference, dotnet restore, dotnet test | [C#: пакеты](../csharp/tooling-and-testing.md#packages) · [Тесты](../csharp/tooling-and-testing.md#tests) |
 | Выбрать фреймворк .NET и границы компонентов | ASP.NET Core, EF Core, DI, desktop, игры | [C#: паттерны](../csharp/practice.md#patterns) · [Области применения](../csharp/practice.md#application-areas) |
