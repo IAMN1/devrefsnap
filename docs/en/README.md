@@ -59,6 +59,7 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 | SQLite | [Reference](databases/relational/sqlite/README.md), [backup and restore](databases/relational/sqlite/backup-and-restore.md) |
 | Redis | [Data structures, caching, and messaging](databases/non-relational/redis/README.md), [RDB backup](databases/non-relational/redis/backup-and-restore.md), [AOF backup and restore](databases/non-relational/redis/aof-backup-and-restore.md) |
 | curl and jq | [Send a request and inspect the HTTP response](tools/http-json.md) |
+| Dockerfile and Docker Compose | [First run](tools/docker/README.md) · [Write a Dockerfile](tools/docker/dockerfile.md) · [Define services](tools/docker/compose-file.md) · [Choose a command](tools/docker/commands.md) |
 | Docker Compose and GitHub Actions | [Run an app with PostgreSQL and test it in CI](tools/compose-and-github-actions.md) |
 | HTTP API contract | [FastAPI, PostgreSQL, and TypeScript in Compose and CI](tools/api-contract-lab.md) |
 | Git | [Choose commands by task](tools/git/README.md) |

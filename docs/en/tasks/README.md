@@ -17,7 +17,7 @@ Links lead to a specific card, commands, or example in the main material.
 | Look up syntax, build a program, or choose a library for C, C#, or C++ | [C, C#, and C++](#c-family-basics) |
 | Query data, run a transaction, or create a backup | [Databases and SQL](#databases-and-sql) |
 | Find a file, process, network port, or service log | [Linux and shell](#linux-and-shell) |
-| Run an app with PostgreSQL or diagnose a failed CI test | [Docker Compose and CI](#docker-compose-and-ci) |
+| Write a Dockerfile, run a service with Compose, or diagnose a failed CI test | [Docker Compose and CI](#docker-compose-and-ci) |
 | Undo a change, update a branch, or prepare a PR | [Git and GitHub](#git-and-github) |
 | Choose a boundary, contract, pattern, or retry protocol | [Architecture](#architecture-and-design) |
 | Estimate how the operation count grows with input size | [Algorithms](#algorithms-and-complexity) |
@@ -262,6 +262,11 @@ In the [C# exercise](../csharp/README.md#first-run), `dotnet run --project … -
 
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
+| Get your first response from a container | Docker, Dockerfile, docker compose up, curl | [First HTTP server run](../tools/docker/README.md#first-run) |
+| Write a Dockerfile and build an image | FROM, COPY, RUN, CMD, USER, docker build | [Build your first image](../tools/docker/dockerfile.md#build-your-first-image) · [Reuse the installation cache](../tools/docker/dockerfile.md#reuse-the-installation-cache) |
+| Connect a Dockerfile to a service and publish a port | compose.yaml, build.context, dockerfile, ports, image | [Define a service](../tools/docker/compose-file.md#define-a-service) · [Locate the Dockerfile](../tools/docker/compose-file.md#locate-the-dockerfile) |
+| Read logs, run a command, or stop a container | docker compose ps, logs, exec, run, stop, down | [Commands by task](../tools/docker/commands.md) |
+| See changes after editing code or configuration | restart, up --build, rebuild, stale response | [Apply a change](../tools/docker/commands.md#apply-a-change) |
 | Start an app and a practice database with one command | Docker Compose, PostgreSQL, compose up, container, healthcheck | [Run the app with Compose](../tools/compose-and-github-actions.md#run-the-application-locally) |
 | Run an existing workflow manually | GitHub Actions, `workflow_dispatch`, Run workflow | [Start a manual run](../tools/compose-and-github-actions.md#run-an-existing-workflow-manually) |
 | Reproduce a test failure in CI | GitHub Actions, PostgreSQL, integration job, `fail_test` | [Run the practice workflow](../tools/compose-and-github-actions.md#run-the-test-in-github-actions) |

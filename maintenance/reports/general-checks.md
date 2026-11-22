@@ -32,6 +32,28 @@
 - `gh workflow run postgres-test.yml --ref main -f fail_test=true` дал отказ в шаге `Run database test`. Журнал содержит `test_reports_current_database`, `AssertionError: 'compose_lab' != 'intentional_failure'` и код 1. [Отказ](https://github.com/IAMN1/devrefsnap/blob/2b164491a2c880fc69484d78c73c6ad777d8f2dd/maintenance/reports/github-actions-lab/43265099266.log)
 - Новый запуск с `-f fail_test=false` прошёл. В том же шаге видны `test_reports_current_database … ok` и `OK`. [Успешный повтор](https://github.com/IAMN1/devrefsnap/blob/2b164491a2c880fc69484d78c73c6ad777d8f2dd/maintenance/reports/github-actions-lab/43265365559.log)
 
+## Dockerfile и базовые команды Compose — 22 ноября 2026
+
+В прежней лабораторной работе читатель запускает готовые файлы, проверяет доступность PostgreSQL и воспроизводит отказ. Два учебных репозитория Docker показывают, как объяснить подготовку и запуск проекта до этой лабораторной работы.
+
+- В `docker/awesome-compose` пример Flask и Redis показывает дерево файлов, запуск и проверку через `ps` и HTTP. В README показана сокращённая конфигурация. Полный файл дополнительно задаёт стадию сборки через `build.target`. Для шпаргалки это основание связывать фрагмент с исполняемым файлом и указывать ожидаемый ответ. [README примера](https://github.com/docker/awesome-compose/blob/master/flask-redis/README.md) · [Файл Compose](https://github.com/docker/awesome-compose/blob/master/flask-redis/compose.yaml).
+- В `docker/getting-started-todo-app` сервисы интерфейса и API выбирают разные стадии одного Dockerfile. Имена `client-dev` и `backend-dev` в `build.target` совпадают с именами стадий после `AS`. Эта пара файлов даёт читателю пример для следующего шага после обычного `build: .`. [Dockerfile](https://github.com/docker/getting-started-todo-app/blob/main/Dockerfile) · [Файл Compose](https://github.com/docker/getting-started-todo-app/blob/main/compose.yaml).
+
+При сверке использовали справочник инструкций Dockerfile и Compose Specification. Для отдельного файла Compose относительный `build.context` отсчитывается от каталога этого файла. Относительный `build.dockerfile` отсчитывается от контекста. Раздельное копирование зависимостей и исходников позволяет повторно использовать слой установки при изменении кода. [Сборка в Compose](https://docs.docker.com/reference/compose-file/build/) · [Контекст сборки](https://docs.docker.com/build/concepts/context/) · [Кеш сборки](https://docs.docker.com/build/cache/optimize/) · [Dockerfile](https://docs.docker.com/reference/dockerfile/).
+
+Локальная команда `docker compose version` вывела `v5.7.0`. Сверили описание этого выпуска и команды, для которых легко выбрать неверное действие. Команда `restart` сохраняет прежние настройки контейнера. Команда `up` применяет изменение конфигурации. Команда `run` создаёт отдельный контейнер, а `exec` выполняет процесс в работающем контейнере. [Выпуск 5.7.0](https://github.com/docker/compose/releases/tag/v5.7.0) · [restart](https://docs.docker.com/reference/cli/docker/compose/restart/) · [up](https://docs.docker.com/reference/cli/docker/compose/up/) · [run](https://docs.docker.com/reference/cli/docker/compose/run/) · [exec](https://docs.docker.com/reference/cli/docker/compose/exec/).
+
+Проверили [первый запуск](../../docs/ru/tools/docker/README.md#первый-запуск) в Docker Desktop на macOS arm64 с Linux-контейнерами, Engine 29.9.3 и Compose 5.7.0. На первом прогоне Python как PID 1 завершился после тайм-аута с кодом 137. После добавления `STOPSIGNAL SIGINT` команда `stop` завершила сервер с кодом 0. Команда `start` вернула его в работу. Buildx 0.38.1 выполнил `docker build --check` без предупреждений.
+
+| Сценарий | Фактический результат |
+| --- | --- |
+| Сборка HTTP-сервера и проверка через `curl`, `exec` и `run --rm` | Запрос к `/message.txt` вернул HTTP 200 и `Hello from Docker!`. Запрос к отсутствующему файлу вернул 404. Обе команды в контейнерах прочитали исходный текст. Процесс имел UID и GID 10001. |
+| Изменение `message.txt` в отдельной копии | После `restart` сервер отдавал исходную строку. После `up -d --build` появился текст `Hello again!`. Значение `SITE_PORT=18082` с `up -d` перенесло публикацию на порт 18082. |
+| Приложение с PostgreSQL 18.6 в отдельном проекте | Оба сервиса получили статус `healthy`. Запрос к `/health` вернул имя `compose_lab`. Интеграционный тест приложения прошёл. |
+| `down`, затем `up` с тем же именем проекта | Строка со значением 42, записанная в учебную таблицу, сохранилась. Затем `down -v` удалил тестовый том. |
+
+Обе схемы отрисовали в Mermaid 11. Прогон контейнеров охватывал локальный Docker Desktop. На Windows и отдельном сервере Linux примеры в этой проверке не запускали.
+
 ## Контракт FastAPI и TypeScript — 12 ноября
 
 В [сквозном примере](../../docs/ru/tools/api-contract-lab.md) одна команда `docker compose run --build --rm client` компилирует TypeScript и проверяет реальный HTTP-ответ FastAPI с PostgreSQL. Код клиента проверяет статус, форму JSON и учебные значения.
