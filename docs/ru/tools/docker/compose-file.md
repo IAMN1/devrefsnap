@@ -19,15 +19,63 @@ Compose использует современную спецификацию б�
 
 ## Указать Dockerfile
 
-Фрагмент описания сервиса, если файл сборки находится в `site/docker/Dockerfile`.
+Если `main.py` лежит в корне проекта, а Dockerfile — в `dockers/`, выберите корень проекта контекстом сборки. Тогда `COPY main.py .` найдёт исходный файл. Дерево показывает два возможных места для `compose.yaml`. Для запуска достаточно одного файла Compose. Пример требует Docker с Compose и базовый образ `python:3.14-slim` из Docker Hub.
 
-```yaml
-build:
-  context: ./site
-  dockerfile: docker/Dockerfile
+```text
+docker-build-context/
+├── main.py
+├── compose.yaml
+└── dockers/
+    ├── Dockerfile
+    └── compose.yaml
 ```
 
-Для одного Compose-файла путь `context` отсчитывается от его каталога. Путь `dockerfile` отсчитывается от контекста. При таком выборе инструкция `COPY message.txt ./` читает `site/message.txt`. Для выбора именованной стадии добавьте `target` под `build`. [Пример с двумя стадиями](../../../../examples/tools/api-contract-lab/compose.yaml).
+**Один Dockerfile для обоих вариантов.** [dockers/Dockerfile](../../../../examples/tools/docker-build-context/dockers/Dockerfile)
+
+```dockerfile
+FROM python:3.14-slim
+WORKDIR /app
+COPY main.py .
+CMD ["python", "main.py"]
+```
+
+**Сборка без Compose.** Выполните команды из корня примера (`examples/tools/docker-build-context/`). Параметр `-f` указывает путь к Dockerfile от текущего каталога терминала. Последняя точка выбирает этот каталог контекстом сборки.
+
+```bash
+docker build -f dockers/Dockerfile -t devrefsnap-context:local .
+docker run --rm devrefsnap-context:local
+```
+
+В `COPY main.py .` источник `main.py` отсчитывается от корня контекста. Если контекстом выбрать только `dockers/`, файл окажется за его пределами. Точка справа означает рабочий каталог внутри образа. Его задаёт `WORKDIR /app`, поэтому [программа](../../../../examples/tools/docker-build-context/main.py) выводит `/app/main.py`.
+
+**Вариант 1.** [compose.yaml в корне](../../../../examples/tools/docker-build-context/compose.yaml). Точка в `context` выбирает каталог, в котором лежит `main.py`.
+
+```yaml
+services:
+  app:
+    build:
+      context: .
+      dockerfile: dockers/Dockerfile
+```
+
+**Вариант 2.** [compose.yaml в dockers/](../../../../examples/tools/docker-build-context/dockers/compose.yaml). Значение `..` поднимает контекст на один уровень от каталога Compose-файла, к `main.py`.
+
+```yaml
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: dockers/Dockerfile
+```
+
+В обоих вариантах Compose отсчитывает `dockerfile` от выбранного контекста. Контекст в обоих случаях — корень проекта, поэтому путь остаётся `dockers/Dockerfile`. Из корня примера выберите одну команду. Ожидаемый вывод приложения — `/app/main.py`.
+
+| Расположение файла | Сборка и разовый запуск |
+| --- | --- |
+| `compose.yaml` | `docker compose -f compose.yaml run --rm --build app` |
+| `dockers/compose.yaml` | `docker compose -f dockers/compose.yaml run --rm --build app` |
+
+Для выбора именованной стадии добавьте `target` под `build`. [Пример с двумя стадиями](../../../../examples/tools/api-contract-lab/compose.yaml) · [Пути сборки в Compose](https://docs.docker.com/reference/compose-file/build/).
 
 ## Передать настройки
 
