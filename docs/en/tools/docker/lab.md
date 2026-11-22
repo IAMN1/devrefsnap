@@ -69,6 +69,8 @@ The example also includes the [Nginx routes](../../../../examples/tools/compose-
 <details>
 <summary>Complete gateway.conf with both routes</summary>
 
+[Source gateway.conf](../../../../examples/tools/compose-site/gateway.conf)
+
 ```nginx
 server {
     listen 80;

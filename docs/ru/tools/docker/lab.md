@@ -69,6 +69,8 @@ networks:
 <details>
 <summary>Полный gateway.conf — где задаются маршруты</summary>
 
+[Исходный gateway.conf](../../../../examples/tools/compose-site/gateway.conf)
+
 ```nginx
 server {
     listen 80;
