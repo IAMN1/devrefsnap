@@ -17,7 +17,7 @@
 
 **Уровень:** средний → продвинутый.
 Предпосылки: SQL JOIN/агрегация и Session.
-Для запуска нужны Python 3.14, SQLAlchemy 2.1.8 и pytest 9.2.0; SQLite входит в Python.
+Для запуска нужны Python 3.14, SQLAlchemy 2.1.9 и pytest 9.2.0; SQLite входит в Python.
 Файлы используют `demo_models.py`.
 Установите `sqlalchemy[asyncio]` и `pytest` в отдельное окружение.
 

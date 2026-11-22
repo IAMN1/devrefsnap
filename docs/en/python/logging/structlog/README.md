@@ -52,7 +52,7 @@ The first JSON event contains `user_id=123`. The second has no `user_id`.
 `bind` returns a new logger and leaves the original context intact.
 [Complete configuration and output checks](configuration.md#standalone-configuration).
 
-Install the packages in a separate environment with `python -m pip install 'structlog==26.1.0' pytest`.
+In the [active environment](../../README.md#create-an-environment-for-an-example), run `python -m pip install 'structlog==26.1.0' 'pytest==9.2.0'`.
 After `import structlog`, try `structlog.get_logger().info("user_logged_in", user_id=123)`.
 This introductory snippet uses the default configuration.
 See the [complete configuration](configuration.md) for a reproducible setup.

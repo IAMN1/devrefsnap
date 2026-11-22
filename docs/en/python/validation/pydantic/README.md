@@ -60,7 +60,7 @@ The model converts a valid string to `int` and rejects a negative value.
 Use strict mode to disable coercion.
 [Complete models, tests, and commands](models.md#models-validation-and-json).
 
-Install the package in a separate virtual environment with `python -m pip install 'pydantic[email]==2.14.3'`.
+In the [active environment](../../README.md#create-an-environment-for-an-example), run `python -m pip install 'pydantic[email]==2.14.4'`.
 
 | Declaration or operation | Meaning |
 | --- | --- |

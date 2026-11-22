@@ -14,11 +14,16 @@ Task-based cheat sheets and runnable examples for languages, databases, Linux, G
 
 ## Try an example
 
-- [Run your first Python program](docs/en/python/language/first-program.md) · [Первая программа на Python](docs/ru/python/language/first-program.md)
-- [Inspect an HTTP response and read a JSON field](docs/en/tools/http-json.md)
-- [Build an image and run it with Docker Compose](docs/en/tools/docker/README.md) · [Dockerfile и Docker Compose](docs/ru/tools/docker/README.md)
-- [Find why a GitHub Actions test failed](docs/en/tools/compose-and-github-actions.md#find-the-cause-in-the-log)
-- [Choose a SQLAlchemy relationship loading strategy](docs/en/python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy)
+| Тема / Topic | Русский | English |
+| --- | --- | --- |
+| Python | [Посчитать цену трёх билетов](docs/ru/python/language/first-program.md) | [Run your first program](docs/en/python/language/first-program.md) |
+| Docker | [Найти команду Compose](docs/ru/tools/docker/commands.md) | [Look up a Compose command](docs/en/tools/docker/commands.md) |
+| Docker | [Собрать проект с Dockerfile в подкаталоге](docs/ru/tools/docker/build-context.md) | [Build with a Dockerfile in a subdirectory](docs/en/tools/docker/build-context.md) |
+| Docker | [Понять маршрут запроса](docs/ru/tools/docker/guide.md) | [Understand the request path](docs/en/tools/docker/guide.md) |
+| Docker | [Запустить три сервиса с томами и сетями](docs/ru/tools/docker/lab.md) | [Run three services with volumes and networks](docs/en/tools/docker/lab.md) |
+| HTTP | [Проверить ответ и прочитать поле JSON](docs/ru/tools/http-json.md) | [Inspect the response and extract a JSON field](docs/en/tools/http-json.md) |
+| GitHub Actions | [Найти ошибку теста в журнале](docs/ru/tools/compose-and-github-actions.md#найти-причину-падения-в-журнале) | [Find the failed test in a log](docs/en/tools/compose-and-github-actions.md#find-the-cause-in-the-log) |
+| SQLAlchemy | [Выбрать стратегию загрузки](docs/ru/python/databases/sqlalchemy/relationship-loading.md#выбрать-стратегию) | [Choose a relationship loading strategy](docs/en/python/databases/sqlalchemy/relationship-loading.md#choose-a-strategy) |
 
 <a id="как-пользоваться-материалами"></a>
 

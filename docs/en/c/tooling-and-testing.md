@@ -13,6 +13,17 @@ Build a program from multiple files and run its tests with CTest. The example va
 
 ## Compile and link files
 
+From the repository root, build the [command-line program](../../../examples/c/port-parser/main.c) and the [parser](../../../examples/c/port-parser/port.c) with one Clang command. Use Clang with C17 support, the standard library, and Bash or Zsh.
+
+```bash
+build_dir=$(mktemp -d) &&
+  clang -std=c17 -Wall -Wextra -pedantic examples/c/port-parser/main.c examples/c/port-parser/port.c \
+    -o "$build_dir/port-check" &&
+  "$build_dir/port-check" 8080
+```
+
+The program prints `Port: 8080`. If you omit `port.c` from the command, the linker reports a missing definition for `parse_port`.
+
 The `port.h` header declares the `parse_port` function and its return type. The `#ifndef` and `#define` include guard prevents repeated inclusion in a single translation unit. Include the header in `port.c` and `main.c` so the compiler can check the definition and call against the declaration.
 
 The diagram shows the files involved in building `port-check`. Each translation unit is the result of preprocessing one source file.

@@ -11,18 +11,21 @@
 
 ## Полный пример
 
-Сохраните SQL как `demo.sql`.
-В PostgreSQL выберите отдельную учебную БД.
-Запустите `psql -X --set=ON_ERROR_STOP=1 --dbname=имя_учебной_бд --file=demo.sql`.
-В SQLite выберите новый файл sql-demo.db в отдельном учебном каталоге.
-Запустите `sqlite3 -bail -cmd 'PRAGMA foreign_keys=ON' sql-demo.db < demo.sql`.
-Эти команды выполняются в оболочке, а не в SQL.
-MySQL/SQL Server требуют адаптации управления транзакцией из [таблицы диалектов](dialects-and-transactions.md).
+Сохраните [готовый файл `demo.sql`](../../../../examples/databases/sql/demo.sql) в отдельном учебном каталоге. Откройте оболочку в этом каталоге. Выберите команду для своей СУБД.
 
-Полный SQL-пример предназначен для PostgreSQL/SQLite.
-Пример создаёт только учебные объекты без DROP:
+**SQLite.** Выберите свободное имя `sql-demo.db`. Команда включает проверку внешних ключей и читает файл в том же соединении.
 
-[`sql/demo.sql`](../../../../examples/databases/sql/demo.sql)
+```bash
+sqlite3 -bail sql-demo.db 'PRAGMA foreign_keys=ON;' '.read demo.sql'
+```
+
+**PostgreSQL.** Подставьте имя отдельной учебной БД вместо `PRACTICE_DB`.
+
+```bash
+psql -X --set=ON_ERROR_STOP=1 --dbname=PRACTICE_DB --file=demo.sql
+```
+
+Файл создаёт таблицы в одной транзакции. Если таблица уже существует, команда остановится с ошибкой. Для MySQL и SQL Server адаптируйте управление транзакцией по [таблице диалектов](dialects-and-transactions.md).
 
 Ожидаемые суммы: `alice | 14000`, `bob | 0`, `carol | 0`.
 Значение preserved_amount равно `10000`.

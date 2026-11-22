@@ -36,8 +36,12 @@ Command показывает запрос, отдельный обработчи
 
 **Полный пример.** Пример использует только стандартную библиотеку.
 Внешние зависимости не нужны.
-Сохраните файл [`shipping-patterns.py`](../../../../examples/architecture/shipping-patterns.py).
-Выполните `python3.14 shipping-patterns.py`.
+Из корня репозитория выполните команду.
+
+```bash
+python3.14 examples/architecture/shipping-patterns.py
+```
+
 Контракт принимает положительный целый вес в граммах.
 Контракт возвращает неотрицательную целую стоимость в условных центах.
 LegacyCarrier заменяет внешний SDK локальным объектом.
@@ -81,8 +85,12 @@ flowchart LR
 Уже выполненные callbacks не откатываются.
 
 **Полный пример.** Пример использует только стандартную библиотеку.
-Сохраните код как `observer-pattern.py`.
-Выполните `python3.14 observer-pattern.py`.
+Из корня репозитория выполните команду.
+
+```bash
+python3.14 examples/architecture/observer-pattern.py
+```
+
 События и результаты представлены учебными строками и списками.
 
 [`architecture/observer-pattern.py`](../../../../examples/architecture/observer-pattern.py)
@@ -119,8 +127,12 @@ flowchart LR
 Метод `execute` в самой команде не обязателен.
 
 **Полный пример.** Пример использует только стандартную библиотеку.
-Сохраните код как `command-pattern.py`.
-Выполните `python3.14 command-pattern.py`.
+Из корня репозитория выполните команду.
+
+```bash
+python3.14 examples/architecture/command-pattern.py
+```
+
 Один handler хранит остатки и журнал результатов в памяти.
 
 [`architecture/command-pattern.py`](../../../../examples/architecture/command-pattern.py)

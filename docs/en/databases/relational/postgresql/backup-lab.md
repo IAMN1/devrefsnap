@@ -22,8 +22,7 @@ Use a separate server with synthetic data.
 <a id="подготовить-входные-файлы"></a>
 ## Prepare the input files
 
-Save [`queries.sql`](../../../../../examples/databases/relational/postgresql/queries.sql).
-Save the linked files below as `verify-backup.sql` and `backup-lab.sh` in the same directory.
+Open `examples/databases/relational/postgresql/` in your checkout. If you download the files separately, place [`queries.sql`](../../../../../examples/databases/relational/postgresql/queries.sql), [`verify-backup.sql`](../../../../../examples/databases/relational/postgresql/verify-backup.sql) and [`backup-lab.sh`](../../../../../examples/databases/relational/postgresql/backup-lab.sh) in one directory.
 The script creates the `cheatsheet_demo` practice database.
 Check that server and clients use PostgreSQL 18.
 The example connects to `127.0.0.1` as `postgres`.
@@ -76,8 +75,9 @@ Assess data volume and the effects of concurrent DDL separately.
 ## Remove practice resources
 
 Inspect the restored databases and save any archives you need first.
-The following snippet **deletes all four practice databases in full**.
-Check the server and each database name before running it.
+After a successful run, the following commands **delete all four practice databases in full**. Check the server and each database name first.
+
+If the script stopped because a name was already taken, skip the corresponding `dropdb` command. Remove only databases created by this run.
 
 ```bash
 dropdb --host=127.0.0.1 --username=postgres cheatsheet_restore_check

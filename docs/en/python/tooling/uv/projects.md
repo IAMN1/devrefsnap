@@ -14,7 +14,7 @@ The dependency-changing commands apply to a separate practice project.
 | Choose groups or export | `--group`, `--extra`, `uv export` | [Groups](#groups-and-platforms) · [Export](#export-and-the-pip-interface) |
 
 Beginner and intermediate levels.
-Requires uv 0.12.13 and Python.
+Requires uv 0.13.9 and Python.
 Package installation requires access to an index.
 [uv reference](README.md).
 

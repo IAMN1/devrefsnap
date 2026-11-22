@@ -28,7 +28,7 @@
 | Уровень | Средний; частичные коллекции и состояние Session — продвинутый |
 | Предпосылки | Для N+1 — Python и основы SELECT: [один файл с объяснениями](n-plus-one.md). Остальные карточки используют SQL JOIN, Session, `demo_models.py` и `seed()` из [подготовки лабораторной](loading-lab.md#подготовить-примеры) |
 | Самостоятельный N+1 | [Отдельная программа, версии и границы](n-plus-one.md#результат-и-ограничения); [расширенный набор](loading-lab.md) использует общую схему |
-| Зависимости | Синхронная ORM SQLAlchemy 2.1.8 и SQLite в памяти; [подготовка](loading-lab.md#подготовить-примеры) |
+| Зависимости | Синхронная ORM SQLAlchemy 2.1.9 и SQLite в памяти; [подготовка](loading-lab.md#подготовить-примеры) |
 
 
 ## Выбрать стратегию
@@ -274,4 +274,4 @@ Wildcard `"*"` действует и на отношения загруженн�
 - [Выбор загрузки отношений](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#what-kind-of-loading-to-use), [select-in](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#select-in-loading), [joined loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#joined-eager-loading).
 - [Raiseload](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#preventing-unwanted-lazy-loads-using-raiseload).
 - [Пакетное чтение и ограничения](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#fetching-large-result-sets-with-yield-per).
-- [Release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+- [Release notes 2.1.9](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.9).

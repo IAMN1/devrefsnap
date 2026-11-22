@@ -4,6 +4,28 @@
 Сверка документации учитывалась отдельно от выполнения кода.
 Результаты относятся к указанным версиям и сценариям; остальные версии не проверены.
 
+## Примеры и зависимости на 22 ноября 2026 года
+
+Проверили 48 пар страниц в `docs/ru/python` и `docs/en/python`. Сопоставили имена общих файлов, фрагменты команд, инструкции установки, источники и условия запуска. В двух временных копиях `examples/python` выполнили тесты со старыми и обновлёнными зависимостями на macOS arm64, CPython 3.14.7 и SQLite 3.53.4. Для Pydantic и SQLAlchemy сохранили выбранные ветки API. Для Django сохранили поддерживаемую ветку 5.2 LTS. [Состояние выпусков Django](https://www.djangoproject.com/download/#supported-versions) · [SQLAlchemy 2.1.9](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.9) · [Pydantic 2.14.4](https://github.com/pydantic/pydantic/releases/tag/v2.14.4)
+
+| Набор и команда из каталога примера | Обновлённая среда | Результат в каждой среде |
+| --- | --- | --- |
+| FastAPI, `python -m pytest -q` | FastAPI 0.165.0, Starlette 1.10.0, HTTPX2 2.16.2, python-multipart 0.0.34, PyJWT 2.15.1, pwdlib 0.4.2 | 53 теста прошли, включая CRUD, формы, SQLite, подмены и отказ доступа |
+| SQLAlchemy и Pydantic, `python -m pytest -q` в каждом каталоге | SQLAlchemy 2.1.9, aiosqlite 0.22.1, Pydantic 2.14.4, pydantic-settings 2.16.3 и email-validator 2.4.0 | 35 и 20 тестов прошли |
+| pytest, Flask и structlog, `python -m pytest -q` в каждом каталоге | pytest 9.2.0, pytest-asyncio 1.5.0, Flask 3.1.3, Werkzeug 3.1.9 и structlog 26.1.0 | 17, 14 и 7 тестов прошли |
+| Пример архитектуры, `uv sync --group dev` и `uv run pytest -q` | uv 0.13.9, Pydantic и pydantic-settings указанных версий | 9 тестов прошли. CLI вывел книгу для `book` и завершился с кодом 2 для отсутствующего SKU |
+| Django, `python manage.py test catalog` | Django 5.2.19 | 2 теста прошли, проверка `makemigrations --check --dry-run` не обнаружила изменений |
+
+Всего в каждой среде прошли 157 тестов. Для наборов с pytest-asyncio область цикла событий фикстур явно задавали как `function`. Прежняя среда использовала FastAPI 0.162.0, SQLAlchemy 2.1.8, Pydantic 2.14.3, pydantic-settings 2.16.2, HTTPX2 2.16.0, pytest-asyncio 1.4.1.post1, python-multipart 0.0.33, email-validator 2.3.0, pwdlib 0.3.1 и uv 0.12.13.
+
+Отдельно проверили десять минимальных установок для независимых задач Pydantic, structlog, FastAPI и SQLAlchemy. Например, `n_plus_one.py` воспроизвёл 3 и 2 SELECT без greenlet. Импорт общей модели с `AsyncAttrs` в этом же окружении потребовал greenlet. В окружении с extra `sqlalchemy[asyncio]` тесты загрузки и потокового чтения прошли. Так проверили, какая зависимость нужна именно выбранному примеру. [Самостоятельный N+1](../../docs/ru/python/databases/sqlalchemy/n-plus-one.md) · [Лабораторная с общей моделью](../../docs/ru/python/databases/sqlalchemy/loading-lab.md)
+
+С Uvicorn 0.54.0 подняли минимальное приложение на свободном порту loopback. Главная страница, Swagger UI, ReDoc и OpenAPI вернули HTTP 200. Для варианта с ограничениями загрузки `TestClient` получил 200 для двух небольших файлов, 400 для трёх и 413 при превышении 3 MiB. Первая версия FastAPI без поддержки Python 3.10 — 0.162.6. Управление общим размером тела добавлено в 0.164.0, настройка лимитов формы — в 0.165.0. [Примечания к выпускам FastAPI](https://fastapi.tiangolo.com/release-notes/#01626-2026-11-13) · [Лимиты HTTP-тела и формы](https://fastapi.tiangolo.com/advanced/request-body-limits/)
+
+В отдельной SQLite проверили первый `alembic upgrade head` с общей схемой и пользовательским типом. После вставки одной строки применили второй фрагмент миграции. Значение `verified` стало ложным, а столбец получил ограничение `NOT NULL`. После `downgrade -1` столбец исчез, строка пользователя сохранилась. Django применил свою начальную миграцию к другой пустой базе, `showmigrations catalog` показал `[X] 0001_initial`. Запуск на PostgreSQL в эту проверку не входил. [Миграция Alembic](../../docs/ru/python/databases/sqlalchemy/async-and-operations.md) · [Миграция Django](../../docs/ru/python/web/django/README.md)
+
+Выполнили программы для чисел и коллекций, построчного чтения, стоимости билетов и asyncio. Для SQLAlchemy отдельно выполнили CRUD, запросы, async и компиляцию SQL для диалекта PostgreSQL. Запустили демонстрации сериализации Pydantic и записи событий structlog. Учебный `project.sh` проверил штатную синхронизацию и отказ при устаревшем lock на uv 0.12.13 и 0.13.9. SHA из фрагмента GitHub Actions сверили с тегами сопровождающих. Windows, сборку образа из примера uv, запуск workflow в GitHub и производственные прокси в этом проходе не проверяли. [Выпуск uv 0.13.9](https://github.com/astral-sh/uv/releases/tag/0.13.9) · [setup-uv 10.4.0](https://github.com/astral-sh/setup-uv/releases/tag/v10.4.0)
+
 ## Основы asyncio — 12 ноября
 
 Выполнили первый пример из [карточки asyncio](../../docs/ru/python/language/asyncio.md#запустить-корутину) и `python -W error examples/python/language/asyncio/demo.py` на macOS arm64 с Python 3.12.13, 3.13.13 и 3.14.7.

@@ -56,7 +56,7 @@ The client does not test the WSGI server or reverse proxy.
 
 
 Use Python 3.14 to reproduce the example.
-In a separate environment, run `python -m pip install 'Flask==3.1.3' 'Werkzeug==3.1.9' 'pytest==9.2.0'`.
+In the [active environment](../../README.md#create-an-environment-for-an-example), run `python -m pip install 'Flask==3.1.3' 'Werkzeug==3.1.9' 'pytest==9.2.0'`.
 Save [flask_app.py](application.md) and [test_flask_app.py](testing.md) in one directory.
 Run `python -m pytest -q test_flask_app.py`.
 The test HTTP client does not open a network port.

@@ -53,7 +53,7 @@ parent.info("service_ready")
 [Полная настройка и проверки вывода](configuration.md#самостоятельная-конфигурация).
 
 
-Установите пакеты в отдельное окружение: `python -m pip install 'structlog==26.1.0' pytest`.
+В [активном окружении](../../README.md#создать-окружение-для-примера) выполните `python -m pip install 'structlog==26.1.0' 'pytest==9.2.0'`.
 После `import structlog` минимальная конструкция — `structlog.get_logger().info("user_logged_in", user_id=123)`.
 Это фрагмент для знакомства.
 Полная настройка находится [отдельно](configuration.md).

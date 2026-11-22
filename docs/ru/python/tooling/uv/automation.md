@@ -23,18 +23,15 @@
 ## GitHub Actions
 
 Ниже приведён фрагмент шагов внутри job на подходящем runner.
-Проверяйте Actions refs отдельно.
-Фиксируйте Actions refs по политике проекта.
-Указанные major refs служат примером настройки.
+Действия закреплены по SHA коммита. В комментарии указан соответствующий выпуск. Для кэша действует политика `auto` выбранной версии setup-uv. [Изменения в setup-uv 10](https://github.com/astral-sh/setup-uv/releases/tag/v10.0.0)
 
 ```yaml
 steps:
   - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-  - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+  - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
     with:
-      version: "0.12.13"
+      version: "0.13.9"
       python-version: "3.14"
-      enable-cache: true
   - run: uv sync --locked
   - run: uv run --locked pytest
   - run: uv run --locked ruff check .
@@ -56,7 +53,7 @@ Lock не заменяет проверку Python и платформы runner.
 Для воспроизводимой production-сборки фиксируйте также digest образов.
 
 ```dockerfile
-FROM ghcr.io/astral-sh/uv:0.12.13 AS uv
+FROM ghcr.io/astral-sh/uv:0.13.9 AS uv
 FROM python:3.14-slim AS builder
 COPY --from=uv /uv /usr/local/bin/uv
 WORKDIR /app
@@ -140,8 +137,8 @@ export UV_CONCURRENT_BUILDS=4
 | TLS failure | Проверьте имя сервера, время и цепочку CA. При необходимости используйте `--system-certs` или `SSL_CERT_FILE` по документации |
 
 `UV_INDEX_URL` — старое имя настройки.
-Для uv 0.12.13 используйте `UV_DEFAULT_INDEX`.
-Не используйте `UV_SSL_VERIFY=0` и `UV_LOG_LEVEL` для настройки uv 0.12.13.
+Для uv 0.13.9 используйте `UV_DEFAULT_INDEX`.
+Не используйте `UV_SSL_VERIFY=0` и `UV_LOG_LEVEL` для настройки uv 0.13.9.
 Не отключайте проверку TLS ради того, чтобы установка «заработала».
 Отключение проверки меняет доверие к коду пакетов.
 

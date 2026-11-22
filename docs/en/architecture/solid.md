@@ -43,8 +43,13 @@ Presentation formats the value.
 | `invoice_before` knows the price and JSON | `total` knows the calculation. `invoice_json` knows the format | The call site connects both operations |
 
 The complete mini-example uses a positive quantity and a fixed price in cents.
-Save the code as `solid-srp.py`.
-Run `python3.14 solid-srp.py`.
+Run this command from the repository root.
+
+```bash
+python3.14 examples/architecture/solid-srp.py
+```
+
+The program exits with status 0 and no output when its checks pass.
 No dependencies are required.
 Quantity validation is omitted from this mini-example.
 Working validation appears in the [complete contract](contracts.md#substitute-a-price-source).
@@ -68,8 +73,13 @@ Pass the formula as a callable.
 | Branches on rate names inside the consumer | The consumer calls the supplied rule | At the composition point, as in the [Factory example](patterns/design-patterns.md#factory-for-assembling-the-required-implementation) |
 
 The complete mini-example uses a positive integer quantity.
-Save the code as `solid-ocp.py`.
-Run `python3.14 solid-ocp.py`.
+Run this command from the repository root.
+
+```bash
+python3.14 examples/architecture/solid-ocp.py
+```
+
+The program exits with status 0 and no output when its checks pass.
 No dependencies are required.
 
 [`architecture/solid-ocp.py`](../../../examples/architecture/solid-ocp.py)

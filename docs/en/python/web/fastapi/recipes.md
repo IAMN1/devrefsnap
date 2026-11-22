@@ -18,7 +18,7 @@ Each card shows one change. Complete applications are separated by task.
 
 Beginner to intermediate level.
 Prerequisites include functions, type annotations, and HTTP methods.
-Environment includes Python 3.14, FastAPI 0.162.0, and Pydantic 2.14.3.
+Environment includes Python 3.14, FastAPI 0.165.0, and Pydantic 2.14.4.
 Setup and complete code are on each application's page. Each task needs only its own packages.
 
 <a id="http-api-с-валидацией"></a>
@@ -106,7 +106,7 @@ async def measure(file: UploadFile):
 Import `UploadFile` and `HTTPException` from FastAPI, as in the complete application.
 **Result** — a file containing `b"abc"` has size `3`. A file over the limit returns `413`.
 The limit is checked after multipart parsing and does not limit the complete HTTP request.
-Set a total body limit and file-count limit on the server or proxy.
+The [upload example](uploads.md#forms-and-file-uploads) also shows how to configure FastAPI limits for the whole body and the number of files in one form.
 [Forms, one or several files, and startup](uploads.md) · [Complete checks](testing-lab.md#files-and-middleware).
 
 <a id="middleware-и-cors"></a>

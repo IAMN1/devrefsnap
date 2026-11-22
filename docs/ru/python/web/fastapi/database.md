@@ -29,7 +29,7 @@
 
 ## Синхронный SQLAlchemy
 
-В отдельном окружении выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'sqlalchemy==2.1.8' 'pydantic[email]==2.14.3'`.
+В отдельном окружении выполните `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0' 'sqlalchemy==2.1.9' 'pydantic[email]==2.14.4'`.
 Сохраните полный пример в файле `db_app.py`:
 
 [`db_app.py`](../../../../../examples/python/web/fastapi/db_app.py)
@@ -37,6 +37,8 @@
 ```bash
 uvicorn db_app:app --reload
 ```
+
+Оставьте сервер запущенным. Выполните запросы во втором терминале. При первом запуске используйте каталог с новой учебной базой.
 
 ```bash
 curl -i -X POST http://127.0.0.1:8000/users -H 'Content-Type: application/json' -d '{"username":"alice","email":"alice@example.com"}'
@@ -65,7 +67,7 @@ FastAPI выполняет эти обработчики в пуле поток�
 
 Если вы впервые используете `async def` и `await`, начните с [основ asyncio](../../language/asyncio.md).
 
-Для независимого async-примера выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1'`.
+Для независимого async-примера выполните `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0' 'sqlalchemy[asyncio]==2.1.9' 'aiosqlite==0.22.1'`.
 Сохраните полный независимый пример в файле `async_db_app.py`:
 
 [`async_db_app.py`](../../../../../examples/python/web/fastapi/async_db_app.py)

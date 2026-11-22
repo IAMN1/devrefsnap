@@ -110,7 +110,8 @@ Command consequences and example limitations appear there as well.
 | Close a Flask connection after a request | g, teardown_appcontext, resource lifecycle | [Flask connection lifecycle](../python/web/flask/configuration-and-deployment.md#connection-lifecycle) |
 | Choose how to run Flask | WSGI, development server, reverse proxy, deploy | [Flask development and production](../python/web/flask/configuration-and-deployment.md#development-and-production) |
 | Create a table from a model and edit records in the admin | Django, ORM, migrations, makemigrations, migrate, admin, test | [Django model and admin](../python/web/django/README.md) |
-| Read an API response in TypeScript and validate the JSON shape | fetch, Response.ok, unknown, type guard, tsc, strict mode | [TypeScript client for FastAPI](../typescript/README.md) |
+| Check TypeScript without starting a server | tsc, --noEmit, strict mode | [Type-check the client](../typescript/README.md#check-types-without-a-server) |
+| Read an API response in TypeScript and validate the JSON shape | fetch, Response.ok, unknown, type guard | [Validate JSON in the client](../typescript/README.md#read-and-validate-a-json-response) |
 | Bound and validate a JSON request in Go | HTTP handler, MaxBytesReader, json.Decoder, validation | [Go handler with input boundaries](../go/http-json.md#handler-with-input-boundaries) |
 | Test a Go handler without a network server | httptest, ResponseRecorder, HTTP test | [Go HTTP/JSON test](../go/http-json.md#test-without-a-network-server) |
 
@@ -265,7 +266,8 @@ In the [C# exercise](../csharp/README.md#first-run), `dotnet run --project … -
 | Get your first response from a container | Docker, Dockerfile, docker compose up, curl | [First HTTP server run](../tools/docker/first-run.md#first-run) |
 | See complete Dockerfile and compose.yaml files for three services | volume, network, gateway, mount | [Complete files and exercises](../tools/docker/lab.md#dockerfile) · [How a request travels](../tools/docker/guide.md) |
 | Write a Dockerfile and build an image | FROM, COPY, RUN, CMD, USER, docker build | [Build your first image](../tools/docker/dockerfile.md#build-your-first-image) · [Reuse the installation cache](../tools/docker/dockerfile.md#reuse-the-installation-cache) |
-| Copy main.py from the root when the Dockerfile is in dockers/ | COPY, build context, docker build -f, compose.yaml | [Build command and both Compose file locations](../tools/docker/compose-file.md#locate-the-dockerfile) |
+| Exclude .venv, .git, and .env from a build | .dockerignore, context root, COPY | [File location and the three rules](../tools/docker/compose-file.md#where-to-put-dockerignore) |
+| Copy main.py from the root when the Dockerfile is in dockers/ | COPY, build context, docker build -f, compose.yaml | [Build command and both Compose file locations](../tools/docker/build-context.md) |
 | Connect a Dockerfile to a service and publish a port | compose.yaml, build.context, dockerfile, ports, image | [Define a service](../tools/docker/compose-file.md#define-a-service) · [Locate the Dockerfile](../tools/docker/compose-file.md#locate-the-dockerfile) |
 | Read logs, run a command, or stop a container | docker compose ps, logs, exec, run, stop, down | [Commands by task](../tools/docker/commands.md) |
 | See changes after editing code or configuration | restart, up --build, rebuild, stale response | [Apply a change](../tools/docker/commands.md#apply-a-change) |

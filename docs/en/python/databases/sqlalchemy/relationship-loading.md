@@ -28,7 +28,7 @@ For an introduction, open the [standalone synchronous N+1 example](n-plus-one.md
 | Level | Intermediate. Partial collections and Session state are advanced |
 | Prerequisites | For N+1, Python and SELECT basics are enough for [one file with explanations](n-plus-one.md). The other cards use SQL JOINs, Session, `demo_models.py`, and `seed()` from the [lab setup](loading-lab.md#prepare-the-examples) |
 | Standalone N+1 | [Separate program, versions, and scope](n-plus-one.md#result-and-limits). The [extended set](loading-lab.md) uses the shared schema |
-| Dependencies | Synchronous SQLAlchemy 2.1.8 ORM and in-memory SQLite. See [setup](loading-lab.md#prepare-the-examples) |
+| Dependencies | Synchronous SQLAlchemy 2.1.9 ORM and in-memory SQLite. See [setup](loading-lab.md#prepare-the-examples) |
 
 <a id="выбрать-стратегию"></a>
 ## Choose a strategy
@@ -276,4 +276,4 @@ The practice SELECT count does not measure application speed improvements.
 - [Choosing relationship loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#what-kind-of-loading-to-use), [select-in](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#select-in-loading), [joined loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#joined-eager-loading).
 - [Raiseload](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#preventing-unwanted-lazy-loads-using-raiseload).
 - [Batch reading and limitations](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#fetching-large-result-sets-with-yield-per).
-- [Release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+- [Release notes 2.1.9](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.9).

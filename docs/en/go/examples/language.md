@@ -17,10 +17,9 @@ Open this page to assemble the complete code after the [short cards](../language
 
 Prerequisites include functions and collections.
 Running the example requires Go 1.27.
-Create a separate learning directory.
-Save the files from this page there.
-All blocks with filenames form one module without third-party dependencies.
-Preserve relative paths after `go/`.
+From the repository root, run `go -C examples/go run ./cmd/demo`. The program prints `Alice Doe (30)` and `true` on separate lines.
+
+To assemble the example separately, save the linked files in a learning directory. Preserve the relative paths after `go/`. The module uses only the standard library.
 
 See the [quick reference](../language.md#basic-constructs) for basic constructs and `range` limitations.
 

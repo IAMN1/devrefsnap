@@ -8,7 +8,9 @@ body:
     id: page
     attributes:
       label: Страница и раздел / Page and section
-      description: Дайте ссылку на раздел или укажите путь к файлу. / Link to the section or provide the file path.
+      description: |
+        Укажите страницу или файл. Для ошибки перехода приложите адрес ссылки.
+        Give the page or file. For a broken link, include its destination.
     validations:
       required: true
   - type: textarea

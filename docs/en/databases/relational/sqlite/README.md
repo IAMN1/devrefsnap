@@ -40,8 +40,7 @@ Consider write concurrency separately.
 Start with the [complete Python example](query-lab.md#complete-in-memory-blog-example).
 It creates users, posts, and comments, runs a JOIN, and checks that SQLite rejects an invalid foreign key.
 `INTEGER PRIMARY KEY` usually generates the rowid automatically.
-Use AUTOINCREMENT when previously assigned rowids must never be reused.
-AUTOINCREMENT adds overhead.
+Use `AUTOINCREMENT` when automatically assigned keys must skip rowids from previously committed rows in the same table. An insert that rolls back can leave its rowid available for reuse. Tracking the assigned keys adds write overhead.
 
 SQLite stores values as NULL, INTEGER, REAL, TEXT, or BLOB.
 BOOLEAN, DATETIME, and JSON have no separate built-in storage classes.

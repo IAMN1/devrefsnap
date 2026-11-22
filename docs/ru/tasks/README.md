@@ -111,7 +111,8 @@
 | Закрывать Flask-соединение после запроса | g, teardown_appcontext, resource lifecycle | [Flask: жизненный цикл соединения](../python/web/flask/configuration-and-deployment.md#жизненный-цикл-соединения) |
 | Выбрать способ запуска Flask | WSGI, development server, reverse proxy, deploy | [Flask: разработка и production](../python/web/flask/configuration-and-deployment.md#разработка-и-production) |
 | Создать таблицу из модели и управлять записями через админку | Django, ORM, migrations, makemigrations, migrate, admin, тест | [Django: модель и админка](../python/web/django/README.md) |
-| Прочитать ответ API в TypeScript и проверить структуру JSON | fetch, Response.ok, unknown, type guard, tsc, строгий режим | [TypeScript: клиент к FastAPI](../typescript/README.md) |
+| Проверить TypeScript без запуска сервера | tsc, --noEmit, строгий режим | [Проверка типов клиента](../typescript/README.md#проверить-типы-без-сервера) |
+| Прочитать ответ API в TypeScript и проверить структуру JSON | fetch, Response.ok, unknown, type guard | [Проверка JSON в клиенте](../typescript/README.md#прочитать-и-проверить-json-ответ) |
 | Ограничить и проверить JSON-запрос в Go | HTTP handler, MaxBytesReader, json.Decoder, validation | [Go: handler с границами ввода](../go/http-json.md#handler-с-границами-ввода) |
 | Проверить Go-handler без сетевого сервера | httptest, ResponseRecorder, HTTP test | [Go: тест HTTP/JSON](../go/http-json.md#тест-без-сетевого-сервера) |
 
@@ -267,7 +268,8 @@
 | Впервые получить ответ из контейнера | Docker, Dockerfile, docker compose up, curl | [Первый запуск HTTP-сервера](../tools/docker/first-run.md#первый-запуск) |
 | Увидеть итоговые Dockerfile и compose.yaml с тремя сервисами | volume, network, том, сеть, gateway | [Полные файлы и задания](../tools/docker/lab.md#dockerfile) · [Как проходит запрос](../tools/docker/guide.md) |
 | Написать Dockerfile и собрать образ | FROM, COPY, RUN, CMD, USER, docker build | [Собрать первый образ](../tools/docker/dockerfile.md#собрать-первый-образ) · [Сохранить кэш установки](../tools/docker/dockerfile.md#сохранить-кэш-установки) |
-| Скопировать main.py из корня, когда Dockerfile в dockers/ | COPY, контекст сборки, docker build -f, compose.yaml | [Команда сборки и оба расположения compose.yaml](../tools/docker/compose-file.md#указать-dockerfile) |
+| Исключить .venv, .git и .env из сборки | .dockerignore, корень контекста, COPY | [Положение файла и три правила](../tools/docker/compose-file.md#куда-положить-dockerignore) |
+| Скопировать main.py из корня, когда Dockerfile в dockers/ | COPY, контекст сборки, docker build -f, compose.yaml | [Команда сборки и оба расположения compose.yaml](../tools/docker/build-context.md) |
 | Подключить Dockerfile к сервису и открыть порт | compose.yaml, build.context, dockerfile, ports, image | [Описать сервис](../tools/docker/compose-file.md#описать-сервис) · [Указать Dockerfile](../tools/docker/compose-file.md#указать-dockerfile) |
 | Прочитать логи, выполнить команду или остановить контейнер | docker compose ps, logs, exec, run, stop, down | [Команды по задачам](../tools/docker/commands.md) |
 | Увидеть изменения после правки кода или конфигурации | restart, up --build, rebuild, пересобрать, старый ответ | [Применить изменение](../tools/docker/commands.md#применить-изменение) |

@@ -70,7 +70,7 @@ SQLite exists only in memory. The data disappears after the engine is disposed.
 
 For an introduction to N+1, use the [separate single-file setup](n-plus-one.md#setup-and-run).
 The installation below applies to the shared schema and the other recipes in this section.
-Install the packages in a separate environment with `python -m pip install 'sqlalchemy[asyncio]==2.1.8' pytest`.
+In the [active environment](../../README.md#create-an-environment-for-an-example), run `python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'pytest==9.2.0'`.
 The `asyncio` extra is required by the shared model with AsyncAttrs, including its synchronous recipes.
 For async examples, add `aiosqlite` and `pytest-asyncio`.
 

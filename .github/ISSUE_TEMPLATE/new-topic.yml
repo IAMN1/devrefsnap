@@ -1,5 +1,5 @@
 name: Предложить тему / Propose a topic
-description: Новая шпаргалка, пример или процедура / New cheat sheet, example, or procedure
+description: Шпаргалка, методичка, практикум или процедура / Reference, guide, lab, or procedure
 body:
   - type: markdown
     attributes:

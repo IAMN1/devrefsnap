@@ -7,6 +7,8 @@
 
 Двуязычный справочник и правила участия опубликованы в `main` через PR №7. [Охват и проверки](../reports/navigation-review.md#русский-и-английский-справочники) · [Правила участия](../../CONTRIBUTING.md).
 
+[Проверка файлов и навигации](../reports/file-audit.md) охватывает каталоги, обе языковые версии, рабочие примеры и страницы старых закладок. [Протокол проверки с читателями](reader-check.md) включает задачу о контексте Docker.
+
 Статический CI проверяет PR и `main`. [Проверки и ограничения CI](../reports/2026-11-10-safe-ci.md).
 
 Подборка для начинающих включает [HTTP и JSON](../../docs/ru/tools/http-json.md), [Compose и CI](../../docs/ru/tools/compose-and-github-actions.md), [основы asyncio](../../docs/ru/python/language/asyncio.md), [Go context](../../docs/ru/go/context.md), [сравнение JOIN](../../docs/ru/databases/sql/queries.md#сравнить-inner-join-и-left-join) и [график N+1](../../docs/ru/python/databases/sqlalchemy/n-plus-one.md#результат-и-ограничения).

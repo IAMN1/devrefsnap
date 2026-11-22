@@ -46,6 +46,28 @@ class MaterialsTests(unittest.TestCase):
         self.write("README.md", "# Тема\n[ошибка](#нет)\n")
         self.check(1, "anchor")
 
+    def test_custom_anchor_and_heading_must_have_distinct_targets(self):
+        self.write("README.md", '<a id="run-the-lab"></a>\n\n## Run the lab\n\n[Run](#run-the-lab)\n')
+        rows = self.check(1, "duplicate-anchor")
+        self.assertEqual(rows[0]["line"], 3)
+
+    def test_identical_names_on_two_html_elements_fail(self):
+        self.write("README.md", '<div>\n<a name="demo"></a>\n<a id="demo"></a>\n</div>\n')
+        rows = self.check(1, "duplicate-anchor")
+        self.assertEqual(rows[0]["line"], 3)
+
+    def test_paths_are_case_sensitive_on_all_filesystems(self):
+        self.write("docs/guide.md", "# Guide\n")
+        self.write("README.md", "[Read](Docs/guide.md)\n")
+        self.check(1, "link")
+
+    def test_slash_starts_at_repository_root(self):
+        self.write("docs/Guide.md", "[Home](/README.md#home)\n")
+        self.write("README.md", "# Home\n")
+        self.check()
+        self.write("docs/Guide.md", "[Outside](/../outside.md)\n")
+        self.check(1, "link-boundary")
+
     def test_html_anchor_and_image_target(self):
         self.write("README.md", '<a id="demo"></a>\n\n[пример](#demo)\n![img](image.svg)\n')
         self.write("image.svg", "<svg/>")

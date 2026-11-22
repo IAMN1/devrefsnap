@@ -2,9 +2,10 @@
 """Статический разбор материалов. Учебный код никогда не исполняется."""
 import argparse
 import ast
-from collections import Counter
+from collections import Counter, defaultdict
 from html.parser import HTMLParser
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -33,17 +34,19 @@ def emit(row):
 class HTMLTargets(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.anchors = set()
+        self.anchors = []
         self.links = []
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
-        for key in ("id", "name" if tag == "a" else "id"):
-            if attrs.get(key):
-                self.anchors.add(attrs[key])
+        names = {attrs.get("id")}
+        if tag == "a":
+            names.add(attrs.get("name"))
+        line = self.getpos()[0]
+        self.anchors.extend((line, name) for name in sorted(filter(None, names)))
         for key in ("href", "src"):
             if attrs.get(key):
-                self.links.append(attrs[key])
+                self.links.append((line, attrs[key]))
 
 
 def slug(text):
@@ -64,8 +67,9 @@ def inline_text(tokens):
 
 def parse_page(text):
     tokens = PARSER.parse(text)
-    anchors, links, seen = set(), [], set()
+    anchors, links, seen = defaultdict(list), [], set()
     for index, token in enumerate(tokens):
+        line = token.map[0] + 1 if token.map else 1
         if token.type == "heading_open":
             base = slug(inline_text(tokens[index + 1].children or []))
             anchor, suffix = base, 0
@@ -73,17 +77,17 @@ def parse_page(text):
                 suffix += 1
                 anchor = f"{base}-{suffix}"
             seen.add(anchor)
-            anchors.add(anchor)
+            anchors[anchor].append(line)
         children = token.children or [token]
         for child in children:
             if child.type in {"link_open", "image"}:
-                links.append((token.map[0] + 1 if token.map else 1,
-                              child.attrGet("href") or child.attrGet("src")))
+                links.append((line, child.attrGet("href") or child.attrGet("src")))
             elif child.type in {"html_inline", "html_block"}:
                 html = HTMLTargets()
                 html.feed(child.content)
-                anchors.update(html.anchors)
-                links.extend((token.map[0] + 1 if token.map else 1, link) for link in html.links)
+                for html_line, name in html.anchors:
+                    anchors[name].append(line + html_line - 1)
+                links.extend((line + html_line - 1, link) for html_line, link in html.links)
     return tokens, anchors, links
 
 
@@ -91,6 +95,7 @@ def check(root):
     root = root.resolve()
     examples = root / "examples"
     issues, pages, counts = [], {}, Counter()
+    file_paths = set()
 
     def issue(path, line, code, message):
         issues.append(dict(path=str(path.relative_to(root)), line=line, code=code, message=message))
@@ -122,8 +127,10 @@ def check(root):
                 issue(path, 1, "symlink", "Символьные ссылки не поддерживаются проверкой")
             elif path.is_dir():
                 yield from walk(path)
-            elif path.suffix.lower() == ".md" or (path.suffix in {".py", ".sh"} and path.is_relative_to(examples)):
-                yield path
+            elif path.is_file():
+                file_paths.add(path.as_posix())
+                if path.suffix.lower() == ".md" or (path.suffix in {".py", ".sh"} and path.is_relative_to(examples)):
+                    yield path
 
     total_bytes = 0
     for path in walk(root):
@@ -152,6 +159,9 @@ def check(root):
             continue
         tokens, anchors, links = parse_page(text)
         pages[path] = (anchors, links)
+        for name, lines in anchors.items():
+            for line in lines[1:]:
+                issue(path, line, "duplicate-anchor", f"Якорь {name!r} уже задан в строке {lines[0]}")
         for token in tokens:
             if token.type != "fence":
                 continue
@@ -182,7 +192,10 @@ def check(root):
                 continue
             if url.scheme or url.netloc:
                 continue  # Не обращаемся к сети.
-            target = path.parent / unquote(url.path) if url.path else path
+            target = path
+            if url.path:
+                decoded = unquote(url.path)
+                target = root / decoded.lstrip("/") if decoded.startswith("/") else path.parent / decoded
             resolved = target.resolve()
             if not resolved.is_relative_to(root):
                 issue(path, line, "link-boundary", f"Ссылка за пределы репозитория: {link}")
@@ -194,8 +207,9 @@ def check(root):
                 issue(path, line, "symlink", f"Ссылка через символический путь: {link}")
                 continue
             if resolved.is_dir():
+                target = target / "README.md"
                 resolved = resolved / "README.md"
-            if not resolved.is_file():
+            if Path(os.path.normpath(target)).as_posix() not in file_paths:
                 issue(path, line, "link", f"Не найден файл: {link}")
             elif url.fragment and resolved.suffix.lower() == ".md":
                 if resolved not in pages or unquote(url.fragment) not in pages[resolved][0]:

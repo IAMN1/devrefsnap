@@ -11,18 +11,21 @@ Use a new PostgreSQL 18 or SQLite 3.53 practice database with the names `sql_use
 <a id="полный-пример"></a>
 ## Complete example
 
-Save the SQL as `demo.sql`.
-For PostgreSQL, replace `PRACTICE_DB` with the name of a separate practice database.
-Run `psql -X --set=ON_ERROR_STOP=1 --dbname=PRACTICE_DB --file=demo.sql`.
-For SQLite, choose a new file named sql-demo.db in a separate practice directory.
-Run `sqlite3 -bail -cmd 'PRAGMA foreign_keys=ON' sql-demo.db < demo.sql`.
-Run these commands in your shell.
-For MySQL or SQL Server, adapt the transaction control using the [dialect comparison](dialects-and-transactions.md).
+Save the [complete `demo.sql` file](../../../../examples/databases/sql/demo.sql) in a separate practice directory. Open a shell in that directory and choose the command for your database engine.
 
-This complete SQL example runs on PostgreSQL and SQLite.
-It creates only practice objects and uses no DROP statements.
+**SQLite.** Choose an unused filename for `sql-demo.db`. The command enables foreign key enforcement and reads the file on the same connection.
 
-[`sql/demo.sql`](../../../../examples/databases/sql/demo.sql)
+```bash
+sqlite3 -bail sql-demo.db 'PRAGMA foreign_keys=ON;' '.read demo.sql'
+```
+
+**PostgreSQL.** Replace `PRACTICE_DB` with the name of your separate practice database.
+
+```bash
+psql -X --set=ON_ERROR_STOP=1 --dbname=PRACTICE_DB --file=demo.sql
+```
+
+The file creates the tables in one transaction. If a table already exists, the command stops with an error. For MySQL or SQL Server, adapt transaction control using the [dialect comparison](dialects-and-transactions.md).
 
 The expected totals are `alice | 14000`, `bob | 0`, and `carol | 0`.
 The value of preserved_amount is `10000`.

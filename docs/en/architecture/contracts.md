@@ -31,8 +31,12 @@ Stock remains unchanged on rejection.
 `bool` is deliberately disallowed as a quantity, although Python treats `bool` as an `int` subclass.
 
 The complete example requires no dependencies.
-Save the code as `invariants.py`.
-Run `python3.14 invariants.py`.
+Run this command from the repository root.
+
+```bash
+python3.14 examples/architecture/invariants.py
+```
+
 
 [`architecture/invariants.py`](../../../examples/architecture/invariants.py)
 
@@ -55,8 +59,12 @@ Repeated snapshot reads preserve the price.
 The contract captures the consumer's agreement beyond the signature.
 
 The complete example requires no pip installation.
-Save the code as `solid-contract.py`.
-Run `python3.14 solid-contract.py`.
+Run this command from the repository root.
+
+```bash
+python3.14 examples/architecture/solid-contract.py
+```
+
 
 [`architecture/solid-contract.py`](../../../examples/architecture/solid-contract.py)
 

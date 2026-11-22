@@ -25,7 +25,7 @@
 
 ## Асинхронная сессия
 
-Выполните `python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1' 'pytest==9.2.0' 'pytest-asyncio==1.4.1.post1'`.
+Выполните `python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'aiosqlite==0.22.1' 'pytest==9.2.0' 'pytest-asyncio==1.5.0'`.
 Ниже приведён полный пример `demo_async.py`.
 Возьмите остальные классы из `demo_models.py` этой темы.
 Драйвер использует только SQLite в памяти.
@@ -100,7 +100,7 @@ Extra `asyncio` нужен импорту `AsyncAttrs` из общей схем�
 Команды оболочки:
 
 ```bash
-python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'alembic==1.20.1'
+python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'alembic==1.20.1'
 alembic init alembic
 ```
 

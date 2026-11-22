@@ -111,7 +111,7 @@ ROLLBACK TO SAVEPOINT отменяет только действия после 
 
 | СУБД | Начало / savepoint | Граница гарантии |
 | --- | --- | --- |
-| PostgreSQL | BEGIN; SAVEPOINT s; ROLLBACK TO SAVEPOINT s | Большинство DDL транзакционны; TRUNCATE откатывается, sequence не откатывается |
+| PostgreSQL | BEGIN; SAVEPOINT s; ROLLBACK TO SAVEPOINT s | Большинство DDL и TRUNCATE можно откатить. Значения, выданные `nextval`, остаются израсходованными. |
 | MySQL InnoDB | START TRANSACTION; SAVEPOINT s; ROLLBACK TO SAVEPOINT s | Многие DDL и TRUNCATE вызывают implicit commit; движок таблицы имеет значение |
 | SQL Server | BEGIN TRANSACTION; SAVE TRANSACTION s; ROLLBACK TRANSACTION s | Обработка ошибок/XACT_STATE и вложенных транзакций отличается от PostgreSQL |
 | SQLite | BEGIN [DEFERRED/IMMEDIATE/EXCLUSIVE]; SAVEPOINT s; ROLLBACK TO s | Один writer; режим журнала и Python autocommit влияют на управление |

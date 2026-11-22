@@ -31,7 +31,7 @@
 Установите зависимости в учебное окружение:
 
 ```bash
-python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'pytest==9.2.0'
+python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'pytest==9.2.0'
 ```
 
 Extra `asyncio` устанавливает greenlet, необходимый импорту AsyncAttrs из общей модели.
@@ -118,4 +118,4 @@ Identity map переиспользует автора и при lazy-загру
 - [Greenlet и установка в SQLAlchemy 2.1](https://docs.sqlalchemy.org/en/21/faq/installation.html#i-m-getting-an-error-about-greenlet-not-being-installed-when-i-try-to-use-asyncio).
 
 - [Загрузка отношений](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html), [события выполнения SQL](https://docs.sqlalchemy.org/en/21/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute).
-- [Populate existing](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#populate-existing), [release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+- [Populate existing](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#populate-existing), [release notes 2.1.9](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.9).

@@ -17,7 +17,7 @@ The complete files use practice data from the shared schema. PostgreSQL examples
 
 **Level** — intermediate to advanced.
 Prerequisites include SQL JOINs, aggregation, and Session.
-Running the examples requires Python 3.14, SQLAlchemy 2.1.8, and pytest 9.2.0. SQLite comes with Python.
+Running the examples requires Python 3.14, SQLAlchemy 2.1.9, and pytest 9.2.0. SQLite comes with Python.
 The files use `demo_models.py`.
 Install `sqlalchemy[asyncio]` and `pytest` in a separate environment.
 

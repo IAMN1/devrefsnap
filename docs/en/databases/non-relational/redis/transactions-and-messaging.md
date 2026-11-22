@@ -33,7 +33,9 @@ Decide which operations must be atomic and what should happen on a retry or disc
 | Pipeline | Send several commands without waiting for each reply | Other clients can interleave commands unless the pipeline uses MULTI/EXEC |
 | MULTI → commands → EXEC | Run the group without interleaving commands from other clients | Successful commands remain applied when another command fails at runtime |
 | WATCH → read → MULTI/EXEC | Optimistically check that a watched key has not changed | Data can change and cause EXEC to abort. A retry may be needed. |
-| Lua or Redis Functions | Read, check, and update on the server in one atomic operation | A script or function can fail after making writes that remain applied. Runtime is finite. |
+| Lua or Redis Functions | Read, check, and update on the server in one atomic operation | Writes made before an error remain applied. A slow script delays other clients’ ordinary commands. |
+
+If a script runs past `busy-reply-threshold`, Redis continues to run it and returns `BUSY` for ordinary commands from other clients. [Script execution time](https://redis.io/docs/latest/develop/programmability/#maximum-execution-time).
 
 redis-py `pipeline()` uses a transaction by default.
 For pipelining alone, set transaction=False explicitly.

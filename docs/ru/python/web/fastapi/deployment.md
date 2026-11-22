@@ -27,8 +27,8 @@
 
 ## Разработка и несколько процессов
 
-Используйте Python 3.14, FastAPI 0.162.0 и Uvicorn 0.54.0.
-Выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]==0.54.0'`.
+Используйте Python 3.14, FastAPI 0.165.0 и Uvicorn 0.54.0.
+Выполните `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0'`.
 
 ```bash
 uvicorn minimal:app --reload --host 127.0.0.1 --port 8000
@@ -79,7 +79,7 @@ gunicorn minimal:app -w 2 -k uvicorn_worker.UvicornWorker -b 127.0.0.1:8000
 Этот набор не покрывает все рецепты:
 
 ```text
-fastapi==0.162.0
+fastapi==0.165.0
 uvicorn==0.54.0
 ```
 

@@ -12,6 +12,7 @@ Find an action through the [task and synonym index](tasks/README.md), or choose 
 
 | Task | Example |
 | --- | --- |
+| Build a project with its Dockerfile in a subdirectory | [Locate main.py, the Dockerfile and .dockerignore](tools/docker/build-context.md) · [Understand images, networks and volumes](tools/docker/guide.md) · [Run three services](tools/docker/lab.md) |
 | Run your first program | [Price three tickets in Python](python/language/first-program.md) · [First C program](c/README.md#first-run) |
 | Inspect an HTTP status and extract a JSON field | [HTTP and JSON in the terminal](tools/http-json.md) |
 | Find why a CI test failed | [Read the GitHub Actions log](tools/compose-and-github-actions.md#find-the-cause-in-the-log) |

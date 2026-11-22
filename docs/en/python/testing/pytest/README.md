@@ -59,8 +59,7 @@ The test passes for the specified behavior and fails if negative quantities go u
 Choose approximate comparison tolerances based on the data.
 [Complete suite and run command](fixtures.md#complete-practice-example).
 
-Create a separate environment with `python -m venv .venv`.
-Install pytest there with `python -m pip install pytest`.
+Create and activate an [environment for the example](../../README.md#create-an-environment-for-an-example). Run `python -m pip install 'pytest==9.2.0'`.
 In a uv project, use `uv add --dev pytest` and `uv run pytest`.
 See the [uv reference](../../tooling/uv/README.md).
 A test sets up data, performs an action, and checks an observable result.
