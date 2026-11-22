@@ -264,7 +264,8 @@
 
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
-| Впервые получить ответ из контейнера | Docker, Dockerfile, docker compose up, curl | [Первый запуск HTTP-сервера](../tools/docker/README.md#первый-запуск) |
+| Впервые получить ответ из контейнера | Docker, Dockerfile, docker compose up, curl | [Первый запуск HTTP-сервера](../tools/docker/first-run.md#первый-запуск) |
+| Увидеть итоговые Dockerfile и compose.yaml с тремя сервисами | volume, network, том, сеть, gateway | [Полные файлы и задания](../tools/docker/lab.md#dockerfile) · [Как проходит запрос](../tools/docker/guide.md) |
 | Написать Dockerfile и собрать образ | FROM, COPY, RUN, CMD, USER, docker build | [Собрать первый образ](../tools/docker/dockerfile.md#собрать-первый-образ) · [Сохранить кэш установки](../tools/docker/dockerfile.md#сохранить-кэш-установки) |
 | Подключить Dockerfile к сервису и открыть порт | compose.yaml, build.context, dockerfile, ports, image | [Описать сервис](../tools/docker/compose-file.md#описать-сервис) · [Указать Dockerfile](../tools/docker/compose-file.md#указать-dockerfile) |
 | Прочитать логи, выполнить команду или остановить контейнер | docker compose ps, logs, exec, run, stop, down | [Команды по задачам](../tools/docker/commands.md) |

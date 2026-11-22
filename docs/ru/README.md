@@ -59,7 +59,7 @@
 | SQLite | [Справочник](databases/relational/sqlite/README.md), [копия и восстановление](databases/relational/sqlite/backup-and-restore.md) |
 | Redis | [Структуры, кэш и обмен сообщениями](databases/non-relational/redis/README.md), [RDB-копия](databases/non-relational/redis/backup-and-restore.md), [AOF-копия и восстановление](databases/non-relational/redis/aof-backup-and-restore.md) |
 | curl и jq | [Запрос и разбор HTTP-ответа](tools/http-json.md) |
-| Dockerfile и Docker Compose | [Первый запуск](tools/docker/README.md) · [Написать Dockerfile](tools/docker/dockerfile.md) · [Описать сервисы](tools/docker/compose-file.md) · [Выбрать команду](tools/docker/commands.md) |
+| Dockerfile и Docker Compose | [Шпаргалки](tools/docker/README.md) · [Методичка](tools/docker/guide.md) · [Полные файлы и задания для трёх сервисов](tools/docker/lab.md) |
 | Docker Compose и GitHub Actions | [Приложение с PostgreSQL и тесты в CI](tools/compose-and-github-actions.md) |
 | Контракт HTTP API | [FastAPI, PostgreSQL и TypeScript в Compose и CI](tools/api-contract-lab.md) |
 | Git | [Выбор команд по рабочим задачам](tools/git/README.md) |

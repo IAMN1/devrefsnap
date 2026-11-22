@@ -4,7 +4,7 @@
 
 Run a sample Python application with PostgreSQL on your computer. Then run the integration test on GitHub and investigate an intentional failure.
 
-If this is your first container project, start with [one service](docker/README.md#first-run). To write your own multi-service file, work through the [PostgreSQL connection settings](docker/compose-file.md#connect-a-database).
+If this is your first container project, start with [one service](docker/first-run.md#first-run). To write your own multi-service file, work through the [PostgreSQL connection settings](docker/compose-file.md#connect-a-database).
 
 | Task | Technique | Where to run it |
 | --- | --- | --- |

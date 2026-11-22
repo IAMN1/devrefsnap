@@ -1,0 +1,33 @@
+services:
+  gateway:
+    image: nginx:stable-alpine
+    ports:
+      - "127.0.0.1:${SITE_PORT:-18083}:80"
+    volumes:
+      - ./gateway.conf:/etc/nginx/conf.d/default.conf:ro
+      - requests:/var/log/site
+    networks: [catalog-net, help-net]
+    depends_on: [catalog, help]
+
+  catalog:
+    build: .
+    working_dir: /site/catalog
+    volumes:
+      - catalog-pages:/site/catalog
+    networks: [catalog-net]
+
+  help:
+    build: .
+    working_dir: /site/help
+    volumes:
+      - help-pages:/site/help
+    networks: [help-net]
+
+volumes:
+  requests:
+  catalog-pages:
+  help-pages:
+
+networks:
+  catalog-net:
+  help-net:
