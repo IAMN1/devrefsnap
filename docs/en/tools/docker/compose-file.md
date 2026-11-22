@@ -19,15 +19,63 @@ Compose uses the current specification without a top-level `version` field. When
 
 ## Locate the Dockerfile
 
-Service excerpt for a build file located at `site/docker/Dockerfile`.
+When `main.py` is at the project root and the Dockerfile is in `dockers/`, use the project root as the build context. Then `COPY main.py .` can find the source file. The tree shows two possible locations for `compose.yaml`. Choose one Compose file per run. The example needs Docker with Compose and the `python:3.14-slim` base image from Docker Hub.
 
-```yaml
-build:
-  context: ./site
-  dockerfile: docker/Dockerfile
+```text
+docker-build-context/
+├── main.py
+├── compose.yaml
+└── dockers/
+    ├── Dockerfile
+    └── compose.yaml
 ```
 
-With one Compose file, `context` is relative to its directory. The `dockerfile` path is relative to the context. Here `COPY message.txt ./` reads `site/message.txt`. To select a named stage, add `target` under `build`. [Two-stage example](../../../../examples/tools/api-contract-lab/compose.yaml).
+**One Dockerfile for both layouts.** [dockers/Dockerfile](../../../../examples/tools/docker-build-context/dockers/Dockerfile)
+
+```dockerfile
+FROM python:3.14-slim
+WORKDIR /app
+COPY main.py .
+CMD ["python", "main.py"]
+```
+
+**Build without Compose.** Run these commands from the example root (`examples/tools/docker-build-context/`). The `-f` path locates the Dockerfile from the current shell directory. The final dot selects that directory as the build context.
+
+```bash
+docker build -f dockers/Dockerfile -t devrefsnap-context:local .
+docker run --rm devrefsnap-context:local
+```
+
+In `COPY main.py .`, the source `main.py` is relative to the context root. Selecting only `dockers/` as the context puts the file outside that boundary. The destination dot refers to the working directory inside the image. With `WORKDIR /app`, the [program](../../../../examples/tools/docker-build-context/main.py) prints `/app/main.py`.
+
+**Option 1.** [compose.yaml at the root](../../../../examples/tools/docker-build-context/compose.yaml). The dot in `context` selects the directory containing `main.py`.
+
+```yaml
+services:
+  app:
+    build:
+      context: .
+      dockerfile: dockers/Dockerfile
+```
+
+**Option 2.** [compose.yaml in dockers/](../../../../examples/tools/docker-build-context/dockers/compose.yaml). The `..` context goes up one level from the Compose file’s directory to the directory containing `main.py`.
+
+```yaml
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: dockers/Dockerfile
+```
+
+In both layouts, Compose resolves `dockerfile` from the chosen context. Both contexts point to the project root, so the path stays `dockers/Dockerfile`. Choose one command below from the example root. The expected application output is `/app/main.py`.
+
+| File location | Build and run once |
+| --- | --- |
+| `compose.yaml` | `docker compose -f compose.yaml run --rm --build app` |
+| `dockers/compose.yaml` | `docker compose -f dockers/compose.yaml run --rm --build app` |
+
+To select a named stage, add `target` under `build`. [Two-stage example](../../../../examples/tools/api-contract-lab/compose.yaml) · [Compose build paths](https://docs.docker.com/reference/compose-file/build/).
 
 ## Pass settings
 
