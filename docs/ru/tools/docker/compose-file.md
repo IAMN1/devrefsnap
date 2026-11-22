@@ -1,102 +1,55 @@
-# Составить compose.yaml для своего приложения
+# Шпаргалка по полям compose.yaml
 
 [English](../../../en/tools/docker/compose-file.md)
 
-Опишите, откуда взять образ каждого сервиса и как запустить его контейнер. Начните с одного HTTP-сервера. Затем посмотрите, какие поля нужны приложению с базой данных.
-
-| Задача | Поля Compose | Пример |
-| --- | --- | --- |
-| Запустить код из Dockerfile | `services`, `build`, `ports` | [Полный файл для одного сервиса](#описать-сервис) |
-| Выбрать другой Dockerfile или стадию | `context`, `dockerfile`, `target` | [Пути сборки](#указать-dockerfile) |
-| Поменять порт или настройку процесса | `${…}`, `environment`, `env_file` | [Подстановка и окружение](#передать-настройки) |
-| Соединить сервисы по сети | `image`, `depends_on`, `healthcheck` | [Приложение и PostgreSQL](#подключить-базу-данных) |
-| Сохранить данные или подставить локальный файл | `volumes` | [Том и привязка файла](#выбрать-хранилище) |
+В `services` описывают сервисы. Верхние разделы `volumes` и `networks` объявляют именованные ресурсы проекта. Чтобы сервис использовал ресурс, его имя указывают ещё раз внутри сервиса. [Полный файл для трёх сервисов](lab.md#composeyaml) · [Методичка со схемой](guide.md).
 
 ## Описать сервис
 
-Положите `compose.yaml` рядом с [Dockerfile сервера](dockerfile.md#собрать-первый-образ) и `message.txt`. Ниже полный файл для этого проекта. Используйте синтаксис `docker compose` и Compose Specification. Верхнее поле `version` устарело. [Файл примера](../../../../examples/tools/docker-basics/compose.yaml) · [Версия спецификации](https://docs.docker.com/reference/compose-file/version-and-name/).
+| Что нужно указать | Запись в сервисе | Что она означает |
+| --- | --- | --- |
+| Собственный образ | `build: .` | Собрать образ по Dockerfile из каталога с Compose-файлом |
+| Готовый образ | `image: nginx:stable-alpine` | Взять образ Nginx с указанным тегом |
+| Рабочий каталог | `working_dir: /site/catalog` | Из этого каталога стартует процесс |
+| Порт на компьютере | `ports: ["127.0.0.1:18083:80"]` | Запрос на локальный порт 18083 попадёт на порт 80 контейнера |
+| Участие в сети | `networks: [catalog-net]` | Сервисы этой сети могут найти друг друга по имени |
+| Место для данных | `volumes: ["catalog-pages:/site/catalog"]` | Подключить именованный том по пути внутри контейнера |
 
-```yaml
-services:
-  web:
-    build: .
-    ports:
-      - "127.0.0.1:${SITE_PORT:-18081}:8000"
-```
-
-1. Назовите сервис под ключом `services`. Здесь имя `web` можно передать команде `docker compose logs web`. Отступ объединяет настройки этого сервиса.
-2. Укажите `build: .`, если хотите собрать свой образ из соседнего Dockerfile. Для готового образа укажите `image`, например `image: postgres:18.6` в сервисе БД.
-3. Запишите публикацию порта строкой в формате `"адрес:порт_компьютера:порт_контейнера"`. В примере сервер слушает `0.0.0.0:8000` внутри контейнера. С компьютера запросите `127.0.0.1:18081`. Привязка к `127.0.0.1` ограничивает публикацию интерфейсом обратной петли.
-
-Из каталога примера выполните `docker compose config --services`. Ожидается одна строка `web`. Чтобы увидеть разрешённые пути и порты, выполните `docker compose config`. Для проверки HTTP выполните [первый запуск](README.md#первый-запуск).
+Compose использует современную спецификацию без верхнего поля `version`. При совместном использовании `build` и `image` выбор загрузки или сборки зависит от `pull_policy`. [Спецификация Compose](https://docs.docker.com/reference/compose-file/) · [Правила сборки](https://docs.docker.com/reference/compose-file/build/).
 
 ## Указать Dockerfile
 
-Для одного файла Compose относительный `context` начинается от каталога `compose.yaml`. Относительный `dockerfile` начинается от `context`. Например, если исходники находятся в `site/`, а рецепт лежит в `site/docker/Dockerfile`, опишите сервис следующим фрагментом.
+Фрагмент описания сервиса, если файл сборки находится в `site/docker/Dockerfile`.
 
 ```yaml
-services:
-  web:
-    build:
-      context: ./site
-      dockerfile: docker/Dockerfile
+build:
+  context: ./site
+  dockerfile: docker/Dockerfile
 ```
 
-В таком Dockerfile команда `COPY message.txt ./` читает `site/message.txt`. Для обычного имени `Dockerfile` в корне контекста достаточно краткой записи `build: ./site`.
-
-Если Dockerfile содержит `FROM … AS client`, поле `target: client` внутри `build` выбирает эту стадию как результат сборки. В примере контракта сервисы `app` и `client` собираются из одного файла. При совместном использовании `build` и `image` порядок загрузки и сборки зависит от `pull_policy`. [Dockerfile со стадиями](../../../../examples/tools/api-contract-lab/Dockerfile) · [Сервисы с build.target](../../../../examples/tools/api-contract-lab/compose.yaml) · [Правила сборки Compose](https://docs.docker.com/reference/compose-file/build/).
+Для одного Compose-файла путь `context` отсчитывается от его каталога. Путь `dockerfile` отсчитывается от контекста. При таком выборе инструкция `COPY message.txt ./` читает `site/message.txt`. Для выбора именованной стадии добавьте `target` под `build`. [Пример с двумя стадиями](../../../../examples/tools/api-contract-lab/compose.yaml).
 
 ## Передать настройки
 
-Запустите команду в каталоге `docker-basics`. Она покажет, какой порт получит сервис при заданном значении.
-
-```bash
-SITE_PORT=18082 docker compose config
-```
-
-Найдите `published: "18082"` и `target: 8000`. Compose подставляет `SITE_PORT` при чтении YAML. Выражение `${SITE_PORT:-18081}` выбирает `18081`, если переменная отсутствует или пуста. Чтобы сохранить выбор между командами, запишите `SITE_PORT=18082` в `.env` рядом с `compose.yaml`. В этом примере значение из оболочки имеет приоритет.
-
-| Кому нужно значение | Куда его поместить | Результат |
+| Кому нужно значение | Где его задать | Пример |
 | --- | --- | --- |
-| Compose при чтении YAML | Оболочка или `.env` | Подстановка в поле `ports`. Чтобы передать значение процессу, укажите его в настройках сервиса. |
-| Программе внутри контейнера | `environment: {LOG_LEVEL: info}` в сервисе | Процесс увидит `LOG_LEVEL=info`, если читает эту переменную. |
-| Программе нужны переменные из файла | `env_file: ./app.env` в сервисе | Compose передаст пары `KEY=value` из файла в контейнер. Значения из `environment` имеют приоритет. |
+| Compose при чтении YAML | В оболочке или в файле `.env` рядом с этим Compose-файлом | `${SITE_PORT:-18083}` выбирает 18083, если значение пустое или отсутствует. В этом примере значение из оболочки имеет приоритет. |
+| Процессу внутри контейнера | В `environment` сервиса | `environment: {LOG_LEVEL: info}` передаёт `LOG_LEVEL=info` программе |
+| Процессу нужны значения из файла | В `env_file` сервиса | `env_file: ./app.env` передаёт пары `KEY=value`. При совпадении имён приоритет у `environment`. |
 
-После изменения настроек выполните `docker compose up -d`. Если поменялся порт, проверьте его через `docker compose port web 8000`. Вывод `config` может содержать подставленные пароли. Для проверки без вывода значений используйте `config -q`. [Подстановка](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/) · [Окружение контейнера](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/).
+Команда `SITE_PORT=18084 docker compose config` покажет итоговый порт. Вывод может содержать значения паролей. Флаг `-q` проверяет конфигурацию без вывода значений. [Подстановка в YAML](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/) · [Переменные контейнера](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/).
 
 ## Подключить базу данных
 
-В отдельном проекте приложение `app` обращается к сервису `postgres`. Следующий фрагмент показывает настройки подключения и проверки готовности. Для запуска используйте [полный compose.yaml](../../../../examples/tools/compose-and-github-actions/compose.yaml). В нём также заданы учебные учётные данные, том и проверка HTTP. [Подготовка и запуск](../compose-and-github-actions.md#запустить-приложение-локально).
-
-```yaml
-services:
-  app:
-    build: .
-    environment:
-      PGHOST: postgres
-    depends_on:
-      postgres:
-        condition: service_healthy
-  postgres:
-    image: postgres:18.6
-    healthcheck:
-      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "lab", "-d", "compose_lab"]
-      interval: 3s
-      timeout: 2s
-      retries: 10
-```
-
-Compose подключает оба сервиса к сети проекта. Приложение находит БД по имени `postgres` и подключается к порту `5432` внутри сети. Публиковать порт БД на компьютере для этого соединения не требуется. Адрес `127.0.0.1` в проверке относится к контейнеру PostgreSQL. В контейнере `app` тот же адрес ведёт к самому приложению.
-
-Краткая запись `depends_on: [postgres]` задаёт порядок запуска. Условие `service_healthy` заставляет Compose дождаться успешной проверки БД при запуске приложения. После запуска обработку обрывов связи обеспечивает приложение. В полном примере команда `docker compose up -d --wait` ждёт состояния `healthy` для обоих сервисов. Для сервиса без проверки готовности достаточно состояния `running`. В полном примере запрос к `/health` выполняет SQL и возвращает имя базы `compose_lab`. [Сеть Compose](https://docs.docker.com/compose/how-tos/networking/) · [Порядок запуска](https://docs.docker.com/compose/how-tos/startup-order/).
+На общей сети приложение обращается к PostgreSQL по имени сервиса, например `postgres:5432`. Для этого публиковать порт БД на компьютере не нужно. Запись `depends_on: [postgres]` задаёт порядок старта. Если приложению нужна готовая база, укажите `depends_on.postgres.condition: service_healthy` и задайте `healthcheck` у БД. Повторным подключением после сбоя управляет приложение. [Полный пример с PostgreSQL](../../../../examples/tools/compose-and-github-actions/compose.yaml) · [Готовность зависимостей](https://docs.docker.com/compose/how-tos/startup-order/).
 
 ## Выбрать хранилище
 
-| Что нужно сохранить | Как подключить | Что произойдёт после пересоздания контейнера |
+| Задача | Запись внутри списка `volumes` | Результат |
 | --- | --- | --- |
-| Данные учебной БД | В сервисе `postgres` подключите `lab-data:/var/lib/postgresql`. Объявите `lab-data:` под верхним ключом `volumes:`. | Новый контейнер проекта получит тот же именованный том. Путь в этом примере рассчитан на образ PostgreSQL 18. |
-| Файл с компьютера для разработки | Добавьте `./message.txt:/site/message.txt:ro` в список `volumes` сервиса `web`. Файл должен существовать. | Контейнер читает файл с компьютера. Привязка скрывает копию файла из образа, а `ro` запрещает запись из контейнера. |
+| Сохранить файлы при замене контейнера | `catalog-pages:/site/catalog` | Именованный том сохраняет данные. Обычный `down` его оставляет. |
+| Подключить свой файл настроек | `./gateway.conf:/etc/nginx/conf.d/default.conf:ro` | Контейнер читает файл с компьютера. Суффикс `ro` запрещает запись через эту привязку. |
 
-Обычный `docker compose down` сохраняет именованный том. Команда `docker compose down -v` удаляет управляемые проектом тома, включая учебные данные в `lab-data`. Используйте её только для намеренного сброса. Внешние тома с `external: true` Compose сохраняет. [Тома Compose](https://docs.docker.com/reference/compose-file/volumes/) · [Привязки файлов](https://docs.docker.com/engine/storage/bind-mounts/) · [Действие down](https://docs.docker.com/reference/cli/docker/compose/down/).
+При подключении тома его содержимое видно вместо файлов образа по тому же пути. Пустой том по умолчанию получает начальные файлы из образа. Команда `docker compose down -v` удаляет управляемые тома проекта с данными. Внешние тома с `external: true` сохраняются. [Тома Docker](https://docs.docker.com/engine/storage/volumes/) · [Привязка файлов](https://docs.docker.com/engine/storage/bind-mounts/).
 
-[Команды Compose](commands.md) · [Dockerfile и Docker Compose](README.md)
+[Все материалы по Docker](README.md)

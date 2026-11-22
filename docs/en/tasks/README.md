@@ -262,7 +262,8 @@ In the [C# exercise](../csharp/README.md#first-run), `dotnet run --project … -
 
 | Task | Synonyms and API names | Direct link |
 | --- | --- | --- |
-| Get your first response from a container | Docker, Dockerfile, docker compose up, curl | [First HTTP server run](../tools/docker/README.md#first-run) |
+| Get your first response from a container | Docker, Dockerfile, docker compose up, curl | [First HTTP server run](../tools/docker/first-run.md#first-run) |
+| See complete Dockerfile and compose.yaml files for three services | volume, network, gateway, mount | [Complete files and exercises](../tools/docker/lab.md#dockerfile) · [How a request travels](../tools/docker/guide.md) |
 | Write a Dockerfile and build an image | FROM, COPY, RUN, CMD, USER, docker build | [Build your first image](../tools/docker/dockerfile.md#build-your-first-image) · [Reuse the installation cache](../tools/docker/dockerfile.md#reuse-the-installation-cache) |
 | Connect a Dockerfile to a service and publish a port | compose.yaml, build.context, dockerfile, ports, image | [Define a service](../tools/docker/compose-file.md#define-a-service) · [Locate the Dockerfile](../tools/docker/compose-file.md#locate-the-dockerfile) |
 | Read logs, run a command, or stop a container | docker compose ps, logs, exec, run, stop, down | [Commands by task](../tools/docker/commands.md) |
