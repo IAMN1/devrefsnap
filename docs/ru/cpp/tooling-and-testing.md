@@ -6,11 +6,25 @@
 
 | Задача | Инструмент | Пример |
 | --- | --- | --- |
+| Собрать программу из двух файлов | `clang++`, стандартная библиотека | [Сборка без CMake](#собрать-cli-командой-clang) |
 | Собрать приложение и библиотеку | CMake, цели и `target_link_libraries` | [Цели сборки](#cmake-targets) |
 | Выбрать способ подключения зависимости | vcpkg, Conan 2, CMake `FetchContent` | [Пакеты](#packages) |
 | Повторить сборку на Apple Silicon | CMake, vcpkg, GoogleTest | [Запустить учебный проект](#run-the-lab) |
 | Проверить обычный ввод и ошибки | GoogleTest, CTest | [Тесты](#tests) |
 | Проверить память и неопределённое поведение | AddressSanitizer, UndefinedBehaviorSanitizer | [Диагностика](#diagnostics) |
+
+## Собрать CLI командой Clang
+
+Из корня репозитория соберите [CLI](../../../examples/cpp/score-count.cpp) и [реализацию подсчёта](../../../examples/cpp/score-summary.cpp). Нужны компилятор и стандартная библиотека с поддержкой C++20, а также Bash или Zsh.
+
+```bash
+build_dir=$(mktemp -d) &&
+  clang++ -std=c++20 -Wall -Wextra -pedantic examples/cpp/score-count.cpp examples/cpp/score-summary.cpp \
+    -o "$build_dir/score-count" &&
+  "$build_dir/score-count" 60 55 60 95
+```
+
+Результат — `2 of 3`. Из трёх чисел только 60 и 95 достигают порога 60. Для сборки с GoogleTest используйте [лабораторную работу](#run-the-lab).
 
 <a id="cmake-targets"></a>
 

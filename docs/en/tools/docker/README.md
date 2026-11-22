@@ -8,6 +8,8 @@
 | Understand how the files work together | **Guide** — [from building an image to a request through two containers](guide.md) |
 | See the complete files or try the exercises | **Lab** — [complete Dockerfile](lab.md#dockerfile), [complete three-service compose.yaml](lab.md#composeyaml), [run and exercises](lab.md#run-the-site) |
 
+[Dockerfile in `dockers/`, `main.py` and `.dockerignore` at the root: file layout and both Compose configurations](build-context.md).
+
 ## First run
 
 Try the [single-service exercise](first-run.md) if this is your first time running Docker. In the [complete example](lab.md), a gateway routes requests to the catalog and help sites. Each service mounts a named volume and explicitly joins a network.

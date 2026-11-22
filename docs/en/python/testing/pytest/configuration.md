@@ -120,7 +120,7 @@ Record the reason for the filter.
 ## Example environment
 
 Use CPython 3.14 to reproduce the examples.
-Install the packages in a separate environment with `python -m pip install 'pytest==9.2.0' 'pytest-mock==3.17.0' 'pytest-asyncio==1.4.1.post1' 'pytest-cov==7.1.0' 'pytest-xdist==3.8.0'`.
+Install the packages in a separate environment with `python -m pip install 'pytest==9.2.0' 'pytest-mock==3.17.0' 'pytest-asyncio==1.5.0' 'pytest-cov==7.1.0' 'pytest-xdist==3.8.0'`.
 
 Coverage reports which lines ran.
 Assess whether assertions are sufficient separately.

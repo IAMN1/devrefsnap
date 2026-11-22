@@ -8,7 +8,7 @@
 
 ### Сообщить об ошибке или предложить тему
 
-Откройте [список форм GitHub](https://github.com/IAMN1/devrefsnap/issues/new/choose).
+Войдите в GitHub и откройте [список форм](https://github.com/IAMN1/devrefsnap/issues/new/choose).
 
 - **Исправить или обновить материал.** Дайте ссылку на страницу и раздел. Опишите проблему и ожидаемый результат. Для ошибки в примере укажите версии, шаги и фактический вывод. Для обновления API приложите официальную документацию или примечания к выпуску нужной версии.
 - **Предложить тему.** Опишите задачу читателя и результат, который он должен получить. Укажите ближайшую страницу из [каталога](docs/ru/README.md#каталог-материалов), если такая страница есть.
@@ -28,6 +28,7 @@
 
 1. Запустите [статические проверки материалов](scripts/README.md#запустить-локально). Они проверяют локальные ссылки, якоря, ограждения и синтаксис примеров.
 2. Если изменили полный пример, выполните его в отдельном учебном окружении с указанными зависимостями. Для изменённой рекомендации сверяйтесь с официальной документацией нужной версии.
+   Если изменили ссылку на внешний сайт, откройте страницу и перейдите к указанному разделу.
 3. Напишите сообщение коммита на английском в формате Conventional Commits, например `docs: clarify SQLite transaction behavior`. Откройте PR в `main`.
 4. Опишите, что изменилось для читателя. Укажите страницы, состояние парной версии и связанный issue, если он есть. Запишите команды, версии и результаты выполненных проверок. Укажите отдельно, что сверили с документацией и какие сценарии ещё требуют проверки.
 
@@ -37,7 +38,7 @@ Write the title and body of an issue or pull request (PR) in either Russian or E
 
 ### Report a problem or propose a topic
 
-Open the [GitHub issue form chooser](https://github.com/IAMN1/devrefsnap/issues/new/choose).
+Sign in to GitHub and open the [issue form chooser](https://github.com/IAMN1/devrefsnap/issues/new/choose).
 
 - **Fix or update material.** Link to the page and section. Describe the problem and the expected result. For a broken example, include versions, steps, and actual output. For an API update, link to the official documentation or release notes for the relevant version.
 - **Propose a topic.** Describe the reader's task and the result they should achieve. Link to the closest page in the [catalog](docs/en/README.md#material-catalog), if one exists.
@@ -57,5 +58,6 @@ Submit material you can share under the [project licenses](LICENSE.md). Cite the
 
 1. Run the commands under [local material checks (Russian)](scripts/README.md#запустить-локально). Use Python 3.13 on Linux x86_64 or Python 3.14 on macOS arm64. The checks cover local links, anchors, code fences, and example syntax.
 2. If you changed a complete example, run it in a separate practice environment with the listed dependencies. For a changed recommendation, check the official documentation for the relevant version.
+   If you changed an external link, open the page and follow the link to its section.
 3. Write your commit message in English using Conventional Commits, for example `docs: clarify SQLite transaction behavior`. Open the PR against `main`.
 4. Describe what changed for the reader. List the pages, the status of the matching edition, and the related issue, if any. Report the commands, versions, and results of the checks you ran. Identify what you checked against documentation and which scenarios still need verification.

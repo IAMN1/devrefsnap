@@ -6,11 +6,25 @@ Build a CLI that counts scores at or above a threshold. Use this lab to follow a
 
 | Task | Tool | Example |
 | --- | --- | --- |
+| Build a program from two files | `clang++`, standard library | [Build without CMake](#build-the-cli-with-clang) |
 | Build an application and a library | CMake targets and `target_link_libraries` | [Build targets](#cmake-targets) |
 | Choose how to add a dependency | vcpkg, Conan 2, CMake `FetchContent` | [Packages](#packages) |
 | Reproduce the build on Apple Silicon | CMake, vcpkg, GoogleTest | [Run the lab](#run-the-lab) |
 | Check ordinary inputs and errors | GoogleTest, CTest | [Tests](#tests) |
 | Check for memory errors and undefined behavior | AddressSanitizer, UndefinedBehaviorSanitizer | [Diagnostics](#diagnostics) |
+
+## Build the CLI with Clang
+
+From the repository root, build the [CLI](../../../examples/cpp/score-count.cpp) and its [scoring implementation](../../../examples/cpp/score-summary.cpp). Use a C++20 compiler and standard library with Bash or Zsh.
+
+```bash
+build_dir=$(mktemp -d) &&
+  clang++ -std=c++20 -Wall -Wextra -pedantic examples/cpp/score-count.cpp examples/cpp/score-summary.cpp \
+    -o "$build_dir/score-count" &&
+  "$build_dir/score-count" 60 55 60 95
+```
+
+The result is `2 of 3`. Of the three scores, 60 and 95 reach the minimum of 60. To build with GoogleTest, follow the [test lab](#run-the-lab).
 
 <a id="cmake-targets"></a>
 
@@ -63,8 +77,6 @@ The [lab manifest](../../../examples/cpp/vcpkg.json) pins the built-in registry 
 | Run unit tests | [GoogleTest](https://google.github.io/googletest/primer.html) | Check results, boundary cases, and expected errors. |
 | Measure function execution time | [Google Benchmark](https://github.com/google/benchmark) | Record input data, build settings, and measurement conditions. |
 | Debug and analyze code | [LLDB](https://lldb.llvm.org/use/tutorial.html), [clang-tidy](https://clang.llvm.org/extra/clang-tidy/) | Use a Debug build for debugging. Pass real compiler flags to the analyzer via `compile_commands.json`. |
-
-<a id="run-the-lab"></a>
 
 ## Run the lab
 

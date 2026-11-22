@@ -16,7 +16,7 @@ The example measures synthetic files without storing user data.
 
 Intermediate level.
 Use Python 3.14.
-In a separate environment, run `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'python-multipart==0.0.33'`.
+In a separate environment, run `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0' 'python-multipart==0.0.34'`.
 
 <a id="формы-и-загрузка-файлов"></a>
 ## Forms and file uploads
@@ -29,8 +29,7 @@ Save the standalone example in `uploads.py`.
 uvicorn uploads:app --reload
 ```
 
-Upload an existing practice file to check the example.
-In curl, `@` reads a local file.
+Open the directory containing `uploads.py` in a second terminal. In the curl commands, `@` before a filename reads the file from disk.
 
 ```bash
 curl -F 'username=alice' http://127.0.0.1:8000/form
@@ -43,8 +42,7 @@ The second result contains the file's name and size.
 The third result contains a list of two results.
 The handler's limit checks the content read from one file.
 This limit does not check the complete HTTP request size before multipart parsing.
-Set a total body limit on the server or proxy as well.
-Set a file-count limit on the server or proxy as well.
+To set limits across this app, replace its `app` assignment with `app = FastAPI(max_body_size=3 * 1024 * 1024, form_limits={"max_files": 2})`. With FastAPI 0.165.0, a third file in one form produces a `400`. The body limit counts all the form parts and their boundaries. Reading a request that exceeds 3 MiB produces a `413`. [Request body and form limits](https://fastapi.tiangolo.com/advanced/request-body-limits/)
 The client supplies the filename and MIME type.
 The example does not save files.
 The example does not verify the actual file format.

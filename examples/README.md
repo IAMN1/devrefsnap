@@ -3,9 +3,20 @@
 Откройте инструкцию на нужном языке для подготовки и запуска.
 Open the guide in your language for setup and execution.
 
+[Алгоритмы / Algorithms](#examples-algorithms) · [Архитектура / Architecture](#examples-architecture) · [C](#examples-c) · [C++](#examples-cpp) · [C#](#examples-csharp) · [Базы данных / Databases](#examples-databases) · [Go](#examples-go) · [Python](#examples-python) · [TypeScript](#examples-typescript) · [Linux](#examples-systems) · [Docker, Git, HTTP](#examples-tools)
+
+<a name="examples-algorithms"></a>
+## Алгоритмы / Algorithms
+
 | Файл / File | Инструкции / Guides |
 | --- | --- |
 | [`count_operations.py`](algorithms/big-o/count_operations.py) | [Русский](../docs/ru/algorithms/README.md#big-o) · [English](../docs/en/algorithms/README.md#big-o) |
+
+<a name="examples-architecture"></a>
+## Архитектура / Architecture
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
 | [`command-pattern.py`](architecture/command-pattern.py) | [Русский](../docs/ru/architecture/patterns/code-examples.md#command-запрос-обработчик-и-локальный-повтор) · [English](../docs/en/architecture/patterns/code-examples.md#command-request-handler-and-local-replay) |
 | [`invariants.py`](architecture/invariants.py) | [Русский](../docs/ru/architecture/contracts.md#резерв-остатка) · [English](../docs/en/architecture/contracts.md#reserve-stock) |
 | [`observer-pattern.py`](architecture/observer-pattern.py) | [Русский](../docs/ru/architecture/patterns/code-examples.md#observer-подписка-отписка-и-ошибка-слушателя) · [English](../docs/en/architecture/patterns/code-examples.md#observer-subscriptions-unsubscribe-and-listener-errors) |
@@ -14,14 +25,38 @@ Open the guide in your language for setup and execution.
 | [`solid-contract.py`](architecture/solid-contract.py) | [Русский](../docs/ru/architecture/contracts.md#подстановка-источника-цен) · [English](../docs/en/architecture/contracts.md#substitute-a-price-source) |
 | [`solid-ocp.py`](architecture/solid-ocp.py) | [Русский](../docs/ru/architecture/solid.md#o--обоснованная-точка-расширения) · [English](../docs/en/architecture/solid.md#o--a-justified-extension-point) |
 | [`solid-srp.py`](architecture/solid-srp.py) | [Русский](../docs/ru/architecture/solid.md#s--причины-изменений) · [English](../docs/en/architecture/solid.md#s--reasons-for-change) |
+
+<a name="examples-c"></a>
+## C
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
 | [`basics.c`](c/basics.c) | [Русский](../docs/ru/c/README.md#первый-запуск) · [English](../docs/en/c/README.md#first-run) |
 | [Парсер порта на C / C port parser](c/port-parser/CMakeLists.txt) | [Русский](../docs/ru/c/tooling-and-testing.md#tests) · [English](../docs/en/c/tooling-and-testing.md#tests) |
+
+<a name="examples-cpp"></a>
+## C++
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
+| [`basics.cpp`](cpp/basics.cpp) | [Русский](../docs/ru/cpp/README.md#первый-запуск) · [English](../docs/en/cpp/README.md#first-run) |
+| [Подсчёт значений на C++ / C++ score count](cpp/CMakeLists.txt), [тесты / tests](cpp/score-summary-test.cpp) | [Русский](../docs/ru/cpp/tooling-and-testing.md#run-the-lab) · [English](../docs/en/cpp/tooling-and-testing.md#run-the-lab) |
+
+<a name="examples-csharp"></a>
+## C#
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
 | [`Program.cs`](csharp/basics/Program.cs), [`basics.csproj`](csharp/basics/basics.csproj) | [Русский](../docs/ru/csharp/README.md#первый-запуск) · [English](../docs/en/csharp/README.md#first-run) |
 | [Расчёт доставки на C# / C# shipping calculation](csharp/shipping/Shipping/Shipping.csproj), [тесты / tests](csharp/shipping/Shipping.Tests/ShippingFeeTests.cs) | [Русский](../docs/ru/csharp/tooling-and-testing.md#tests) · [English](../docs/en/csharp/tooling-and-testing.md#tests) |
 | [HTTP-сервис / HTTP service](csharp/shipping/Shipping.Api/Program.cs), [HTTP-тесты / HTTP tests](csharp/shipping/Shipping.Api.Tests/ShippingQuoteTests.cs) | [Русский](../docs/ru/csharp/first-http-service.md) · [English](../docs/en/csharp/first-http-service.md) |
 | [Заказы в SQLite / Orders in SQLite](csharp/shipping/Orders.Api/Program.cs), [модель / model](csharp/shipping/Orders.Api/OrdersDb.cs) | [Русский](../docs/ru/csharp/persist-orders.md) · [English](../docs/en/csharp/persist-orders.md) |
-| [`basics.cpp`](cpp/basics.cpp) | [Русский](../docs/ru/cpp/README.md#первый-запуск) · [English](../docs/en/cpp/README.md#first-run) |
-| [Подсчёт значений на C++ / C++ score count](cpp/CMakeLists.txt), [тесты / tests](cpp/score-summary-test.cpp) | [Русский](../docs/ru/cpp/tooling-and-testing.md#run-the-lab) · [English](../docs/en/cpp/tooling-and-testing.md#run-the-lab) |
+
+<a name="examples-databases"></a>
+## Базы данных / Databases
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
 | [`aof_backup.py`](databases/non-relational/redis/aof_backup.py) | [Русский](../docs/ru/databases/non-relational/redis/aof-backup-and-restore.md#полный-пример) · [English](../docs/en/databases/non-relational/redis/aof-backup-and-restore.md#complete-example) |
 | [`data.py`](databases/non-relational/redis/data.py) | [Русский](../docs/ru/databases/non-relational/redis/data-lab.md#полный-пример-структуры-и-ttl) · [English](../docs/en/databases/non-relational/redis/data-lab.md#complete-data-structures-and-ttl-example) |
 | [`messaging.py`](databases/non-relational/redis/messaging.py) | [Русский](../docs/ru/databases/non-relational/redis/transactions-lab.md#полный-пример-stream-и-pubsub) · [English](../docs/en/databases/non-relational/redis/transactions-lab.md#complete-stream-and-pubsub-example) |
@@ -35,6 +70,12 @@ Open the guide in your language for setup and execution.
 | [`demo.py`](databases/relational/sqlite/demo.py) | [Русский](../docs/ru/databases/relational/sqlite/query-lab.md#полный-пример-блог-в-памяти) · [English](../docs/en/databases/relational/sqlite/query-lab.md#complete-in-memory-blog-example) |
 | [`migration.py`](databases/relational/sqlite/migration.py) | [Русский](../docs/ru/databases/relational/sqlite/migration-lab.md#полный-пример-перестроение-таблицы) · [English](../docs/en/databases/relational/sqlite/migration-lab.md#complete-example-of-a-table-rebuild) |
 | [`demo.sql`](databases/sql/demo.sql) | [Русский](../docs/ru/databases/sql/query-lab.md#полный-пример) · [English](../docs/en/databases/sql/query-lab.md#complete-example) |
+
+<a name="examples-go"></a>
+## Go
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
 | [`main.go`](go/cmd/demo/main.go) | [Русский](../docs/ru/go/examples/language.md#полный-модуль) · [English](../docs/en/go/examples/language.md#complete-module) |
 | [`context/main.go`](go/context/main.go) | [Русский](../docs/ru/go/context.md#проверить-три-исхода) · [English](../docs/en/go/context.md#check-three-outcomes) |
 | [`counter.go`](go/counter.go) | [Русский](../docs/ru/go/examples/concurrency-and-testing.md#общие-данные-и-mutex) · [English](../docs/en/go/examples/concurrency-and-testing.md#shared-data-and-mutexes) |
@@ -45,6 +86,12 @@ Open the guide in your language for setup and execution.
 | [`model_test.go`](go/model_test.go) | [Русский](../docs/ru/go/examples/language.md#проверка-валидного-и-невалидного-ввода) · [English](../docs/en/go/examples/language.md#test-valid-and-invalid-input) |
 | [`worker.go`](go/worker.go) | [Русский](../docs/ru/go/examples/concurrency-and-testing.md#ограниченный-worker-pool) · [English](../docs/en/go/examples/concurrency-and-testing.md#bounded-worker-pool) |
 | [`worker_test.go`](go/worker_test.go) | [Русский](../docs/ru/go/examples/concurrency-and-testing.md#тесты-и-race-detector) · [English](../docs/en/go/examples/concurrency-and-testing.md#tests-and-the-race-detector) |
+
+<a name="examples-python"></a>
+## Python
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
 | [`pyproject.toml`](python/architecture/project-design/pyproject.toml) | [Русский](../docs/ru/python/architecture/project-design/example.md#метаданные-и-структура) · [English](../docs/en/python/architecture/project-design/example.md#metadata-and-structure) |
 | [`__init__.py`](python/architecture/project-design/src/catalog_demo/__init__.py) | [Русский](../docs/ru/python/architecture/project-design/example.md#метаданные-и-структура) · [English](../docs/en/python/architecture/project-design/example.md#metadata-and-structure) |
 | [`__main__.py`](python/architecture/project-design/src/catalog_demo/__main__.py) | [Русский](../docs/ru/python/architecture/project-design/example.md#запуск) · [English](../docs/en/python/architecture/project-design/example.md#run) |
@@ -114,13 +161,31 @@ Open the guide in your language for setup and execution.
 | [`flask_db.py`](python/web/flask/flask_db.py) | [Русский](../docs/ru/python/web/flask/configuration-and-deployment.md#жизненный-цикл-соединения) · [English](../docs/en/python/web/flask/configuration-and-deployment.md#connection-lifecycle) |
 | [`test_flask_app.py`](python/web/flask/test_flask_app.py) | [Русский](../docs/ru/python/web/flask/testing.md#полный-набор-проверок) · [English](../docs/en/python/web/flask/testing.md#complete-check-suite) |
 | [`test_flask_db.py`](python/web/flask/test_flask_db.py) | [Русский](../docs/ru/python/web/flask/configuration-and-deployment.md#жизненный-цикл-соединения) · [English](../docs/en/python/web/flask/configuration-and-deployment.md#connection-lifecycle) |
+
+<a name="examples-typescript"></a>
+## TypeScript
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
 | [`client.mts`](typescript/http-client/client.mts) | [Русский](../docs/ru/typescript/README.md) · [English](../docs/en/typescript/README.md) |
+
+<a name="examples-systems"></a>
+## Linux
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
 | [`example.sh`](systems/linux/example.sh) | [Русский](../docs/ru/systems/linux/shell-and-files.md#безопасный-практический-пример) · [English](../docs/en/systems/linux/shell-and-files.md#safe-practice-example) |
 | [`port_probe.py`](systems/linux/port_probe.py) | [Русский](../docs/ru/systems/linux/process-by-port.md#самостоятельный-учебный-пример) · [English](../docs/en/systems/linux/process-by-port.md#standalone-practice-example) |
 | [`process.sh`](systems/linux/process.sh) | [Русский](../docs/ru/systems/linux/permissions-and-processes.md#проверить-завершение-своего-дочернего-процесса) · [English](../docs/en/systems/linux/permissions-and-processes.md#check-termination-of-your-own-child-process) |
+
+<a name="examples-tools"></a>
+## Docker, Git, HTTP
+
+| Файл / File | Инструкции / Guides |
+| --- | --- |
 | [`api-contract-lab/compose.yaml`](tools/api-contract-lab/compose.yaml) · [`workflow-example.yml`](tools/api-contract-lab/workflow-example.yml) | [Русский](../docs/ru/tools/api-contract-lab.md) · [English](../docs/en/tools/api-contract-lab.md) |
 | [`compose-site/Dockerfile`](tools/compose-site/Dockerfile) · [`compose.yaml`](tools/compose-site/compose.yaml) | [Русский](../docs/ru/tools/docker/lab.md) · [English](../docs/en/tools/docker/lab.md) |
-| [`docker-build-context/dockers/Dockerfile`](tools/docker-build-context/dockers/Dockerfile) · [`compose.yaml`](tools/docker-build-context/compose.yaml) · [`dockers/compose.yaml`](tools/docker-build-context/dockers/compose.yaml) | [Русский](../docs/ru/tools/docker/compose-file.md#указать-dockerfile) · [English](../docs/en/tools/docker/compose-file.md#locate-the-dockerfile) |
+| [`dockers/Dockerfile`](tools/docker-build-context/dockers/Dockerfile) · [`main.py`](tools/docker-build-context/main.py) · [`.dockerignore`](tools/docker-build-context/.dockerignore) · [`compose.yaml`](tools/docker-build-context/compose.yaml) · [`dockers/compose.yaml`](tools/docker-build-context/dockers/compose.yaml) | [Русский](../docs/ru/tools/docker/build-context.md) · [English](../docs/en/tools/docker/build-context.md) |
 | [`docker-basics/Dockerfile`](tools/docker-basics/Dockerfile) · [`compose.yaml`](tools/docker-basics/compose.yaml) | [Русский](../docs/ru/tools/docker/first-run.md#первый-запуск) · [English](../docs/en/tools/docker/first-run.md#first-run) |
 | [`compose.yaml`](tools/compose-and-github-actions/compose.yaml) · [`workflow-example.yml`](tools/compose-and-github-actions/workflow-example.yml) | [Русский](../docs/ru/tools/compose-and-github-actions.md#файлы-примера) · [English](../docs/en/tools/compose-and-github-actions.md#example-files) |
 | [`conflicts.sh`](tools/git/conflicts.sh) | [Русский](../docs/ru/tools/git/history.md#проверить-конфликты-merge-и-rebase) · [English](../docs/en/tools/git/history.md#test-merge-and-rebase-conflicts) |

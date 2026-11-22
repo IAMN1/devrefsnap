@@ -46,7 +46,7 @@
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install 'fastapi==0.162.0' 'httpx2==2.16.0' 'pytest==9.2.0'
+python -m pip install 'fastapi==0.165.0' 'httpx2==2.16.2' 'pytest==9.2.0'
 python -m pytest -q test_dependency_override.py
 ```
 
@@ -112,7 +112,7 @@ python -m pytest -q test_dependency_override.py
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install 'fastapi==0.162.0' 'httpx2==2.16.0' 'pytest==9.2.0'
+python -m pip install 'fastapi==0.165.0' 'httpx2==2.16.2' 'pytest==9.2.0'
 python -m pytest -q test_dependencies.py
 ```
 
@@ -172,8 +172,8 @@ Starlette использует HTTPX2 для `TestClient`.
 
 - [FastAPI: подмена зависимостей](https://fastapi.tiangolo.com/advanced/testing-dependencies/).
 - [FastAPI: зависимости в декораторе](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-in-path-operation-decorators/).
-- [FastAPI 0.162.0: разрешение зависимостей](https://github.com/fastapi/fastapi/blob/0.162.0/fastapi/dependencies/utils.py).
-- [FastAPI: release notes 0.162.0](https://fastapi.tiangolo.com/release-notes/#01620-2026-10-23).
+- [FastAPI 0.165.0: разрешение зависимостей](https://github.com/fastapi/fastapi/blob/0.165.0/fastapi/dependencies/utils.py).
+- [FastAPI: release notes 0.165.0](https://fastapi.tiangolo.com/release-notes/#01650-2026-11-18).
 - [Starlette: TestClient](https://starlette.dev/testclient/).
 
 [Карточка подмены](testing.md#подмена-зависимости) · [Справочник FastAPI](README.md) · [Указатель задач](../../../tasks/README.md#http-api-и-веб-приложения)

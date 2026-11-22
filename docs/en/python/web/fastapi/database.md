@@ -29,7 +29,7 @@ Production connections are unnecessary here.
 <a id="синхронный-sqlalchemy"></a>
 ## Synchronous SQLAlchemy
 
-In a separate environment, run `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'sqlalchemy==2.1.8' 'pydantic[email]==2.14.3'`.
+In a separate environment, run `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0' 'sqlalchemy==2.1.9' 'pydantic[email]==2.14.4'`.
 Save the complete example in `db_app.py`.
 
 [`db_app.py`](../../../../../examples/python/web/fastapi/db_app.py)
@@ -37,6 +37,8 @@ Save the complete example in `db_app.py`.
 ```bash
 uvicorn db_app:app --reload
 ```
+
+Leave the server running and send the requests from a second terminal. For the first run, start with a fresh practice database.
 
 ```bash
 curl -i -X POST http://127.0.0.1:8000/users -H 'Content-Type: application/json' -d '{"username":"alice","email":"alice@example.com"}'
@@ -65,7 +67,7 @@ Sources include [SQLAlchemy sessions and transactions](https://docs.sqlalchemy.o
 
 If you are new to `async def` and `await`, start with [asyncio basics](../../language/asyncio.md).
 
-For the independent async example, run `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1'`.
+For the independent async example, run `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0' 'sqlalchemy[asyncio]==2.1.9' 'aiosqlite==0.22.1'`.
 Save the complete independent example in `async_db_app.py`.
 
 [`async_db_app.py`](../../../../../examples/python/web/fastapi/async_db_app.py)

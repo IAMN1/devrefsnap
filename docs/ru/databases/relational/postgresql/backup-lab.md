@@ -22,8 +22,7 @@
 
 ## Подготовить входные файлы
 
-Сохраните [`queries.sql`](../../../../../examples/databases/relational/postgresql/queries.sql).
-Сохраните файлы по ссылкам ниже под именами `verify-backup.sql` и `backup-lab.sh` в той же папке.
+Откройте каталог `examples/databases/relational/postgresql/` в копии репозитория. Если вы скачиваете файлы отдельно, поместите [`queries.sql`](../../../../../examples/databases/relational/postgresql/queries.sql), [`verify-backup.sql`](../../../../../examples/databases/relational/postgresql/verify-backup.sql) и [`backup-lab.sh`](../../../../../examples/databases/relational/postgresql/backup-lab.sh) в один каталог.
 Скрипт сам создаёт учебную базу `cheatsheet_demo`.
 Убедитесь, что сервер и клиенты относятся к PostgreSQL 18.
 Сценарий подключается к `127.0.0.1` под `postgres`.
@@ -76,8 +75,9 @@ Data-only restore ниже намеренно запускается в несо
 ## Очистить учебные ресурсы
 
 Сначала просмотрите восстановленные БД и сохраните нужные архивы.
-Следующий фрагмент **удаляет четыре учебные БД целиком**.
-Проверьте сервер и каждое имя перед запуском:
+После успешного прогона следующие команды **удаляют четыре учебные БД целиком**. Проверьте сервер и каждое имя перед запуском.
+
+Если скрипт остановился на занятом имени, пропустите соответствующую команду `dropdb`. Удаляйте только базы, которые создал этот прогон.
 
 ```bash
 dropdb --host=127.0.0.1 --username=postgres cheatsheet_restore_check

@@ -31,7 +31,7 @@ FastAPI строит HTTP API из аннотаций Python и моделей P
 
 | Параметр | Значение |
 | --- | --- |
-| Целевой API | FastAPI 0.162.0, Pydantic v2; синтаксис примеров Python 3.10+ |
+| Целевой API | FastAPI 0.165.0, Pydantic v2. Для FastAPI нужен Python 3.11 или новее |
 | Предпосылки | Функции, аннотации типов, HTTP/JSON; для продвинутых задач — `async` и контекстные менеджеры |
 
 <a id="навигация"></a>
@@ -41,27 +41,29 @@ FastAPI строит HTTP API из аннотаций Python и моделей P
 
 ## Первый запуск
 
-Для воспроизведения используйте Python 3.14, FastAPI 0.162.0 и Uvicorn 0.54.0.
+Для воспроизведения используйте Python 3.14, FastAPI 0.165.0 и Uvicorn 0.54.0.
 
-Создайте виртуальное окружение в отдельной учебной папке.
-Установите зависимости в учебное окружение.
+В терминале macOS или Linux откройте пустой учебный каталог. Создайте окружение и установите зависимости.
 
 ```bash
-python -m venv .venv
+python3.14 -m venv .venv
 source .venv/bin/activate
-python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]'
+python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0'
 ```
 
-Полный пример: файл `minimal.py` в этой папке.
-
-[`minimal.py`](../../../../../examples/python/web/fastapi/minimal.py)
+Сохраните [готовое приложение](../../../../../examples/python/web/fastapi/minimal.py) как `minimal.py` в этом каталоге. Запустите сервер.
 
 ```bash
 uvicorn minimal:app --reload
-curl http://127.0.0.1:8000/
 ```
 
-Результат: `200` и `{"message":"Привет"}`.
+Оставьте сервер запущенным. Во втором терминале запросите статус и тело ответа.
+
+```bash
+curl -i http://127.0.0.1:8000/
+```
+
+В первой строке появится статус `200 OK`. После заголовков появится тело `{"message":"Привет"}`. Для остановки сервера нажмите `Ctrl+C` в первом терминале.
 Swagger UI доступен на [localhost:8000/docs](http://localhost:8000/docs).
 ReDoc доступен на [localhost:8000/redoc](http://localhost:8000/redoc).
 Схема доступна на [localhost:8000/openapi.json](http://localhost:8000/openapi.json).
@@ -180,7 +182,7 @@ def get_session() -> Generator[Session, None, None]:
 
 ## Источники
 
-- [FastAPI: release notes 0.162.0](https://fastapi.tiangolo.com/release-notes/#01620-2026-10-23).
+- [FastAPI: release notes 0.165.0](https://fastapi.tiangolo.com/release-notes/#01650-2026-11-18).
 - [Параметры query](https://fastapi.tiangolo.com/tutorial/query-params-str-validations/), [модели ответа](https://fastapi.tiangolo.com/tutorial/response-model/).
 - [Когда использовать async/def](https://fastapi.tiangolo.com/async/), [lifespan](https://fastapi.tiangolo.com/advanced/events/).
 - [Миграция Pydantic v2](https://pydantic.dev/docs/validation/latest/get-started/migration/).

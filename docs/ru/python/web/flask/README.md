@@ -56,7 +56,7 @@ with app.test_client() as client:
 
 
 Для воспроизведения используйте Python 3.14.
-В отдельном окружении выполните `python -m pip install 'Flask==3.1.3' 'Werkzeug==3.1.9' 'pytest==9.2.0'`.
+В [активном окружении](../../README.md#создать-окружение-для-примера) выполните `python -m pip install 'Flask==3.1.3' 'Werkzeug==3.1.9' 'pytest==9.2.0'`.
 Сохраните [flask_app.py](application.md) и [test_flask_app.py](testing.md) в одном каталоге.
 Запустите `python -m pytest -q test_flask_app.py`.
 HTTP-клиент тестов не открывает сетевой порт.

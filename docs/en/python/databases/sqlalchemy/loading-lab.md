@@ -31,7 +31,7 @@ Save [`test_relationship_loading.py`](../../../../../examples/python/databases/s
 Install the dependencies in the practice environment.
 
 ```bash
-python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'pytest==9.2.0'
+python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'pytest==9.2.0'
 ```
 
 The `asyncio` extra installs greenlet, which is required to import AsyncAttrs from the shared model.
@@ -118,4 +118,4 @@ Other database systems, composite keys, locks, and concurrent access require sep
 - [Greenlet and installation in SQLAlchemy 2.1](https://docs.sqlalchemy.org/en/21/faq/installation.html#i-m-getting-an-error-about-greenlet-not-being-installed-when-i-try-to-use-asyncio).
 
 - [Relationship loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html), [SQL execution events](https://docs.sqlalchemy.org/en/21/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute).
-- [Populate existing](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#populate-existing), [release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+- [Populate existing](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#populate-existing), [release notes 2.1.9](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.9).

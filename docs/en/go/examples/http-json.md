@@ -18,8 +18,9 @@ The [short cards](../http-json.md) explain individual techniques.
 
 Running the example requires Go 1.27.
 Prerequisites include HTTP, structs, and errors.
-Create a separate learning directory.
-Copy [go.mod](language.md#go-mod) into the new directory.
+From the repository root, run `go -C examples/go test -run 'TestJSONHandler|TestMethodAndMediaType' .`. The tests report `ok` followed by the module name on success.
+
+To assemble the example separately, copy [go.mod](../../../../examples/go/go.mod) into a learning directory.
 Save `http.go` and `http_test.go` from the links below beside `go.mod`.
 The example uses only the standard library, including `encoding/json`, `net/http`, and `httptest`.
 

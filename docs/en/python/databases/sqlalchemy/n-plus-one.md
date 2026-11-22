@@ -11,7 +11,7 @@ The program reads the same data with two loading strategies. It uses two synchro
 | Run the example from scratch | Install SQLAlchemy and save one file | [Setup and run](#setup-and-run) · [Full program](#full-program) |
 | Compare more loading strategies | Try `joinedload`, `raiseload`, and partial collections | [Extended lab](loading-lab.md) |
 
-You need Python 3.14, SQLAlchemy 2.1.8, and Python's `sqlite3` module.
+You need Python 3.14, SQLAlchemy 2.1.9, and Python's `sqlite3` module.
 The example assumes that you know Python classes, type annotations, loops, context managers, `try`/`finally`, assertions, and basic SQL `SELECT`.
 The program uses synthetic data in an in-memory SQLite database. The data disappears when the program exits.
 
@@ -64,7 +64,7 @@ Open a terminal in the directory and run these commands on macOS or Linux.
 ```bash
 python3.14 -m venv .venv
 source .venv/bin/activate
-python -m pip install 'sqlalchemy==2.1.8'
+python -m pip install 'sqlalchemy==2.1.9'
 python n_plus_one.py
 ```
 
@@ -115,6 +115,6 @@ Async sessions, other databases, larger data sets, and concurrent access require
 - [Select-in loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#select-in-loading).
 - [ORM quick start](https://docs.sqlalchemy.org/en/21/orm/quickstart.html) · [Session basics](https://docs.sqlalchemy.org/en/21/orm/session_basics.html).
 - [SQL execution events](https://docs.sqlalchemy.org/en/21/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute).
-- [SQLAlchemy 2.1.8 release notes](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+- [SQLAlchemy 2.1.9 release notes](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.9).
 
 [Relationship loading cards](relationship-loading.md) · [SQLAlchemy reference](README.md) · [Task index](../../../tasks/README.md#sql-and-access-from-python)

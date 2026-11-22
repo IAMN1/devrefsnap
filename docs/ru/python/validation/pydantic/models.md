@@ -18,7 +18,7 @@
 **Предпосылки:** классы, типы, Decimal и JSON.
 Поместите все файлы ниже в одну учебную папку.
 Используйте Python 3.14.
-Выполните `python -m pip install 'pydantic[email]==2.14.3' 'email-validator==2.3.0' 'pytest==9.2.0'`.
+Выполните `python -m pip install 'pydantic[email]==2.14.4' 'email-validator==2.4.0' 'pytest==9.2.0'`.
 
 
 ## Модели, валидация и JSON

@@ -10,12 +10,32 @@ Imagine a site with two sections. A reader opens the catalog or the help page th
 
 **compose.yaml determines how the containers run.** The `services` section describes the application's roles. Both `catalog` and `help` use the same Dockerfile. Each starts the server in its own working directory and gets its own volume. The `gateway` service uses the published Nginx image. All three belong to one Compose project.
 
+## Where COPY finds a file
+
+In `docker build -f dockers/Dockerfile .`, the final dot selects the source directory for the build. Run it from the project root and Docker looks there for `.dockerignore`. Then `COPY main.py .` reads the included file from that root. The dot on the right selects the working directory in the image. With `WORKDIR /app`, the file lands at `/app/main.py`.
+
+The arrows trace one source file into the image.
+
+```mermaid
+flowchart TD
+    accTitle: Path of main.py during the image build
+    accDescr: The context selects the available files. After .dockerignore is applied, COPY places main.py in the image working directory.
+    Project["Project root · context ."] -->|"apply rules"| Ignore[".dockerignore"]
+    Ignore -->|"include source"| Source["main.py"]
+    Ignore -->|"exclude three names"| Excluded[".venv · .git · .env"]
+    Source -->|"COPY main.py . with WORKDIR /app"| Image["/app/main.py in the image"]
+```
+
+What changes if the last argument is `dockers/`? That subdirectory becomes the context. The root-level `main.py` falls outside it, so the build fails. [Project tree and complete files](build-context.md)
+
 ## How a request reaches its service
 
 Each arrow shows the destination of one hop.
 
 ```mermaid
 flowchart TD
+    accTitle: How the gateway reaches the catalog and help services
+    accDescr: The browser connects to the gateway on port 18083. The gateway selects a backend by its service name on one of two networks.
     Host["Browser"] -->|"127.0.0.1:18083"| Gate["gateway · port 80"]
     Gate -->|"catalog-net · catalog:8000"| Catalog["catalog"]
     Gate -->|"help-net · help:8000"| Help["help"]

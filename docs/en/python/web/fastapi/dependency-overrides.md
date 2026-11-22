@@ -46,7 +46,7 @@ Run the shell commands on macOS or Linux.
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install 'fastapi==0.162.0' 'httpx2==2.16.0' 'pytest==9.2.0'
+python -m pip install 'fastapi==0.165.0' 'httpx2==2.16.2' 'pytest==9.2.0'
 python -m pytest -q test_dependency_override.py
 ```
 
@@ -112,7 +112,7 @@ Run the shell commands from the practice directory.
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install 'fastapi==0.162.0' 'httpx2==2.16.0' 'pytest==9.2.0'
+python -m pip install 'fastapi==0.165.0' 'httpx2==2.16.2' 'pytest==9.2.0'
 python -m pytest -q test_dependencies.py
 ```
 
@@ -172,8 +172,8 @@ Avoid running these tests concurrently with other tests of the same `app` within
 
 - [FastAPI dependency overrides](https://fastapi.tiangolo.com/advanced/testing-dependencies/).
 - [FastAPI decorator dependencies](https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-in-path-operation-decorators/).
-- [FastAPI 0.162.0 dependency resolution](https://github.com/fastapi/fastapi/blob/0.162.0/fastapi/dependencies/utils.py).
-- [FastAPI release notes 0.162.0](https://fastapi.tiangolo.com/release-notes/#01620-2026-10-23).
+- [FastAPI 0.165.0 dependency resolution](https://github.com/fastapi/fastapi/blob/0.165.0/fastapi/dependencies/utils.py).
+- [FastAPI release notes 0.165.0](https://fastapi.tiangolo.com/release-notes/#01650-2026-11-18).
 - [Starlette TestClient](https://starlette.dev/testclient/).
 
 [Override card](testing.md#dependency-override) · [FastAPI reference](README.md) · [Task index](../../../tasks/README.md#http-apis-and-web-applications)

@@ -19,61 +19,30 @@ Compose использует современную спецификацию б�
 
 ## Указать Dockerfile
 
-Если `main.py` лежит в корне проекта, а Dockerfile — в `dockers/`, выберите корень проекта контекстом сборки. Тогда `COPY main.py .` найдёт исходный файл. Дерево показывает два возможных места для `compose.yaml`. Для запуска достаточно одного файла Compose. Пример требует Docker с Compose и базовый образ `python:3.14-slim` из Docker Hub.
-
-```text
-docker-build-context/
-├── main.py
-├── compose.yaml
-└── dockers/
-    ├── Dockerfile
-    └── compose.yaml
-```
-
-**Один Dockerfile для обоих вариантов.** [dockers/Dockerfile](../../../../examples/tools/docker-build-context/dockers/Dockerfile)
-
-```dockerfile
-FROM python:3.14-slim
-WORKDIR /app
-COPY main.py .
-CMD ["python", "main.py"]
-```
-
-**Сборка без Compose.** Выполните команды из корня примера (`examples/tools/docker-build-context/`). Параметр `-f` указывает путь к Dockerfile от текущего каталога терминала. Последняя точка выбирает этот каталог контекстом сборки.
+В копии репозитория откройте каталог `examples/tools/docker-build-context/`. В нём лежит [main.py](../../../../examples/tools/docker-build-context/main.py). Соберите образ из этого каталога.
 
 ```bash
 docker build -f dockers/Dockerfile -t devrefsnap-context:local .
-docker run --rm devrefsnap-context:local
 ```
 
-В `COPY main.py .` источник `main.py` отсчитывается от корня контекста. Если контекстом выбрать только `dockers/`, файл окажется за его пределами. Точка справа означает рабочий каталог внутри образа. Его задаёт `WORKDIR /app`, поэтому [программа](../../../../examples/tools/docker-build-context/main.py) выводит `/app/main.py`.
+| Файл Compose | `build.context` | `build.dockerfile` |
+| --- | --- | --- |
+| [В корне](../../../../examples/tools/docker-build-context/compose.yaml) | `.` | `dockers/Dockerfile` |
+| [В dockers/](../../../../examples/tools/docker-build-context/dockers/compose.yaml) | `..` | `dockers/Dockerfile` |
 
-**Вариант 1.** [compose.yaml в корне](../../../../examples/tools/docker-build-context/compose.yaml). Точка в `context` выбирает каталог, в котором лежит `main.py`.
+Эти два примера запускаются по отдельности. Для одного Compose-файла с обычными параметрами Compose отсчитывает `context` от каталога файла, а `dockerfile` — от контекста. В обоих случаях `COPY main.py .` берёт файл из корня проекта.
 
-```yaml
-services:
-  app:
-    build:
-      context: .
-      dockerfile: dockers/Dockerfile
+### Куда положить .dockerignore
+
+Положите [`.dockerignore`](../../../../examples/tools/docker-build-context/.dockerignore) рядом с `main.py`, в корень контекста сборки. Каждая строка исключает одно имя в этом корне.
+
+```text
+.venv
+.git
+.env
 ```
 
-**Вариант 2.** [compose.yaml в dockers/](../../../../examples/tools/docker-build-context/dockers/compose.yaml). Значение `..` поднимает контекст на один уровень от каталога Compose-файла, к `main.py`.
-
-```yaml
-services:
-  app:
-    build:
-      context: ..
-      dockerfile: dockers/Dockerfile
-```
-
-В обоих вариантах Compose отсчитывает `dockerfile` от выбранного контекста. Контекст в обоих случаях — корень проекта, поэтому путь остаётся `dockers/Dockerfile`. Из корня примера выберите одну команду. Ожидаемый вывод приложения — `/app/main.py`.
-
-| Расположение файла | Сборка и разовый запуск |
-| --- | --- |
-| `compose.yaml` | `docker compose -f compose.yaml run --rm --build app` |
-| `dockers/compose.yaml` | `docker compose -f dockers/compose.yaml run --rm --build app` |
+[Дерево, полные файлы и команды запуска обоих вариантов](build-context.md) · [Как Docker читает .dockerignore](https://docs.docker.com/build/concepts/context/#dockerignore-files).
 
 Для выбора именованной стадии добавьте `target` под `build`. [Пример с двумя стадиями](../../../../examples/tools/api-contract-lab/compose.yaml) · [Пути сборки в Compose](https://docs.docker.com/reference/compose-file/build/).
 
@@ -81,11 +50,11 @@ services:
 
 | Кому нужно значение | Где его задать | Пример |
 | --- | --- | --- |
-| Compose при чтении YAML | В оболочке или в файле `.env` рядом с этим Compose-файлом | `${SITE_PORT:-18083}` выбирает 18083, если значение пустое или отсутствует. В этом примере значение из оболочки имеет приоритет. |
+| Compose при чтении YAML | В оболочке или в файле `.env` текущего каталога запуска. Путь к другому файлу задаёт `--env-file` | `${SITE_PORT:-18083}` выбирает 18083, если значение пустое или отсутствует. В этом примере значение из оболочки имеет приоритет. |
 | Процессу внутри контейнера | В `environment` сервиса | `environment: {LOG_LEVEL: info}` передаёт `LOG_LEVEL=info` программе |
 | Процессу нужны значения из файла | В `env_file` сервиса | `env_file: ./app.env` передаёт пары `KEY=value`. При совпадении имён приоритет у `environment`. |
 
-Команда `SITE_PORT=18084 docker compose config` покажет итоговый порт. Вывод может содержать значения паролей. Флаг `-q` проверяет конфигурацию без вывода значений. [Подстановка в YAML](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/) · [Переменные контейнера](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/).
+Из корня репозитория выполните `SITE_PORT=18084 docker compose -f examples/tools/compose-site/compose.yaml config`. В разделе `services.gateway.ports` поле `published` получит значение `18084`. [Compose-файл этого примера](../../../../examples/tools/compose-site/compose.yaml). Вывод может содержать значения паролей. Флаг `-q` проверяет конфигурацию без вывода значений. [Подстановка в YAML](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/) · [Переменные контейнера](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/).
 
 ## Подключить базу данных
 

@@ -16,7 +16,7 @@
 
 Уровень: средний.
 Используйте Python 3.14.
-В отдельном окружении выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]'`.
+В отдельном окружении выполните `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0'`.
 
 
 ## Middleware и CORS

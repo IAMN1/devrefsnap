@@ -38,17 +38,17 @@
 
 Для подмены используйте [самостоятельный пример с отдельной установкой](dependency-overrides.md#минимальный-самостоятельный-пример).
 Для остальных тестов создайте учебное окружение на Python 3.14.
-Установите общие пакеты: `python -m pip install 'fastapi==0.162.0' 'starlette==1.10.0' 'pytest==9.2.0' 'httpx2==2.16.0'`.
+Установите общие пакеты: `python -m pip install 'fastapi==0.165.0' 'starlette==1.10.0' 'pytest==9.2.0' 'httpx2==2.16.2'`.
 Затем добавьте только зависимости выбранного приложения:
 
 | Тестируемое приложение | Дополнительная установка |
 | --- | --- |
-| [main.py: CRUD и валидация](http-api.md) | `python -m pip install 'pydantic[email]==2.14.3' 'email-validator==2.3.0'` |
-| [uploads.py: multipart](uploads.md) | `python -m pip install 'python-multipart==0.0.33'` |
+| [main.py: CRUD и валидация](http-api.md) | `python -m pip install 'pydantic[email]==2.14.4' 'email-validator==2.4.0'` |
+| [uploads.py: multipart](uploads.md) | `python -m pip install 'python-multipart==0.0.34'` |
 | [middleware_app.py: CORS](middleware.md) | Дополнительные пакеты не нужны |
-| [db_app.py: sync-БД](database.md#синхронный-sqlalchemy) | `python -m pip install 'sqlalchemy==2.1.8' 'pydantic[email]==2.14.3' 'email-validator==2.3.0'` |
-| [async_db_app.py: async-БД](database.md#async-sqlalchemy-и-lifespan) | `python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1'` |
-| [auth_app.py: пароль и JWT](authentication.md) | `python -m pip install 'python-multipart==0.0.33' 'PyJWT==2.15.1' 'pwdlib[argon2]==0.3.1'` |
+| [db_app.py: sync-БД](database.md#синхронный-sqlalchemy) | `python -m pip install 'sqlalchemy==2.1.9' 'pydantic[email]==2.14.4' 'email-validator==2.4.0'` |
+| [async_db_app.py: async-БД](database.md#async-sqlalchemy-и-lifespan) | `python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'aiosqlite==0.22.1'` |
+| [auth_app.py: пароль и JWT](authentication.md) | `python -m pip install 'python-multipart==0.0.34' 'PyJWT==2.15.1' 'pwdlib[argon2]==0.4.2'` |
 
 
 ## Подготовка
@@ -56,11 +56,10 @@
 Сохраните выбранное приложение и соответствующий [полный тестовый модуль](testing-lab.md) рядом в учебной папке.
 Для файла `test_integrations.py` нужны оба приложения: `uploads.py` и `middleware_app.py`.
 Для файла `test_database.py` нужны оба варианта БД и их зависимости.
-Для async-теста добавьте `pytest-asyncio==1.4.1.post1`.
-Отдельная команда установки инструментов async-теста:
+После установки общих пакетов добавьте плагин для async-теста.
 
 ```bash
-python -m pip install pytest pytest-asyncio httpx2
+python -m pip install 'pytest-asyncio==1.5.0'
 ```
 
 В окружении Starlette 1.10.0 используйте `httpx2`.

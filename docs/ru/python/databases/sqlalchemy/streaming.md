@@ -17,7 +17,7 @@
 | --- | --- |
 | Уровень | Продвинутый |
 | Предпосылки | Session, итераторы; demo_models.py и demo_queries.py из [подготовки](loading-lab.md#подготовить-примеры) |
-| Зависимости | Python 3.14, SQLAlchemy 2.1.8 и SQLite; [подготовка](loading-lab.md#подготовить-примеры) |
+| Зависимости | Python 3.14, SQLAlchemy 2.1.9 и SQLite; [подготовка](loading-lab.md#подготовить-примеры) |
 
 
 ## Читать результат партиями
@@ -67,7 +67,7 @@ with Session(engine) as session:
 
 Полный `test_streaming.py` использует те же модели и исходный `seed()`.
 Сохраните файл рядом с `demo_models.py` и `demo_queries.py`.
-Установите `sqlalchemy[asyncio]==2.1.8` и `pytest==9.2.0` в отдельное окружение.
+Установите `sqlalchemy[asyncio]==2.1.9` и `pytest==9.2.0` в отдельное окружение.
 Фикстура создаёт и освобождает SQLite в памяти для каждого теста.
 
 [`sqlalchemy/test_streaming.py`](../../../../../examples/python/databases/sqlalchemy/test_streaming.py)
@@ -81,4 +81,4 @@ with Session(engine) as session:
 ## Источники
 
 - [ORM yield_per и ограничения](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#fetching-large-result-sets-with-yield-per), [буферизация и server-side cursors](https://docs.sqlalchemy.org/en/21/core/connections.html#using-server-side-cursors-a-k-a-stream-results).
-- [Release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+- [Release notes 2.1.9](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.9).

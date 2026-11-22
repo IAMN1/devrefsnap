@@ -31,8 +31,12 @@
 `bool` намеренно недопустим как количество, хотя Python считает `bool` подклассом `int`.
 
 Полный пример не требует зависимостей.
-Сохраните код как `invariants.py`.
-Выполните `python3.14 invariants.py`.
+Из корня репозитория выполните команду.
+
+```bash
+python3.14 examples/architecture/invariants.py
+```
+
 
 [`architecture/invariants.py`](../../../examples/architecture/invariants.py)
 
@@ -55,8 +59,12 @@
 Контракт задаёт договорённость потребителя, а не только сигнатуру.
 
 Полный пример не требует pip.
-Сохраните код как `solid-contract.py`.
-Выполните `python3.14 solid-contract.py`.
+Из корня репозитория выполните команду.
+
+```bash
+python3.14 examples/architecture/solid-contract.py
+```
+
 
 [`architecture/solid-contract.py`](../../../examples/architecture/solid-contract.py)
 

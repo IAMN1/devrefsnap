@@ -22,9 +22,9 @@ To serve the image directly, `docker run --rm -p 127.0.0.1:18083:8000 site:local
 
 ## Choose the build context
 
-In `docker build -f dockers/Dockerfile .`, the `-f` option selects the recipe and the dot sets the **context**, the directory of available source files. Source paths in ordinary `COPY` instructions start at the context root. A `.dockerignore` there excludes unwanted files. For `COPY … not found`, check the context, filename, and ignore rules. [Working .dockerignore](../../../../examples/tools/compose-site/.dockerignore) · [Build context](https://docs.docker.com/build/concepts/context/).
+In `docker build -f dockers/Dockerfile .`, the `-f` option selects the recipe and the dot sets the **context**, the directory of available source files. Source paths in ordinary `COPY` instructions start at the context root. Put `.dockerignore` next to `main.py`. The entries `.venv`, `.git`, and `.env` exclude these names from the context root. For `COPY … not found`, check the context, filename, and ignore rules. [Working .dockerignore](../../../../examples/tools/docker-build-context/.dockerignore) · [Build context](https://docs.docker.com/build/concepts/context/).
 
-[Example with main.py at the root and two Compose file locations](compose-file.md#locate-the-dockerfile).
+[Example with main.py at the root and two Compose file locations](build-context.md).
 
 ## Reuse the installation cache
 

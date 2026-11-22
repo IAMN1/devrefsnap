@@ -4,6 +4,24 @@
 
 Send `GET /` to a local API from Node.js. Use TypeScript to check types in your code, then validate the server's data at runtime.
 
+| Task | Technique |
+| --- | --- |
+| Check types before starting an API | [`tsc --noEmit`](#check-types-without-a-server) |
+| Validate data from the network | [`response.ok`, `unknown`, and a property check](#read-and-validate-a-json-response) |
+| Send a request and see the response | [Run the server and client](#run-the-client) |
+
+## Check types without a server
+
+From the repository root, check the [client](../../../examples/typescript/http-client/client.mts) with Node.js 26 and npm. On the first run, npm downloads TypeScript 6.0.3 if the package is missing from its cache.
+
+```bash
+npm exec --yes --package=typescript@6.0.3 -- tsc \
+  --ignoreConfig --strict --noEmit --target ES2022 --module NodeNext \
+  --lib ES2022,DOM examples/typescript/http-client/client.mts
+```
+
+The compiler exits silently with status 0 on success. To see a type error in a practice copy, replace `return { message: data.message }` with `return { message: 42 }`. Repeat the command. The compiler reports that a `number` cannot be assigned to a `string` property. Restore the original line before running the client.
+
 ## Read and validate a JSON response
 
 The client expects an object with a string `message` property. The `Greeting` type describes the value you get from `await getGreeting(url)`.

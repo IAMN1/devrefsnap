@@ -199,17 +199,15 @@ Test full restores regularly.
 <a id="удалить-только-проверочную-бд"></a>
 ## Remove only the verification database
 
-After verification, save the archive in the required location.
-Close connections to the verification database.
-This shell command **deletes the entire `cheatsheet_restore_check` database**.
+Save the archive and check the server address. Confirm that this run created `cheatsheet_restore_check`. If `createdb` reported that the database already existed, skip cleanup.
+
+Close connections to the verification database. The following shell command **deletes the entire `cheatsheet_restore_check` database**.
 
 ```bash
 dropdb --host=127.0.0.1 --username=postgres cheatsheet_restore_check
 ```
 
-Check the server address and exact database name before running it.
-The command targets the verification database.
-Remove any other practice databases separately by their exact names.
+For other practice databases, check separately which names this run created.
 
 <a id="pitr-и-репликация"></a>
 ## PITR and replication

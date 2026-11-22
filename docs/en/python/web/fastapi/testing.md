@@ -38,17 +38,17 @@ Here, a dependency is a function that FastAPI calls through `Depends` before the
 
 For overrides, use the [standalone example with separate installation](dependency-overrides.md#minimal-standalone-example).
 For the other tests, create a practice environment on Python 3.14.
-Install the common packages with `python -m pip install 'fastapi==0.162.0' 'starlette==1.10.0' 'pytest==9.2.0' 'httpx2==2.16.0'`.
+Install the common packages with `python -m pip install 'fastapi==0.165.0' 'starlette==1.10.0' 'pytest==9.2.0' 'httpx2==2.16.2'`.
 Then add only the dependencies of the selected application.
 
 | Application under test | Additional installation |
 | --- | --- |
-| [main.py with CRUD and validation](http-api.md) | `python -m pip install 'pydantic[email]==2.14.3' 'email-validator==2.3.0'` |
-| [uploads.py with multipart](uploads.md) | `python -m pip install 'python-multipart==0.0.33'` |
+| [main.py with CRUD and validation](http-api.md) | `python -m pip install 'pydantic[email]==2.14.4' 'email-validator==2.4.0'` |
+| [uploads.py with multipart](uploads.md) | `python -m pip install 'python-multipart==0.0.34'` |
 | [middleware_app.py with CORS](middleware.md) | No additional packages required |
-| [db_app.py with a sync database](database.md#synchronous-sqlalchemy) | `python -m pip install 'sqlalchemy==2.1.8' 'pydantic[email]==2.14.3' 'email-validator==2.3.0'` |
-| [async_db_app.py with an async database](database.md#async-sqlalchemy-and-lifespan) | `python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1'` |
-| [auth_app.py with passwords and JWT](authentication.md) | `python -m pip install 'python-multipart==0.0.33' 'PyJWT==2.15.1' 'pwdlib[argon2]==0.3.1'` |
+| [db_app.py with a sync database](database.md#synchronous-sqlalchemy) | `python -m pip install 'sqlalchemy==2.1.9' 'pydantic[email]==2.14.4' 'email-validator==2.4.0'` |
+| [async_db_app.py with an async database](database.md#async-sqlalchemy-and-lifespan) | `python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'aiosqlite==0.22.1'` |
+| [auth_app.py with passwords and JWT](authentication.md) | `python -m pip install 'python-multipart==0.0.34' 'PyJWT==2.15.1' 'pwdlib[argon2]==0.4.2'` |
 
 <a id="подготовка"></a>
 ## Setup
@@ -56,11 +56,10 @@ Then add only the dependencies of the selected application.
 Save the selected application and corresponding [complete test module](testing-lab.md) together in the practice directory.
 `test_integrations.py` needs both `uploads.py` and `middleware_app.py`.
 `test_database.py` needs both database variants and their dependencies.
-For the async test, add `pytest-asyncio==1.4.1.post1`.
-Install the async test tools with this separate command.
+After installing the common packages, add the plugin for the async test.
 
 ```bash
-python -m pip install pytest pytest-asyncio httpx2
+python -m pip install 'pytest-asyncio==1.5.0'
 ```
 
 Use `httpx2` with Starlette 1.10.0.

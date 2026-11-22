@@ -22,9 +22,9 @@ Dockerfile описывает, что входит в образ и какую �
 
 ## Выбрать контекст сборки
 
-В команде `docker build -f dockers/Dockerfile .` параметр `-f` выбирает рецепт, а точка задаёт **контекст** — каталог доступных исходников. Путь слева в `COPY` начинается от корня контекста. Файл `.dockerignore` в корне исключает лишнее. При ошибке `COPY … not found` проверьте контекст, имя файла и правила исключения. [Рабочий .dockerignore](../../../../examples/tools/compose-site/.dockerignore) · [Контекст сборки](https://docs.docker.com/build/concepts/context/).
+В команде `docker build -f dockers/Dockerfile .` параметр `-f` выбирает рецепт, а точка задаёт **контекст** — каталог доступных исходников. Путь слева в `COPY` начинается от корня контекста. Для этого примера положите `.dockerignore` рядом с `main.py`. Строки `.venv`, `.git` и `.env` исключают эти имена из корня контекста. При ошибке `COPY … not found` проверьте контекст, имя файла и правила исключения. [Рабочий .dockerignore](../../../../examples/tools/docker-build-context/.dockerignore) · [Контекст сборки](https://docs.docker.com/build/concepts/context/).
 
-[Пример с main.py в корне и двумя расположениями compose.yaml](compose-file.md#указать-dockerfile).
+[Пример с main.py в корне и двумя расположениями compose.yaml](build-context.md).
 
 ## Сохранить кэш установки
 

@@ -195,8 +195,7 @@ In autocommit, a standalone SELECT releases its lock when its transaction ends.
 Set the isolation level in BEGIN or with SET TRANSACTION before the first read or write.
 On SQLSTATE `40001`, retry **the entire transaction** from the beginning.
 For a deadlock, `40P01`, define an application recovery or retry policy as well.
-Sequence changes persist after transaction rollback.
-Gaps in IDs are normal.
+A rollback does not reclaim an ID already issued by `nextval`. An `INSERT` using an identity column can therefore leave a gap in the IDs.
 
 ROLLBACK TO SAVEPOINT undoes only work after the savepoint.
 For an atomic business operation, roll back the entire operation on failure.

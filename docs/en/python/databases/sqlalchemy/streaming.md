@@ -17,7 +17,7 @@ Relationship-loading choices are covered [separately](relationship-loading.md).
 | --- | --- |
 | Level | Advanced |
 | Prerequisites | Session and iterators. demo_models.py and demo_queries.py from the [setup](loading-lab.md#prepare-the-examples) |
-| Dependencies | Python 3.14, SQLAlchemy 2.1.8, and SQLite. See [setup](loading-lab.md#prepare-the-examples) |
+| Dependencies | Python 3.14, SQLAlchemy 2.1.9, and SQLite. See [setup](loading-lab.md#prepare-the-examples) |
 
 <a id="читать-результат-партиями"></a>
 ## Read a result in batches
@@ -67,7 +67,7 @@ Then check batch processing separately on the required database system and drive
 
 The complete `test_streaming.py` uses the same models and original `seed()`.
 Save the file next to `demo_models.py` and `demo_queries.py`.
-Install `sqlalchemy[asyncio]==2.1.8` and `pytest==9.2.0` in a separate environment.
+Install `sqlalchemy[asyncio]==2.1.9` and `pytest==9.2.0` in a separate environment.
 The fixture creates and disposes of an in-memory SQLite database for each test.
 
 [`sqlalchemy/test_streaming.py`](../../../../../examples/python/databases/sqlalchemy/test_streaming.py)
@@ -81,4 +81,4 @@ The exceptions verify incompatible combinations. They do not provide load-test r
 ## Sources
 
 - [ORM yield_per and limitations](https://docs.sqlalchemy.org/en/21/orm/queryguide/api.html#fetching-large-result-sets-with-yield-per), [buffering and server-side cursors](https://docs.sqlalchemy.org/en/21/core/connections.html#using-server-side-cursors-a-k-a-stream-results).
-- [Release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+- [Release notes 2.1.9](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.9).

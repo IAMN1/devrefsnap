@@ -31,7 +31,7 @@ Detailed examples are provided in standalone recipes.
 
 | Parameter | Value |
 | --- | --- |
-| Target API | FastAPI 0.162.0, Pydantic v2. Example syntax requires Python 3.10+ |
+| Target API | FastAPI 0.165.0, Pydantic v2. FastAPI requires Python 3.11 or later |
 | Prerequisites | Functions, type annotations, HTTP/JSON. Advanced tasks require `async` and context managers |
 
 <a id="навигация"></a>
@@ -41,27 +41,29 @@ Detailed examples are provided in standalone recipes.
 <a id="первый-запуск"></a>
 ## First run
 
-Use Python 3.14, FastAPI 0.162.0, and Uvicorn 0.54.0 to reproduce the example.
+Use Python 3.14, FastAPI 0.165.0, and Uvicorn 0.54.0 to reproduce the example.
 
-Create a virtual environment in a separate practice directory.
-Install the dependencies in that environment.
+Open an empty practice directory in a macOS or Linux terminal. Create the environment and install the dependencies.
 
 ```bash
-python -m venv .venv
+python3.14 -m venv .venv
 source .venv/bin/activate
-python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]'
+python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0'
 ```
 
-Save the complete example as `minimal.py` in this directory.
-
-[`minimal.py`](../../../../../examples/python/web/fastapi/minimal.py)
+Save the [complete application](../../../../../examples/python/web/fastapi/minimal.py) as `minimal.py` in this directory. Start the server.
 
 ```bash
 uvicorn minimal:app --reload
-curl http://127.0.0.1:8000/
 ```
 
-The result is `200` and `{"message":"Привет"}`.
+Leave the server running. In a second terminal, request the response status and body.
+
+```bash
+curl -i http://127.0.0.1:8000/
+```
+
+The first line shows `200 OK`. The body after the headers is `{"message":"Привет"}`. Press `Ctrl+C` in the first terminal to stop the server.
 Swagger UI is available at [localhost:8000/docs](http://localhost:8000/docs).
 ReDoc is available at [localhost:8000/redoc](http://localhost:8000/redoc).
 The schema is available at [localhost:8000/openapi.json](http://localhost:8000/openapi.json).
@@ -180,7 +182,7 @@ In the complete example, the handler explicitly commits or rolls back the transa
 <a id="источники"></a>
 ## Sources
 
-- [FastAPI release notes 0.162.0](https://fastapi.tiangolo.com/release-notes/#01620-2026-10-23).
+- [FastAPI release notes 0.165.0](https://fastapi.tiangolo.com/release-notes/#01650-2026-11-18).
 - [Query parameters](https://fastapi.tiangolo.com/tutorial/query-params-str-validations/), [response models](https://fastapi.tiangolo.com/tutorial/response-model/).
 - [When to use async or def](https://fastapi.tiangolo.com/async/), [lifespan](https://fastapi.tiangolo.com/advanced/events/).
 - [Pydantic v2 migration](https://pydantic.dev/docs/validation/latest/get-started/migration/).

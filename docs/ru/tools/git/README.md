@@ -129,7 +129,7 @@ URL и права доступа зависят от проекта.
 ## Источники
 
 - [Руководства Git v2.55.0](https://github.com/git/git/tree/v2.55.0/Documentation), [release notes 2.55.0](https://raw.githubusercontent.com/git/git/v2.55.0/Documentation/RelNotes/2.55.0.adoc).
-- [Status](https://git-scm.com/docs/git-status/2.55.0/), [restore](https://git-scm.com/docs/git-restore/2.55.0), [push](https://git-scm.com/docs/git-push/2.55.0).
+- [Status](https://github.com/git/git/blob/v2.55.0/Documentation/git-status.adoc), [restore](https://git-scm.com/docs/git-restore/2.55.0), [push](https://git-scm.com/docs/git-push/2.55.0).
 - [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
 
 [Инструменты разработки](../README.md) · [Указатель задач](../../tasks/README.md#git-и-github)

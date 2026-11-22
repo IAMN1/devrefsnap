@@ -18,7 +18,7 @@ The level is basic to intermediate.
 Prerequisites include classes, types, Decimal, and JSON.
 Place all files below in one practice directory.
 Use Python 3.14.
-Run `python -m pip install 'pydantic[email]==2.14.3' 'email-validator==2.3.0' 'pytest==9.2.0'`.
+Run `python -m pip install 'pydantic[email]==2.14.4' 'email-validator==2.4.0' 'pytest==9.2.0'`.
 
 <a id="модели-валидация-и-json"></a>
 ## Models, validation, and JSON

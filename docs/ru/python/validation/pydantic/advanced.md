@@ -23,7 +23,7 @@
 ## Generic, TypeAdapter и собственный тип
 
 Для воспроизведения используйте Python 3.14.
-Выполните `python -m pip install 'pydantic==2.14.3' 'pytest==9.2.0'`.
+Выполните `python -m pip install 'pydantic==2.14.4' 'pytest==9.2.0'`.
 Сохраните полный пример как `demo_advanced.py`.
 Возьмите файл `demo_types.py` с [предыдущей страницы](models.md#атрибуты-конфигурация-и-типы).
 
@@ -46,7 +46,7 @@
 
 ## Настройки приложения
 
-В отдельном окружении выполните `python -m pip install 'pydantic-settings==2.16.2' 'pytest==9.2.0'`.
+В отдельном окружении выполните `python -m pip install 'pydantic-settings==2.16.3' 'pytest==9.2.0'`.
 Полный пример `demo_settings.py` читает только переменные с учебным префиксом.
 Пример не подключается к БД.
 
@@ -59,12 +59,12 @@
 Для отдельного учебного dotenv-файла передайте `Settings(_env_file="training.env", _env_file_encoding="utf-8")`.
 Значения окружения имеют приоритет над dotenv.
 Если вы вызываете `get_secret_value()` и печатаете результат, не полагайтесь на маскирование `SecretStr`.
-[Документация settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
+[Документация settings](https://pydantic.dev/docs/validation/latest/concepts/pydantic_settings/).
 
 
 ## Query-модель FastAPI
 
-В отдельном окружении выполните `python -m pip install 'fastapi==0.162.0' 'httpx2==2.16.0' 'pytest==9.2.0'`.
+В отдельном окружении выполните `python -m pip install 'fastapi==0.165.0' 'httpx2==2.16.2' 'pytest==9.2.0'`.
 Ниже приведён полный пример `demo_query.py`.
 Вызов `Query()` явно задаёт заполнение модели из URL, а не из body.
 

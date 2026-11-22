@@ -32,7 +32,7 @@ The context manager restores previous values.
 Call `clear_contextvars()` at the start of a new operation to clear fields inherited from a previous request.
 
 The complete `demo_context.py` follows.
-In the practice environment, run `python -m pip install 'structlog==26.1.0' 'pytest==9.2.0' 'pytest-asyncio==1.4.1.post1'`.
+In the practice environment, run `python -m pip install 'structlog==26.1.0' 'pytest==9.2.0' 'pytest-asyncio==1.5.0'`.
 
 [`structlog/demo_context.py`](../../../../../examples/python/logging/structlog/demo_context.py)
 
@@ -55,7 +55,7 @@ Check context propagation into each thread explicitly.
 ## FastAPI request boundary
 
 The complete `demo_web.py` follows.
-In a separate environment, run `python -m pip install 'structlog==26.1.0' 'fastapi==0.162.0' 'starlette==1.10.0' 'httpx2==2.16.0' 'pytest==9.2.0'`.
+In a separate environment, run `python -m pip install 'structlog==26.1.0' 'fastapi==0.165.0' 'starlette==1.10.0' 'httpx2==2.16.2' 'pytest==9.2.0'`.
 The example uses ASGI middleware to avoid BaseHTTPMiddleware's additional contextvars propagation limits.
 
 [`structlog/demo_web.py`](../../../../../examples/python/logging/structlog/demo_web.py)

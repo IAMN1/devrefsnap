@@ -15,14 +15,14 @@ Practice items are stored in one process's memory.
 [HTTP cards](recipes.md) · [FastAPI reference](README.md) · [Checks](testing.md)
 
 Beginner to intermediate level.
-Running the example requires Python 3.14, FastAPI 0.162.0, and Pydantic 2.14.3.
+Running the example requires Python 3.14, FastAPI 0.165.0, and Pydantic 2.14.4.
 
 <a id="http-api-с-валидацией"></a>
 ## HTTP API with validation
 
 **Prerequisites** — functions, types, and HTTP methods.
 
-In a separate environment, run `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'pydantic[email]==2.14.3'`.
+In a separate environment, run `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0' 'pydantic[email]==2.14.4'`.
 Create the complete `main.py` file.
 
 [`main.py`](../../../../../examples/python/web/fastapi/main.py)

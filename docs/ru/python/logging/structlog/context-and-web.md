@@ -33,7 +33,7 @@
 Этот вызов предотвращает наследование полей прошлого запроса.
 
 Ниже приведён полный пример `demo_context.py`.
-В учебном окружении выполните `python -m pip install 'structlog==26.1.0' 'pytest==9.2.0' 'pytest-asyncio==1.4.1.post1'`.
+В учебном окружении выполните `python -m pip install 'structlog==26.1.0' 'pytest==9.2.0' 'pytest-asyncio==1.5.0'`.
 
 [`structlog/demo_context.py`](../../../../../examples/python/logging/structlog/demo_context.py)
 
@@ -56,7 +56,7 @@
 ## FastAPI: граница запроса
 
 Ниже приведён полный пример `demo_web.py`.
-В отдельном окружении выполните `python -m pip install 'structlog==26.1.0' 'fastapi==0.162.0' 'starlette==1.10.0' 'httpx2==2.16.0' 'pytest==9.2.0'`.
+В отдельном окружении выполните `python -m pip install 'structlog==26.1.0' 'fastapi==0.165.0' 'starlette==1.10.0' 'httpx2==2.16.2' 'pytest==9.2.0'`.
 Пример использует ASGI middleware, чтобы не добавлять ограничения распространения contextvars от BaseHTTPMiddleware.
 
 [`structlog/demo_web.py`](../../../../../examples/python/logging/structlog/demo_web.py)

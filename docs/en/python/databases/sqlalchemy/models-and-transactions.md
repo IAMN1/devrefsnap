@@ -18,7 +18,7 @@ The example creates an in-memory SQLite database without using an existing datab
 The extended recipes use the shared schema below.
 For an introduction to loading, [two models in one file](n-plus-one.md) are enough.
 Run the examples on Python 3.14 with SQLite from the standard `sqlite3` module.
-Run `python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'pytest==9.2.0'`.
+Run `python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'pytest==9.2.0'`.
 The shared base inherits AsyncAttrs. Importing asyncio support in SQLAlchemy 2.1 requires greenlet through the `asyncio` extra.
 [Installation explanation](https://docs.sqlalchemy.org/en/21/faq/installation.html#i-m-getting-an-error-about-greenlet-not-being-installed-when-i-try-to-use-asyncio).
 The examples create only an in-memory practice database.

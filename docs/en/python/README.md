@@ -32,6 +32,17 @@ Each topic states its API versions, dependencies, and conditions of use.
 General principles and patterns are in [Architecture](../architecture/README.md).
 The design guide here applies those principles and patterns to a Python project.
 
+## Create an environment for an example
+
+If a recipe uses `python -m pip install`, open a terminal in the practice directory. For Python 3.14 examples, run the commands from left to right.
+
+| Shell | Create the environment | Activate it in this terminal |
+| --- | --- | --- |
+| Bash or Zsh on macOS and Linux | `python3.14 -m venv .venv` | `source .venv/bin/activate` |
+| Windows PowerShell with Python 3.14 and the `py` command installed | `py -3.14 -m venv .venv` | `.\.venv\Scripts\Activate.ps1` |
+
+Check `python -m pip --version`. The printed path should contain the `.venv` directory. You can now install the packages for the selected example. Run `deactivate` to leave the environment. [Python 3.14 virtual environments](https://docs.python.org/3.14/library/venv.html#how-venvs-work)
+
 <a id="связанные-темы"></a>
 ## Related topics
 

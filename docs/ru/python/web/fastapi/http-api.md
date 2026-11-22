@@ -15,14 +15,14 @@
 [Карточки HTTP](recipes.md) · [Справочник FastAPI](README.md) · [Проверки](testing.md)
 
 Уровень: базовый → средний.
-Для запуска нужны Python 3.14, FastAPI 0.162.0 и Pydantic 2.14.3.
+Для запуска нужны Python 3.14, FastAPI 0.165.0 и Pydantic 2.14.4.
 
 
 ## HTTP API с валидацией
 
 **Предпосылки:** функции, типы, HTTP-методы.
 
-В отдельном окружении выполните `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' 'pydantic[email]==2.14.3'`.
+В отдельном окружении выполните `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0' 'pydantic[email]==2.14.4'`.
 Создайте полный файл `main.py`:
 
 [`main.py`](../../../../../examples/python/web/fastapi/main.py)

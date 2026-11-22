@@ -23,18 +23,15 @@ For a first run, use the [Docker Compose and GitHub Actions practice project](..
 ## GitHub Actions
 
 The following snippet contains steps within a job on a suitable runner.
-Check the Actions refs separately.
-Pin Actions refs according to project policy.
-The major-version refs shown are examples.
+The actions are pinned by commit SHA. The comment identifies the corresponding release. The cache uses this version of setup-uv's default `auto` policy. [Changes in setup-uv 10](https://github.com/astral-sh/setup-uv/releases/tag/v10.0.0)
 
 ```yaml
 steps:
   - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-  - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+  - uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
     with:
-      version: "0.12.13"
+      version: "0.13.9"
       python-version: "3.14"
-      enable-cache: true
   - run: uv sync --locked
   - run: uv run --locked pytest
   - run: uv run --locked ruff check .
@@ -56,7 +53,7 @@ Both Python images in the Dockerfile must have compatible paths, operating syste
 For reproducible production builds, pin image digests as well.
 
 ```dockerfile
-FROM ghcr.io/astral-sh/uv:0.12.13 AS uv
+FROM ghcr.io/astral-sh/uv:0.13.9 AS uv
 FROM python:3.14-slim AS builder
 COPY --from=uv /uv /usr/local/bin/uv
 WORKDIR /app
@@ -140,8 +137,8 @@ For your own comparisons, record commands, lockfile, Python, platform, network, 
 | Diagnose TLS failure | Check the server name, time, and CA chain. If needed, use `--system-certs` or `SSL_CERT_FILE` according to the documentation |
 
 `UV_INDEX_URL` is the old setting name.
-For uv 0.12.13, use `UV_DEFAULT_INDEX`.
-Avoid using `UV_SSL_VERIFY=0` and `UV_LOG_LEVEL` to configure uv 0.12.13.
+For uv 0.13.9, use `UV_DEFAULT_INDEX`.
+Avoid using `UV_SSL_VERIFY=0` and `UV_LOG_LEVEL` to configure uv 0.13.9.
 Keep TLS verification enabled when troubleshooting installation.
 Disabling verification changes which package code you trust.
 

@@ -19,8 +19,12 @@ No external dependencies or network services are required.
 <a id="полный-пример-outbox-и-дубликат-публикации"></a>
 ## Complete Outbox example and duplicate publication
 
-**Advanced level.** Save the code as `outbox.py`.
-Run `python3.14 outbox.py`.
+**Advanced level.** Run this command from the repository root.
+
+```bash
+python3.14 examples/architecture/outbox.py
+```
+
 The example uses sqlite3 from the standard library.
 The example uses only an in-memory database.
 A list stands in for a broker.
@@ -28,7 +32,7 @@ The checks cover local-write atomicity and possible repeated external publicatio
 
 [`architecture/outbox.py`](../../../../examples/architecture/outbox.py)
 
-The result is OK.
+Expect `OK: strategies, unit adapter, rounding, wrapper and factory refusal`.
 After the event-write error, order 43 was not saved.
 After the simulated failure, the event for order 42 was published twice.
 This is an expected Outbox boundary.

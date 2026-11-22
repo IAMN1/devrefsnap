@@ -112,5 +112,5 @@ For a portable transformation, write a new file, check it, and then replace the 
 
 [GNU Bash quoting/status](https://www.gnu.org/software/bash/manual/bash.html),
 [Coreutils mktemp/cp/chmod](https://www.gnu.org/software/coreutils/manual/coreutils.html),
-[Findutils](https://www.gnu.org/software/findutils/manual/html_mono/find.html),
+[Findutils](https://www.gnu.org/software/findutils/manual/html_node/index.html),
 [Grep exit status](https://www.gnu.org/s/grep/manual/html_node/Exit-Status.html).

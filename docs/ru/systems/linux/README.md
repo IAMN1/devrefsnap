@@ -119,7 +119,7 @@ macOS использует BSD-варианты многих инструмен�
 ## Источники
 
 - [GNU Bash](https://www.gnu.org/software/bash/manual/bash.html), [Coreutils](https://www.gnu.org/software/coreutils/manual/coreutils.html).
-- [Findutils](https://www.gnu.org/software/findutils/manual/html_mono/find.html), [Grep](https://www.gnu.org/software/grep/manual/grep.html).
+- [Findutils](https://www.gnu.org/software/findutils/manual/html_node/index.html), [Grep](https://www.gnu.org/software/grep/manual/grep.html).
 - [Linux ps](https://man7.org/linux/man-pages/man1/ps.1.html), [ip](https://man7.org/linux/man-pages/man8/ip.8.html), [ss](https://man7.org/linux/man-pages/man8/ss.8.html).
 - [systemctl](https://www.freedesktop.org/software/systemd/man/latest/systemctl.html), [journalctl](https://www.freedesktop.org/software/systemd/man/latest/journalctl.html).
 

@@ -15,7 +15,7 @@
 Уровень: средний; первое знакомство с загрузкой отношений ORM.
 Предпосылки: функции и классы Python, аннотации типов, циклы, `with`, `try`/`finally`, `assert` и основы SQL SELECT.
 
-Для запуска нужны Python 3.14, SQLAlchemy 2.1.8 и встроенный модуль `sqlite3`.
+Для запуска нужны Python 3.14, SQLAlchemy 2.1.9 и встроенный модуль `sqlite3`.
 
 Пример использует SQLite в памяти и синтетические данные.
 После завершения программы учебные данные исчезают.
@@ -80,7 +80,7 @@ stmt = select(User).options(selectinload(User.posts)).order_by(User.id)
 ```bash
 python3.14 -m venv .venv
 source .venv/bin/activate
-python -m pip install 'sqlalchemy==2.1.8'
+python -m pip install 'sqlalchemy==2.1.9'
 python n_plus_one.py
 ```
 
@@ -136,6 +136,6 @@ Async, другие СУБД, большие объёмы и конкурент�
 - [Select-in loading](https://docs.sqlalchemy.org/en/21/orm/queryguide/relationships.html#select-in-loading).
 - [Основы ORM](https://docs.sqlalchemy.org/en/21/orm/quickstart.html), [Session](https://docs.sqlalchemy.org/en/21/orm/session_basics.html).
 - [События выполнения SQL](https://docs.sqlalchemy.org/en/21/core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute).
-- [Release notes 2.1.8](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.8).
+- [Release notes 2.1.9](https://docs.sqlalchemy.org/en/21/changelog/changelog_21.html#change-2.1.9).
 
 [Карточки загрузки](relationship-loading.md) · [Справочник SQLAlchemy](README.md) · [Указатель задач](../../../tasks/README.md#sql-и-доступ-из-python)

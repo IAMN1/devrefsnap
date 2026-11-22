@@ -12,6 +12,7 @@
 
 | Задача | Пример |
 | --- | --- |
+| Собрать проект с Dockerfile в подкаталоге | [Где лежат main.py, Dockerfile и .dockerignore](tools/docker/build-context.md) · [Как работают образ, сеть и том](tools/docker/guide.md) · [Запустить три сервиса](tools/docker/lab.md) |
 | Запустить первую программу | [Цена трёх билетов на Python](python/language/first-program.md) · [Первая программа на C](c/README.md#первый-запуск) |
 | Посмотреть статус HTTP и извлечь поле из JSON | [HTTP и JSON в терминале](tools/http-json.md) |
 | Найти причину падения теста в CI | [Разбор журнала GitHub Actions](tools/compose-and-github-actions.md#найти-причину-падения-в-журнале) |

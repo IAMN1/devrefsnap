@@ -19,61 +19,30 @@ Compose uses the current specification without a top-level `version` field. When
 
 ## Locate the Dockerfile
 
-When `main.py` is at the project root and the Dockerfile is in `dockers/`, use the project root as the build context. Then `COPY main.py .` can find the source file. The tree shows two possible locations for `compose.yaml`. Choose one Compose file per run. The example needs Docker with Compose and the `python:3.14-slim` base image from Docker Hub.
-
-```text
-docker-build-context/
-├── main.py
-├── compose.yaml
-└── dockers/
-    ├── Dockerfile
-    └── compose.yaml
-```
-
-**One Dockerfile for both layouts.** [dockers/Dockerfile](../../../../examples/tools/docker-build-context/dockers/Dockerfile)
-
-```dockerfile
-FROM python:3.14-slim
-WORKDIR /app
-COPY main.py .
-CMD ["python", "main.py"]
-```
-
-**Build without Compose.** Run these commands from the example root (`examples/tools/docker-build-context/`). The `-f` path locates the Dockerfile from the current shell directory. The final dot selects that directory as the build context.
+In your checkout, open `examples/tools/docker-build-context/`, the directory containing [main.py](../../../../examples/tools/docker-build-context/main.py). Build the image from that directory.
 
 ```bash
 docker build -f dockers/Dockerfile -t devrefsnap-context:local .
-docker run --rm devrefsnap-context:local
 ```
 
-In `COPY main.py .`, the source `main.py` is relative to the context root. Selecting only `dockers/` as the context puts the file outside that boundary. The destination dot refers to the working directory inside the image. With `WORKDIR /app`, the [program](../../../../examples/tools/docker-build-context/main.py) prints `/app/main.py`.
+| Compose file | `build.context` | `build.dockerfile` |
+| --- | --- | --- |
+| [At the root](../../../../examples/tools/docker-build-context/compose.yaml) | `.` | `dockers/Dockerfile` |
+| [In dockers/](../../../../examples/tools/docker-build-context/dockers/compose.yaml) | `..` | `dockers/Dockerfile` |
 
-**Option 1.** [compose.yaml at the root](../../../../examples/tools/docker-build-context/compose.yaml). The dot in `context` selects the directory containing `main.py`.
+Use one of these Compose files per run. With a single file and default project settings, Compose resolves `context` from the file’s directory and `dockerfile` from the context. In both layouts, `COPY main.py .` reads the file from the project root.
 
-```yaml
-services:
-  app:
-    build:
-      context: .
-      dockerfile: dockers/Dockerfile
+### Where to put .dockerignore
+
+Place [`.dockerignore`](../../../../examples/tools/docker-build-context/.dockerignore) next to `main.py`, at the build context root. Each line excludes one name at that root.
+
+```text
+.venv
+.git
+.env
 ```
 
-**Option 2.** [compose.yaml in dockers/](../../../../examples/tools/docker-build-context/dockers/compose.yaml). The `..` context goes up one level from the Compose file’s directory to the directory containing `main.py`.
-
-```yaml
-services:
-  app:
-    build:
-      context: ..
-      dockerfile: dockers/Dockerfile
-```
-
-In both layouts, Compose resolves `dockerfile` from the chosen context. Both contexts point to the project root, so the path stays `dockers/Dockerfile`. Choose one command below from the example root. The expected application output is `/app/main.py`.
-
-| File location | Build and run once |
-| --- | --- |
-| `compose.yaml` | `docker compose -f compose.yaml run --rm --build app` |
-| `dockers/compose.yaml` | `docker compose -f dockers/compose.yaml run --rm --build app` |
+[Directory tree, full files and run commands for both layouts](build-context.md) · [How Docker reads .dockerignore](https://docs.docker.com/build/concepts/context/#dockerignore-files).
 
 To select a named stage, add `target` under `build`. [Two-stage example](../../../../examples/tools/api-contract-lab/compose.yaml) · [Compose build paths](https://docs.docker.com/reference/compose-file/build/).
 
@@ -81,11 +50,11 @@ To select a named stage, add `target` under `build`. [Two-stage example](../../.
 
 | Who needs the value? | Where to set it | Example |
 | --- | --- | --- |
-| Compose while reading YAML | The shell or a `.env` next to this Compose file | `${SITE_PORT:-18083}` selects 18083 when the value is empty or missing. A shell value takes precedence in this example. |
+| Compose while reading YAML | The shell or a `.env` in the current working directory. Use `--env-file` to select another file | `${SITE_PORT:-18083}` selects 18083 when the value is empty or missing. A shell value takes precedence in this example. |
 | A process inside the container | Service `environment` | `environment: {LOG_LEVEL: info}` passes `LOG_LEVEL=info` to the program |
 | A process that takes settings from a file | Service `env_file` | `env_file: ./app.env` supplies `KEY=value` pairs. On a name collision, `environment` takes precedence. |
 
-Run `SITE_PORT=18084 docker compose config` to see the resolved port. The output can contain passwords. Use `-q` to validate without printing values. [YAML interpolation](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/) · [Container environment](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/).
+From the repository root, run `SITE_PORT=18084 docker compose -f examples/tools/compose-site/compose.yaml config`. Under `services.gateway.ports`, the `published` field is `18084`. [Compose file for this example](../../../../examples/tools/compose-site/compose.yaml). The output can contain passwords. Use `-q` to validate without printing values. [YAML interpolation](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/) · [Container environment](https://docs.docker.com/compose/how-tos/environment-variables/set-environment-variables/).
 
 ## Connect a database
 

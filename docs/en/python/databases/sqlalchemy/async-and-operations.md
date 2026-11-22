@@ -25,7 +25,7 @@ Prerequisites include transactions, [the basics of `asyncio`](../../language/asy
 <a id="асинхронная-сессия"></a>
 ## Async session
 
-Run `python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'aiosqlite==0.22.1' 'pytest==9.2.0' 'pytest-asyncio==1.4.1.post1'`.
+Run `python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'aiosqlite==0.22.1' 'pytest==9.2.0' 'pytest-asyncio==1.5.0'`.
 The complete `demo_async.py` example follows.
 Use the remaining classes from this topic's `demo_models.py`.
 The driver uses only an in-memory SQLite database.
@@ -100,7 +100,7 @@ The SQLite check does not verify migration behavior in other dialects.
 Run these shell commands.
 
 ```bash
-python -m pip install 'sqlalchemy[asyncio]==2.1.8' 'alembic==1.20.1'
+python -m pip install 'sqlalchemy[asyncio]==2.1.9' 'alembic==1.20.1'
 alembic init alembic
 ```
 

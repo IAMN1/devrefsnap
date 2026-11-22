@@ -13,8 +13,6 @@ Choose a stack for the application you want to build. Use the patterns below whe
 | Choose a test boundary | Unit, integration, or end-to-end test | [Test at the right boundary](#test-at-the-right-boundary) |
 | Keep a query small | EF Core projection and bounded results | [Query only the data you need](#query-data) |
 
-<a id="application-areas"></a>
-
 ## Application areas
 
 The stack depends on the target platform. The runnable examples in this section use .NET 10. For desktop, mobile, and game development, check the tools and language version for the target platform or engine.

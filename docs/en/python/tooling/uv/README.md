@@ -28,7 +28,7 @@ Installing and updating dependencies changes the environment and lockfile.
 
 | Parameter | Value |
 | --- | --- |
-| Command version | uv 0.12.13 |
+| Command version | uv 0.13.9 |
 | Prerequisites | Installed uv and Python for the offline practice example |
 
 <a id="навигация"></a>
@@ -95,7 +95,7 @@ The test files must already exist.
 `uv python pin 3.14` writes a version request to `.python-version`. It leaves the default system path alone.
 `project.requires-python` in `pyproject.toml` defines the project's supported Python versions.
 
-In uv 0.12.13, `uv check` runs type checking through ty.
+In uv 0.13.9, `uv check` runs type checking through ty.
 `uv format` runs Ruff formatting.
 These commands do not run general-purpose lint checks or sort imports.
 For linting and import sorting, add Ruff as a development dependency.
@@ -138,7 +138,7 @@ Their scope is Python packages within the monorepo.
 <a id="частые-ошибки"></a>
 ## Common errors
 
-| Unsuitable command or expectation | Use in uv 0.12.13 |
+| Unsuitable command or expectation | Use in uv 0.13.9 |
 | --- | --- |
 | `uv update`, `uv sort`, `uv info`, `uv outdated`, `uv show` | `lock --upgrade`, Ruff, `uv help`, `uv pip list --outdated`, `uv pip show` |
 | `uv sync --parallel` | Operations already use internal parallelism. Configure documented concurrency settings if needed |

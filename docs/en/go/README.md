@@ -16,7 +16,7 @@ The section contains a quick reference and independent learning examples with no
 
 | Task | Technique | Details |
 | --- | --- | --- |
-| Create a module and run a program | `go.mod`, `go run ./cmd/demo` | [Complete example setup](examples/language.md#setup) |
+| Run the example from the repository root | `go -C examples/go run ./cmd/demo` | [Code and expected output](examples/language.md#setup) |
 | Variables, loops, slices/maps/pointers | Standard syntax | [Syntax](language.md#basic-constructs) |
 | Struct, method, interface, generics | Value/pointer receivers, type constraints | [Object and interface](language.md#mutate-an-object-and-preserve-its-interface) |
 | Error with a cause | `%w`, `errors.Is`, `errors.As` | [Reference card](language.md#validate-input-and-inspect-an-errors-cause) · [Input tests](examples/language.md#test-valid-and-invalid-input) |
@@ -47,23 +47,18 @@ The section contains a quick reference and independent learning examples with no
 <a id="команды-модуля"></a>
 ## Module commands
 
-Choose a complete example for the [language](examples/language.md), [concurrency](examples/concurrency-and-testing.md), or [HTTP](examples/http-json.md).
-Save the selected example's files in a separate learning directory.
-The installed Go version must support the version in `go.mod`.
-The commands below require no third-party libraries.
-`go run ./cmd/demo` applies to the language example. The other commands apply to every example.
+Install Go 1.27. A repository checkout already contains the complete module in `examples/go`. From the repository root, run the [demo program](../../../examples/go/cmd/demo/main.go) and check the module.
 
 ```bash
-go version
-gofmt -w .
+cd examples/go
 go run ./cmd/demo
+gofmt -l .
 go test ./...
 go vet ./...
 go test -race ./...
 ```
 
-`gofmt -w` rewrites formatting in the learning directory's `.go` files.
-`go run` compiles and runs the program.
+The program prints `Alice Doe (30)` and `true` on separate lines. The command `gofmt -l .` lists files that need formatting. Use `gofmt -w .` to write the changes.
 `go test` runs tests.
 `vet` checks suspicious constructs.
 The race detector finds races only on executed paths.

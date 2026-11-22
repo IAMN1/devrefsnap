@@ -16,7 +16,7 @@ The example implements no authentication and does not measure transmission of th
 
 Intermediate level.
 Use Python 3.14.
-In a separate environment, run `python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]'`.
+In a separate environment, run `python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0'`.
 
 <a id="middleware-и-cors"></a>
 ## Middleware and CORS

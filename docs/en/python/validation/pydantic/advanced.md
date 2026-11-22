@@ -23,7 +23,7 @@ Each example has its own dependencies. Install only the packages for your chosen
 ## Generics, TypeAdapter, and custom types
 
 Use Python 3.14 to reproduce the example.
-Run `python -m pip install 'pydantic==2.14.3' 'pytest==9.2.0'`.
+Run `python -m pip install 'pydantic==2.14.4' 'pytest==9.2.0'`.
 Save the complete example as `demo_advanced.py`.
 Copy `demo_types.py` from the [previous page](models.md#attributes-configuration-and-types).
 
@@ -44,7 +44,7 @@ Complete `test_advanced.py` follows.
 <a id="настройки-приложения"></a>
 ## Application settings
 
-In a separate environment, run `python -m pip install 'pydantic-settings==2.16.2' 'pytest==9.2.0'`.
+In a separate environment, run `python -m pip install 'pydantic-settings==2.16.3' 'pytest==9.2.0'`.
 The complete `demo_settings.py` reads only variables with the practice prefix.
 It requires no database connection.
 
@@ -57,12 +57,12 @@ The complete `test_settings.py` uses only a synthetic environment.
 For a separate practice dotenv file, pass `Settings(_env_file="training.env", _env_file_encoding="utf-8")`.
 Environment variables take precedence over dotenv.
 `get_secret_value()` reveals the underlying value, so printing its result bypasses `SecretStr` masking.
-[Settings documentation](https://docs.pydantic.dev/latest/concepts/pydantic_settings/).
+[Settings documentation](https://pydantic.dev/docs/validation/latest/concepts/pydantic_settings/).
 
 <a id="query-модель-fastapi"></a>
 ## FastAPI query model
 
-In a separate environment, run `python -m pip install 'fastapi==0.162.0' 'httpx2==2.16.0' 'pytest==9.2.0'`.
+In a separate environment, run `python -m pip install 'fastapi==0.165.0' 'httpx2==2.16.2' 'pytest==9.2.0'`.
 The complete `demo_query.py` follows.
 `Query()` explicitly populates the model from URL parameters.
 

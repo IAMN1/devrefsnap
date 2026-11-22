@@ -18,5 +18,7 @@ List the changed pages and shared examples. Say whether the matching page needs 
 
 <!--
 Запишите команды, версии и фактические результаты проверок. Укажите официальные источники, если использовали их для сверки. Перечислите существенные сценарии, которые ещё нужно проверить.
+Для изменений навигации укажите начальную страницу и раздел, куда ведёт ссылка.
+For navigation changes, give the starting page and the section the link opens.
 Report the commands, versions, and actual results. Include any official sources you used to verify the change. List significant scenarios that still need testing.
 -->

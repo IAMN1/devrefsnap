@@ -4,6 +4,8 @@
 
 Estimate how the number of operations grows as the input gets larger. This section introduces time complexity with Python loops.
 
+[Look up growth rates](#express-the-growth-rate) · [Walk through two loops](#count-iterations) · [Run the program and check the counts](#run-the-example)
+
 ## Big O
 
 Big O gives an upper bound on the growth of the operation count. For a simple traversal, the input size `n` is the number of items in the sequence.
@@ -13,6 +15,7 @@ Big O gives an upper bound on the growth of the operation count. For a simple tr
 Choose an operation to count. In this fragment, each increment represents one execution of a loop body. The variable `items` holds a sequence of `n` items, such as `range(n)`.
 
 ```python
+items = range(4)
 linear = 0
 for item in items:
     linear += 1
@@ -22,6 +25,8 @@ for first in items:
     for second in items:
         quadratic += 1
 ```
+
+With `range(4)`, the counters finish at 4 and 16.
 
 The first loop runs `n` times. In the second case, the inner loop visits all `n` items for each of the `n` items in the outer loop. The inner loop body runs `n × n = n²` times.
 

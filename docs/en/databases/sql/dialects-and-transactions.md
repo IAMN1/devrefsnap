@@ -107,7 +107,7 @@ If you set a savepoint after debiting an account, rolling back the credit and th
 
 | Database engine | Begin and use a savepoint | Guarantees |
 | --- | --- | --- |
-| PostgreSQL | BEGIN; SAVEPOINT s; ROLLBACK TO SAVEPOINT s | Most DDL is transactional. You can roll back TRUNCATE. Sequence changes persist after rollback. |
+| PostgreSQL | BEGIN; SAVEPOINT s; ROLLBACK TO SAVEPOINT s | Most DDL is transactional. You can roll back TRUNCATE. Values consumed by `nextval` remain consumed after rollback. |
 | MySQL InnoDB | START TRANSACTION; SAVEPOINT s; ROLLBACK TO SAVEPOINT s | Many DDL statements and TRUNCATE cause an implicit commit. The table's storage engine matters. |
 | SQL Server | BEGIN TRANSACTION; SAVE TRANSACTION s; ROLLBACK TRANSACTION s | Error handling, XACT_STATE, and nested transactions have their own rules |
 | SQLite | BEGIN [DEFERRED/IMMEDIATE/EXCLUSIVE]; SAVEPOINT s; ROLLBACK TO s | One writer at a time. Journal mode and Python autocommit affect transaction control. |

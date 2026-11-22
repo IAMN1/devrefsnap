@@ -19,8 +19,9 @@ The [short cards](../concurrency-and-testing.md) explain individual techniques.
 
 Running the example requires Go 1.27.
 Prerequisites include functions, slices, errors, and memory ownership.
-Create a separate learning directory.
-Copy [go.mod](language.md#go-mod) into the new directory.
+From the repository root, run `go -C examples/go test -race -run 'TestUppercase|TestCounter' .`. The tests report `ok` followed by the module name on success.
+
+To assemble the example separately, copy [go.mod](../../../../examples/go/go.mod) into a learning directory.
 Save `worker.go`, `counter.go`, and `worker_test.go` from the links below beside `go.mod`.
 The example uses only the standard library, including `context` and `sync`.
 

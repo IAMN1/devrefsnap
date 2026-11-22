@@ -36,8 +36,12 @@ The examples use only the standard library.
 
 **Complete example.** The example uses only the standard library.
 No external dependencies are required.
-Save [`shipping-patterns.py`](../../../../examples/architecture/shipping-patterns.py).
-Run `python3.14 shipping-patterns.py`.
+Run this command from the repository root.
+
+```bash
+python3.14 examples/architecture/shipping-patterns.py
+```
+
 The contract accepts a positive integer weight in grams.
 The contract returns a nonnegative integer cost in illustrative cents.
 LegacyCarrier stands in for an external SDK with a local object.
@@ -46,7 +50,7 @@ The network protocol is not modeled here.
 
 [`architecture/shipping-patterns.py`](../../../../examples/architecture/shipping-patterns.py)
 
-The result is OK.
+Expect `OK: strategies, unit adapter, rounding, wrapper and factory refusal`.
 The example compares two rates and converts grams to kilograms.
 The cost rounds up to a cent.
 The wrapper preserves the result and records an audit entry.
@@ -81,8 +85,12 @@ The error propagates to the caller.
 Callbacks already executed are not rolled back.
 
 **Complete example.** The example uses only the standard library.
-Save the code as `observer-pattern.py`.
-Run `python3.14 observer-pattern.py`.
+Run this command from the repository root.
+
+```bash
+python3.14 examples/architecture/observer-pattern.py
+```
+
 Illustrative strings and lists represent events and results.
 
 [`architecture/observer-pattern.py`](../../../../examples/architecture/observer-pattern.py)
@@ -119,8 +127,12 @@ Data with a separate handler represents the command.
 An `execute` method on the command itself is optional.
 
 **Complete example.** The example uses only the standard library.
-Save the code as `command-pattern.py`.
-Run `python3.14 command-pattern.py`.
+Run this command from the repository root.
+
+```bash
+python3.14 examples/architecture/command-pattern.py
+```
+
 One handler keeps stock and a result log in memory.
 
 [`architecture/command-pattern.py`](../../../../examples/architecture/command-pattern.py)

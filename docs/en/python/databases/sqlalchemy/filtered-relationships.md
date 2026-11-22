@@ -10,7 +10,7 @@ Decide which parents to return and what each collection should contain. If a col
 | Keep only posts that match the JOIN filter | `contains_eager` | [Partial collection](#load-a-partial-collection-from-a-join) |
 | Replace a loaded collection with the query result | `populate_existing` | [Refresh in the Session](#refresh-an-already-loaded-collection) |
 
-Use Python 3.14, synchronous SQLAlchemy 2.1.8 ORM, and in-memory SQLite. Set up the models, data, and `engine` using the [lab instructions](loading-lab.md#prepare-the-examples). The first two cards use fresh Sessions. For the third card, first load Alice's complete collection in the same Session, as in the [complete test](../../../../../examples/python/databases/sqlalchemy/test_relationship_loading.py).
+Use Python 3.14, synchronous SQLAlchemy 2.1.9 ORM, and in-memory SQLite. Set up the models, data, and `engine` using the [lab instructions](loading-lab.md#prepare-the-examples). The first two cards use fresh Sessions. For the third card, first load Alice's complete collection in the same Session, as in the [complete test](../../../../../examples/python/databases/sqlalchemy/test_relationship_loading.py).
 
 The diagram starts with a JOIN that selects Alice by her Python post. The loading technique determines what her collection contains.
 

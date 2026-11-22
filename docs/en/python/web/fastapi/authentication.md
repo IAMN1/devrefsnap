@@ -33,7 +33,7 @@ Use Python 3.14.
 Run the following in a separate virtual environment.
 
 ```bash
-python -m pip install 'fastapi==0.162.0' 'uvicorn[standard]' python-multipart PyJWT 'pwdlib[argon2]'
+python -m pip install 'fastapi==0.165.0' 'uvicorn[standard]==0.54.0' python-multipart PyJWT 'pwdlib[argon2]'
 export JWT_SECRET_KEY="$(python -c 'import secrets; print(secrets.token_hex(32))')"
 ```
 
