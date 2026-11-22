@@ -1,0 +1,5 @@
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:${SITE_PORT:-18081}:8000"

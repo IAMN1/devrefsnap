@@ -17,7 +17,7 @@
 | Найти синтаксис, собрать программу или выбрать библиотеку для C, C# или C++ | [C, C# и C++](#c-family-basics) |
 | Выбрать данные, выполнить транзакцию, сделать резервную копию | [Базы данных и SQL](#базы-данных-и-sql) |
 | Найти файл, процесс, сетевой порт или журнал службы | [Linux и оболочка](#linux-и-оболочка) |
-| Поднять приложение с PostgreSQL или разобрать отказ теста в CI | [Docker Compose и CI](#docker-compose-и-ci) |
+| Написать Dockerfile, запустить сервис в Compose или разобрать отказ в CI | [Docker Compose и CI](#docker-compose-и-ci) |
 | Отменить изменение, обновить ветку, подготовить PR | [Git и GitHub](#git-и-github) |
 | Выбрать границу, контракт, паттерн или протокол повтора | [Архитектура](#архитектура-и-проектирование) |
 | Оценить, как растёт число операций с размером входа | [Алгоритмы](#алгоритмы-и-сложность) |
@@ -264,6 +264,11 @@
 
 | Хочу сделать | Синонимы и имена API | Прямой переход |
 | --- | --- | --- |
+| Впервые получить ответ из контейнера | Docker, Dockerfile, docker compose up, curl | [Первый запуск HTTP-сервера](../tools/docker/README.md#первый-запуск) |
+| Написать Dockerfile и собрать образ | FROM, COPY, RUN, CMD, USER, docker build | [Собрать первый образ](../tools/docker/dockerfile.md#собрать-первый-образ) · [Сохранить кэш установки](../tools/docker/dockerfile.md#сохранить-кэш-установки) |
+| Подключить Dockerfile к сервису и открыть порт | compose.yaml, build.context, dockerfile, ports, image | [Описать сервис](../tools/docker/compose-file.md#описать-сервис) · [Указать Dockerfile](../tools/docker/compose-file.md#указать-dockerfile) |
+| Прочитать логи, выполнить команду или остановить контейнер | docker compose ps, logs, exec, run, stop, down | [Команды по задачам](../tools/docker/commands.md) |
+| Увидеть изменения после правки кода или конфигурации | restart, up --build, rebuild, пересобрать, старый ответ | [Применить изменение](../tools/docker/commands.md#применить-изменение) |
 | Запустить приложение и учебную БД одной командой | Docker Compose, PostgreSQL, compose up, контейнер, healthcheck | [Compose: локальный запуск](../tools/compose-and-github-actions.md#запустить-приложение-локально) |
 | Запустить готовый workflow вручную | GitHub Actions, `workflow_dispatch`, Run workflow | [Запустить workflow вручную](../tools/compose-and-github-actions.md#запустить-готовый-workflow-вручную) |
 | Воспроизвести отказ теста в CI | GitHub Actions, PostgreSQL, задание integration, `fail_test` | [Запустить учебный workflow](../tools/compose-and-github-actions.md#запустить-тест-в-github-actions) |

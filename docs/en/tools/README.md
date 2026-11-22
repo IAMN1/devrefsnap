@@ -16,6 +16,7 @@ These include [uv](../python/tooling/uv/README.md) and [pytest](../python/testin
 | Topic | Content |
 | --- | --- |
 | [HTTP and JSON](http-json.md) | Send a request with curl, inspect status, headers and body, and extract a field with jq |
+| [Dockerfile and Docker Compose](docker/README.md) | Build an image, define services, choose commands, and troubleshoot |
 | [Docker Compose and GitHub Actions](compose-and-github-actions.md) | Run an app with PostgreSQL, test it, and diagnose a failure from the log |
 | [Check an HTTP API contract](api-contract-lab.md) | FastAPI, PostgreSQL, and TypeScript with the same check in Compose and CI |
 | [Git](git/README.md) | Task cards, undo, conflicts, and remote branch checks |
